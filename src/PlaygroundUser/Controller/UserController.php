@@ -423,7 +423,7 @@ class UserController extends ZfcUserController
             $formBlock->get('confirm_submit')->setAttribute('value', 'Confirmer réactivation');
         }
 
-        $categoryService = $this->getServiceLocator()->get('adfabgame_prizecategoryuser_service');
+        $categoryService = $this->getServiceLocator()->get('playgroundgame_prizecategoryuser_service');
         $categoriesUser = $categoryService->getPrizeCategoryUserMapper()->findBy(array('user' => $this->zfcUserAuthentication()->getIdentity()));
         $existingCategories = array();
 
@@ -752,11 +752,11 @@ class UserController extends ZfcUserController
 
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost()->toArray();
-            $service = $this->getServiceLocator()->get('adfabgame_prizecategoryuser_service');
-            $result = $service->edit($data, $this->zfcUserAuthentication()->getIdentity(), 'adfabgame_prizecategoryuser_form');
+            $service = $this->getServiceLocator()->get('playgroundgame_prizecategoryuser_service');
+            $result = $service->edit($data, $this->zfcUserAuthentication()->getIdentity(), 'playgroundgame_prizecategoryuser_form');
             if ($result) {
                 $this->flashMessenger()
-                    ->setNamespace('adfabgame')
+                    ->setNamespace('playgroundgame')
                     ->addMessage('La catégorie a été mise à jour');
             }
         }
@@ -916,7 +916,7 @@ class UserController extends ZfcUserController
     {
         if (! $this->prizeCategoryForm) {
             $this->setPrizeCategoryForm($this->getServiceLocator()
-                ->get('adfabgame_prizecategoryuser_form'));
+                ->get('playgroundgame_prizecategoryuser_form'));
         }
 
         return $this->prizeCategoryForm;
