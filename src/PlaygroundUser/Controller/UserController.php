@@ -1080,7 +1080,7 @@ class UserController extends ZfcUserController
     public function getCoreOptions()
     {
         if (!$this->coreOptions) {
-            $this->setCoreOptions($this->getServiceLocator()->get('adfabcore_module_options'));
+            $this->setCoreOptions($this->getServiceLocator()->get('playgroundcore_module_options'));
         }
 
         return $this->coreOptions;

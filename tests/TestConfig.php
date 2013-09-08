@@ -5,7 +5,7 @@ return array(
         'DoctrineORMModule',
         'ZfcBase',
         'ZfcUser',
-    	'AdfabCore',
+    	'PlaygroundCore',
         'PlaygroundUser',
     ),
     'module_listener_options' => array(

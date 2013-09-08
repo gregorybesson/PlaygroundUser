@@ -26,7 +26,7 @@ class Module
 
         //Set the translator for default validation messages
         $translator = $sm->get('translator');
-        AbstractValidator::setDefaultTranslator($translator,'adfabcore');
+        AbstractValidator::setDefaultTranslator($translator,'playgroundcore');
 
         $doctrine = $sm->get('doctrine.entitymanager.orm_default');
         $evm = $doctrine->getEventManager();
@@ -141,7 +141,7 @@ class Module
         return array(
             'aliases' => array(
                     'zfcuser_doctrine_em'  => 'doctrine.entitymanager.orm_default',
-                    'playgrounduser_message'    => 'adfabcore_message',
+                    'playgrounduser_message'    => 'playgroundcore_message',
             ),
 
             'invokables' => array(

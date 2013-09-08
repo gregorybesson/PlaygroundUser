@@ -7,7 +7,7 @@ use PlaygroundUser\Options\ModuleOptions;
 use Zend\View\Model\ViewModel;
 use Zend\Paginator\Paginator;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
-use AdfabCore\ORM\Pagination\LargeTablePaginator as ORMPaginator;
+use PlaygroundCore\ORM\Pagination\LargeTablePaginator as ORMPaginator;
 
 class AdminController extends AbstractActionController
 {
