@@ -1,0 +1,19 @@
+<?php $this->plugin('translate')->setTranslatorTextDomain('playgrounduser');// Pour le texte ?>
+<?php
+$form = $this->loginForm;
+$form->prepare();
+//$form->setAttribute('action', $this->url('frontend/zfcuser/ajaxlogin'));
+//$form->setAttribute('action', $this->url('frontend/zfcuser/login'));
+$form->setAttribute('id', 'loginAdmin');
+$form->setAttribute('method', 'post');
+?>
+<?php echo $this->form()->openTag($form) ?>
+    <?php echo $this->formElementErrors($form->get('identity')) ?>
+    <?php echo $this->formInput($form->get('identity')) ?>
+    <?php echo $this->formInput($form->get('credential')) ?>
+	<div class="row-fluid">
+		<div id="btn-connect" class="span8">
+			<?php echo $this->formButton($form->get('submit')) ?>
+		</div>
+	</div>
+<?php echo $this->form()->closeTag() ?>

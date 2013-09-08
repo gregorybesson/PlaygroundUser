@@ -1,0 +1,39 @@
+<?php $this->plugin('translate')->setTranslatorTextDomain('playgrounduser');// Pour le texte ?>
+
+<div id="change-password" class="row-fluid">
+	<div class="container-content span8">
+		<div class="row-fluid">
+			<p class="h2"><?php echo $this->translate('Change Password for')?> <?php echo $this->escapeHtml($this->email); ?></p>
+			
+			<div id="container-form" class="row-fluid">
+				<?php
+			
+				$form = $this->resetForm;
+			
+				$form->prepare();
+				$form->setAttribute('action', $this->url('frontend/zfcuser/resetpassword', array('userId' => $this->userId, 'token' => $this->token)));
+				$form->setAttribute('method', 'post');
+				
+				echo $this->form()->openTag($form);
+				
+				?>
+				
+				<ul class="zend_form">
+					<li class="row-fluid">
+						<div class="span5"><?php echo $this->formLabel($form->get('newCredential')); ?></div>
+						<div class="span7"><?php echo $this->formInput($form->get('newCredential')) . $this->formElementErrors($form->get('newCredential'));
+					?></div>
+					</li>
+					<li class="row-fluid">
+						<div class="span5"><?php echo $this->formLabel($form->get('newCredentialVerify')); ?></div>
+						<div class="span7"><?php echo $this->formInput($form->get('newCredentialVerify')) . $this->formElementErrors($form->get('newCredentialVerify')); ?></div>
+					</li class="row-fluid">
+					<li>
+						<div class="span7 offset5"><?php echo $this->formButton($form->get('submit')); ?></div></li>
+				</ul>
+			
+				<?php echo $this->form()->closeTag(); ?>
+			</div>
+		</div>
+	</div>
+</div>

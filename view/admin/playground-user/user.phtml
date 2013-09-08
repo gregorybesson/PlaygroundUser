@@ -1,0 +1,132 @@
+<?php $this->plugin('translate')->setTranslatorTextDomain('playgrounduser');// Pour le texte ?>
+<?php
+$form = $this->form;
+$form->prepare();
+?>
+
+<h1>Editer un utilisateur</h1>
+
+<?php echo $this->form()->openTag($form) ?>
+<?php echo $this->formButton($form->get('submit')) ?>
+
+<?php if ($this->redirect): ?><input type="hidden" name="redirect" value="<?php echo $this->redirect ?>" /><?php endif ?>
+
+<div id="content" class="tabbable tabs-left">
+    <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+        <li class="active"><a href="#identity" data-toggle="tab"><?php echo $this->translate('Identity'); ?></a></li>
+        <li><a href="#address" data-toggle="tab"><?php echo $this->translate('Address'); ?></a></li>
+        <li><a href="#newsletter" data-toggle="tab"><?php echo $this->translate('Newsletters'); ?></a></li>
+        <li><a href="#avatar" data-toggle="tab"><?php echo $this->translate('Avatar'); ?></a></li>
+    </ul>
+    <div id="my-tab-content" class="tab-content">
+        <div class="tab-pane active" id="identity">
+            <?php echo $this->formHidden($form->get('id')); ?>
+            
+            <div class="label-input">
+	            <?php echo $this->formLabel($form->get('username')); ?>
+	            <?php echo $this->formInput($form->get('username')); ?>
+	            <?php echo $this->formElementErrors($form->get('username')) ?>
+	        </div>
+	        <div class="label-input">
+	            <?php echo $this->formLabel($form->get('email')); ?>
+	            <?php echo $this->formInput($form->get('email')); ?>
+	            <?php echo $this->formElementErrors($form->get('email')) ?>
+	        </div>
+	        <div class="label-input">
+	            <?php echo $this->formLabel($form->get('title')); ?>
+	            <div class="radio">
+		            <?php echo $this->formRadio($form->get('title')); ?>
+		            <?php echo $this->formElementErrors($form->get('title')) ?>
+	            </div>
+	        </div>
+	        <div class="label-input">
+	            <?php echo $this->formLabel($form->get('firstname')); ?>
+	            <?php echo $this->formInput($form->get('firstname')); ?>
+	            <?php echo $this->formElementErrors($form->get('firstname')) ?>
+	        </div>
+	        <div class="label-input">
+	            <?php echo $this->formLabel($form->get('lastname')); ?>
+	            <?php echo $this->formInput($form->get('lastname')); ?>
+	            <?php echo $this->formElementErrors($form->get('lastname')) ?>
+	        </div>
+	        <div class="label-input">
+	            <?php echo $this->formLabel($form->get('roleId')); ?>
+	            <?php echo $this->formSelect($form->get('roleId')); ?>
+	            <?php echo $this->formElementErrors($form->get('roleId')) ?>
+	        </div>
+			
+			<div class="label-input">
+	            <?php echo $this->formLabel($form->get('dob')); ?>
+				<?php echo $this->formDateTime($form->get('dob')) ?>
+				<?php echo $this->formElementErrors($form->get('dob')) ?>
+	        </div>
+        </div>
+        <div class="tab-pane" id="address">
+        	<div class="label-input">
+	            <?php echo $this->formLabel($form->get('address')); ?>
+	            <?php echo $this->formInput($form->get('address')); ?>
+	            <?php echo $this->formElementErrors($form->get('address')) ?>
+	        </div>
+	        <div class="label-input">
+	            <?php echo $this->formLabel($form->get('address2')); ?>
+	            <?php echo $this->formInput($form->get('address2')); ?>
+	            <?php echo $this->formElementErrors($form->get('address2')) ?>
+	        </div>
+	        <div class="label-input">
+	            <?php echo $this->formLabel($form->get('postal_code')); ?>
+	            <?php echo $this->formInput($form->get('postal_code')); ?>
+	            <?php echo $this->formElementErrors($form->get('postal_code')) ?>
+	        </div>
+	        <div class="label-input">
+	            <?php echo $this->formLabel($form->get('city')); ?>
+	            <?php echo $this->formInput($form->get('city')); ?>
+	            <?php echo $this->formElementErrors($form->get('city')) ?>
+	        </div>
+	        <div class="label-input">
+	            <?php echo $this->formLabel($form->get('telephone')); ?>
+	            <?php echo $this->formInput($form->get('telephone')); ?>
+	            <?php echo $this->formElementErrors($form->get('telephone')) ?>
+	        </div>
+			<div class="label-input">
+	            <?php echo $this->formLabel($form->get('country')); ?>
+	            <?php echo $this->formSelect($form->get('country')); ?>
+	            <?php echo $this->formElementErrors($form->get('country')) ?>
+	        </div>
+		</label>
+        </div>
+        <div class="tab-pane" id="newsletter">
+            <div class="label-input">
+	            <?php echo $this->formLabel($form->get('optin')); ?>
+	            <div class="radio">
+		            <?php echo $this->formRadio($form->get('optin')); ?>
+		            <?php echo $this->formElementErrors($form->get('optin')) ?>
+		        </div>
+            </div>
+            <div class="label-input">
+	            <?php echo $this->formLabel($form->get('optinPartner')); ?>
+	            <div class="radio">
+		            <?php echo $this->formRadio($form->get('optinPartner')); ?>
+		            <?php echo $this->formElementErrors($form->get('optinPartner')) ?>
+		        </div>
+            </div>
+        </div>
+        <div class="tab-pane" id="avatar">
+            <div class="image-profil">
+            	<?php echo $this->formLabel($form->get('avatar')); ?>
+            	<?php echo $this->formFile($form->get('avatar')); ?>
+				<?php echo $this->formElementErrors($form->get('avatar')) ?>
+            </div>
+            <?php if($form->get('avatar')->getValue() != ''):?>
+            	<img src="<?php echo $this->basePath($form->get('avatar')->getValue()); ?>" />
+            <?php endif;?>
+        </div>
+    </div>
+</div>
+<?php echo $this->form()->closeTag() ?>
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#tabs').tab();
+        $('.date').datepicker();
+    });
+</script>

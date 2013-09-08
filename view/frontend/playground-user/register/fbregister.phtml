@@ -1,0 +1,13 @@
+<?php $this->plugin('translate')->setTranslatorTextDomain('playgrounduser');// Pour le texte ?>
+
+<div>
+	<?php echo $this->header();?>
+	<p id="cta">Jouez !</p>
+	<div id="fb-play">
+		<p class="btn btn-success"><a href="<?php echo $this->url('frontend/instantwin',array('id' => 'tour-de-france')) ?>">Jouez</a></p>
+	</div>
+	<div id="alert-auth">
+		<div id="close-button"></div>
+		<p>Vous devez accepter l'application pour jouer</p>
+	</div>
+</div>

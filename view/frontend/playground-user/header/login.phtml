@@ -1,0 +1,51 @@
+<?php $this->plugin('translate')->setTranslatorTextDomain('playgrounduser');// Pour le texte ?>
+<?php
+$form = $this->loginForm;
+$form->prepare();
+$form->setAttribute('action', $this->url('frontend/zfcuser/ajaxlogin'));
+$form->setAttribute('method', 'post');
+$form->setAttribute('id', 'header-login');
+?>
+<div class="barnav row-fluid">
+	<div id="menu"></div>
+	<ul class="mainnav span7">
+		<li class="nav-item games"><a href="<?php echo $this->url('frontend') ?>"<?php if($this->pageGames != ''): echo ' class="'.$this->pageGames.'"'; endif; ?>>Home</a></li>
+	</ul>
+    <div id="not-logged">
+        <div class="connexion span5">
+    		<span class="link-connect"><?php echo $this->translate('Me connecter'); ?> / <?php echo $this->translate('Créer un compte'); ?></span>
+    		<div id="slide-connexion">
+    		    <?php echo $this->form()->openTag($form) ?>
+    		    <div class="row-fluid">
+    				<div id="input-login" class="span11">
+        				<div class="input-login-error"></div>
+                        <?php echo $this->formInput($form->get('identity')) ?>
+    					<?php echo $this->formInput($form->get('credential')) ?>
+    					<?php //echo $this->formLabel($form->get('remember_me')) ?>
+    					<?php //echo $this->formCheckbox($form->get('remember_me')) ?>
+    					<?php if ($this->redirect): ?><input type="hidden" name="redirect" value="<?php echo $this->redirect ?>" /><?php endif ?>
+    				</div>
+    			</div>
+    			<div class="row-fluid">
+    				<div class="span7">
+    					<p id="lost-pass-link">
+    						<a href="<?php echo $this->url('frontend/zfcuser/forgotpassword') ?>">Mot de passe oublié ?</a>
+    					</p>
+    				</div>
+    				<div class="span4">
+    					<?php echo $this->formButton($form->get('submit')) ?>
+    				</div>
+    			</div>
+    			<?php echo $this->form()->closeTag() ?>
+    			<?php if ($this->enableRegistration) : ?>
+    			<div id="new-account" class="row-fluid">
+    				<p>
+    					<a href="<?php echo $this->url('frontend/zfcuser/register') . ($this->redirect ? '?redirect='.$this->redirect : '') ?>">Créer un compte</a>
+    					<a href="<?php echo $this->url('frontend/zfcuser/register',array('socialnetwork' => 'facebook')) . ($this->redirect ? '?redirect='.$this->redirect : '');?>" class="fbconnect-header"><img src="<?php echo $this->frontendAssetPath('images/header/fb-connect.png') ?>" alt="Facebook Connect" /></a>
+    				</p>
+    			</div>
+    			<?php endif; ?>
+    		</div>
+    	</div>
+    </div>
+</div>

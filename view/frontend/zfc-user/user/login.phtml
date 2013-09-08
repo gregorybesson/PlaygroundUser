@@ -1,0 +1,25 @@
+<?php $this->plugin('translate')->setTranslatorTextDomain('playgrounduser');// Pour le texte ?>
+<?php
+$form = $this->loginForm;
+$form->prepare();
+$form->setAttribute('action', $this->url('zfcuser/ajaxlogin'));
+//$form->setAttribute('action', $this->url('zfcuser/login'));
+$form->setAttribute('id', 'register-login');
+$form->setAttribute('method', 'post');
+?>
+<?php echo $this->form()->openTag($form) ?>
+    <?php echo $this->formElementErrors($form->get('identity')) ?>
+    <?php echo $this->formInput($form->get('identity')) ?>
+    <?php echo $this->formInput($form->get('credential')) ?>
+    <?php //echo $this->formLabel($form->get('remember_me')) ?>
+    <?php //echo $this->formCheckbox($form->get('remember_me')) ?>
+    <?php if ($this->redirect): ?><input type="hidden" name="redirect" value="<?php echo $this->redirect ?>" /><?php endif ?>
+	<div class="row-fluid">
+		<div class="span4 lostpass">
+			<a href="<?php echo $this->url('zfcuser/forgotpassword') ?>">Mot de passe oublié ?</a>
+		</div>
+		<div id="btn-connect" class="span8">
+			<?php echo $this->formButton($form->get('submit')) ?>
+		</div>
+	</div>
+<?php echo $this->form()->closeTag() ?>

@@ -1,0 +1,18 @@
+<div id="lost-pass" class="row-fluid">
+	<div class="container-content span8">
+		<div class="row-fluid">
+		
+			<p class="h2">Mot de passe oublié ?</p>
+		
+			<div id="container-form" class="row-fluid">
+				<?php if($this->statusMail):?>
+					<p>Un mail vous a été envoyé à l'adresse indiquée. Veuillez le consulter pour réactiver votre compte.</p>
+				<?php else:?>
+					<p>Ce compte n'existe pas.</p>
+				<?php endif;?>
+				<!-- <p><a href="<?php echo $this->url('frontend/zfcuser/login') ?>">Retour à l'accueil ></a></p> -->
+			</div>
+			
+		</div>
+	</div>
+</div>

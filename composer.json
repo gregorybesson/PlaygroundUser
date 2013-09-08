@@ -1,0 +1,40 @@
+{
+    "name": "playground/user",
+    "description": "Module managing user",
+    "type": "library",
+    "license": "BSD-3-Clause",
+    "keywords": [
+        "zf2",
+        "playground",
+        "user"
+    ],
+    "homepage": "https://github.com/gregorybesson/PlaygroundUser",
+    "authors": [
+        {
+            "name": "Greg Besson",
+            "email": "gregory.besson@playground.gg",
+            "homepage": "http://www.playground.gg"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.3.3",
+		"zendframework/zend-mvc" : "~2.1",
+		"zendframework/zend-form" : "~2.1",
+		"zendframework/zend-loader" : "~2.1",
+		"zendframework/zend-servicemanager" : "~2.1",
+		"zendframework/zend-modulemanager" : "~2.1",
+		"zendframework/zend-stdlib" : "~2.1",
+		"adfab/core" : "0.*",
+		"hybridauth/hybridauth" : "dev-master",
+		"zf-commons/zfc-user" : "0.*"
+    },
+    "require-dev": {
+        "doctrine/doctrine-orm-module": "0.*"
+    },
+    "autoload" : {
+		"psr-0" : {
+			"PlaygroundUser" : "src/"
+		}
+	}
+}

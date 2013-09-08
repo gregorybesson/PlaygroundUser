@@ -1,0 +1,61 @@
+<?php $this->plugin('translate')->setTranslatorTextDomain('playgrounduser');// Pour le texte ?>
+<!-- NEWSLETTER -->
+<div id="newsletter" class="row-fluid">
+	<?php
+    $form = $this->form;
+    $form->prepare();
+    $form->setAttribute('action', $this->url('frontend/zfcuser/newsletter'));
+    $form->setAttribute('method', 'post');
+    ?>
+    
+    <p class="h1">Newsletter</p>
+    
+	<!-- create account -->
+	<div class="backgrey row-fluid">
+				
+		<!-- start form -->
+        <?php echo $this->form()->openTag($form) ?>				
+			<!-- opt-in -->
+			<div class="row-fluid opt-in">
+				<b><?php echo $this->translate('Inscrivez-vous aux newsletters pour ne rater aucun jeu et être informé de tous nos bons plans :')?></b>
+				<?php if(($this->zfcUserIdentity() && ! $this->zfcUserIdentity()->getOptin()) || ($this->zfcUserIdentity() && ! $this->zfcUserIdentity()->getOptinPartner())): ?>
+				<p class="orange"><b>Gagnez 150 points par inscription !</b></p>
+				<?php endif ?>
+				<div class="span7 raz">
+					<p><?php echo $this->translate('Je souhaite recevoir la newsletter Playground')?><br/>
+					<?php echo $this->translate('(nouveaux jeux-concours, bons plans, invitations VIP...)')?></p>
+				</div>
+				<div class="span3">
+					<?php echo $this->formRadio($form->get('optin')) ?>
+					<?php echo $this->formElementErrors($form->get('optin')) ?>
+				</div>
+				<div class="span2">
+					<?php if($this->zfcUserIdentity() && ! $this->zfcUserIdentity()->getOptin()) : ?>
+					<p class="orange-points">+ 150 pts</p>
+					<?php endif; ?>
+				</div>
+			</div>
+			
+			<div class="row-fluid opt-in">
+				<div class="span7">
+					<p><?php echo $this->translate('Je souhaite recevoir les offres des partenaires de Playground')?>
+					<?php echo $this->translate('(réductions, bons plans...)')?></p>
+				</div>
+				<div class="span3">
+					<?php echo $this->formRadio($form->get('optinPartner')) ?>
+					<?php echo $this->formElementErrors($form->get('optinPartner')) ?>
+				</div>
+				<div class="span2">
+					<?php if($this->zfcUserIdentity() && ! $this->zfcUserIdentity()->getOptinPartner()): ?>
+					<p class="orange-points">+ 150 pts</p>
+					<?php endif; ?>
+				</div>
+			</div>
+			<div id="btn-create-account" class="row-fluid span2 center">
+				<?php echo $this->formButton($form->get('submit')) ?>
+			</div>
+        <?php echo $this->form()->closeTag() ?>
+		<!-- end form -->			
+	</div>	
+</div>
+<!-- END NEWSLETTER -->
