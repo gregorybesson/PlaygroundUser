@@ -6,7 +6,7 @@ use Zend\View\Helper\AbstractHelper;
 use PlaygroundUser\Form\Login as LoginForm;
 use Zend\View\Model\ViewModel;
 
-class PlaygroundUserLoginWidget extends AbstractHelper
+class UserLoginWidget extends AbstractHelper
 {
     /**
      * Login Form

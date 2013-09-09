@@ -123,9 +123,9 @@ class Module
     {
         return array(
             'factories' => array(
-                'playgroundUserLoginWidget' => function ($sm) {
+                'userLoginWidget' => function ($sm) {
                     $locator = $sm->getServiceLocator();
-                    $viewHelper = new View\Helper\PlaygroundUserLoginWidget;
+                    $viewHelper = new View\Helper\UserLoginWidget;
                     $viewHelper->setViewTemplate($locator->get('zfcuser_module_options')->getUserLoginWidgetViewTemplate());
                     $viewHelper->setLoginForm($locator->get('zfcuser_login_form'));
 

@@ -13,7 +13,7 @@
 					</div>
 					<div class="block-right span5">
 					<?php if(!$this->zfcUserIdentity()): ?>
-					    <?php echo $this->playgroundUserLoginWidget(array(
+					    <?php echo $this->userLoginWidget(array(
 			    		        'redirect' => ($this->redirect) ? $this->redirect : $this->url('frontend'),
 			    		        'enableRegistration' => false,
 			    		        'template' => 'playground-user/register/login.phtml'
