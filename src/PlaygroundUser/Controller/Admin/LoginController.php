@@ -24,28 +24,29 @@ class LoginController extends ZfcUserController
 
         $user = $this->zfcUserAuthentication()->getIdentity();
         if($user && $this->isAllowed('core', 'dashboard')){
-        	return $this->redirect()->toUrl($redirect);
+        	// TODO : Make this road configurable and remove the adherence with adminstats.
+        	return $this->forward()->dispatch('adminstats', array('action' => 'index'));
         }
 
         if ($request->isPost()) {
 	        $form->setData($request->getPost());
-	
+
 	        if (!$form->isValid()) {
 	            $this->flashMessenger()->setNamespace('zfcuser-login-form')->addMessage($this->failedLoginMessage);
-	
+
 	            return $this->redirect()->toUrl($this->url()->fromRoute(static::ROUTE_LOGIN));
 	        }
-	
+
 	        // clear adapters
 	        $this->zfcUserAuthentication()->getAuthAdapter()->resetAdapters();
 	        $this->zfcUserAuthentication()->getAuthService()->clearIdentity();
-	        
-	        
+
+
 	        $request->getQuery()->redirect = $this->url()->fromRoute(static::ROUTE_LOGIN);;
-	
+
 	        return $this->forward()->dispatch(static::CONTROLLER_NAME, array('action' => 'authenticate'));
         }
-        
+
         return array(
             'loginForm' => $form,
         );
