@@ -466,7 +466,7 @@ return array(
 
             'newsletter' => array(
                 'label' => 'Newsletter',
-                'route' => 'zfcuser/newsletter',
+                'route' => 'frontend/zfcuser/newsletter',
                 'controller' => 'playgrounduser_user',
                 'action'     => 'newsletter',
             ),
