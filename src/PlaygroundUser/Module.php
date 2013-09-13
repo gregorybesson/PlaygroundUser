@@ -32,6 +32,7 @@ class Module
         $evm = $doctrine->getEventManager();
 
 
+
         /* In some cases, this listener overrides those described further in application.config.php
         $listener = new  \Doctrine\ORM\Tools\ResolveTargetEntityListener();
         $listener->addResolveTargetEntity(
@@ -197,6 +198,10 @@ class Module
                     ));
 
                     return $form;
+                },
+
+                'PlaygroundUser\View\Strategy\UnauthorizedStrategy' => function ($sm) {
+                	return new View\Strategy\UnauthorizedStrategy;
                 },
 
                 'SocialConfig' => function($sm) {
