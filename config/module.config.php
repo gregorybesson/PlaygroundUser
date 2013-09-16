@@ -47,7 +47,7 @@ return array(
                 'playgrounduser_user'   => array(
                     'default_layout' => 'playground-user/layout/2columns-left',
                     'children_views' => array(
-                        'col_left'  => 'playground-user/layout/col-user.phtml',
+                        'col_left'  => 'playground-user/user/col-user.phtml',
                     ),
                     'actions' => array(
                         'index' => array(
@@ -59,7 +59,7 @@ return array(
                         'profile' => array(
                             'default_layout' => 'playground-user/layout/2columns-left',
                             'children_views' => array(
-                                'col_left'  => 'playground-user/layout/col-user.phtml',
+                                'col_left'  => 'playground-user/user/col-user.phtml',
                             ),
                         ),
                         'registermail' => array(
