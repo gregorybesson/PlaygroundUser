@@ -2,8 +2,8 @@
 <?php
 $form = $this->loginForm;
 $form->prepare();
-$form->setAttribute('action', $this->url('zfcuser/ajaxlogin'));
-//$form->setAttribute('action', $this->url('zfcuser/login'));
+$form->setAttribute('action', $this->url('frontend/zfcuser/ajaxlogin'));
+//$form->setAttribute('action', $this->url('frontend/zfcuser/login'));
 $form->setAttribute('id', 'register-login');
 $form->setAttribute('method', 'post');
 ?>
@@ -16,7 +16,7 @@ $form->setAttribute('method', 'post');
     <?php if ($this->redirect): ?><input type="hidden" name="redirect" value="<?php echo $this->redirect ?>" /><?php endif ?>
 	<div class="row-fluid">
 		<div class="span4 lostpass">
-			<a href="<?php echo $this->url('zfcuser/forgotpassword') ?>">Mot de passe oublié ?</a>
+			<a href="<?php echo $this->url('frontend/zfcuser/forgotpassword') ?>">Mot de passe oublié ?</a>
 		</div>
 		<div id="btn-connect" class="span8">
 			<?php echo $this->formButton($form->get('submit')) ?>

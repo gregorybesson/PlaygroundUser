@@ -82,7 +82,7 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
             );*/
             $user->setPassword($pass);
         }
-        
+
         $filter = $user->getInputFilter();
         $filter->remove('password');
         $filter->remove('passwordVerify');
@@ -92,14 +92,14 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         $filter->remove('postal_code');
         $filter->remove('dob');
         $form->setInputFilter($filter);
-        
+
         $emailInput = $form->getInputFilter()->get('email');
         $noObjectExistsValidator = new NoObjectExistsValidator(array(
         		'object_repository' => $entityManager->getRepository($class),
         		'fields'            => 'email',
         		'messages'          => array('objectFound' => 'This email already exists !')
         ));
-        
+
         $emailInput->getValidatorChain()->addValidator($noObjectExistsValidator);
 
         if (!$zfcUserOptions->getEnableUsername()) {
@@ -224,11 +224,11 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         		'fields'            => 'email',
         		'messages'          => array('objectFound' => 'This email already exists !')
         ));
-        
+
         if($user->getEmail() != $data['email']){
         	$emailInput->getValidatorChain()->addValidator($noObjectExistsValidator);
         }
-        
+
         // If avatar is set, I prepend the url path to the image
         if (isset($data['avatar'])) {
             $fileName = $data['avatar'];
@@ -254,7 +254,7 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
 	            $data['dob'] = $tmpDate->format('d/m/Y');
 				$form->setData(array('dob' => $data['dob']));
 	        }
-	        
+
             return false;
         }
 
@@ -494,7 +494,7 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         $from = $this->getOptions()->getEmailFromAddress();
         $subject = $this->getOptions()->getNewEmailSubjectLine();
 
-        $message = $mailService->createHtmlMessage($from, $to, $subject, 'playground-user/admin/email/newemail', array('email' => $to, 'password' => $password));
+        $message = $mailService->createHtmlMessage($from, $to, $subject, 'playground-user/email/newemail', array('email' => $to, 'password' => $password));
 
         $mailService->send($message);
     }
@@ -549,7 +549,7 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
 	            $data['dob'] = $tmpDate->format('d/m/Y');
 				$form->setData(array('dob' => $data['dob']));
 	        }
-	        
+
             return false;
         }
 

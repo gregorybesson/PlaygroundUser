@@ -29,7 +29,7 @@
             $formEmail = $this->changeEmailForm;
 
             $formEmail->prepare();
-            $formEmail->setAttribute('action', $this->url('zfcuser/profile'));
+            $formEmail->setAttribute('action', $this->url('frontend/zfcuser/profile'));
             $formEmail->setAttribute('method', 'post');
 
             ?>
@@ -75,7 +75,7 @@
             $form = $this->changePasswordForm;
 
             $form->prepare();
-            $form->setAttribute('action', $this->url('zfcuser/profile'));
+            $form->setAttribute('action', $this->url('frontend/zfcuser/profile'));
             $form->setAttribute('method', 'post');
 			$form->setAttribute('class', 'validate');
 
@@ -135,7 +135,7 @@
     $formInfo = $this->changeInfoForm;
 
     $formInfo->prepare();
-    $formInfo->setAttribute('action', $this->url('zfcuser/profile'));
+    $formInfo->setAttribute('action', $this->url('frontend/zfcuser/profile'));
     $formInfo->setAttribute('method', 'post');
 	$formInfo->setAttribute('class', 'validate');
 
@@ -288,7 +288,7 @@
 
 	<?php
     $formPrize = $this->prizeCategoryForm;
-    $formPrize->setAttribute('action', $this->url('zfcuser/profile_prizes'));
+    $formPrize->setAttribute('action', $this->url('frontend/zfcuser/profile_prizes'));
     $formPrize->setAttribute('method', 'post');
     //$formInfo->prepare();
     ?>
@@ -310,7 +310,7 @@
 
     <?php
         $formBlockAccount = $this->blockAccountForm;
-        $formBlockAccount->setAttribute('action', $this->url('zfcuser/blockaccount'));
+        $formBlockAccount->setAttribute('action', $this->url('frontend/zfcuser/blockaccount'));
         $formBlockAccount->setAttribute('method', 'post');
         $emailElement = $formBlockAccount->get('identity');
         $emailElement->setValue($this->zfcUserIdentity()->getEmail());

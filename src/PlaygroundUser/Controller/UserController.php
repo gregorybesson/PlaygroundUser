@@ -82,7 +82,7 @@ class UserController extends ZfcUserController
         $service = $this->getUserService();
         $form = $this->getRegisterForm();
         $socialnetwork = $this->params()->fromRoute('socialnetwork', false);
-        $form->setAttribute('action', $this->url()->fromRoute('zfcuser/register'));
+        $form->setAttribute('action', $this->url()->fromRoute('frontend/zfcuser/register'));
         $params = array();
         $socialCredentials = array();
 
@@ -105,12 +105,12 @@ class UserController extends ZfcUserController
                     	$redirect = $this->url()->fromRoute($this->getOptions()->getLoginRedirectRoute(), array('channel' => $this->getEvent()->getRouteMatch()->getParam('channel')));
                     }
                     $redir = $this->url()
-                        ->fromRoute('zfcuser/login', array('channel' => $this->getEvent()->getRouteMatch()->getParam('channel'))) .'/' . $socialnetwork . ($redirect ? '?redirect=' . $redirect : '');
+                        ->fromRoute('frontend/zfcuser/login', array('channel' => $this->getEvent()->getRouteMatch()->getParam('channel'))) .'/' . $socialnetwork . ($redirect ? '?redirect=' . $redirect : '');
 
                     return $this->redirect()->toUrl($redir);
                 }
                 // Je retire la saisie du login/mdp
-                $form->setAttribute('action', $this->url()->fromRoute('zfcuser/register', array('socialnetwork' => $socialnetwork, 'channel' => $this->getEvent()->getRouteMatch()->getParam('channel'))));
+                $form->setAttribute('action', $this->url()->fromRoute('frontend/zfcuser/register', array('socialnetwork' => $socialnetwork, 'channel' => $this->getEvent()->getRouteMatch()->getParam('channel'))));
                 $form->remove('password');
                 $form->remove('passwordVerify');
 
@@ -146,7 +146,7 @@ class UserController extends ZfcUserController
             }
         }
 
-        $redirectUrl = $this->url()->fromRoute('zfcuser/register', array('channel' => $this->getEvent()->getRouteMatch()->getParam('channel'))) .($socialnetwork ? '/' . $socialnetwork : ''). ($redirect ? '?redirect=' . $redirect : '');
+        $redirectUrl = $this->url()->fromRoute('frontend/zfcuser/register', array('channel' => $this->getEvent()->getRouteMatch()->getParam('channel'))) .($socialnetwork ? '/' . $socialnetwork : ''). ($redirect ? '?redirect=' . $redirect : '');
         $prg = $this->prg($redirectUrl, true);
 
         if ($prg instanceof Response) {
@@ -186,7 +186,7 @@ class UserController extends ZfcUserController
 
                 return $vm;
 
-                //return $this->redirect()->toUrl($this->url()->fromRoute('zfcuser/registermail', array('userId' => $user->getId(), 'channel' => $this->getEvent()->getRouteMatch()->getParam('channel'))));
+                //return $this->redirect()->toUrl($this->url()->fromRoute('frontend/zfcuser/registermail', array('userId' => $user->getId(), 'channel' => $this->getEvent()->getRouteMatch()->getParam('channel'))));
             } elseif ($service->getOptions()->getLoginAfterRegistration()) {
                 $identityFields = $service->getOptions()->getAuthIdentityFields();
                 if (in_array('email', $identityFields)) {
@@ -204,7 +204,7 @@ class UserController extends ZfcUserController
         //}
 
         // TODO: Add the redirect parameter here...
-        $redirect = $this->url()->fromRoute('zfcuser/login', array('channel' => $this->getEvent()->getRouteMatch()->getParam('channel'))) . ($socialnetwork ? '/' . $socialnetwork : ''). ($redirect ? '?redirect=' . $redirect : '');
+        $redirect = $this->url()->fromRoute('frontend/zfcuser/login', array('channel' => $this->getEvent()->getRouteMatch()->getParam('channel'))) . ($socialnetwork ? '/' . $socialnetwork : ''). ($redirect ? '?redirect=' . $redirect : '');
 
         return $this->redirect()->toUrl($redirect);
     }
@@ -334,7 +334,7 @@ class UserController extends ZfcUserController
             $query .= '&redirect=' . $this->getRequest()->getQuery()->get('redirect');
         }
 
-        $redirectUrl = $this->url()->fromRoute('zfcuser/authenticate', array('channel' => $this->getEvent()->getRouteMatch()->getParam('channel'))) . '?' . $query;
+        $redirectUrl = $this->url()->fromRoute('frontend/zfcuser/authenticate', array('channel' => $this->getEvent()->getRouteMatch()->getParam('channel'))) . '?' . $query;
 
         $adapter = $hybridAuth->authenticate(
             $provider,
@@ -527,7 +527,7 @@ class UserController extends ZfcUserController
             );
         }
 
-        $prg = $this->prg('zfcuser/profile');
+        $prg = $this->prg('frontend/zfcuser/profile');
 
         if ($prg instanceof Response) {
             return $prg;
