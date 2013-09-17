@@ -16,7 +16,7 @@ return array(
             )
         )
     ),
-		
+
 	'bjyauthorize' => array(
 		'default_role' => 'guest',
 		'identity_provider' => 'BjyAuthorize\Provider\Identity\AuthenticationDoctrineEntity',
@@ -35,51 +35,31 @@ return array(
 	),
 
     'core_layout' => array(
-        'PlaygroundUser' => array(
-            'default_layout' => 'playground-user/layout/2columns-left',
-            'controllers' => array(
-            	'playgrounduseradmin' => array(
-            		'default_layout' => 'layout/admin',
-            	),
-            	'playgrounduseradmin_login' => array(
-           			'default_layout' => 'layout/adminlogin',
-           		),
-                'playgrounduser_user'   => array(
-                    'default_layout' => 'playground-user/layout/2columns-left',
-                    'children_views' => array(
-                        'col_left'  => 'playground-user/user/col-user.phtml',
-                    ),
-                    'actions' => array(
-                        'index' => array(
-                            'default_layout' => 'playground-user/layout/1column',
-                        ),
-                        'register' => array(
-                            'default_layout' => 'playground-user/layout/1column',
-                        ),
-                        'profile' => array(
-                            'default_layout' => 'playground-user/layout/2columns-left',
+        'frontend' => array(
+            'modules' => array(
+                'playgrounduser' => array(
+                    'layout' => 'layout/2columns-left.phtml',
+                    'controllers' => array(
+                        'playgrounduser_user' => array(
                             'children_views' => array(
-                                'col_left'  => 'playground-user/user/col-user.phtml',
+                                'col_left' => 'playground-user/user/col-user.phtml'
                             ),
+                            'actions' => array(
+                                'index' => array(
+                                    'layout' => 'layout/1column.phtml'
+                                ),
+                                'register' => array(
+                                    'layout' => 'layout/1column.phtml'
+                                ),
+                                'registermail' => array(
+                                    'layout' => 'layout/1column.phtml'
+                                )
+                            )
                         ),
-                        'registermail' => array(
-                            'default_layout' => 'playground-user/layout/1column',
-                        ),
-                    ),
-                ),
-                'playgrounduser_forgot' => array(
-                    'default_layout' => 'playground-user/layout/1column',
-                    'actions' => array(
-                        'forgot' => array(
-                            'default_layout' => 'playground-user/layout/1column',
-                        ),
-                        'resetpassword' => array(
-                            'default_layout' => 'playground-user/layout/1column',
-                        ),
-                        'forgotpassword' => array(
-                            'default_layout' => 'playground-user/layout/1column',
-                        ),
-                    ),
+                        'playgrounduser_forgot' => array(
+                            'layout' => 'layout/1column.phtml'
+                        )
+                    )
                 ),
             ),
         ),
@@ -259,7 +239,7 @@ return array(
 		                            )
 		                        ),
 		                    ),
-		
+
 		                    'profile' => array(
 		                        'type' => 'Literal',
 		                        'options' => array(
