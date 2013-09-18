@@ -219,7 +219,7 @@ class Module
                         $router->setBaseUrl($request->getBaseUrl());
                     }
                     $config['base_url'] = $router->assemble(
-                        array(),
+                        array('channel' => ''),
                         array(
                             'name' => 'frontend/zfcuser/backend',
                             'force_canonical' => true,
@@ -230,13 +230,13 @@ class Module
                 // If it's a console request (phpunit or doctrine console)...
                 if (PHP_SAPI === 'cli') {
                     $_SERVER['HTTP_HOST'] = '127.0.0.1'.
-                    $_SERVER['REQUEST_URI'] = 'frontend/zfcuser/backend';
+                    $_SERVER['REQUEST_URI'] = 'backend';
                 }
 
                 // this following config doesn't work with bjyprofiler
                 //https://github.com/SocalNick/ScnSocialAuth/issues/57
                 //$urlHelper = $sm->get('viewhelpermanager')->get('url');
-                //$config['base_url'] = $urlHelper('frontend/zfcuser/backend',array(), array('force_canonical' => true));
+                //$config['base_url'] = $urlHelper('frontend/zfcuser/backend',array('channel' => $this->getEvent()->getRouteMatch()->getParam('channel')), array('force_canonical' => true));
                 return $config;
                 },
 

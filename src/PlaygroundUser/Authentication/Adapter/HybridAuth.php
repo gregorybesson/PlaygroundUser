@@ -355,8 +355,12 @@ class HybridAuth extends AbstractAdapter implements ServiceManagerAwareInterface
             return $localUser;
         }
         $localUser = $this->instantiateLocalUser();
+
+        $userName = ucfirst($userProfile->firstName) . " " . substr(ucfirst($userProfile->lastName),0,1);
+        
         $localUser->setEmail($userProfile->emailVerified)
             ->setDisplayName($userProfile->displayName)
+            ->setUsername($userName)
             ->setPassword(__FUNCTION__);
         $result = $this->insert($localUser, 'facebook', $userProfile);
 
