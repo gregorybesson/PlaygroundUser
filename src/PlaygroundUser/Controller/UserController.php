@@ -82,7 +82,7 @@ class UserController extends ZfcUserController
         $service = $this->getUserService();
         $form = $this->getRegisterForm();
         $socialnetwork = $this->params()->fromRoute('socialnetwork', false);
-        $form->setAttribute('action', $this->url()->fromRoute('frontend/zfcuser/register'));
+        $form->setAttribute('action', $this->url()->fromRoute('frontend/zfcuser/register', array('channel' => $this->getEvent()->getRouteMatch()->getParam('channel'))));
         $params = array();
         $socialCredentials = array();
 
@@ -109,6 +109,7 @@ class UserController extends ZfcUserController
 
                     return $this->redirect()->toUrl($redir);
                 }
+                
                 // Je retire la saisie du login/mdp
                 $form->setAttribute('action', $this->url()->fromRoute('frontend/zfcuser/register', array('socialnetwork' => $socialnetwork, 'channel' => $this->getEvent()->getRouteMatch()->getParam('channel'))));
                 $form->remove('password');
@@ -350,9 +351,56 @@ class UserController extends ZfcUserController
     	
         Hybrid_Auth::logoutAllProviders();
 
-        return $this->forward()->dispatch('zfcuser', array(
-        	'action' => 'logout'
-        ));
+        $this->zfcUserAuthentication()->getAuthAdapter()->resetAdapters();
+        $this->zfcUserAuthentication()->getAuthAdapter()->logoutAdapters();
+        $this->zfcUserAuthentication()->getAuthService()->clearIdentity();
+
+        $redirect = $this->params()->fromPost('redirect', $this->params()->fromQuery('redirect', false));
+
+        if ($this->getOptions()->getUseRedirectParameterIfPresent() && $redirect) {
+            return $this->redirect()->toUrl($redirect);
+        }
+
+        return $this->redirect()->toRoute($this->getOptions()->getLogoutRedirectRoute(), array('channel' => $this->getEvent()->getRouteMatch()->getParam('channel')));
+    }
+    
+    /**
+     * General-purpose authentication action
+     */
+    public function authenticateAction()
+    {
+        if ($this->zfcUserAuthentication()->getAuthService()->hasIdentity()) {
+            return $this->redirect()->toRoute($this->getOptions()->getLoginRedirectRoute(), array('channel' => $this->getEvent()->getRouteMatch()->getParam('channel')));
+        }
+        $adapter = $this->zfcUserAuthentication()->getAuthAdapter();
+        $redirect = $this->params()->fromPost('redirect', $this->params()->fromQuery('redirect', false));
+    
+        $result = $adapter->prepareForAuthentication($this->getRequest());
+    
+        // Return early if an adapter returned a response
+        if ($result instanceof Response) {
+            return $result;
+        }
+    
+        $auth = $this->zfcUserAuthentication()->getAuthService()->authenticate($adapter);
+    
+        if (!$auth->isValid()) {
+            $this->flashMessenger()->setNamespace('zfcuser-login-form')->addMessage($this->failedLoginMessage);
+            $adapter->resetAdapters();
+            return $this->redirect()->toUrl($this->url()->fromRoute('frontend/login', array('channel' => $this->getEvent()->getRouteMatch()->getParam('channel')))
+                . ($redirect ? '?redirect='.$redirect : ''));
+        }
+    
+        if ($this->getOptions()->getUseRedirectParameterIfPresent() && $redirect) {
+            return $this->redirect()->toUrl($redirect);
+        }
+    
+        return $this->redirect()->toUrl(
+			$this->url()->fromRoute(
+				$this->getOptions()->getLoginRedirectRoute(), 
+				array('channel' => $this->getEvent()->getRouteMatch()->getParam('channel'))
+			)
+		);
     }
 
     /**
