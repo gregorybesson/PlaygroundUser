@@ -26,7 +26,7 @@
 		"zendframework/zend-modulemanager" : "~2.1",
 		"zendframework/zend-stdlib" : "~2.1",
 		"playground/core" : "dev-master",
-		"hybridauth/hybridauth" : "dev-master",
+		"playground/hybridauth" : "dev-master",
 		"zf-commons/zfc-user" : "0.*"
     },
     "require-dev": {
