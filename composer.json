@@ -16,6 +16,12 @@
             "homepage": "http://www.playground.gg"
         }
     ],
+    "repositories": [
+    	{
+        "type": "git",
+        "url":  "git@github.com:gregorybesson/hybridauth.git"
+    	}
+	],
     "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.3",
