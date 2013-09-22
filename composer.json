@@ -19,7 +19,7 @@
     "repositories": [
     	{
         "type": "git",
-        "url":  "git@github.com:gregorybesson/hybridauth.git"
+        "url":  "https://github.com/gregorybesson/hybridauth"
     	}
 	],
     "minimum-stability": "dev",
