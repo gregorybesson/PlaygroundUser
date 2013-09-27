@@ -44,7 +44,6 @@ class AdminController extends AbstractActionController
         $service = $this->getAdminUserService();
         $request = $this->getRequest();
         $form = $this->getServiceLocator()->get('playgrounduseradmin_register_form');
-        $form->get('submit')->setLabel('Créer');
         $form->setAttribute('action', $this->url()->fromRoute('admin/playgrounduser/create', array('userId' => 0)));
         $form->setAttribute('method', 'post');
 
@@ -83,7 +82,6 @@ class AdminController extends AbstractActionController
         $user = $service->getUserMapper()->findById($userId);
 
         $form = $this->getServiceLocator()->get('playgrounduseradmin_register_form');
-        $form->get('submit')->setLabel('Mettre à jour');
         $form->setAttribute('action', $this->url()->fromRoute('admin/playgrounduser/edit', array('userId' => $userId)));
         $form->setAttribute('method', 'post');
 

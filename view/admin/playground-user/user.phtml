@@ -7,6 +7,7 @@ $form->prepare();
 <h1>Editer un utilisateur</h1>
 
 <?php echo $this->form()->openTag($form) ?>
+<?php $form->get('submit')->setLabel($this->translate('Validate'));?>
 <?php echo $this->formButton($form->get('submit')) ?>
 
 <?php if ($this->redirect): ?><input type="hidden" name="redirect" value="<?php echo $this->redirect ?>" /><?php endif ?>
