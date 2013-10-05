@@ -5,16 +5,30 @@ namespace PlaygroundUser\View\Strategy;
 use BjyAuthorize\Service\Authorize;
 use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\ListenerAggregateInterface;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Http\Response as HttpResponse;
 use Zend\Mvc\MvcEvent;
 use Zend\Stdlib\ResponseInterface as Response;
 
-class UnauthorizedStrategy implements ListenerAggregateInterface
+class UnauthorizedStrategy implements ListenerAggregateInterface, ServiceLocatorAwareInterface
 {
     /**
      * @var \Zend\Stdlib\CallbackHandler[]
      */
     protected $listeners = array();
+    protected $serviceLocator;
+
+    public function getServiceLocator ()
+    {
+        return $this->serviceLocator;
+    }
+
+    public function setServiceLocator (ServiceLocatorInterface $serviceLocator)
+    {
+        $this->serviceLocator = $serviceLocator;
+    }
+
 
     public function attach(EventManagerInterface $events)
     {
@@ -39,11 +53,14 @@ class UnauthorizedStrategy implements ListenerAggregateInterface
             return;
         }
 
+        $config = $this->getServiceLocator()->get('Config');
+        $playgroundAuth = $config['playgroundAuth'];
+
         $router = $e->getRouter();
         $match  = $e->getRouteMatch();
 
         // get url to the zfcuser/login route
-        $options['name'] = 'admin';
+        $options['name'] = $playgroundAuth['authFail']['route'];
         $url = $router->assemble(array(), $options);
 
         // Work out where were we trying to get to
@@ -56,6 +73,7 @@ class UnauthorizedStrategy implements ListenerAggregateInterface
             $response = new HttpResponse();
             $e->setResponse($response);
         }
+        
         $response->getHeaders()->addHeaderLine('Location', $url . '?redirect=' . $redirect);
         $response->setStatusCode(302);
     }

@@ -120,10 +120,39 @@ $zfcSettings = array(
      */
 );
 
+
+/**
+*
+* playgroundAuth
+* Permet de définir quelle est la route pour se connecter
+* Permet de définir quelle est la route d'apres connexion.
+* Permet de définir quelle est la route si on a pas les droits
+*
+*/
+
+$playgroundAuth = array(
+    // Route de login : ecran de connexion
+    "routeLogin" => 'admin',
+    // Information sur la page d'apres
+    "loginSuccess" => array(
+        // Ressource associé
+        'resource'   => 'core',
+        // Privilege associé
+        'privilege'  => 'dashboard',
+        // Controller 
+        'controller' => 'adminstats',
+        // Action 
+        'action'     => 'index'),
+    "authFail" => array(
+        'route' => 'admin',
+    )
+);
+
 /**
  * You do not need to edit below this line
  */
 return array(
     'playgrounduser' => $playgrounduser,
     'zfcuser' => $zfcSettings,
+    'playgroundAuth' => $playgroundAuth,
 );

@@ -10,22 +10,23 @@ use Zend\View\Model\ViewModel;
 
 class LoginController extends ZfcUserController
 {
-    const ROUTE_DASHBOARD    = 'admin/dashboard';
-    const ROUTE_LOGIN        = 'admin';
 
     /**
      * Login form
      */
     public function loginAction()
     {
+
+        $config = $this->getServiceLocator()->get('Config');
+        $playgroundAuth = $config['playgroundAuth'];
+        
         $request = $this->getRequest();
         $form    = $this->getLoginForm();
-        $redirect = $this->url()->fromRoute(static::ROUTE_DASHBOARD);
 
         $user = $this->zfcUserAuthentication()->getIdentity();
-        if($user && $this->isAllowed('core', 'dashboard')){
+        if($user && $this->isAllowed($playgroundAuth['loginSuccess']['resource'], $playgroundAuth['loginSuccess']['privilege'])){
         	// TODO : Make this road configurable and remove the adherence with adminstats.
-        	return $this->forward()->dispatch('adminstats', array('action' => 'index'));
+        	return $this->forward()->dispatch($playgroundAuth['loginSuccess']['controller'], array('action' => $playgroundAuth['loginSuccess']['action']));
         }
 
         if ($request->isPost()) {
@@ -34,7 +35,7 @@ class LoginController extends ZfcUserController
 	        if (!$form->isValid()) {
 	            $this->flashMessenger()->setNamespace('zfcuser-login-form')->addMessage($this->failedLoginMessage);
 
-	            return $this->redirect()->toUrl($this->url()->fromRoute(static::ROUTE_LOGIN));
+	            return $this->redirect()->toUrl($this->url()->fromRoute($playgroundAuth['routeLogin']));
 	        }
 
 	        // clear adapters
@@ -42,7 +43,7 @@ class LoginController extends ZfcUserController
 	        $this->zfcUserAuthentication()->getAuthService()->clearIdentity();
 
 
-	        $request->getQuery()->redirect = $this->url()->fromRoute(static::ROUTE_LOGIN);;
+	        $request->getQuery()->redirect = $this->url()->fromRoute($playgroundAuth['routeLogin']);
 
 	        return $this->forward()->dispatch(static::CONTROLLER_NAME, array('action' => 'authenticate'));
         }
