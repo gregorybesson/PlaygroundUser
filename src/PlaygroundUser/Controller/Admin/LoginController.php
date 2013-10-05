@@ -25,7 +25,6 @@ class LoginController extends ZfcUserController
 
         $user = $this->zfcUserAuthentication()->getIdentity();
         if($user && $this->isAllowed($playgroundAuth['loginSuccess']['resource'], $playgroundAuth['loginSuccess']['privilege'])){
-        	// TODO : Make this road configurable and remove the adherence with adminstats.
         	return $this->forward()->dispatch($playgroundAuth['loginSuccess']['controller'], array('action' => $playgroundAuth['loginSuccess']['action']));
         }
 
