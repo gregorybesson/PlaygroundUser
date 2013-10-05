@@ -54,7 +54,7 @@ class UnauthorizedStrategy implements ListenerAggregateInterface, ServiceLocator
         }
 
         $config = $this->getServiceLocator()->get('Config');
-        $playgroundAuth = $config['playgroundAuth'];
+        $playgroundAuth = $config['playgroundAdminAuth'];
 
         $router = $e->getRouter();
         $match  = $e->getRouteMatch();

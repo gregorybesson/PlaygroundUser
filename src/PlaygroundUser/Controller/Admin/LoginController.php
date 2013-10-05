@@ -18,7 +18,7 @@ class LoginController extends ZfcUserController
     {
 
         $config = $this->getServiceLocator()->get('Config');
-        $playgroundAuth = $config['playgroundAuth'];
+        $playgroundAuth = $config['playgroundAdminAuth'];
         
         $request = $this->getRequest();
         $form    = $this->getLoginForm();
