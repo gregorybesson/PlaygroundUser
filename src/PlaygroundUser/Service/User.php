@@ -11,6 +11,7 @@ use Zend\Crypt\Password\Bcrypt;
 use PlaygroundUser\Options\ModuleOptions;
 use Zend\Validator\File\Size;
 use DoctrineModule\Validator\NoObjectExists as NoObjectExistsValidator;
+use Zend\Session\Container;
 
 class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
 {
@@ -440,6 +441,13 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
             $this->sendVerificationEmailMessage($verification);
         }
         $this->getEventManager()->trigger(__FUNCTION__.'.post', $this, array('user' => $user, 'data' => $data));
+        
+        // Is there a sponsor on this registration ?
+        $session = new Container('sponsorship');
+        // Is there a secretKey in session ?
+        if ($session->offsetGet('key')) {
+            $this->getEventManager()->trigger('sponsor.post', $this, array('user' => $user, 'data' => $data, 'secretKey' => $session->offsetGet('key')));
+        }
 
         return $user;
     }
