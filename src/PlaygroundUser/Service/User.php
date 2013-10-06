@@ -609,7 +609,7 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
      */
     public function updateAddress(array $data, $user)
     {
-        $this->getEventManager()->trigger(__FUNCTION__.'.pre', $this, array('user' => $user, 'data' => $data));
+        $this->getEventManager()->trigger('updateInfo.pre', $this, array('user' => $user, 'data' => $data));
 
         $zfcUserOptions = $this->getServiceManager()->get('zfcuser_module_options');
 
@@ -626,7 +626,7 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
 
         if ($form->isValid()) {
             $user = $this->getUserMapper()->update($user);
-            $this->getEventManager()->trigger(__FUNCTION__.'.post', $this, array('user' => $user, 'data' => $data));
+            $this->getEventManager()->trigger('updateInfo.post', $this, array('user' => $user, 'data' => $data));
 
             if ($user) {
                 return $user;
@@ -644,9 +644,20 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
     public function updateNewsletter(array $data)
     {
         $user = $this->getAuthService()->getIdentity();
+        $optinChange = false;
+        $optinPartnerChange = false;
 
-        // I trigger an event before updating user.
-        $this->getEventManager()->trigger(__FUNCTION__.'.pre', $this, array('user' => $user, 'data' => $data));
+        // I trigger an optin event before updating user if it has changed .
+        if($user->getOptin() != $data['optin']){
+            $optinChange = true;
+            $this->getEventManager()->trigger(__FUNCTION__.'.pre', $this, array('user' => $user, 'data' => $data));
+        }
+        
+        // I trigger an optinPartner event before updating user if it has changed
+        if($user->getOptinPartner() != $data['optinPartner']){
+            $optinPartnerChange = true;
+            $this->getEventManager()->trigger(__FUNCTION__.'Partner.pre', $this, array('user' => $user, 'data' => $data));
+        }
 
         $form  = $this->getServiceManager()->get('playgrounduser_newsletter_form');
         $form->bind($user);
@@ -661,7 +672,13 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         $user->setOptinPartner($data['optinPartner']);
 
         $user = $this->getUserMapper()->update($user);
-        $this->getEventManager()->trigger(__FUNCTION__.'.post', $this, array('user' => $user, 'data' => $data));
+        if($optinChange){
+            $this->getEventManager()->trigger(__FUNCTION__.'.post', $this, array('user' => $user, 'data' => $data));
+        }
+        
+        if($optinPartnerChange){
+            $this->getEventManager()->trigger(__FUNCTION__.'Partner.post', $this, array('user' => $user, 'data' => $data));
+        }  
 
         return $user;
     }
