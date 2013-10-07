@@ -2,6 +2,15 @@
 return array(
     // Admin list user
     'Create an account' => 'Créer un compte',
+	'Creation Date'		=> 'Date de création',
+	'Active'			=> 'Active',
+	'Player'			=> 'Joueur',
+	'Administrator'		=> 'Administrateur',
+	'Salesman'			=> 'Commercial',
+	'Add new user'		=> 'Ajouter un nouvel utilisateur',
+	'User\'s list'		=> 'Liste des utilisateurs',
+	'Role sort order'	=> 'Tri par rôle',
+	'Search'			=> 'Rechercher',
 
     // Admin register user
     'Login' => 'Se connecter',
@@ -35,6 +44,15 @@ return array(
     'Your Email' => 'Votre email',
     'Create an account and participate' => 'Créer un compte et participer',
     'Identity'=> 'Identité',
+	'Country'=> 'Pays',
+	'Select your country' => 'Sélectionnez votre pays',
+	'Yes'=> 'Oui',
+	'No'=> 'Non',
+	'Newsletter' => 'Newsletter',
+	'Newsletters' => 'Newsletters',
+	'Partners Newsletter' => 'Newsletter des partenaires',
+	'Select a role' => 'Sélectionnez un rôle',
+	'Roles'=> 'Roles',
 
     // Admin Block Account
     'Current Password' => 'Mot de passe actuel',
@@ -78,7 +96,7 @@ return array(
     'Add new page' => 'Ajouter une nouvelle page',
     'Create' => 'Créer',
     'title' => 'Titre',
-    'identifier' => 'Identifiant',
+    'Identifier' => 'Slug',
     'is_active' => 'Est activé',
     'sort_order' => 'Ordre de tri',
     'Add new block' => 'Ajouter un bloc de contenu',
