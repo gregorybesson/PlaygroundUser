@@ -10,22 +10,18 @@ use Zend\View\Model\ViewModel;
 
 class LoginController extends ZfcUserController
 {
-
+    protected $options = null;
     /**
      * Login form
      */
     public function loginAction()
     {
-
-        $config = $this->getServiceLocator()->get('Config');
-        $playgroundAuth = $config['playgroundAdminAuth'];
-        
         $request = $this->getRequest();
         $form    = $this->getLoginForm();
 
         $user = $this->zfcUserAuthentication()->getIdentity();
-        if($user && $this->isAllowed($playgroundAuth['loginSuccess']['resource'], $playgroundAuth['loginSuccess']['privilege'])){
-        	return $this->forward()->dispatch($playgroundAuth['loginSuccess']['controller'], array('action' => $playgroundAuth['loginSuccess']['action']));
+        if($user && $this->isAllowed($this->getOptions()->getResource(), $this->getOptions()->getPrivilege())){
+        	return $this->forward()->dispatch($this->getOptions()->getController(), array('action' => $this->getOptions()->getAction()));
         }
 
         if ($request->isPost()) {
@@ -34,7 +30,7 @@ class LoginController extends ZfcUserController
 	        if (!$form->isValid()) {
 	            $this->flashMessenger()->setNamespace('zfcuser-login-form')->addMessage($this->failedLoginMessage);
 
-	            return $this->redirect()->toUrl($this->url()->fromRoute($playgroundAuth['routeLogin']));
+	            return $this->redirect()->toUrl($this->url()->fromRoute($this->getOptions()->getRouteLogin()));
 	        }
 
 	        // clear adapters
@@ -42,7 +38,7 @@ class LoginController extends ZfcUserController
 	        $this->zfcUserAuthentication()->getAuthService()->clearIdentity();
 
 
-	        $request->getQuery()->redirect = $this->url()->fromRoute($playgroundAuth['routeLogin']);
+	        $request->getQuery()->redirect = $this->url()->fromRoute($this->getOptions()->getRouteLogin());
 
 	        return $this->forward()->dispatch(static::CONTROLLER_NAME, array('action' => 'authenticate'));
         }
@@ -50,5 +46,14 @@ class LoginController extends ZfcUserController
         return array(
             'loginForm' => $form,
         );
+    }
+
+    public function getOptions()
+    {
+        if($this->options === null){
+            $this->options = $this->getServiceLocator()->get('playgrounduser_module_options');
+        }
+
+        return  $this->options;
     }
 }

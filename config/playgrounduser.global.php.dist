@@ -92,6 +92,19 @@ $playgrounduser = array(
             'debug_file' => '',
             'config_file' => __DIR__.'/social.config.php',
         ),
+        /*
+        // login route
+        'route_login' => 'admin',
+        // resource associated to admin access
+        'resource' => 'core',
+        // privilege associated to admin access
+        'privilege'   => 'dashboard',
+        // controller & action if auth success
+        'controller' => 'adminstats',
+        'action' => 'index',
+        // route if auth fail
+        'route_login_fail' => 'admin'
+        */
 );
 
 /**
@@ -121,32 +134,6 @@ $zfcSettings = array(
 );
 
 
-/**
-*
-* playgroundAdminAuth
-* Permet de définir quelle est la route pour se connecter
-* Permet de définir quelle est la route d'apres connexion.
-* Permet de définir quelle est la route si on a pas les droits
-*
-*/
-
-$playgroundAdminAuth = array(
-    // Route de login : ecran de connexion
-    "routeLogin" => 'admin',
-    // Information sur la page d'apres
-    "loginSuccess" => array(
-        // Ressource associé
-        'resource'   => 'syncmytv',
-        // Privilege associé
-        'privilege'  => 'system',
-        // Controller 
-        'controller' => 'SyncMyTv\Controller\Admin\Index',
-        // Action 
-        'action'     => 'index'),
-    "authFail" => array(
-        'route' => 'admin',
-    )
-);
 
 /**
  * You do not need to edit below this line
@@ -154,5 +141,4 @@ $playgroundAdminAuth = array(
 return array(
     'playgrounduser' => $playgrounduser,
     'zfcuser' => $zfcSettings,
-    'playgroundAdminAuth' => $playgroundAdminAuth,
 );

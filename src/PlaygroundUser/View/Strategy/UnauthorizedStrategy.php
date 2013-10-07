@@ -18,6 +18,7 @@ class UnauthorizedStrategy implements ListenerAggregateInterface, ServiceLocator
      */
     protected $listeners = array();
     protected $serviceLocator;
+    protected $options = null;
 
     public function getServiceLocator ()
     {
@@ -52,15 +53,12 @@ class UnauthorizedStrategy implements ListenerAggregateInterface, ServiceLocator
         if ($result instanceof Response) {
             return;
         }
-
-        $config = $this->getServiceLocator()->get('Config');
-        $playgroundAuth = $config['playgroundAdminAuth'];
-
+        
         $router = $e->getRouter();
         $match  = $e->getRouteMatch();
 
         // get url to the zfcuser/login route
-        $options['name'] = $playgroundAuth['authFail']['route'];
+        $options['name'] = $this->getOptions()->getRouteLoginFail();
         $url = $router->assemble(array(), $options);
 
         // Work out where were we trying to get to
@@ -73,8 +71,17 @@ class UnauthorizedStrategy implements ListenerAggregateInterface, ServiceLocator
             $response = new HttpResponse();
             $e->setResponse($response);
         }
-        
+     
         $response->getHeaders()->addHeaderLine('Location', $url . '?redirect=' . $redirect);
         $response->setStatusCode(302);
+    }
+
+    public function getOptions()
+    {
+        if($this->options === null){
+            $this->options = $this->getServiceLocator()->get('playgrounduser_module_options');
+        }
+
+        return  $this->options;
     }
 }

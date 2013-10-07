@@ -253,7 +253,6 @@ class Module
 
                 'playgrounduser_module_options' => function ($sm) {
                     $config = $sm->get('Configuration');
-
                     return new Options\ModuleOptions(isset($config['playgrounduser']) ? $config['playgrounduser'] : array());
                 },
 
