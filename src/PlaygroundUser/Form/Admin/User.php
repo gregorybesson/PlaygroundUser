@@ -158,9 +158,9 @@ class User extends Register
         		'type' => 'Zend\Form\Element\Select',
         		'name' => 'country',
         		'options' => array(
-        				'empty_option' => $translator->translate('Sélectionnez votre pays', 'playgrounduser'),
+        				'empty_option' => $translator->translate('Select your country', 'playgrounduser'),
         				'value_options' => $this->getCountries(),
-        				'label' => $translator->translate('Pays', 'playgrounduser')
+        				'label' => $translator->translate('Country', 'playgrounduser')
         		)
         ));
 
@@ -195,8 +195,8 @@ class User extends Register
                 'options' => array(
                         'label' => $translator->translate('Newsletter', 'playgrounduser'),
                         'value_options' => array(
-                                '1'  => $translator->translate('Oui', 'playgrounduser'),
-                                '0' => $translator->translate('Non', 'playgrounduser'),
+                                '1'  => $translator->translate('Yes', 'playgrounduser'),
+                                '0'  => $translator->translate('No', 'playgrounduser'),
                         ),
                 ),
         ));
@@ -205,10 +205,10 @@ class User extends Register
                 'name' => 'optinPartner',
                 'type' => 'Zend\Form\Element\Radio',
                 'options' => array(
-                        'label' => $translator->translate('Newsletter des partenaires', 'playgrounduser'),
+                        'label' => $translator->translate('Partners Newsletter', 'playgrounduser'),
                         'value_options' => array(
-                                '1'  => $translator->translate('Oui', 'playgrounduser'),
-                                '0' => $translator->translate('Non', 'playgrounduser'),
+                                '1'  => $translator->translate('Yes', 'playgrounduser'),
+                                '0'  => $translator->translate('No', 'playgrounduser'),
                         ),
                 ),
         ));
