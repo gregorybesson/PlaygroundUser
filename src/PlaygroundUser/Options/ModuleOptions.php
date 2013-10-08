@@ -132,11 +132,22 @@ class ModuleOptions extends BaseModuleOptions implements
      * @var boolean
      */
     protected $emailVerification = false;
-
     /**
      * @var string
      */
     protected $defaultRegisterRole = 'user';
+    
+    /**
+     * @var array
+     */
+    protected $admin = array(
+            'route_login' => 'admin',
+            'resource' => 'core',
+            'privilege'   => 'dashboard',
+            'controller' => 'adminstats',
+            'action' => 'index',
+            'route_login_fail' => 'admin'
+            );
 
     /**
      * @return the $emailVerification
@@ -417,13 +428,35 @@ class ModuleOptions extends BaseModuleOptions implements
     }
 
     /**
-     * @return string
+     *
+     * @param  string                           $social
+     * @return \PlaygroundUser\Options\ModuleOptions
      */
     public function setSocial($social)
     {
         $this->social = $social;
 
         return $this;
+    }
+
+    /**
+     *
+     * @param  array                           $admin
+     * @return \PlaygroundUser\Options\ModuleOptions
+     */
+    public function setAdmin($admin)
+    {
+        $this->admin = $admin;
+
+        return $this;
+    }
+
+    /**
+     * @return array 
+     */
+    public function getAdmin()
+    {
+        return $this->admin;
     }
 
     /**
