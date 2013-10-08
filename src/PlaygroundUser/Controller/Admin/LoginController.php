@@ -20,8 +20,10 @@ class LoginController extends ZfcUserController
         $form    = $this->getLoginForm();
 
         $user = $this->zfcUserAuthentication()->getIdentity();
-        if($user && $this->isAllowed($this->getOptions()->getResource(), $this->getOptions()->getPrivilege())){
-        	return $this->forward()->dispatch($this->getOptions()->getController(), array('action' => $this->getOptions()->getAction()));
+        $authAdminConfig = $this->getOptions()->getAdmin();
+
+        if($user && $this->isAllowed($authAdminConfig['resource'], $authAdminConfig['privilege'])){
+        	return $this->forward()->dispatch($authAdminConfig['controller'], array('action' => $authAdminConfig['action']));
         }
 
         if ($request->isPost()) {
@@ -30,7 +32,7 @@ class LoginController extends ZfcUserController
 	        if (!$form->isValid()) {
 	            $this->flashMessenger()->setNamespace('zfcuser-login-form')->addMessage($this->failedLoginMessage);
 
-	            return $this->redirect()->toUrl($this->url()->fromRoute($this->getOptions()->getRouteLogin()));
+	            return $this->redirect()->toUrl($this->url()->fromRoute($authAdminConfig['route_login']));
 	        }
 
 	        // clear adapters
@@ -38,7 +40,7 @@ class LoginController extends ZfcUserController
 	        $this->zfcUserAuthentication()->getAuthService()->clearIdentity();
 
 
-	        $request->getQuery()->redirect = $this->url()->fromRoute($this->getOptions()->getRouteLogin());
+	        $request->getQuery()->redirect = $this->url()->fromRoute($authAdminConfig['route_login']);
 
 	        return $this->forward()->dispatch(static::CONTROLLER_NAME, array('action' => 'authenticate'));
         }

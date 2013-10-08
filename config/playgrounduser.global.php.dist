@@ -93,17 +93,19 @@ $playgrounduser = array(
             'config_file' => __DIR__.'/social.config.php',
         ),
         /*
-        // login route
-        'route_login' => 'admin',
-        // resource associated to admin access
-        'resource' => 'core',
-        // privilege associated to admin access
-        'privilege'   => 'dashboard',
-        // controller & action if auth success
-        'controller' => 'adminstats',
-        'action' => 'index',
-        // route if auth fail
-        'route_login_fail' => 'admin'
+        'admin' => array(
+            // login route
+            'route_login' => 'admin',
+            // resource associated to admin access
+            'resource' => 'core',
+            // privilege associated to admin access
+            'privilege'   => 'dashboard',
+            // controller & action if auth success
+            'controller' => 'adminstats',
+            'action' => 'index',
+            // route if auth fail
+            'route_login_fail' => 'admin'
+        ),
         */
 );
 

@@ -132,36 +132,22 @@ class ModuleOptions extends BaseModuleOptions implements
      * @var boolean
      */
     protected $emailVerification = false;
-
     /**
      * @var string
      */
     protected $defaultRegisterRole = 'user';
-
+    
     /**
-     * @var string
+     * @var array
      */
-    protected $route_login = 'admin';
-    /**
-     * @var string
-     */
-    protected $resource = 'core';
-    /**
-     * @var string
-     */
-    protected $privilege = 'dashboard';
-    /**
-     * @var string
-     */
-     protected $controller = 'adminstats';
-    /**
-     * @var string
-     */
-    protected $action = 'index';
-    /**
-     * @var string
-     */ 
-    protected $route_login_fail = 'admin';
+    protected $admin = array(
+            'route_login' => 'admin',
+            'resource' => 'core',
+            'privilege'   => 'dashboard',
+            'controller' => 'adminstats',
+            'action' => 'index',
+            'route_login_fail' => 'admin'
+            );
 
     /**
      * @return the $emailVerification
@@ -414,122 +400,6 @@ class ModuleOptions extends BaseModuleOptions implements
     }
 
     /**
-     * Set route login
-     *
-     * @param  string                           $routeLogin
-     * @return \PlaygroundUser\Options\ModuleOptions
-     */
-    public function setRouteLogin($routeLogin)
-    {
-        return $this->route_login = $routeLogin;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRouteLogin()
-    {
-        return $this->route_login;
-    }
-    
-    /**
-     * Set resource
-     *
-     * @param  string                           $resource
-     * @return \PlaygroundUser\Options\ModuleOptions
-     */
-    public function setResource($resource)
-    {
-        return $this->resource = $resource;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getResource()
-    {
-        return $this->resource;
-    }
-
-    /**
-     * Set privilege
-     *
-     * @param  string                           $privilege
-     * @return \PlaygroundUser\Options\ModuleOptions
-     */
-    public function setPrivilege($privilege)
-    {
-        return $this->privilege = $privilege;
-        return $this;
-    }
-
-    public function getPrivilege()
-    {
-        return $this->privilege;
-    }
-    
-    /**
-     * Set controller
-     *
-     * @param  string                           $controller
-     * @return \PlaygroundUser\Options\ModuleOptions
-     */
-    public function setController($controller)
-    {
-        return $this->controller = $controller;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getController()
-    {
-        return $this->controller;
-    }
-
-    /**
-     * Set action
-     *
-     * @param  string                           $action
-     * @return \PlaygroundUser\Options\ModuleOptions
-     */
-    public function setAction($action)
-    {
-        return $this->action = $action;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAction()
-    {
-        return $this->action;
-    }
-
-    /**
-     * Set routeLoginFail
-     *
-     * @param  string                           $routeLoginFail
-     * @return \PlaygroundUser\Options\ModuleOptions
-     */
-    public function setRouteLoginFail($routeLoginFail)
-    {
-        return $this->route_login_fail = $routeLoginFail;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRouteLoginFail()
-    {
-        return $this->route_login_fail;
-    }
-    /**
      *
      * @param  string                           $media_url
      * @return \PlaygroundUser\Options\ModuleOptions
@@ -558,13 +428,35 @@ class ModuleOptions extends BaseModuleOptions implements
     }
 
     /**
-     * @return string
+     *
+     * @param  string                           $social
+     * @return \PlaygroundUser\Options\ModuleOptions
      */
     public function setSocial($social)
     {
         $this->social = $social;
 
         return $this;
+    }
+
+    /**
+     *
+     * @param  array                           $admin
+     * @return \PlaygroundUser\Options\ModuleOptions
+     */
+    public function setAdmin($admin)
+    {
+        $this->admin = $admin;
+
+        return $this;
+    }
+
+    /**
+     * @return array 
+     */
+    public function getAdmin()
+    {
+        return $this->admin;
     }
 
     /**
