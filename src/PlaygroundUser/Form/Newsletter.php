@@ -28,8 +28,8 @@ class Newsletter extends ProvidesEventsForm
             'options' => array(
                 'label' => $translator->translate('Newsletter', 'playgrounduser'),
                 'value_options' => array(
-                    '1'  => $translator->translate('Oui', 'playgrounduser'),
-                    '0' => $translator->translate('Non', 'playgrounduser'),
+                    '1'  => $translator->translate('Yes', 'playgrounduser'),
+                    '0' => $translator->translate('No', 'playgrounduser'),
                 ),
             ),
         ));
@@ -40,8 +40,8 @@ class Newsletter extends ProvidesEventsForm
             'options' => array(
                 'label' => $translator->translate('Newsletter des partenaires', 'playgrounduser'),
                 'value_options' => array(
-                    '1'  => $translator->translate('Oui', 'playgrounduser'),
-                    '0' => $translator->translate('Non', 'playgrounduser'),
+                    '1'  => $translator->translate('Yes', 'playgrounduser'),
+                    '0' => $translator->translate('No', 'playgrounduser'),
                 ),
             ),
         ));

@@ -11,6 +11,8 @@ return array(
 	'User\'s list'		=> 'User\'s list',
 	'Role sort order'	=> 'Sort by role',
 	'Search'			=> 'Search',
+    'Creation'          => 'Created at',
+    'Actif'             => 'active',
 		
     // Admin register user
     'Login' => 'Login',
@@ -47,7 +49,7 @@ return array(
 	'Country'=> 'Country',
 	'Select your country' => 'Select your country',
 	'Yes'=> 'Yes',
-	'No'=> 'No',
+    'No'=> 'No',
 	'Newsletter' => 'Newsletter',
 	'Newsletters' => 'Newsletters',
 	'Partners Newsletter' => 'Partners Newsletter',
