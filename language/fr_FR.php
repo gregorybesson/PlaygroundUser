@@ -16,6 +16,7 @@ return array(
 
     // Admin register user
     'Login' => 'Se connecter',
+    'Login2' => 'Pseudo',
     'Username'   => 'Pseudo',
     'First Name' => 'Prénom',
     'Firstname' => 'Prénom',

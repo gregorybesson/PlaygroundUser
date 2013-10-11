@@ -26,9 +26,9 @@ class Module
  
         $options = $sm->get('playgroundcore_module_options');
         $locale = $options->getLocale();
+        $translator = $sm->get('translator');
         if (!empty($locale)) {
             //translator
-            $translator = $sm->get('translator');
             $translator->setLocale($locale);
 
             // plugins

@@ -16,6 +16,7 @@ return array(
 		
     // Admin register user
     'Login' => 'Login',
+    'Login2' => 'Login',
     'Username'   => 'Username',
     'First Name' => 'First Name',
     'Firstname' => 'First Name',
