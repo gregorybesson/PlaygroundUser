@@ -35,7 +35,6 @@ class User extends Register
                 'selected' => false,
             );
         }
-
         $this->setAttribute('enctype','multipart/form-data');
 
         $this->add(array(
@@ -196,7 +195,7 @@ class User extends Register
                         'label' => $translator->translate('Newsletter', 'playgrounduser'),
                         'value_options' => array(
                                 '1'  => $translator->translate('Yes', 'playgrounduser'),
-                                '0'  => $translator->translate('No', 'playgrounduser'),
+                                '0'  => $translator->translate('No','playgrounduser'),
                         ),
                 ),
         ));
@@ -208,7 +207,7 @@ class User extends Register
                         'label' => $translator->translate('Partners Newsletter', 'playgrounduser'),
                         'value_options' => array(
                                 '1'  => $translator->translate('Yes', 'playgrounduser'),
-                                '0'  => $translator->translate('No', 'playgrounduser'),
+                                '0'  => $translator->translate('No','playgrounduser'),
                         ),
                 ),
         ));

@@ -12,7 +12,7 @@ return array(
 	'Role sort order'	=> 'Sort by role',
 	'Search'			=> 'Search',
     'Creation'          => 'Created at',
-    'Actif'             => 'active',
+    'Actif'             => 'Active',
 		
     // Admin register user
     'Login' => 'Login',
@@ -48,8 +48,9 @@ return array(
     'Identity'=> 'Identity',
 	'Country'=> 'Country',
 	'Select your country' => 'Select your country',
-	'Yes'=> 'Yes',
     'No'=> 'No',
+	'Yes'=> 'Yes',
+
 	'Newsletter' => 'Newsletter',
 	'Newsletters' => 'Newsletters',
 	'Partners Newsletter' => 'Partners Newsletter',
