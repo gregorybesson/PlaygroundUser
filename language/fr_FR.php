@@ -11,9 +11,12 @@ return array(
 	'User\'s list'		=> 'Liste des utilisateurs',
 	'Role sort order'	=> 'Tri par rôle',
 	'Search'			=> 'Rechercher',
+    'Creation'          => 'Création',
+    'Actif'             => 'Actif',
 
     // Admin register user
     'Login' => 'Se connecter',
+    'Login2' => 'Pseudo',
     'Username'   => 'Pseudo',
     'First Name' => 'Prénom',
     'Firstname' => 'Prénom',
