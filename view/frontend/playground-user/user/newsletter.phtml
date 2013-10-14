@@ -52,7 +52,7 @@
 				</div>
 			</div>
 			<div id="btn-create-account" class="row-fluid span2 center">
-				<?php echo $this->formButton($form->get('submit')) ?>
+				<?php $form->get('submit')->setLabel($this->translate('Validate')); ?>
 			</div>
         <?php echo $this->form()->closeTag() ?>
 		<!-- end form -->			

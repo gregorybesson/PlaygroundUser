@@ -19,7 +19,7 @@ $form->setAttribute('method', 'post');
 			<a href="<?php echo $this->url('frontend/zfcuser/forgotpassword') ?>">Mot de passe oublié ?</a>
 		</div>
 		<div id="btn-connect" class="span8">
-			<?php echo $this->formButton($form->get('submit')) ?>
+			<?php $form->get('submit')->setLabel($this->translate('Validate')); ?>
 		</div>
 	</div>
 <?php echo $this->form()->closeTag() ?>

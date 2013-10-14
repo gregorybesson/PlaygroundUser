@@ -13,7 +13,7 @@ $form->setAttribute('method', 'post');
     <?php echo $this->formInput($form->get('credential')) ?>
 	<div class="row-fluid">
 		<div id="btn-connect" class="span8">
-			<?php echo $this->formButton($form->get('submit')) ?>
+			<?php $form->get('submit')->setLabel($this->translate('Validate')); ?>
 		</div>
 	</div>
 <?php echo $this->form()->closeTag() ?>

@@ -5,16 +5,31 @@ namespace PlaygroundUser\View\Strategy;
 use BjyAuthorize\Service\Authorize;
 use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\ListenerAggregateInterface;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Http\Response as HttpResponse;
 use Zend\Mvc\MvcEvent;
 use Zend\Stdlib\ResponseInterface as Response;
 
-class UnauthorizedStrategy implements ListenerAggregateInterface
+class UnauthorizedStrategy implements ListenerAggregateInterface, ServiceLocatorAwareInterface
 {
     /**
      * @var \Zend\Stdlib\CallbackHandler[]
      */
     protected $listeners = array();
+    protected $serviceLocator;
+    protected $options = null;
+
+    public function getServiceLocator ()
+    {
+        return $this->serviceLocator;
+    }
+
+    public function setServiceLocator (ServiceLocatorInterface $serviceLocator)
+    {
+        $this->serviceLocator = $serviceLocator;
+    }
+
 
     public function attach(EventManagerInterface $events)
     {
@@ -38,12 +53,13 @@ class UnauthorizedStrategy implements ListenerAggregateInterface
         if ($result instanceof Response) {
             return;
         }
-
+        
         $router = $e->getRouter();
         $match  = $e->getRouteMatch();
 
         // get url to the zfcuser/login route
-        $options['name'] = 'admin';
+        $authAdminConfig = $this->getOptions()->getAdmin();
+        $options['name'] = $authAdminConfig['route_login_fail'];
         $url = $router->assemble(array(), $options);
 
         // Work out where were we trying to get to
@@ -56,13 +72,21 @@ class UnauthorizedStrategy implements ListenerAggregateInterface
             $response = new HttpResponse();
             $e->setResponse($response);
         }
-
-        // C'est difficile de faire des devs si on a un redirect pour cacher l'erreur.
-        $environnement = getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : null; 
+        
+        // Don't redirect in case of dev.
+        $environnement = getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : null;
         if ($environnement !== 'development') {
             $response->getHeaders()->addHeaderLine('Location', $url . '?redirect=' . $redirect);
             $response->setStatusCode(302);
         }
+    }
 
+    public function getOptions()
+    {
+        if($this->options === null){
+            $this->options = $this->getServiceLocator()->get('playgrounduser_module_options');
+        }
+
+        return  $this->options;
     }
 }

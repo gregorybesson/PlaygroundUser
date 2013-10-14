@@ -33,7 +33,7 @@ $form->setAttribute('id', 'header-login');
     					</p>
     				</div>
     				<div class="span4">
-    					<?php echo $this->formButton($form->get('submit')) ?>
+    					<?php $form->get('submit')->setLabel($this->translate('Validate')); ?>
     				</div>
     			</div>
     			<?php echo $this->form()->closeTag() ?>

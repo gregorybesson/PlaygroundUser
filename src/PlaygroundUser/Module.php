@@ -21,6 +21,36 @@ class Module
 
     public function onBootstrap($e)
     {
+        /*
+        // In some cases, this listener overrides the entity of User definition
+        $doctrine = $sm->get('doctrine.entitymanager.orm_default');
+                $evm = $doctrine->getEventManager();
+
+        $listener = new  \Doctrine\ORM\Tools\ResolveTargetEntityListener();
+        $listener->addResolveTargetEntity(
+                'PlaygroundUser\Entity\UserInterface',
+                'PlaygroundUser\Entity\User',
+                array()
+            );
+        $evm->addEventListener(\Doctrine\ORM\Events::loadClassMetadata, $listener);
+        */
+
+        /*
+        // Remember me feature
+        
+        $session = new \Zend\Session\Container('zfcuser');
+        $cookieLogin = $session->offsetGet("cookieLogin");
+
+        $cookie = $e->getRequest()->getCookie();
+        // do autologin only if not done before and cookie is present
+
+        if (isset($cookie['remember_me']) && $cookieLogin == false) {
+           $adapter = $e->getApplication()->getServiceManager()->get('ZfcUser\Authentication\Adapter\AdapterChain');
+            $adapter->prepareForAuthentication($e->getRequest());
+            $authService = $e->getApplication()->getServiceManager()->get('zfcuser_auth_service');
+
+            $auth = $authService->authenticate($adapter);
+        }*/
         $sm = $e->getApplication()->getServiceManager();
         $em = $e->getApplication()->getEventManager();
  
@@ -36,10 +66,6 @@ class Module
             $translate->getTranslator()->setLocale($locale);
         }
         AbstractValidator::setDefaultTranslator($translator,'playgrounduser');
-
-        $doctrine = $sm->get('doctrine.entitymanager.orm_default');
-        $evm = $doctrine->getEventManager();
-
 
         // If cron is called, the $e->getRequest()->getQuery()->get('key'); produces an error so I protect it with
         // this test
