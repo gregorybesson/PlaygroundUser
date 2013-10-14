@@ -1,4 +1,122 @@
 <?php
 return array(
-    'Welcome to %sPlayground Framework 2%s' => 'Welcome to %sPlayground Framework 2%s'
+    // Admin list user
+    'Create an account' => 'Create an account',
+	'Creation Date'		=> 'Creation Date',
+	'Active'			=> 'Active',
+	'Player'			=> 'Player',
+	'Administrator'		=> 'Administrator',
+	'Salesman'			=> 'Salesman',
+	'Add new user'		=> 'Add a new user',
+	'User\'s list'		=> 'User\'s list',
+	'Role sort order'	=> 'Sort by role',
+	'Search'			=> 'Search',
+    'Creation'          => 'Created at',
+    'Actif'             => 'Active',
+		
+    // Admin register user
+    'Login' => 'Login',
+    'Login2' => 'Login',
+    'Username'   => 'Username',
+    'First Name' => 'First Name',
+    'Firstname' => 'First Name',
+    'Your first name' => 'Your first name',
+    'Last Name'  => 'Last Name',
+    'Lastname'  => 'Lastname',
+    'Email address' => 'Email address',
+    'Your last name'  => 'Your last name',
+    'Title'  => 'Title',
+    'Miss'  => 'Miss',
+    'Mister'  => 'Mister',
+    'Avatar' => 'Avatar',
+    'Address'  => 'Address',
+    'Address 2'  => 'Address 2',
+    'Postal Code' => 'Postal Code',
+    'Your zip code' => 'Your zip code',
+    'City' => 'City',
+    'Telephone' => 'Telephone',
+    'Mobile' => 'Mobile',
+    'Year of Birth' => 'Year of Birth',
+    'Your year of birth' => 'Your year of birth',
+    'Children' => 'Children',
+    'Password' => 'Password',
+    'Your password' => 'Your password',
+    'Password Verify' => 'Password Verification',
+    'Confirm your Password' => 'Confirm your Password',
+    'Your Password' => 'Your Password',
+    'Your Email' => 'Your Email',
+    'Create an account and participate' => 'Create an account and participate',
+    'Identity'=> 'Identity',
+	'Country'=> 'Country',
+	'Select your country' => 'Select your country',
+    'No'=> 'No',
+	'Yes'=> 'Yes',
+
+	'Newsletter' => 'Newsletter',
+	'Newsletters' => 'Newsletters',
+	'Partners Newsletter' => 'Partners Newsletter',
+	'Select a role' => 'Select a role',
+	'Roles'=> 'Roles',
+
+    // Admin Block Account
+    'Current Password' => 'Current Password',
+
+    // Mot de passe oublié
+    'Your email adress' 	=> 'Your email adress',
+    'Request new password' 	=> 'Valider',
+    'Enter your new password' => 'Enter your new password',
+    'Your password contains less than 6 characters' => 'Your password contains less than 6 characters',
+    'Confirm your password' => 'Confirm your password',
+    'Your passwords are different' => 'Your passwords are different',
+
+    // Reset account
+    'New Email' => 'New Email Address',
+    'Verify New Email' => 'Confirmez',
+    'New Password' => 'You new password',
+    'Verify New Password' => 'Verify Your New Password',
+    'Change Password for' => 'Change password account',
+    'Set new password' => 'Valider',
+
+    // Frontend Change Info
+    'Select' => 'Select',
+	'Date of birth' => 'Date of birth',
+
+    // Admin
+    'Home' => 'Home',
+    'First' => 'First',
+    'Previous' => 'Previous',
+    'Next' => 'Next',
+    'Last' => 'Last',
+
+    // Admin
+    'Admin' => 'Administration',
+    'Dashboard' => 'Dashboard',
+    'New Action' => 'New Action',
+    'System' => 'System',
+    'Settings' => 'Settings',
+    'Edit FAQ' => 'Edit FAQ',
+    'Edit' => 'Edit',
+    'Delete' => 'Delete',
+    'Add new page' => 'Add a new page',
+    'Create' => 'Create',
+    'title' => 'title',
+    'Identifier' => 'Identifier',
+    'is_active' => 'is active',
+    'sort_order' => 'Sort order',
+    'Add new block' => 'Add new block',
+    'Block' => 'Add new block',
+    'Content' => 'Content',
+    'Add' => 'Add',
+    'Dynarea' => 'target zone',
+    'Dynablocks' => 'Dynamic block',
+    'Available Dynareas' => 'available target zone',
+
+    //Profile
+    'Password changed successfully.' 	=> 'Password changed successfully.',
+    'Unable to update your password. Please try again.' => 'Unable to update your password. Please try again.',
+    'Email address changed successfully.' => 'Email address changed successfully.',
+    'Unable to update your email address. Please try again.' => 'Unable to update your email address. Please try again.',
+    'Info changed successfully.' => 'Info changed successfully',
+    'Unable to update your info. Please try again.' => 'Unable to update your info. Please try again.',
+
 );
