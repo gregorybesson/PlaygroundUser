@@ -56,7 +56,13 @@ class UnauthorizedStrategy implements ListenerAggregateInterface
             $response = new HttpResponse();
             $e->setResponse($response);
         }
-        $response->getHeaders()->addHeaderLine('Location', $url . '?redirect=' . $redirect);
-        $response->setStatusCode(302);
+
+        // C'est difficile de faire des devs si on a un redirect pour cacher l'erreur.
+        $environnement = getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : null; 
+        if ($environnement !== 'development') {
+            $response->getHeaders()->addHeaderLine('Location', $url . '?redirect=' . $redirect);
+            $response->setStatusCode(302);
+        }
+
     }
 }
