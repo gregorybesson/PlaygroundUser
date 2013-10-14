@@ -23,53 +23,23 @@ class Module
     {
         $sm = $e->getApplication()->getServiceManager();
         $em = $e->getApplication()->getEventManager();
-
-        //Set the translator for default validation messages
+ 
+        $options = $sm->get('playgroundcore_module_options');
+        $locale = $options->getLocale();
         $translator = $sm->get('translator');
-        AbstractValidator::setDefaultTranslator($translator,'playgroundcore');
+        if (!empty($locale)) {
+            //translator
+            $translator->setLocale($locale);
+
+            // plugins
+            $translate = $sm->get('viewhelpermanager')->get('translate');
+            $translate->getTranslator()->setLocale($locale);
+        }
+        AbstractValidator::setDefaultTranslator($translator,'playgrounduser');
 
         $doctrine = $sm->get('doctrine.entitymanager.orm_default');
         $evm = $doctrine->getEventManager();
 
-
-
-        /* In some cases, this listener overrides those described further in application.config.php
-        $listener = new  \Doctrine\ORM\Tools\ResolveTargetEntityListener();
-        $listener->addResolveTargetEntity(
-        		'PlaygroundUser\Entity\UserInterface',
-        		'PlaygroundUser\Entity\User',
-        		array()
-        );
-        $evm->addEventListener(\Doctrine\ORM\Events::loadClassMetadata, $listener);
-        */
-
-        //$options = $sm->get('zfcuser_module_options');
-        //$reader = new AnnotationReader();
-
-        /*
-        // Add the default entity driver only if specified in configuration
-        if ($options->getEnableDefaultEntities()) {
-            $chain = $sm->get('doctrine.driver.orm_default');
-            $chain->addDriver(new AnnotationDriver($reader, array(__DIR__.'/src/PlaygroundUser/Entity')), 'PlaygroundUser\Entity');
-        }
-
-        if (!$e->getRequest() instanceof HttpRequest) {
-            return;
-        }*/
-
-        /*$session = new \Zend\Session\Container('zfcuser');
-        $cookieLogin = $session->offsetGet("cookieLogin");
-
-        $cookie = $e->getRequest()->getCookie();
-        // do autologin only if not done before and cookie is present
-
-        if (isset($cookie['remember_me']) && $cookieLogin == false) {
-            $adapter = $e->getApplication()->getServiceManager()->get('ZfcUser\Authentication\Adapter\AdapterChain');
-            $adapter->prepareForAuthentication($e->getRequest());
-            $authService = $e->getApplication()->getServiceManager()->get('zfcuser_auth_service');
-
-            $auth = $authService->authenticate($adapter);
-        }*/
 
         // If cron is called, the $e->getRequest()->getQuery()->get('key'); produces an error so I protect it with
         // this test
