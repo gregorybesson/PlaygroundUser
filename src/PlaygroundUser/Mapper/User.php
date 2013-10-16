@@ -65,6 +65,9 @@ class User extends ZfcUserMapper
         $er = $this->em->getRepository($this->options->getUserEntityClass());
 
         if ($partner == true) {
+            if ($optin == true) {
+                return $er->findBy(array('optinPartner' => $optin, 'optin' => $optin));
+            } 
             return $er->findBy(array('optinPartner' => $optin));
         } else {
             return $er->findBy(array('optin' => $optin));
@@ -97,7 +100,8 @@ class User extends ZfcUserMapper
 
     public function clearRoles($entity)
     {
-        $entity->getRoles()->clear();
+        $entity->setRoles(null);
+        //$entity->getRoles()->clear();
 
         return $this->persist($entity);
     }

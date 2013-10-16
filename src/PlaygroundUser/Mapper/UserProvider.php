@@ -7,6 +7,7 @@ use PlaygroundUser\Options\ModuleOptions;
 use Zend\Stdlib\Hydrator\HydratorInterface;
 use ZfcBase\Mapper\AbstractDbMapper;
 use ZfcUser\Entity\UserInterface;
+use PlaygroundUser\Entity\UserProvider as UserProviderEntity;
 
 class UserProvider extends AbstractDbMapper
 {
@@ -66,7 +67,7 @@ class UserProvider extends AbstractDbMapper
             throw new Exception\RuntimeException('This ' . ucfirst($provider) . ' profile is already linked to another user.');
         }
 
-        $userProvider = clone($this->getEntityPrototype());
+        $userProvider = new UserProviderEntity;
         $userProvider->setUser($user)
                      ->setProviderId($hybridUserProfile->identifier)
                      ->setProvider($provider);
@@ -81,7 +82,6 @@ class UserProvider extends AbstractDbMapper
      */
     public function insert($entity, $tableName = null, HydratorInterface $hydrator = null)
     {
-//        print_r('on y est : ' . $entity->getUser()->getId() . ' ' . $entity->getProvider() . ' ' . $entity->getProviderId());
         return $this->persist($entity);
     }
 
@@ -116,7 +116,7 @@ class UserProvider extends AbstractDbMapper
     public function findProviderByUser(UserInterface $user, $provider)
     {
         $er = $this->getEntityRepository();
-        $entity = $er->findOneBy(array('userId' => $user->getId(), 'provider' => $provider));
+        $entity = $er->findOneBy(array('user' => $user, 'provider' => $provider));
         $this->getEventManager()->trigger('find', $this, array('entity' => $entity));
 
         return $entity;
@@ -129,7 +129,7 @@ class UserProvider extends AbstractDbMapper
     public function findProvidersByUser(UserInterface $user)
     {
         $er = $this->getEntityRepository();
-        $entities = $er->findBy(array('userId' => $user->getId()));
+        $entities = $er->findBy(array('user' => $user));
 
         $return = array();
         foreach ($entities as $entity) {
@@ -147,5 +147,16 @@ class UserProvider extends AbstractDbMapper
         }
 
         return $this->er;
+    }
+
+     /**
+    * remove : supprimer une entite userProvider
+    * @param UserProvider
+    *
+    */
+    public function remove($entity)
+    {
+        $this->em->remove($entity);
+        $this->em->flush();
     }
 }

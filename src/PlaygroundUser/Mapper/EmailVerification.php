@@ -25,7 +25,7 @@ class EmailVerification extends EventProvider
         $this->options = $options;
     }
 
-    protected function getEntityRepository()
+    public function getEntityRepository()
     {
         return $this->em->getRepository('PlaygroundUser\Entity\EmailVerification');
     }

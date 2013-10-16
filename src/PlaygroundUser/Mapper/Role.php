@@ -27,16 +27,14 @@ class Role extends AbstractDbMapper
 
     public function findByRoleId($role)
     {
-        $er = $this->em->getRepository('\PlaygroundUser\Entity\Role');
 
-        return $er->findOneBy(array('roleId' => $role));
+        return $this->getRepository()->findOneBy(array('roleId' => $role));
     }
 
     public function findById($id)
     {
-        $er = $this->em->getRepository($this->options->getRoleEntityClass());
 
-        return $er->find($id);
+        return $this->getRepository()->find($id);
     }
 
     public function insert($entity, $tableName = null, HydratorInterface $hydrator = null)
@@ -59,14 +57,17 @@ class Role extends AbstractDbMapper
 
     public function findAll()
     {
-        $er = $this->em->getRepository($this->options->getRoleEntityClass());
-
-        return $er->findAll();
+        return $this->getRepository()->findAll();
     }
 
     public function remove($entity)
     {
         $this->em->remove($entity);
         $this->em->flush();
+    }
+
+    public function getRepository()
+    {
+        return $this->em->getRepository('\PlaygroundUser\Entity\Role');
     }
 }
