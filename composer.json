@@ -35,9 +35,6 @@
 		"playground/hybridauth" : "dev-master",
 		"zf-commons/zfc-user" : "0.*"
     },
-    "require-dev": {
-        "doctrine/doctrine-orm-module": "0.*"
-    },
     "autoload" : {
 		"psr-0" : {
 			"PlaygroundUser" : "src/"
