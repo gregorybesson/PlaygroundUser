@@ -316,7 +316,7 @@ class UserController extends ZfcUserController
         if ( $user->getState() && $user->getState() === 2 ) {
             $this->getUserService()->getUserMapper()->activate($user);
         }
-
+        $this->getEventManager()->trigger('login.post', $this, array('user' => $user));
         return true;
     }
 
@@ -347,7 +347,9 @@ class UserController extends ZfcUserController
 
     public function logoutAction()
     {
-    	$hybridAuth = $this->getHybridAuth();
+        $user = $this->zfcUserAuthentication()->getIdentity();
+        
+        $hybridAuth = $this->getHybridAuth();
     	
         Hybrid_Auth::logoutAllProviders();
 
@@ -357,6 +359,11 @@ class UserController extends ZfcUserController
 
         $redirect = $this->params()->fromPost('redirect', $this->params()->fromQuery('redirect', false));
 
+        // before logout, a user was connected
+        if($user){
+            $this->getEventManager()->trigger('logout.post', $this, array('user' => $user));
+        }
+        
         if ($this->getOptions()->getUseRedirectParameterIfPresent() && $redirect) {
             return $this->redirect()->toUrl($redirect);
         }
@@ -391,6 +398,9 @@ class UserController extends ZfcUserController
                 . ($redirect ? '?redirect='.$redirect : ''));
         }
     
+        $user = $this->zfcUserAuthentication()->getIdentity();
+        $this->getEventManager()->trigger('login.post', $this, array('user' => $user));
+        
         if ($this->getOptions()->getUseRedirectParameterIfPresent() && $redirect) {
             return $this->redirect()->toUrl($redirect);
         }
@@ -1158,5 +1168,15 @@ class UserController extends ZfcUserController
         $this->rewardService = $rewardService;
 
         return $this;
+    }
+    
+    /**
+     * Retrieve service manager instance
+     *
+     * @return ServiceManager
+     */
+    public function getServiceManager ()
+    {
+        return $this->getServiceLocator();
     }
 }
