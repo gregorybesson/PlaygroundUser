@@ -49,7 +49,7 @@ class Cron extends EventProvider implements ServiceManagerAwareInterface
         $period->sub(new \DateInterval($interval));
         $period = $period->format('Y-m-d') . ' 0:0:0';
 
-        $em = $this->getServiceManager()->get('zfcuser_doctrine_em');
+        $em = $this->getServiceManager()->get('doctrine.entitymanager.orm_default');
 
         // I Have to know what is the User Class used
         $zfcUserOptions = $this->getServiceManager()->get('zfcuser_module_options');

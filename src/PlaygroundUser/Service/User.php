@@ -57,7 +57,7 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
      */
     public function create(array $data)
     {
-    	$entityManager = $this->getServiceManager()->get('zfcuser_doctrine_em');
+    	$entityManager = $this->getServiceManager()->get('doctrine.entitymanager.orm_default');
         $zfcUserOptions = $this->getServiceManager()->get('zfcuser_module_options');
         $class = $zfcUserOptions->getUserEntityClass();
         $user  = new $class;
@@ -200,7 +200,7 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
 
     public function edit(array $data, $user)
     {
-    	$entityManager 		  = $this->getServiceManager()->get('zfcuser_doctrine_em');
+    	$entityManager 		  = $this->getServiceManager()->get('doctrine.entitymanager.orm_default');
     	$zfcUserOptions = $this->getServiceManager()->get('zfcuser_module_options');
     	$class 				  = $zfcUserOptions->getUserEntityClass();
         $path                 = $this->getOptions()->getAvatarPath() . DIRECTORY_SEPARATOR;
@@ -332,7 +332,7 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         $form->bind($user);
         $form->setData($data);
         // Fetch any valid object manager from the Service manager (here, an entity manager)
-        $entityManager = $this->getServiceManager()->get('zfcuser_doctrine_em');
+        $entityManager = $this->getServiceManager()->get('doctrine.entitymanager.orm_default');
 
         // Now get the input filter of the form, and add the validator to the email input
         $emailInput = $form->getInputFilter()->get('email');
@@ -685,7 +685,7 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
 
     public function getQueryUsersByRole($role=1, $order=null, $search='')
     {
-        $em = $this->getServiceManager()->get('zfcuser_doctrine_em');
+        $em = $this->getServiceManager()->get('doctrine.entitymanager.orm_default');
         $filterSearch = '';
 
         if ($search != '') {

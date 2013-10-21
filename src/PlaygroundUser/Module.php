@@ -137,8 +137,7 @@ class Module
     {
         return array(
             'aliases' => array(
-                    'zfcuser_doctrine_em'  => 'doctrine.entitymanager.orm_default',
-                    'playgrounduser_message'    => 'playgroundcore_message',
+                'playgrounduser_message'    => 'playgroundcore_message',
             ),
 
             'invokables' => array(
@@ -163,7 +162,7 @@ class Module
                 },
                 'zfcuser_user_mapper' => function ($sm) {
                     return new \PlaygroundUser\Mapper\User(
-                        $sm->get('zfcuser_doctrine_em'),
+                        $sm->get('doctrine.entitymanager.orm_default'),
                         $sm->get('zfcuser_module_options')
                     );
                 },
@@ -299,14 +298,14 @@ class Module
 
                 'playgrounduser_emailverification_mapper' => function ($sm) {
                     return new \PlaygroundUser\Mapper\EmailVerification(
-                        $sm->get('zfcuser_doctrine_em'),
+                        $sm->get('doctrine.entitymanager.orm_default'),
                         $sm->get('zfcuser_module_options')
                     );
                 },
 
                 'playgrounduser_role_mapper' => function ($sm) {
                     return new Mapper\Role(
-                        $sm->get('zfcuser_doctrine_em'),
+                        $sm->get('doctrine.entitymanager.orm_default'),
                         $sm->get('playgrounduser_module_options')
                     );
                 },
@@ -376,7 +375,7 @@ class Module
 
                 'playgrounduser_userprovider_mapper' => function ($sm) {
                     return new Mapper\UserProvider(
-                        $sm->get('zfcuser_doctrine_em'),
+                        $sm->get('doctrine.entitymanager.orm_default'),
                         $sm->get('playgrounduser_module_options')
                     );
                 },
