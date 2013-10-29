@@ -107,9 +107,9 @@ class Address extends Register
        		'type' => 'Zend\Form\Element\Select',
        		'name' => 'country',
        		'options' => array(
-       			'empty_option' => $translator->translate('Sélectionnez votre pays', 'playgrounduser'),
+       			'empty_option' => $translator->translate('Select your country', 'playgrounduser'),
        			'value_options' => $countries_label,
-       			'label' => $translator->translate('Pays', 'playgrounduser')
+       			'label' => $translator->translate('Country', 'playgrounduser')
         	)
         ));
         
