@@ -465,25 +465,25 @@ return array(
         ),
         'admin' => array(
             'playgrounduser' => array(
-                'label' => 'Utilisateurs',
+                'label' => 'Users',
                 'route' => 'admin/playgrounduser/list',
                 'resource' => 'user',
                 'privilege' => 'list',
                 'pages' => array(
                     'list' => array(
-                        'label' => 'Liste des utilisateurs',
+                        'label' => 'Users list',
                         'route' => 'admin/playgrounduser/list',
                         'resource' => 'user',
                         'privilege' => 'list',
                     ),
                     'create' => array(
-                        'label' => 'Créer un utilisateur',
+                        'label' => 'Create user',
                         'route' => 'admin/playgrounduser/create',
                         'resource' => 'user',
                         'privilege' => 'add',
                     ),
                     'edit' => array(
-                        'label' => 'Editer un utilisateur',
+                        'label' => 'Edit user',
                         'route' => 'admin/playgrounduser/edit',
                         'privilege' => 'edit',
                     ),

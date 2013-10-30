@@ -418,8 +418,8 @@ return array(
 	'click on the confirmation link it contains to confirm your registration' => 'click on the confirmation link it contains to confirm your registration',
 	
 	// EMAILS
-	'Good morning' => 'Good morning',
-	'You can log into your account using your username and new password' => 'You can log into your account using your username and new password',
+	'Good morning' => 'Bonjour',
+	'You can log into your account using your username and new password' => 'Vous pourrez vous connecter &agrave; votre compte en utilisant votre identifiant et un nouveau mot de passe',
 	'Username' => 'Username',
 	'Your password is changed successfully' => 'Your password is changed successfully',
 	'Change my password' => 'Change my password',
