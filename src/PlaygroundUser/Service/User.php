@@ -12,6 +12,7 @@ use PlaygroundUser\Options\ModuleOptions;
 use Zend\Validator\File\Size;
 use DoctrineModule\Validator\NoObjectExists as NoObjectExistsValidator;
 use Zend\Session\Container;
+use PlaygroundUser\Entity\User as UserEntity;
 
 class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
 {
@@ -711,8 +712,33 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
     {
         $query = $this->getQueryUsersByRole();
         $result = $query->getResult();
-        //die(print $query->getSQL());
         return $result;
+    }
+
+    /**
+    * findUserOrCreateByEmail : retrieve user with email or create user if not exist
+    * @param string $email
+    * 
+    * @return User $user
+    */
+    public function findUserOrCreateByEmail($email)
+    {
+        $user = $this->getUserMapper()->findByEmail($email);
+        if(empty($user)) {
+            // Pas d'utilisateur playground : alors on en crée un
+            $user = new UserEntity();
+            $user->setEmail($email);
+            $rand = \Zend\Math\Rand::getString(8);
+            $clearPassword = $rand;
+            $bcrypt = new Bcrypt;
+            $zfcUserOptions = $this->getServiceManager()->get('zfcuser_module_options');
+            $bcrypt->setCost($zfcUserOptions->getPasswordCost());
+            $pass = $bcrypt->create($rand);
+            $user->setPassword($pass);
+            $user = $this->getUserMapper()->insert($user);
+        }
+
+        return $user;
     }
 
     public function findAll()
