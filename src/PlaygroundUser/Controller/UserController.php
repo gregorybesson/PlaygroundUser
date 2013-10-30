@@ -420,6 +420,8 @@ class UserController extends ZfcUserController
      */
     public function profileAction ()
     {
+    	$translator = $this->getServiceLocator()->get('translator');
+ 
         if (! $this->zfcUserAuthentication()->hasIdentity()) {
         	return $this->redirect()->toUrl(
         				$this->url()->fromRoute(
@@ -430,55 +432,55 @@ class UserController extends ZfcUserController
         }
         $formEmail     = $this->getChangeEmailForm();
         $formEmail->get('credential')
-                  ->setLabel('Mot de passe')
+                  ->setLabel($translator->translate('Your password', 'playgrounduser'))
                   ->setAttributes(array(
                       'type' 			=> 'password',
                       'class' 		=> 'large-input',
-                      'placeholder' 	=> 'Votre mot de passe'
+                      'placeholder' 	=> $translator->translate('Your password', 'playgrounduser')
                   ));
         $formEmail->get('newIdentity')
-                  ->setLabel('Nouvel email')
+                  ->setLabel($translator->translate('Your new email', 'playgrounduser'))
                   ->setAttributes(array(
                       'type' 			=> 'email',
                       'class' 		=> 'large-input',
-                      'placeholder' 	=> 'Votre nouvel email'
+                      'placeholder' 	=> $translator->translate('Your new email', 'playgrounduser')
                   ));
         $formEmail->get('newIdentityVerify')
-                  ->setLabel('Confirmer le nouvel email')
+                  ->setLabel($translator->translate('Confirm the new email', 'playgrounduser'))
                   ->setAttributes(array(
                       'type' 			=> 'email',
                       'class' 		=> 'large-input',
-                      'placeholder'	=> 'Confirmer votre nouvel email'
+                      'placeholder'	=> $translator->translate('Confirm the new email', 'playgrounduser')
                   ));
         $formPassword  = $this->getChangePasswordForm();
         $formPassword->get('credential')
-                     ->setLabel('Mot de passe actuel')
+                     ->setLabel($translator->translate('Your current password', 'playgrounduser'))
                      ->setAttributes(array(
                          'class' 	=> 'large-input',
                          'type'		=> 'password',
-                         'placeholder' => 'Votre mot de passe actuel'
+                         'placeholder' => $translator->translate('Your current password', 'playgrounduser')
                      ));
         $formPassword->get('newCredential')
-                     ->setLabel('Nouveau mot de passe')
+                     ->setLabel($translator->translate('New Password', 'playgrounduser'))
                      ->setAttributes(array(
                          'class' 	=> 'large-input',
                          'type'		=> 'password',
-                         'placeholder' => 'Votre nouveau mot de passe'
+                         'placeholder' => $translator->translate('New Password', 'playgrounduser')
                      ));
         $formPassword->get('newCredentialVerify')
-                     ->setLabel('Confirmer le nouveau mot de passe')
+                     ->setLabel($translator->translate('Verify New Password', 'playgrounduser'))
                      ->setAttributes(array(
                          'class' 	=> 'large-input',
                          'type'		=> 'password',
-                         'placeholder' => 'Confirmer votre nouveau mot de passe'
+                         'placeholder' => $translator->translate('Verify New Password', 'playgrounduser')
                      ));;
         $formInfo      = $this->getChangeInfoForm();
         $formPrize     = $this->getPrizeCategoryForm();
         $formBlock     = $this->getBlockAccountForm();
         if ($this->zfcUserAuthentication()->getIdentity()->getState() == 2) {
             $formBlock->get('activate')->setAttribute('value', 1);
-            $formBlock->get('submit')->setAttribute('value', 'Réactiver mon compte');
-            $formBlock->get('confirm_submit')->setAttribute('value', 'Confirmer réactivation');
+            $formBlock->get('submit')->setAttribute('value', $translator->translate('Reactivate my account', 'playgrounduser'));
+            $formBlock->get('confirm_submit')->setAttribute('value', $translator->translate('Confirm account reactivation', 'playgrounduser'));
         }
 
         $categoryService = $this->getServiceLocator()->get('playgroundgame_prizecategoryuser_service');

@@ -57,7 +57,7 @@ class BlockAccount extends ProvidesEventsForm
             'attributes' => array(
                 'class' => 'btn btn-success',
                 'type'  => 'button',
-                'value' => 'Supprimer mon compte',
+                'value' => $translator->translate('Delete my account', 'playgrounduser'),
                 'id' => 'del-confirm',
             ),
         ));
@@ -67,7 +67,7 @@ class BlockAccount extends ProvidesEventsForm
             'attributes' => array(
                 'class' => 'btn btn-cancel',
                 'type'  => 'button',
-                'value' => 'Annuler',
+                'value' => $translator->translate('Cancel', 'playgrounduser'),
                 'id' => 'del-cancel',
             ),
         ));
@@ -77,7 +77,7 @@ class BlockAccount extends ProvidesEventsForm
             'attributes' => array(
                 'class' => 'btn btn-success',
                 'type'  => 'submit',
-                'value' => 'Valider la suppression de mon compte',
+                'value' => $translator->translate('Confirm the deletion of my account', 'playgrounduser'),
                 'id' => 'del-input',
             ),
         ));
