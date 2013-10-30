@@ -36,11 +36,11 @@ class ChangeInfo extends Register
         $this->add(array(
                 'name' => 'username',
                 'options' => array(
-                        'label' => $translator->translate('Votre pseudo', 'playgrounduser'),
+                        'label' => $translator->translate('Username', 'playgrounduser'),
                 ),
                 'attributes' => array(
                         'type' => 'text',
-                        'placeholder' => $translator->translate('Votre pseudo', 'playgrounduser'),
+                        'placeholder' => $translator->translate('Username', 'playgrounduser'),
                 ),
         ));
 
@@ -144,9 +144,9 @@ class ChangeInfo extends Register
         		'type' => 'Zend\Form\Element\Select',
         		'name' => 'country',
         		'options' => array(
-        				'empty_option' => $translator->translate('Sélectionnez votre pays', 'playgrounduser'),
+        				'empty_option' => $translator->translate('Select your country', 'playgrounduser'),
         				'value_options' => $countries_label,
-        				'label' => $translator->translate('Pays', 'playgrounduser')
+        				'label' => $translator->translate('Country', 'playgrounduser')
         		)
         ));
 
@@ -183,8 +183,8 @@ class ChangeInfo extends Register
                 'options' => array(
                         'label' => $translator->translate('Newsletter', 'playgrounduser'),
                         'value_options' => array(
-                                '1'  => $translator->translate('Oui', 'playgrounduser'),
-                                '0' => $translator->translate('Non', 'playgrounduser'),
+                                '1'  => $translator->translate('Yes', 'playgrounduser'),
+                                '0' => $translator->translate('No', 'playgrounduser'),
                         ),
                 ),
         ));
@@ -193,10 +193,10 @@ class ChangeInfo extends Register
                 'name' => 'optinPartner',
                 'type' => 'Zend\Form\Element\Radio',
                 'options' => array(
-                        'label' => $translator->translate('Newsletter des partenaires', 'playgrounduser'),
+                        'label' => $translator->translate('Partners Newsletter', 'playgrounduser'),
                         'value_options' => array(
-                                '1'  => $translator->translate('Oui', 'playgrounduser'),
-                                '0' => $translator->translate('Non', 'playgrounduser'),
+                                '1'  => $translator->translate('Yes', 'playgrounduser'),
+                                '0' => $translator->translate('No', 'playgrounduser'),
                         ),
                 ),
         ));

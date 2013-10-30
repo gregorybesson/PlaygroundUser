@@ -38,7 +38,7 @@ class Newsletter extends ProvidesEventsForm
             'name' => 'optinPartner',
             'type' => 'Zend\Form\Element\Radio',
             'options' => array(
-                'label' => $translator->translate('Newsletter des partenaires', 'playgrounduser'),
+                'label' => $translator->translate('Partners Newsletter', 'playgrounduser'),
                 'value_options' => array(
                     '1'  => $translator->translate('Yes', 'playgrounduser'),
                     '0' => $translator->translate('No', 'playgrounduser'),
@@ -47,7 +47,7 @@ class Newsletter extends ProvidesEventsForm
         ));
 
         $submitElement = new Element\Button('submit');
-        $submitElement->setLabel($translator->translate('Valider', 'playgrounduser'))
+        $submitElement->setLabel($translator->translate('Validate', 'playgrounduser'))
         ->setAttributes(array(
                 'type' => 'submit',
                 'class' => 'btn btn-success'
