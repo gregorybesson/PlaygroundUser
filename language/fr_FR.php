@@ -424,18 +424,10 @@ return array(
 	'Change my password' => 'Changer mon mot de passe',
 	'Thank you and see you soon on Playground!' => 'Merci et &agrave; tr&egrave;s vite sur Playground !',
 	'Playground team' => 'L&apos;&eacute;quipe Playground',
-		'Follow us on Facebook' => 'Suivez-nous sur Facebook',
-		'You registered to <b> Playground </ b> and we thank you' => 'Vous vous &ecirc;tes inscrit(e) à <b>Playground</b> et nous vous en remercions',
-		'Finalize your registration now and try to win a lot of gifts!' => 'Finaliser d&egrave;s &agrave; pr&eacute;sent votre inscription et tenter de gagner plein de cadeaux!',
-		'Validate registration' => 'Valider l\'inscription',
-		'If this link does not display correctly, <br/> copy and paste this URL into your browser' => 'Si ce lien ne s\'affiche pas correctement, <br/>copiez-collez cette URL dans votre navigateur',
-		'' => '',
-		'' => '',
-		'' => '',
-		'' => '',
-		'' => '',
-		'' => '',
-		'' => '',
-		
+	'Follow us on Facebook' => 'Suivez-nous sur Facebook',
+	'You registered to <b> Playground </ b> and we thank you' => 'Vous vous &ecirc;tes inscrit(e) à <b>Playground</b> et nous vous en remercions',
+	'Finalize your registration now and try to win a lot of gifts!' => 'Finaliser d&egrave;s &agrave; pr&eacute;sent votre inscription et tenter de gagner plein de cadeaux!',
+	'Validate registration' => 'Valider l\'inscription',
+	'If this link does not display correctly, <br/> copy and paste this URL into your browser' => 'Si ce lien ne s\'affiche pas correctement, <br/>copiez-collez cette URL dans votre navigateur',
 	
 );
