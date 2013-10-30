@@ -417,18 +417,18 @@ return array(
 	'An email has been sent to the address' => 'An email has been sent to the address',
 	'click on the confirmation link it contains to confirm your registration' => 'click on the confirmation link it contains to confirm your registration',
 	
-		// EMAILS
-		'Good morning' => 'Bonjour',
-		'You can log into your account using your username and new password' => 'Vous pourrez vous connecter &agrave; votre compte en utilisant votre identifiant et un nouveau mot de passe',
-		'Username' => 'Username',
-		'Your password is changed successfully' => 'Your password is changed successfully',
-		'Change my password' => 'Change my password',
-		'Thank you and see you soon on Playground!' => 'Thank you and see you soon on Playground!',
-		'Playground team' => 'Playground team',
-		'Follow us on Facebook' => 'Follow us on Facebook',
-		'You registered to <b> Playground </ b> and we thank you' => 'You registered to <b> Playground </ b> and we thank you',
-		'Finalize your registration now and try to win a lot of gifts!' => 'Finalize your registration now and try to win a lot of gifts!',
-		'Validate registration' => 'Validate registration',
-		'If this link does not display correctly, <br/> copy and paste this URL into your browser' => 'If this link does not display correctly, <br/> copy and paste this URL into your browser',
-		
+	// EMAILS
+	'Good morning' => 'Bonjour',
+	'You can log into your account using your username and new password' => 'Vous pourrez vous connecter &agrave; votre compte en utilisant votre identifiant et un nouveau mot de passe',
+	'Username' => 'Username',
+	'Your password is changed successfully' => 'Your password is changed successfully',
+	'Change my password' => 'Change my password',
+	'Thank you and see you soon on Playground!' => 'Thank you and see you soon on Playground!',
+	'Playground team' => 'Playground team',
+	'Follow us on Facebook' => 'Follow us on Facebook',
+	'You registered to <b> Playground </ b> and we thank you' => 'You registered to <b> Playground </ b> and we thank you',
+	'Finalize your registration now and try to win a lot of gifts!' => 'Finalize your registration now and try to win a lot of gifts!',
+	'Validate registration' => 'Validate registration',
+	'If this link does not display correctly, <br/> copy and paste this URL into your browser' => 'If this link does not display correctly, <br/> copy and paste this URL into your browser',
+	
 );

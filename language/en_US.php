@@ -426,16 +426,9 @@ return array(
 	'Thank you and see you soon on Playground!' => 'Thank you and see you soon on Playground!',
 	'Playground team' => 'Playground team',
 	'Follow us on Facebook' => 'Follow us on Facebook',
-		'You registered to <b> Playground </ b> and we thank you' => 'You registered to <b> Playground </ b> and we thank you',
-		'Finalize your registration now and try to win a lot of gifts!' => 'Finalize your registration now and try to win a lot of gifts!',
-		'Validate registration' => 'Validate registration',
-		'If this link does not display correctly, <br/> copy and paste this URL into your browser' => 'If this link does not display correctly, <br/> copy and paste this URL into your browser',
-		'' => '',
-		'' => '',
-		'' => '',
-		'' => '',
-		'' => '',
-		'' => '',
-		
+	'You registered to <b> Playground </ b> and we thank you' => 'You registered to <b> Playground </ b> and we thank you',
+	'Finalize your registration now and try to win a lot of gifts!' => 'Finalize your registration now and try to win a lot of gifts!',
+	'Validate registration' => 'Validate registration',
+	'If this link does not display correctly, <br/> copy and paste this URL into your browser' => 'If this link does not display correctly, <br/> copy and paste this URL into your browser',
 	
 );
