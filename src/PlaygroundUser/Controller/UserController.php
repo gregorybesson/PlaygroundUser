@@ -109,7 +109,7 @@ class UserController extends ZfcUserController
 
                     return $this->redirect()->toUrl($redir);
                 }
-                
+
                 // Je retire la saisie du login/mdp
                 $form->setAttribute('action', $this->url()->fromRoute('frontend/zfcuser/register', array('socialnetwork' => $socialnetwork, 'channel' => $this->getEvent()->getRouteMatch()->getParam('channel'))));
                 $form->remove('password');
@@ -348,9 +348,9 @@ class UserController extends ZfcUserController
     public function logoutAction()
     {
         $user = $this->zfcUserAuthentication()->getIdentity();
-        
+
         $hybridAuth = $this->getHybridAuth();
-    	
+
         Hybrid_Auth::logoutAllProviders();
 
         $this->zfcUserAuthentication()->getAuthAdapter()->resetAdapters();
@@ -363,14 +363,14 @@ class UserController extends ZfcUserController
         if($user){
             $this->getEventManager()->trigger('logout.post', $this, array('user' => $user));
         }
-        
+
         if ($this->getOptions()->getUseRedirectParameterIfPresent() && $redirect) {
             return $this->redirect()->toUrl($redirect);
         }
 
         return $this->redirect()->toRoute($this->getOptions()->getLogoutRedirectRoute(), array('channel' => $this->getEvent()->getRouteMatch()->getParam('channel')));
     }
-    
+
     /**
      * General-purpose authentication action
      */
@@ -381,33 +381,33 @@ class UserController extends ZfcUserController
         }
         $adapter = $this->zfcUserAuthentication()->getAuthAdapter();
         $redirect = $this->params()->fromPost('redirect', $this->params()->fromQuery('redirect', false));
-    
+
         $result = $adapter->prepareForAuthentication($this->getRequest());
-    
+
         // Return early if an adapter returned a response
         if ($result instanceof Response) {
             return $result;
         }
-    
+
         $auth = $this->zfcUserAuthentication()->getAuthService()->authenticate($adapter);
-    
+
         if (!$auth->isValid()) {
             $this->flashMessenger()->setNamespace('zfcuser-login-form')->addMessage($this->failedLoginMessage);
             $adapter->resetAdapters();
             return $this->redirect()->toUrl($this->url()->fromRoute('frontend/login', array('channel' => $this->getEvent()->getRouteMatch()->getParam('channel')))
                 . ($redirect ? '?redirect='.$redirect : ''));
         }
-    
+
         $user = $this->zfcUserAuthentication()->getIdentity();
         $this->getEventManager()->trigger('login.post', $this, array('user' => $user));
-        
+
         if ($this->getOptions()->getUseRedirectParameterIfPresent() && $redirect) {
             return $this->redirect()->toUrl($redirect);
         }
-    
+
         return $this->redirect()->toUrl(
 			$this->url()->fromRoute(
-				$this->getOptions()->getLoginRedirectRoute(), 
+				$this->getOptions()->getLoginRedirectRoute(),
 				array('channel' => $this->getEvent()->getRouteMatch()->getParam('channel'))
 			)
 		);
@@ -425,7 +425,7 @@ class UserController extends ZfcUserController
         if (! $this->zfcUserAuthentication()->hasIdentity()) {
         	return $this->redirect()->toUrl(
         				$this->url()->fromRoute(
-        					$this->getOptions()->getLoginRedirectRoute(), 
+        					$this->getOptions()->getLoginRedirectRoute(),
         					array('channel' => $this->getEvent()->getRouteMatch()->getParam('channel'))
         				)
         			);
@@ -578,7 +578,7 @@ class UserController extends ZfcUserController
             $this->flashMessenger()
                 ->setNamespace('change-info')
                 ->addMessage(true);
-            
+
             return $this->redirect()->toUrl(
             		$this->url()->fromRoute(
             				'frontend/zfcuser/profile',
@@ -776,6 +776,148 @@ class UserController extends ZfcUserController
 
         $viewModel = new ViewModel();
         $viewModel->setVariables(array('form' => $form));
+
+        return $viewModel;
+    }
+
+
+    /**
+     * Register a user from Facebook
+     */
+    public function registerFacebookUserAction ()
+    {
+
+        // Get platform configuration for Facebook
+
+        $config = $this->getServiceLocator()->get('config');
+        $fbAppId = '';
+        if (isset($config['facebook']['fb_appid'])) {
+            $fbAppId = $config['facebook']['fb_appid'];
+        }
+        $fbSecret = '';
+        if (isset($config['facebook']['fb_secret'])) {
+            $fbSecret = $config['facebook']['fb_secret'];
+        }
+        $facebook = new \Facebook(array(
+                'appId'  => $fbAppId,
+                'secret' => $fbSecret,
+        ));
+
+        $facebook_user = $facebook->getUser();
+
+        $userProfile = array();
+        $user = null;
+
+        // The user is logged to Facebook
+
+        if ($facebook_user) {
+
+            // Try to retrieve user information from Facebook
+
+            try {
+                $userProfile = $facebook->api('/me');
+            } catch (FacebookApiException $e) {
+
+            }
+
+            $userNotFound = true;
+            $createUserProvider = false;
+
+            $userProviderMapper = $this->getServiceLocator()->get('playgrounduser_userprovider_mapper');
+
+            // Check if the user Facebook account is registered into Playground
+
+            if (isset($userProfile['id'])){
+
+                $localUserProvider = $userProviderMapper->findUserByProviderId($userProfile['id'], 'facebook');
+
+                if ($localUserProvider) {
+                    $userNotFound = false;
+                    $user = $localUserProvider->getUser();
+                }
+
+            }
+
+            // Check if the user email form Facebook account exist into Playground users
+
+            if ($userNotFound && isset($userProfile['email'])){
+
+                $zfcUserMapper = $this->getServiceLocator()->get('zfcuser_user_mapper');
+
+                $localUser = $zfcUserMapper->findByEmail($userProfile['email']);
+
+                if ($localUser) {
+                    $userNotFound = false;
+                    $createUserProvider = true;
+                    $user = $localUser;
+                }
+            }
+
+            // Create the new user is no user has been found
+
+            if ($userNotFound){
+
+                $user = new \PlaygroundUser\Entity\User();
+                $user
+                ->setEmail($userProfile['email'])
+                ->setUserName($userProfile['name'])
+                ->setFirstName($userProfile['first_name'])
+                ->setLastName($userProfile['last_name'])
+                ->setPassword('facebookToLocalUser');
+
+                // Create and persist ZfcUser
+
+                $zfcUserOptions = $this->getServiceLocator()->get('zfcuser_module_options');
+
+                // If user state is enabled, set the default state value
+                if ($zfcUserOptions->getEnableUserState()) {
+                    if ($zfcUserOptions->getDefaultUserState()) {
+                        $user->setState((int) $zfcUserOptions->getDefaultUserState());
+                    }
+                }
+
+                $roleMapper          = $this->getServiceLocator()->get('playgrounduser_role_mapper');
+
+                $userOptions = $this->getServiceLocator()->get('playgrounduser_module_options');
+
+                $defaultRegisterRole = $userOptions->getDefaultRegisterRole();
+                $role = $roleMapper->findByRoleId($defaultRegisterRole);
+                $user->addRole($role);
+
+                $options = array(
+                        'user'          => $user,
+                        'provider'      => 'facebook',
+                        'userProfile'   => $userProfile,
+                );
+
+                $result = $zfcUserMapper->insert($user);
+
+            }
+
+
+            // Create the user provider if necessary
+
+            if ($createUserProvider){
+
+                $localUserProvider = new \PlaygroundUser\Entity\UserProvider();
+                $localUserProvider->setUser($user)
+                ->setProviderId($userProfile['id'])
+                ->setProvider('facebook');
+
+                $userProviderMapper->insert($localUserProvider);
+
+                $user = $localUserProvider->getUser();
+            }
+
+            // Authentify user
+
+            $authService = $this->getServiceLocator()->get('zfcuser_auth_service');
+            $authService->getStorage()->write($user->getId());
+
+        }
+
+        $viewModel = new ViewModel();
+        $viewModel->setVariables(array('user' => $user));
 
         return $viewModel;
     }
@@ -1171,7 +1313,7 @@ class UserController extends ZfcUserController
 
         return $this;
     }
-    
+
     /**
      * Retrieve service manager instance
      *
