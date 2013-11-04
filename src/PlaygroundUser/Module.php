@@ -146,7 +146,7 @@ class Module
                     'playgrounduser_user_service'                  => 'PlaygroundUser\Service\User',
                     'playgrounduser_rememberme_service'            => 'PlaygroundUser\Service\RememberMe',
                     'playgrounduser_password_service'              => 'PlaygroundUser\Service\Password',
-                    'zfcuser_user_service'                    => 'PlaygroundUser\Service\User', // Extending ZfcUser service
+                    'zfcuser_user_service'                         => 'PlaygroundUser\Service\User', // Extending ZfcUser service
                     'playgrounduser_cron_service'                  => 'PlaygroundUser\Service\Cron',
                     'playgrounduser_provider_service'              => 'PlaygroundUser\Service\Provider',
                ),
