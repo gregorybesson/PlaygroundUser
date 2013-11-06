@@ -1,4 +1,112 @@
 <?php
+
+// Gestion du formulaire de creation de compte (admin / back)
+$playgrounduserform = array(
+    'email' => array('name' => 'email',
+                     'label' => 'email',
+                     'type' => 'Zend\Form\Element\Text',
+                     'configurable' => 0,
+                     'visibility' => array('admin' => 1, 'front' => 1),
+                     'required' => array('admin' => 1, 'front' => 1)
+    ),
+    'password' =>array('name' => 'password',
+                     'label' => 'password',
+                     'type' => 'Zend\Form\Element\Password',
+                     'configurable' => 0,
+                     'visibility' => array('admin' => 1, 'front' => 0),
+                     'required' => array('admin' => 1, 'front' => 0)
+    ),
+    'username' =>array('name' => 'username',
+                     'label' => 'username',
+                     'type' => 'Zend\Form\Element\Text',
+                     'configurable' => 1
+    ),
+    'title' => array('name' => 'title',
+                     'label' => 'title',
+                     'type' => 'Zend\Form\Element\Radio',
+                     'configurable' => 1,
+                     'value_options' => array(
+                        'M'  => 'Mister',
+                        'Me' => 'Miss')
+    ),
+    'firstname' => array('name' => 'firstname',
+                         'label' => 'firstname',
+                         'type' => 'Zend\Form\Element\Text',
+                         'configurable' => 1
+    ),
+    'lastname' => array('name' => 'lastname',
+                         'label' => 'lastname',
+                         'type' => 'Zend\Form\Element\Text',
+                         'configurable' => 1
+    ),
+
+    'roles' =>array('name' => 'password',
+                     'label' => 'password',
+                     'type' => 'Zend\Form\Element\Select',
+                     'configurable' => 1,
+                    /* 'visibility' => array('admin' => 1, 'front' => 0),
+                     'required' => array('admin' => 1, 'front' => 0)*/
+    ),
+    'dob' => array('name' => 'dob',
+                   'label' => 'Date of birth',
+                   'type' => 'Zend\Form\Element\DateTime',
+                   'format' => 'd/m/Y',
+                   'configurable' => 1
+    ),
+    'address' => array('name' => 'address',
+                         'label' => 'address',
+                         'type' => 'Zend\Form\Element\Text',
+                         'configurable' => 1
+    ),
+    'address2' => array('name' => 'address2',
+                         'label' => 'address2',
+                         'type' => 'Zend\Form\Element\Text',
+                         'configurable' => 1
+    ),
+    'postal_code' => array('name' => 'postal_code',
+                         'label' => 'postal_code',
+                         'type' => 'Zend\Form\Element\Text',
+                         'configurable' => 1
+    ),
+    'city' => array('name' => 'city',
+                         'label' => 'city',
+                         'type' => 'Zend\Form\Element\Text',
+                         'configurable' => 1
+    ),
+    'country' => array('name' => 'country',
+                         'label' => 'country',
+                         'type' => 'Zend\Form\Element\Select',
+                         'configurable' => 1,
+                         'value_options' => 'getCountries',
+    ),
+    'telephone' => array('name' => 'telephone',
+                         'label' => 'telephone',
+                         'type' => 'Zend\Form\Element\Text',
+                         'configurable' => 1
+    ),
+    'avatar' => array('name' => 'avatar',
+                         'label' => 'avatar',
+                         'type' => 'Zend\Form\Element\File',
+                         'configurable' => 1
+    ),
+    'optin' => array('name' => 'optin',
+                     'label' => 'optin',
+                     'type' => 'Zend\Form\Element\Radio',
+                     'configurable' => 1,
+                     'value_options' => array(
+                        '1'  => 'Oui',
+                        '0' => 'Non')
+    ),
+    'optinPartner' => array('name' => 'optinPartner',
+                     'label' => 'optinPartner',
+                     'type' => 'Zend\Form\Element\Radio',
+                     'configurable' => 1,
+                     'value_options' => array(
+                        '1'  => 'Oui',
+                        '0' => 'Non'),
+    ),
+);
+
 $playgrounduser = array(
         
         /**
