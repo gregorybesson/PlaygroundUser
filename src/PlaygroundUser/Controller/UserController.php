@@ -779,142 +779,25 @@ class UserController extends ZfcUserController
 
         return $viewModel;
     }
-
-
+    
     /**
-     * Register a user from Facebook
+     * Register a user from a social channel (only Facebook has been tested)
      */
     public function registerFacebookUserAction ()
     {
+        // The provider has to be set in the querystring of the request for hybridauth to work properly.
+        $provider = $this->params()->fromRoute('provider');
+        $this->getRequest()->getQuery()->provider = $provider;
+        
+        $this->zfcUserAuthentication()->getAuthAdapter()->resetAdapters();
+        $this->zfcUserAuthentication()->getAuthService()->clearIdentity();
+        
+        $adapter = $this->zfcUserAuthentication()->getAuthAdapter();
+        $adapter->prepareForAuthentication($this->getRequest());
 
-        // Get platform configuration for Facebook
-
-        $config = $this->getServiceLocator()->get('config');
-        $fbAppId = '';
-        if (isset($config['facebook']['fb_appid'])) {
-            $fbAppId = $config['facebook']['fb_appid'];
-        }
-        $fbSecret = '';
-        if (isset($config['facebook']['fb_secret'])) {
-            $fbSecret = $config['facebook']['fb_secret'];
-        }
-        $facebook = new \Facebook(array(
-                'appId'  => $fbAppId,
-                'secret' => $fbSecret,
-        ));
-
-        $facebook_user = $facebook->getUser();
-
-        $userProfile = array();
-        $user = null;
-
-        // The user is logged to Facebook
-
-        if ($facebook_user) {
-
-            // Try to retrieve user information from Facebook
-
-            try {
-                $userProfile = $facebook->api('/me');
-            } catch (FacebookApiException $e) {
-
-            }
-
-            $userNotFound = true;
-            $createUserProvider = false;
-
-            $userProviderMapper = $this->getServiceLocator()->get('playgrounduser_userprovider_mapper');
-
-            // Check if the user Facebook account is registered into Playground
-
-            if (isset($userProfile['id'])){
-
-                $localUserProvider = $userProviderMapper->findUserByProviderId($userProfile['id'], 'facebook');
-
-                if ($localUserProvider) {
-                    $userNotFound = false;
-                    $user = $localUserProvider->getUser();
-                }
-
-            }
-
-            // Check if the user email form Facebook account exist into Playground users
-
-            if ($userNotFound && isset($userProfile['email'])){
-
-                $zfcUserMapper = $this->getServiceLocator()->get('zfcuser_user_mapper');
-
-                $localUser = $zfcUserMapper->findByEmail($userProfile['email']);
-
-                if ($localUser) {
-                    $userNotFound = false;
-                    $createUserProvider = true;
-                    $user = $localUser;
-                }
-            }
-
-            // Create the new user is no user has been found
-
-            if ($userNotFound){
-
-                $user = new \PlaygroundUser\Entity\User();
-                $user
-                ->setEmail($userProfile['email'])
-                ->setUserName($userProfile['name'])
-                ->setFirstName($userProfile['first_name'])
-                ->setLastName($userProfile['last_name'])
-                ->setPassword('facebookToLocalUser');
-
-                // Create and persist ZfcUser
-
-                $zfcUserOptions = $this->getServiceLocator()->get('zfcuser_module_options');
-
-                // If user state is enabled, set the default state value
-                if ($zfcUserOptions->getEnableUserState()) {
-                    if ($zfcUserOptions->getDefaultUserState()) {
-                        $user->setState((int) $zfcUserOptions->getDefaultUserState());
-                    }
-                }
-
-                $roleMapper          = $this->getServiceLocator()->get('playgrounduser_role_mapper');
-
-                $userOptions = $this->getServiceLocator()->get('playgrounduser_module_options');
-
-                $defaultRegisterRole = $userOptions->getDefaultRegisterRole();
-                $role = $roleMapper->findByRoleId($defaultRegisterRole);
-                $user->addRole($role);
-
-                $options = array(
-                        'user'          => $user,
-                        'provider'      => 'facebook',
-                        'userProfile'   => $userProfile,
-                );
-
-                $result = $zfcUserMapper->insert($user);
-
-            }
-
-
-            // Create the user provider if necessary
-
-            if ($createUserProvider){
-
-                $localUserProvider = new \PlaygroundUser\Entity\UserProvider();
-                $localUserProvider->setUser($user)
-                ->setProviderId($userProfile['id'])
-                ->setProvider('facebook');
-
-                $userProviderMapper->insert($localUserProvider);
-
-                $user = $localUserProvider->getUser();
-            }
-
-            // Authentify user
-
-            $authService = $this->getServiceLocator()->get('zfcuser_auth_service');
-            $authService->getStorage()->write($user->getId());
-
-        }
+        $auth = $this->zfcUserAuthentication()->getAuthService()->authenticate($adapter);
+        
+        $user = $this->zfcUserAuthentication()->getIdentity();
 
         $viewModel = new ViewModel();
         $viewModel->setVariables(array('user' => $user));

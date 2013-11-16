@@ -80,6 +80,13 @@ class Module
             }
         });
 
+        // Automatically add Facebook app_id and scope for authentication
+        $e->getApplication()->getEventManager()->attach(\Zend\Mvc\MvcEvent::EVENT_RENDER, function(\Zend\Mvc\MvcEvent $e) use ($sm) {
+            $view   = $sm->get('ViewHelperManager');
+            $plugin = $view->get('facebookLogin');
+            $plugin();
+        });
+            
         // I can post cron tasks to be scheduled by the core cron service
         $em->getSharedManager()->attach('Zend\Mvc\Application','getCronjobs', array($this, 'addCronjob'));
     }
@@ -127,6 +134,14 @@ class Module
                     $viewHelper->setLoginForm($locator->get('zfcuser_login_form'));
 
                     return $viewHelper;
+                },
+                'facebookLogin' => function($sm) {
+                    $config = $sm->getServiceLocator()->get('SocialConfig');
+                    $renderer = $sm->getServiceLocator()->get('Zend\View\Renderer\RendererInterface');
+                
+                    $helper  = new View\Helper\FacebookLogin($config, $sm->getServiceLocator()->get('Request'), $renderer);
+                
+                    return $helper;
                 },
             ),
         );
