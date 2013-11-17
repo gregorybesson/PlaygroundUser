@@ -109,7 +109,7 @@ class UserController extends ZfcUserController
 
                     return $this->redirect()->toUrl($redir);
                 }
-                
+
                 // Je retire la saisie du login/mdp
                 $form->setAttribute('action', $this->url()->fromRoute('frontend/zfcuser/register', array('socialnetwork' => $socialnetwork, 'channel' => $this->getEvent()->getRouteMatch()->getParam('channel'))));
                 $form->remove('password');
@@ -348,9 +348,9 @@ class UserController extends ZfcUserController
     public function logoutAction()
     {
         $user = $this->zfcUserAuthentication()->getIdentity();
-        
+
         $hybridAuth = $this->getHybridAuth();
-    	
+
         Hybrid_Auth::logoutAllProviders();
 
         $this->zfcUserAuthentication()->getAuthAdapter()->resetAdapters();
@@ -363,14 +363,14 @@ class UserController extends ZfcUserController
         if($user){
             $this->getEventManager()->trigger('logout.post', $this, array('user' => $user));
         }
-        
+
         if ($this->getOptions()->getUseRedirectParameterIfPresent() && $redirect) {
             return $this->redirect()->toUrl($redirect);
         }
 
         return $this->redirect()->toRoute($this->getOptions()->getLogoutRedirectRoute(), array('channel' => $this->getEvent()->getRouteMatch()->getParam('channel')));
     }
-    
+
     /**
      * General-purpose authentication action
      */
@@ -381,33 +381,33 @@ class UserController extends ZfcUserController
         }
         $adapter = $this->zfcUserAuthentication()->getAuthAdapter();
         $redirect = $this->params()->fromPost('redirect', $this->params()->fromQuery('redirect', false));
-    
+
         $result = $adapter->prepareForAuthentication($this->getRequest());
-    
+
         // Return early if an adapter returned a response
         if ($result instanceof Response) {
             return $result;
         }
-    
+
         $auth = $this->zfcUserAuthentication()->getAuthService()->authenticate($adapter);
-    
+
         if (!$auth->isValid()) {
             $this->flashMessenger()->setNamespace('zfcuser-login-form')->addMessage($this->failedLoginMessage);
             $adapter->resetAdapters();
             return $this->redirect()->toUrl($this->url()->fromRoute('frontend/login', array('channel' => $this->getEvent()->getRouteMatch()->getParam('channel')))
                 . ($redirect ? '?redirect='.$redirect : ''));
         }
-    
+
         $user = $this->zfcUserAuthentication()->getIdentity();
         $this->getEventManager()->trigger('login.post', $this, array('user' => $user));
-        
+
         if ($this->getOptions()->getUseRedirectParameterIfPresent() && $redirect) {
             return $this->redirect()->toUrl($redirect);
         }
-    
+
         return $this->redirect()->toUrl(
 			$this->url()->fromRoute(
-				$this->getOptions()->getLoginRedirectRoute(), 
+				$this->getOptions()->getLoginRedirectRoute(),
 				array('channel' => $this->getEvent()->getRouteMatch()->getParam('channel'))
 			)
 		);
@@ -420,65 +420,67 @@ class UserController extends ZfcUserController
      */
     public function profileAction ()
     {
+    	$translator = $this->getServiceLocator()->get('translator');
+ 
         if (! $this->zfcUserAuthentication()->hasIdentity()) {
         	return $this->redirect()->toUrl(
         				$this->url()->fromRoute(
-        					$this->getOptions()->getLoginRedirectRoute(), 
+        					$this->getOptions()->getLoginRedirectRoute(),
         					array('channel' => $this->getEvent()->getRouteMatch()->getParam('channel'))
         				)
         			);
         }
         $formEmail     = $this->getChangeEmailForm();
         $formEmail->get('credential')
-                  ->setLabel('Mot de passe')
+                  ->setLabel($translator->translate('Your password', 'playgrounduser'))
                   ->setAttributes(array(
                       'type' 			=> 'password',
                       'class' 		=> 'large-input',
-                      'placeholder' 	=> 'Votre mot de passe'
+                      'placeholder' 	=> $translator->translate('Your password', 'playgrounduser')
                   ));
         $formEmail->get('newIdentity')
-                  ->setLabel('Nouvel email')
+                  ->setLabel($translator->translate('Your new email', 'playgrounduser'))
                   ->setAttributes(array(
                       'type' 			=> 'email',
                       'class' 		=> 'large-input',
-                      'placeholder' 	=> 'Votre nouvel email'
+                      'placeholder' 	=> $translator->translate('Your new email', 'playgrounduser')
                   ));
         $formEmail->get('newIdentityVerify')
-                  ->setLabel('Confirmer le nouvel email')
+                  ->setLabel($translator->translate('Confirm the new email', 'playgrounduser'))
                   ->setAttributes(array(
                       'type' 			=> 'email',
                       'class' 		=> 'large-input',
-                      'placeholder'	=> 'Confirmer votre nouvel email'
+                      'placeholder'	=> $translator->translate('Confirm the new email', 'playgrounduser')
                   ));
         $formPassword  = $this->getChangePasswordForm();
         $formPassword->get('credential')
-                     ->setLabel('Mot de passe actuel')
+                     ->setLabel($translator->translate('Your current password', 'playgrounduser'))
                      ->setAttributes(array(
                          'class' 	=> 'large-input',
                          'type'		=> 'password',
-                         'placeholder' => 'Votre mot de passe actuel'
+                         'placeholder' => $translator->translate('Your current password', 'playgrounduser')
                      ));
         $formPassword->get('newCredential')
-                     ->setLabel('Nouveau mot de passe')
+                     ->setLabel($translator->translate('New Password', 'playgrounduser'))
                      ->setAttributes(array(
                          'class' 	=> 'large-input',
                          'type'		=> 'password',
-                         'placeholder' => 'Votre nouveau mot de passe'
+                         'placeholder' => $translator->translate('New Password', 'playgrounduser')
                      ));
         $formPassword->get('newCredentialVerify')
-                     ->setLabel('Confirmer le nouveau mot de passe')
+                     ->setLabel($translator->translate('Verify New Password', 'playgrounduser'))
                      ->setAttributes(array(
                          'class' 	=> 'large-input',
                          'type'		=> 'password',
-                         'placeholder' => 'Confirmer votre nouveau mot de passe'
+                         'placeholder' => $translator->translate('Verify New Password', 'playgrounduser')
                      ));;
         $formInfo      = $this->getChangeInfoForm();
         $formPrize     = $this->getPrizeCategoryForm();
         $formBlock     = $this->getBlockAccountForm();
         if ($this->zfcUserAuthentication()->getIdentity()->getState() == 2) {
             $formBlock->get('activate')->setAttribute('value', 1);
-            $formBlock->get('submit')->setAttribute('value', 'Réactiver mon compte');
-            $formBlock->get('confirm_submit')->setAttribute('value', 'Confirmer réactivation');
+            $formBlock->get('submit')->setAttribute('value', $translator->translate('Reactivate my account', 'playgrounduser'));
+            $formBlock->get('confirm_submit')->setAttribute('value', $translator->translate('Confirm account reactivation', 'playgrounduser'));
         }
 
         $categoryService = $this->getServiceLocator()->get('playgroundgame_prizecategoryuser_service');
@@ -576,7 +578,7 @@ class UserController extends ZfcUserController
             $this->flashMessenger()
                 ->setNamespace('change-info')
                 ->addMessage(true);
-            
+
             return $this->redirect()->toUrl(
             		$this->url()->fromRoute(
             				'frontend/zfcuser/profile',
@@ -774,6 +776,31 @@ class UserController extends ZfcUserController
 
         $viewModel = new ViewModel();
         $viewModel->setVariables(array('form' => $form));
+
+        return $viewModel;
+    }
+    
+    /**
+     * Register a user from a social channel (only Facebook has been tested)
+     */
+    public function registerFacebookUserAction ()
+    {
+        // The provider has to be set in the querystring of the request for hybridauth to work properly.
+        $provider = $this->params()->fromRoute('provider');
+        $this->getRequest()->getQuery()->provider = $provider;
+        
+        $this->zfcUserAuthentication()->getAuthAdapter()->resetAdapters();
+        $this->zfcUserAuthentication()->getAuthService()->clearIdentity();
+        
+        $adapter = $this->zfcUserAuthentication()->getAuthAdapter();
+        $adapter->prepareForAuthentication($this->getRequest());
+
+        $auth = $this->zfcUserAuthentication()->getAuthService()->authenticate($adapter);
+        
+        $user = $this->zfcUserAuthentication()->getIdentity();
+
+        $viewModel = new ViewModel();
+        $viewModel->setVariables(array('user' => $user));
 
         return $viewModel;
     }
@@ -1169,7 +1196,7 @@ class UserController extends ZfcUserController
 
         return $this;
     }
-    
+
     /**
      * Retrieve service manager instance
      *
