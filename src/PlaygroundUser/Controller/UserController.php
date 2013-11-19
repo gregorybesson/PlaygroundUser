@@ -753,10 +753,15 @@ class UserController extends ZfcUserController
                 ->getAuthService()
                 ->getIdentity()
                 ->getEmail());
-        $request->getPost()->set('email', $this->getUserService()
-                ->getAuthService()
-                ->getIdentity()
-                ->getEmail());
+
+        $email = $request->getPost()->get('email');
+        if (empty($email)) {
+            $request->getPost()->set('email', $this->getUserService()
+                    ->getAuthService()
+                    ->getIdentity()
+                    ->getEmail());
+        }
+
         $userId = $this->getUserService()
             ->getAuthService()
             ->getIdentity()
