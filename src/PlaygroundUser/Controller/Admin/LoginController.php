@@ -31,6 +31,7 @@ class LoginController extends ZfcUserController
 
 	        if (!$form->isValid()) {
 	            $this->flashMessenger()->setNamespace('zfcuser-login-form')->addMessage($this->failedLoginMessage);
+                
 	            return $this->redirect()->toUrl($this->url()->fromRoute($authAdminConfig['route_login']));
 	        }
 
