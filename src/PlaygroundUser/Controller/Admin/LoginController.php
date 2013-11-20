@@ -31,7 +31,6 @@ class LoginController extends ZfcUserController
 
 	        if (!$form->isValid()) {
 	            $this->flashMessenger()->setNamespace('zfcuser-login-form')->addMessage($this->failedLoginMessage);
-
 	            return $this->redirect()->toUrl($this->url()->fromRoute($authAdminConfig['route_login']));
 	        }
 
@@ -39,10 +38,10 @@ class LoginController extends ZfcUserController
 	        $this->zfcUserAuthentication()->getAuthAdapter()->resetAdapters();
 	        $this->zfcUserAuthentication()->getAuthService()->clearIdentity();
 
+            $request->getQuery()->redirect = $this->url()->fromRoute($authAdminConfig['route_login']);
+            $request->getQuery()->routeLoginAdmin = $authAdminConfig['route_login'];
 
-	        $request->getQuery()->redirect = $this->url()->fromRoute($authAdminConfig['route_login']);
-
-	        return $this->forward()->dispatch(static::CONTROLLER_NAME, array('action' => 'authenticate'));
+	        return $this->forward()->dispatch("playgrounduser_user", array('action' => 'authenticate')); 
         }
 
         return array(
