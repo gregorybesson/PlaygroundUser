@@ -61,8 +61,8 @@ class Password extends EventProvider implements ServiceManagerAwareInterface
 
         $class = $this->getOptions()->getPasswordEntityClass();
         $model = new $class;
-        $model->setUserId($userId);
-        $model->setRequestTime(new \DateTime('now'));
+        $model->setUserId($userId)
+            ->setRequestTime(new \DateTime('now'));
         $model->generateRequestKey();
         $this->getEventManager()->trigger(__FUNCTION__, $this, array('record' => $model, 'userId' => $userId));
         $this->getPasswordMapper()->persist($model);

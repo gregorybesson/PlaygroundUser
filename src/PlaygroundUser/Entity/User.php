@@ -459,6 +459,8 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
     public function setAddress($address)
     {
         $this->address = $address;
+        
+        return $this;
     }
 
     /**
@@ -475,6 +477,8 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
     public function setAddress2($address2)
     {
         $this->address2 = $address2;
+        
+        return $this;
     }
 
     /**
@@ -491,6 +495,8 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
     public function setPostalCode($postal_code)
     {
         $this->postal_code = $postal_code;
+        
+        return $this;
     }
 
     /**
@@ -507,6 +513,8 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
     public function setCity($city)
     {
         $this->city = $city;
+        
+        return $this;
     }
     
     /**
@@ -523,6 +531,8 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
     public function setCountry($country)
     {
     	$this->country = $country;
+    	
+    	return $this;
     }
 
     /**
@@ -531,6 +541,8 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
     public function setRoles($roles)
     {
         $this->roles = $roles;
+        
+        return $this;
     }
 
     /**
@@ -585,6 +597,8 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
     public function setOptin ($optin)
     {
         $this->optin = $optin;
+        
+        return $this;
     }
 
     /**
@@ -603,6 +617,8 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
     public function setOptinPartner ($optinPartner)
     {
         $this->optinPartner = $optinPartner;
+        
+        return $this;
     }
 
     /**
