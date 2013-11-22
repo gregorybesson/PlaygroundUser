@@ -205,7 +205,7 @@ class UserController extends ZfcUserController
         //}
 
         // TODO: Add the redirect parameter here...
-        $redirect = $this->url()->fromRoute('frontend/zfcuser/login', array('channel' => $this->getEvent()->getRouteMatch()->getParam('channel'))) . ($socialnetwork ? '/' . $socialnetwork : ''). ($redirect ? '?redirect=' . $redirect : '');
+        $redirect = $this->url()->fromRoute('frontend/zfcuser/login') . ($socialnetwork ? '/' . $socialnetwork : ''). ($redirect ? '?redirect=' . $redirect : '');
 
         return $this->redirect()->toUrl($redirect);
     }
