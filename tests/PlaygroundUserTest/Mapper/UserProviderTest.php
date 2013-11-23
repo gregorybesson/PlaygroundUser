@@ -57,9 +57,9 @@ class UserProviderTest extends \PHPUnit_Framework_TestCase
         $user = $this->um->insert($user);
 
         $userProvider = new UserProvider;
-        $userProvider->setUser($user);
-        $userProvider->setProviderId($this->userProvider['providerId']);
-        $userProvider->setProvider($this->userProvider['provider']);
+        $userProvider->setUser($user)
+            ->setProviderId($this->userProvider['providerId'])
+            ->setProvider($this->userProvider['provider']);
         $userProvider = $this->tm->insert($userProvider);
         $this->assertEquals($this->userProvider['provider'], $userProvider->getProvider());
 

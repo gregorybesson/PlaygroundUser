@@ -422,9 +422,9 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         if (isset($data['socialNetwork']) && $user->getId()) {
 
             $userProvider = new \PlaygroundUser\Entity\UserProvider();
-            $userProvider->setProvider($data['socialNetwork']);
-            $userProvider->setProviderId($data['socialId']);
-            $userProvider->setUser($user);
+            $userProvider->setProvider($data['socialNetwork'])
+                ->setProviderId($data['socialId'])
+                ->setUser($user);
 
             $this->getProviderService()->getUserProviderMapper()->insert($userProvider);
 
@@ -669,8 +669,8 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
             return false;
         }*/
 
-        $user->setOptin($data['optin']);
-        $user->setOptinPartner($data['optinPartner']);
+        $user->setOptin($data['optin'])
+            ->setOptinPartner($data['optinPartner']);
 
         $user = $this->getUserMapper()->update($user);
         if($optinChange){
