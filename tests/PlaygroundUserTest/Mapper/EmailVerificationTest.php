@@ -35,8 +35,8 @@ class EmailVerificationTest extends \PHPUnit_Framework_TestCase
     public function testCanInsertNewRecord()
     {
         $email = new EmailVerification();
-        $email->setRequestTime($this->emailData['request_time']);
-        $email->setEmailAddress($this->emailData['email_address']);
+        $email->setRequestTime($this->emailData['request_time'])
+            ->setEmailAddress($this->emailData['email_address']);
 
         $emailEntityMocked = $this->getMockBuilder('PlaygroundUser\Entity\EmailVerification')
             ->setMethods(array('generateRequestKey'))
@@ -80,8 +80,8 @@ class EmailVerificationTest extends \PHPUnit_Framework_TestCase
     {
         $date = "2011-11-11 11:11:11";
         $email = new EmailVerification();
-        $email->setRequestTime($date);
-        $email->setEmailAddress($this->emailData['email_address']);
+        $email->setRequestTime($date)
+            ->setEmailAddress($this->emailData['email_address']);
 
         $emailEntityMocked = $this->getMockBuilder('PlaygroundUser\Entity\EmailVerification')
             ->setMethods(array('generateRequestKey'))

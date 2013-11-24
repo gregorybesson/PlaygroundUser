@@ -376,14 +376,16 @@ class UserController extends ZfcUserController
      */
     public function authenticateAction()
     {
+   
         if ($this->zfcUserAuthentication()->getAuthService()->hasIdentity()) {
             return $this->redirect()->toRoute($this->getOptions()->getLoginRedirectRoute(), array('channel' => $this->getEvent()->getRouteMatch()->getParam('channel')));
         }
         $adapter = $this->zfcUserAuthentication()->getAuthAdapter();
         $redirect = $this->params()->fromPost('redirect', $this->params()->fromQuery('redirect', false));
+        $routeLoginAdmin = $this->params()->fromPost('routeLoginAdmin', $this->params()->fromQuery('routeLoginAdmin', false));
 
         $result = $adapter->prepareForAuthentication($this->getRequest());
-
+ 
         // Return early if an adapter returned a response
         if ($result instanceof Response) {
             return $result;
@@ -394,6 +396,11 @@ class UserController extends ZfcUserController
         if (!$auth->isValid()) {
             $this->flashMessenger()->setNamespace('zfcuser-login-form')->addMessage($this->failedLoginMessage);
             $adapter->resetAdapters();
+
+            if (!empty($routeLoginAdmin)) {
+                return $this->redirect()->toUrl($routeLoginAdmin);
+            }
+            
             return $this->redirect()->toUrl($this->url()->fromRoute('frontend/login', array('channel' => $this->getEvent()->getRouteMatch()->getParam('channel')))
                 . ($redirect ? '?redirect='.$redirect : ''));
         }
@@ -753,10 +760,15 @@ class UserController extends ZfcUserController
                 ->getAuthService()
                 ->getIdentity()
                 ->getEmail());
-        $request->getPost()->set('email', $this->getUserService()
-                ->getAuthService()
-                ->getIdentity()
-                ->getEmail());
+
+        $email = $request->getPost()->get('email');
+        if (empty($email)) {
+            $request->getPost()->set('email', $this->getUserService()
+                    ->getAuthService()
+                    ->getIdentity()
+                    ->getEmail());
+        }
+
         $userId = $this->getUserService()
             ->getAuthService()
             ->getIdentity()
