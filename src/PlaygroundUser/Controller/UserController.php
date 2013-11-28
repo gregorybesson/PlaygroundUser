@@ -67,7 +67,7 @@ class UserController extends ZfcUserController
         $this->zfcUserAuthentication()->getAuthAdapter()->resetAdapters();
         $this->zfcUserAuthentication()->getAuthService()->clearIdentity();
 
-        return $this->forward()->dispatch(static::CONTROLLER_NAME, array('action' => 'authenticate'));
+        return $this->forward()->dispatch('playgrounduser_user', array('action' => 'authenticate'));
     }
 
     /**
@@ -75,6 +75,7 @@ class UserController extends ZfcUserController
      */
     public function registerAction ()
     {
+        
         if ($this->zfcUserAuthentication()->hasIdentity()) {
         	return $this->redirect()->toUrl($this->url()->fromRoute($this->getOptions()->getLoginRedirectRoute(), array('channel' => $this->getEvent()->getRouteMatch()->getParam('channel'))));
         }
@@ -198,7 +199,7 @@ class UserController extends ZfcUserController
                 $post['credential'] = isset($post['password'])?$post['password']:'';
                 $request->setPost(new Parameters($post));
 
-                return $this->forward()->dispatch('zfcuser', array(
+                return $this->forward()->dispatch('playgrounduser_user', array(
                     'action' => 'authenticate'
                 ));
             }
@@ -961,7 +962,7 @@ class UserController extends ZfcUserController
             );
         }
 
-        return $this->forward()->dispatch('zfcuser', array(
+        return $this->forward()->dispatch('playgrounduser_user', array(
             'action' => 'authenticate'
         ));
     }
