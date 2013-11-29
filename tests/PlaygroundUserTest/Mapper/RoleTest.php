@@ -40,8 +40,8 @@ class RoleTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($this->roleData['roleId'], $role->getRoleId());
 
         $childRole = new Role();
-        $childRole->setRoleId('2');
-        $childRole->setParent($role);
+        $childRole->setRoleId('2')
+            ->setParent($role);
         $childRole = $this->tm->insert($childRole);
    
         $this->assertEquals($childRole->getParent(), $role);

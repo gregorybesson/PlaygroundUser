@@ -86,8 +86,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $searchUsers = $this->tm->findByOptin(true, true);
         $this->assertEquals(count($searchUsers), 0);
 
-        $newUser->setOptin(1);
-        $newUser->setOptinPartner(1);
+        $newUser->setOptin(1)
+            ->setOptinPartner(1);
         $newUser = $this->tm->update($newUser);
         $searchUsers = $this->tm->findByOptin(true, true);
         $this->assertEquals(count($searchUsers), 1);
