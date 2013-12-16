@@ -470,7 +470,7 @@ class ModuleOptions extends BaseModuleOptions implements
 
         if (isset($social['providers'])) {
             $providers = $social['providers'];
-            if($providers){
+            if (!empty($providers) && is_array($providers)) {
                 foreach ($providers as $provider => $config) {
                     if ($config['enabled']) {
                         $enabled[] = strtolower($provider);
