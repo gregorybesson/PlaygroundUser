@@ -53,6 +53,9 @@ class Module
         }*/
         $sm = $e->getApplication()->getServiceManager();
         $em = $e->getApplication()->getEventManager();
+
+
+        $config = $sm->get('config');
  
         $options = $sm->get('playgroundcore_module_options');
         $locale = $options->getLocale();
@@ -89,6 +92,21 @@ class Module
             
         // I can post cron tasks to be scheduled by the core cron service
         $em->getSharedManager()->attach('Zend\Mvc\Application','getCronjobs', array($this, 'addCronjob'));
+
+
+        if (PHP_SAPI !== 'cli') {
+
+            if(!empty($config['playgrounduser']['anonymous_tracking'])){
+                // We set an anonymous cookie. No usage yet else but persisting it in a game entry.
+                if ($e->getRequest()->getCookie() && $e->getRequest()->getCookie()->offsetExists('pg_anonymous')) {
+                    $anonymousId = $e->getRequest()->getCookie()->offsetGet('pg_anonymous');
+                } else {
+                    $anonymousId = uniqid('pg_', true);
+                }
+                $cookie = new \Zend\Http\Header\SetCookie('pg_anonymous', $anonymousId, time() + 60*60*24*365,'/');
+                $e->getResponse()->getHeaders()->addHeader($cookie);
+            }
+        }
     }
 
     /**

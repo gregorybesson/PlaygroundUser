@@ -105,6 +105,8 @@ $playgrounduser = array(
             // route if auth fail
             'route_login_fail' => 'admin'
         ),
+
+        'anonymous_tracking' => false,
 );
 
 /**

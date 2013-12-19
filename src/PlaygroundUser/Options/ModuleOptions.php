@@ -469,7 +469,7 @@ class ModuleOptions extends BaseModuleOptions implements
         $enabled = array();
         if (isset($social['providers'])) {
             $providers = $social['providers'];
-            if (is_array($providers)) {
+            if (!empty($providers) && is_array($providers)) {
                 foreach ($providers as $provider => $config) {
                     if ($config['enabled']) {
                         $enabled[] = strtolower($provider);
