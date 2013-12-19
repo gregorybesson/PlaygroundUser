@@ -467,7 +467,6 @@ class ModuleOptions extends BaseModuleOptions implements
     {
         $social = $this->getSocial();
         $enabled = array();
-
         if (isset($social['providers'])) {
             $providers = $social['providers'];
             if (!empty($providers) && is_array($providers)) {
