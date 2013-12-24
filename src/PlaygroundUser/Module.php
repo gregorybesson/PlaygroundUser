@@ -37,7 +37,7 @@ class Module
 
         /*
         // Remember me feature
-        
+
         $session = new \Zend\Session\Container('zfcuser');
         $cookieLogin = $session->offsetGet("cookieLogin");
 
@@ -56,7 +56,7 @@ class Module
 
 
         $config = $sm->get('config');
- 
+
         $options = $sm->get('playgroundcore_module_options');
         $locale = $options->getLocale();
         $translator = $sm->get('translator');
@@ -89,7 +89,7 @@ class Module
             $plugin = $view->get('facebookLogin');
             $plugin();
         });
-            
+
         // I can post cron tasks to be scheduled by the core cron service
         $em->getSharedManager()->attach('Zend\Mvc\Application','getCronjobs', array($this, 'addCronjob'));
 
@@ -156,9 +156,9 @@ class Module
                 'facebookLogin' => function($sm) {
                     $config = $sm->getServiceLocator()->get('SocialConfig');
                     $renderer = $sm->getServiceLocator()->get('Zend\View\Renderer\RendererInterface');
-                
+
                     $helper  = new View\Helper\FacebookLogin($config, $sm->getServiceLocator()->get('Request'), $renderer);
-                
+
                     return $helper;
                 },
             ),
@@ -322,6 +322,7 @@ class Module
                     $rememberOptions = $sm->get('playgrounduser_module_options');
                     $mapper = new Mapper\RememberMe;
                     $mapper->setDbAdapter($sm->get('zfcuser_zend_db_adapter'));
+
                     $entityClass = $rememberOptions->getRememberMeEntityClass();
                     $mapper->setEntityPrototype(new $entityClass);
                     $mapper->setHydrator(new Mapper\RememberMeHydrator());
@@ -396,12 +397,15 @@ class Module
                 },
 
                 'playgrounduser_password_mapper' => function ($sm) {
-                    $options = $sm->get('playgrounduser_module_options');
-                    $mapper = new Mapper\Password;
-                    $mapper->setDbAdapter($sm->get('zfcuser_zend_db_adapter'));
-                    $entityClass = $options->getPasswordEntityClass();
-                    $mapper->setEntityPrototype(new $entityClass);
-                    $mapper->setHydrator(new Mapper\PasswordHydrator());
+//                     $options = $sm->get('playgrounduser_module_options');
+//                     $mapper = new Mapper\Password;
+//                     $mapper->setDbAdapter($sm->get('zfcuser_zend_db_adapter'));
+//                     $entityClass = $options->getPasswordEntityClass();
+//                     $mapper->setEntityPrototype(new $entityClass);
+//                     $mapper->setHydrator(new Mapper\PasswordHydrator());
+                    $mapper =  new Mapper\Password(
+                        $sm->get('doctrine.entitymanager.orm_default')
+                    );
 
                     return $mapper;
                 },
