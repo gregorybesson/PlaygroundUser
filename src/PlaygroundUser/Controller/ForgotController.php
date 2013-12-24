@@ -77,7 +77,7 @@ class ForgotController extends AbstractActionController
                 $user = $userService->getUserMapper()->findByEmail($email);
 
                 $vm = new ViewModel();
-                $vm->setTemplate('playground-user/frontend/forgot/sent');
+                $vm->setTemplate('playground-user/forgot/sent');
                 //only send request when email is found
                 if ($user != null) {
                     $service->sendProcessForgotRequest($user->getId(), $email);
@@ -135,7 +135,7 @@ class ForgotController extends AbstractActionController
                 $service->resetPassword($password, $user, $form->getData());
 
                 $vm = new ViewModel(array('email' => $user->getEmail()));
-                $vm->setTemplate('playground-user/frontend/forgot/passwordchanged');
+                $vm->setTemplate('playground-user/forgot/passwordchanged');
 
                 return $vm;
             }
