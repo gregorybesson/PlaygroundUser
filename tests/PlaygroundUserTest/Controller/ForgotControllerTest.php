@@ -31,7 +31,7 @@ class ForgotControllerTest extends AbstractHttpControllerTestCase
 
     public function testSentPasswordWrongMail()
     {
-        $this->dispatch('/mon-compte/envoie-mot-passe/fake-mail-address');
+        $this->dispatch('/mon-compte/envoi-mot-passe/fake-mail-address');
         $this->assertResponseStatusCode(200);
 
         $this->assertModuleName('playgrounduser');
