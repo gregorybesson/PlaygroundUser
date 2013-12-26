@@ -145,7 +145,7 @@ return array(
 		                    'sentpassword' => array(
 		                        'type' => 'Segment',
 		                        'options' => array(
-		                            'route' => '/envoie-mot-passe[/:email]',
+		                            'route' => '/envoi-mot-passe[/:email]',
 		                            'constraints' => array(
                                         ':email' => '[a-zA-Z0-9_-@.]+',
                                     ),
