@@ -7,11 +7,11 @@ $form->setAttribute('method', 'post');
 $form->setAttribute('class', 'validate');
 
 ?>
-    
+
 <div id="content-article" class="row-fluid rounded backgrey coordinates">
 	<p class="green">Vos coordonnées</p>
 	<p class="fillform"><b>Remplissez ou validez vos coordonnées afin que nous puissions vous envoyer votre cadeau :</b></p>
-	
+
 	<?php echo $this->form()->openTag($form) ?>
         <?php echo $this->formHidden($form->get('email')); ?>
 		<label class="row-fluid">
@@ -22,7 +22,7 @@ $form->setAttribute('class', 'validate');
 				<?php echo $this->formInput($form->get('lastname')) ?>
 				<?php echo $this->formElementErrors($form->get('lastname')) ?>
 			</div>
-		</label>	
+		</label>
 		<label class="row-fluid">
 			<div class="block-left span4">
 				<?php echo $form->get('firstname')->getLabel(); ?><span class="red">*</span> :
@@ -61,11 +61,11 @@ $form->setAttribute('class', 'validate');
 		</label>
 		<label id="cp" class="row-fluid">
 			<div class="block-left span4">
-				<?php echo $form->get('postal_code')->getLabel(); ?><span class="red">*</span> :
+				<?php echo $form->get('postalCode')->getLabel(); ?><span class="red">*</span> :
 			</div>
 			<div class="block-right span7">
-				<?php echo $this->formInput($form->get('postal_code')) ?>
-				<?php echo $this->formElementErrors($form->get('postal_code')) ?>
+				<?php echo $this->formInput($form->get('postalCode')) ?>
+				<?php echo $this->formElementErrors($form->get('postalCode')) ?>
 			</div>
 		</label>
 		<label id="country" class="row-fluid">

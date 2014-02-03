@@ -45,7 +45,7 @@ class userTest extends \PHPUnit_Framework_TestCase
         	'mobile' => '0623456789',
         	'avatar' => 'correct@test.com',
         	'state' => '1',
-       		'postal_code'  => '77000',
+       		'postalCode'  => '77000',
        		'optin' => '1',
         	'optinPartner' => '1',
         	'username'  => 'jolindien',
@@ -71,6 +71,45 @@ class userTest extends \PHPUnit_Framework_TestCase
         return $user->getId();
     }
 
+    public function testCanInsertNewRecordUKZipCode()
+    {
+        $this->userData['postalCode'] = 'AA9A 9AA';
+        $user = new User();
+        $user->populate($this->userData);
+        $rand = \Zend\Math\Rand::getString(8);
+        $bcrypt = new \Zend\Crypt\Password\Bcrypt;
+        $bcrypt->setCost(6);
+        $pass = $bcrypt->create($rand);
+        $user->setPassword($pass);
+        // save data
+        $this->em->persist($user);
+        $this->em->flush();
+
+        $this->assertEquals($this->userData['email'], $user->getEmail());
+
+        return $user->getId();
+    }
+
+    public function testCanInsertNewRecordUSZipCode()
+    {
+        $this->userData['postalCode'] = '12345-6789';
+        $user = new User();
+        $user->populate($this->userData);
+        $rand = \Zend\Math\Rand::getString(8);
+        $bcrypt = new \Zend\Crypt\Password\Bcrypt;
+        $bcrypt->setCost(6);
+        $pass = $bcrypt->create($rand);
+        $user->setPassword($pass);
+        // save data
+        $this->em->persist($user);
+        $this->em->flush();
+
+        $this->assertEquals($this->userData['email'], $user->getEmail());
+
+        return $user->getId();
+    }
+
+
     /**
      * @depends testCanInsertNewRecord
      */
@@ -92,7 +131,7 @@ class userTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($this->userData['telephone'], $user->getTelephone());
         $this->assertEquals($this->userData['mobile'], $user->getMobile());
         $this->assertEquals($this->userData['avatar'], $user->getAvatar());
-        $this->assertEquals($this->userData['postal_code'], $user->getPostalCode());
+        $this->assertEquals($this->userData['postalCode'], $user->getPostalCode());
         $this->assertEquals($this->userData['state'], $user->getState());
         $this->assertEquals($this->userData['username'], $user->getUsername());
         $this->assertEquals($this->userData['optin'], $user->getOptin());

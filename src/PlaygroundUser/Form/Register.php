@@ -27,7 +27,7 @@ class Register extends \ZfcUser\Form\Register
         	->setLabel($translator->translate('Username', 'playgrounduser'))
         	->setAttributes(array('placeholder' => 'Your username'));
         }
-        
+
         $this->get('email')
             ->setLabel($translator->translate('Your Email', 'playgrounduser'))
             ->setAttributes(array('type' => 'email', 'class' => 'large-input required email', 'placeholder' => $translator->translate('Your Email', 'playgrounduser')));
@@ -78,7 +78,7 @@ class Register extends \ZfcUser\Form\Register
         ));
 
         $this->add(array(
-            'name' => 'postal_code',
+            'name' => 'postalCode',
             'options' => array(
                 'label' => $translator->translate('Postal Code', 'playgrounduser')
             ),
@@ -86,7 +86,8 @@ class Register extends \ZfcUser\Form\Register
                 'id' => 'postalcode',
                 'type' => 'text',
                 'class'=> 'medium-input required number',
-                'maxlength' => 5,
+                'minlength' => 5,
+                'maxlength' => 10,
                 'placeholder' => $translator->translate('Your zip code', 'playgrounduser')
             )
         ));

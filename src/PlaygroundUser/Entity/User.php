@@ -106,9 +106,9 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
     protected $address2;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="string", length=10, nullable=true, name="postal_code")
      */
-    protected $postal_code;
+    protected $postalCode;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -119,7 +119,7 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
      * @ORM\Column(type="string", length=2, nullable=true)
      */
     protected $country;
-    
+
     /**
      * @var \Doctrine\Common\Collections\Collection
      * @ORM\ManyToMany(targetEntity="PlaygroundUser\Entity\Role")
@@ -459,7 +459,7 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
     public function setAddress($address)
     {
         $this->address = $address;
-        
+
         return $this;
     }
 
@@ -477,25 +477,25 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
     public function setAddress2($address2)
     {
         $this->address2 = $address2;
-        
+
         return $this;
     }
 
     /**
-     * @return the $postal_code
+     * @return the $postalCode
      */
     public function getPostalCode()
     {
-        return $this->postal_code;
+        return $this->postalCode;
     }
 
     /**
-     * @param field_type $postal_code
+     * @param field_type $postalCode
      */
-    public function setPostalCode($postal_code)
+    public function setPostalCode($postalCode)
     {
-        $this->postal_code = $postal_code;
-        
+        $this->postalCode = $postalCode;
+
         return $this;
     }
 
@@ -513,10 +513,10 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
     public function setCity($city)
     {
         $this->city = $city;
-        
+
         return $this;
     }
-    
+
     /**
      * @return the $country
      */
@@ -524,14 +524,14 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
     {
     	return $this->country;
     }
-    
+
     /**
      * @param field_type $country
      */
     public function setCountry($country)
     {
     	$this->country = $country;
-    	
+
     	return $this;
     }
 
@@ -541,7 +541,7 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
     public function setRoles($roles)
     {
         $this->roles = $roles;
-        
+
         return $this;
     }
 
@@ -597,7 +597,7 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
     public function setOptin ($optin)
     {
         $this->optin = $optin;
-        
+
         return $this;
     }
 
@@ -617,7 +617,7 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
     public function setOptinPartner ($optinPartner)
     {
         $this->optinPartner = $optinPartner;
-        
+
         return $this;
     }
 
@@ -683,11 +683,11 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
     public function getArrayCopy()
     {
         $obj_vars = get_object_vars($this);
-		
+
 		if (isset($obj_vars['dob']) && $obj_vars['dob'] != null) {
             $obj_vars['dob'] = $obj_vars['dob']->format('d/m/Y');
         }
-		
+
         return $obj_vars;
     }
 
@@ -711,10 +711,10 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
         if (isset($data['state']) && $data['state'] != null) {
             $this->state    = $data['state'];
         }
-        if (isset($data['postal_code'])) {
-            $this->postal_code    = $data['postal_code'];
+        if (isset($data['postalCode'])) {
+            $this->postalCode    = $data['postalCode'];
         }
-		
+
 		if (isset($data['dob']) && $data['dob'] != null) {
 			$this->dob = DateTime::createFromFormat('Y-m-d', $data['dob']);
 		}
@@ -762,7 +762,7 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
 			$this->mobile    = $data['mobile'];
 		}
     }
- 
+
     public function setInputFilter(InputFilterInterface $inputFilter)
     {
         throw new \Exception("Not used");
@@ -829,7 +829,7 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
                     ),
                 ),
             )));
-			
+
 			$inputFilter->add($factory->createInput(array(
                 'name' => 'dob',
                 'required' => false,
@@ -842,21 +842,39 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
 				),*/
             )));
 
+			// US post code (also match french one)
+			$regexUs = '\d{5}-\d{4}|\d{5}';
+			// canadian post code
+			$regexCa = '[A-Z]\d[A-Z] \d[A-Z]\d';
+			// UK post code
+			$regexUk = '([A-Z]\d|[A-Z]\d{2}|[A-Z]\d[A-Z]|[A-Z]{2}\d|[A-Z]{2}\d{2}|[A-Z]{2}\d[A-Z]) \d[A-Z]{2}';
+
             $inputFilter->add($factory->createInput(array(
-                'name'     => 'postal_code',
+                'name'     => 'postalCode',
                 'required' => false,
-            	'allowEmpty' => true,
-                /*'validators' => array(
+                'allowEmpty' => true,
+                'filters' => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
                     array(
-                        'name'    => 'PostCode',
-                        // TODO Remove this constraint (error in Linux : Locale must contain a region)
+                        'name'    => 'StringLength',
                         'options' => array(
-                            'locale' => 'fr_FR',
-                        )
+                            'min' => 5,
+                            'max' => 10,
+                        ),
                     ),
-                ),*/
+                    array(
+                        'name'    => 'Regex',
+                        'options' => array(
+                            // Validate postCode - french / Us / canadian / Uk
+                            'pattern' => '#^'.$regexUs.'|'.$regexUk.'|'.$regexCa.'$#',
+                        ),
+                    ),
+                ),
             )));
-            
+
             $inputFilter->add(array(
             	'name'       => 'country',
             	'required'   => false,
@@ -878,7 +896,7 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
                 'required' => false,
             	'allowEmpty' => true,
             )));
-            
+
             $inputFilter->add($factory->createInput(array(
             		'name'     => 'displayName',
             		'required' => false,
@@ -890,43 +908,43 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
             		'required' => false,
             		'allowEmpty' => true,
             )));
-            
+
             $inputFilter->add($factory->createInput(array(
             		'name'     => 'avatar',
             		'required' => false,
             		'allowEmpty' => true,
             )));
-            
+
             $inputFilter->add($factory->createInput(array(
             		'name'     => 'telephone',
             		'required' => false,
             		'allowEmpty' => true,
             )));
-            
+
             $inputFilter->add($factory->createInput(array(
             		'name'     => 'mobile',
             		'required' => false,
             		'allowEmpty' => true,
             )));
-            
+
             $inputFilter->add($factory->createInput(array(
             		'name'     => 'address',
             		'required' => false,
             		'allowEmpty' => true,
             )));
-            
+
             $inputFilter->add($factory->createInput(array(
             		'name'     => 'address2',
             		'required' => false,
             		'allowEmpty' => true,
             )));
-            
+
             $inputFilter->add($factory->createInput(array(
             		'name'     => 'city',
             		'required' => false,
             		'allowEmpty' => true,
             )));
-            
+
             $inputFilter->add($factory->createInput(array(
                 'name'       => 'email',
                 'required'   => true,
