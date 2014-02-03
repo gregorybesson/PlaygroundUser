@@ -27,6 +27,8 @@ class userTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+        parent::setUp();
+
         $this->sm = Bootstrap::getServiceManager();
         $this->em = $this->sm->get('doctrine.entitymanager.orm_default');
 
@@ -50,7 +52,6 @@ class userTest extends \PHPUnit_Framework_TestCase
         	'optinPartner' => '1',
         	'username'  => 'jolindien',
         );
-        parent::setUp();
     }
 
     public function testCanInsertNewRecord()
