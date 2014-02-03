@@ -22,7 +22,7 @@ $form->prepare();
     <div id="my-tab-content" class="tab-content">
         <div class="tab-pane active" id="identity">
             <?php echo $this->formHidden($form->get('id')); ?>
-            
+
             <div class="label-input">
 	            <?php echo $this->formLabel($form->get('username')); ?>
 	            <?php echo $this->formInput($form->get('username')); ?>
@@ -55,7 +55,7 @@ $form->prepare();
 	            <?php echo $this->formSelect($form->get('roleId')); ?>
 	            <?php echo $this->formElementErrors($form->get('roleId')) ?>
 	        </div>
-			
+
 			<div class="label-input">
 	            <?php echo $this->formLabel($form->get('dob')); ?>
 				<?php echo $this->formDateTime($form->get('dob')) ?>
@@ -74,9 +74,9 @@ $form->prepare();
 	            <?php echo $this->formElementErrors($form->get('address2')) ?>
 	        </div>
 	        <div class="label-input">
-	            <?php echo $this->formLabel($form->get('postal_code')); ?>
-	            <?php echo $this->formInput($form->get('postal_code')); ?>
-	            <?php echo $this->formElementErrors($form->get('postal_code')) ?>
+	            <?php echo $this->formLabel($form->get('postalCode')); ?>
+	            <?php echo $this->formInput($form->get('postalCode')); ?>
+	            <?php echo $this->formElementErrors($form->get('postalCode')) ?>
 	        </div>
 	        <div class="label-input">
 	            <?php echo $this->formLabel($form->get('city')); ?>

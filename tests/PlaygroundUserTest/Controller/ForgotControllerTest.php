@@ -10,11 +10,11 @@ class ForgotControllerTest extends AbstractHttpControllerTestCase
 
     public function setUp()
     {
+        parent::setUp();
+
         $this->setApplicationConfig(
             include __DIR__ . '/../../TestConfig.php'
         );
-
-        parent::setUp();
     }
 
     public function testForgotPasswordFormAccessed()
@@ -31,7 +31,7 @@ class ForgotControllerTest extends AbstractHttpControllerTestCase
 
     public function testSentPasswordWrongMail()
     {
-        $this->dispatch('/mon-compte/envoi-mot-passe/fake-mail-address');
+        $this->dispatch('/mon-compte/envoi-mot-passe/fake.mail@address');
         $this->assertResponseStatusCode(200);
 
         $this->assertModuleName('playgrounduser');

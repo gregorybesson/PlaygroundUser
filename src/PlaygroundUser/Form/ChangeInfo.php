@@ -32,7 +32,7 @@ class ChangeInfo extends Register
         				'value' => 0
         		),
         ));
-        
+
         $this->add(array(
                 'name' => 'username',
                 'options' => array(
@@ -111,7 +111,7 @@ class ChangeInfo extends Register
         ));
 
         $this->add(array(
-            'name' => 'postal_code',
+            'name' => 'postalCode',
             'options' => array(
                     'label' => $translator->translate('Postal Code', 'playgrounduser'),
             ),
@@ -119,7 +119,8 @@ class ChangeInfo extends Register
                     'type' => 'text',
                     'placeholder' => $translator->translate('Postal Code', 'playgrounduser'),
                     'class' => 'number zipcodefr',
-                    'maxlength' => '5',
+                    'minlength' => 5,
+                    'maxlength' => 10,
             ),
         ));
 
@@ -133,7 +134,7 @@ class ChangeInfo extends Register
                         'placeholder' => $translator->translate('City', 'playgrounduser'),
                 ),
         ));
-        
+
         $countries = $this->getCountries();
         $countries_label = array();
         foreach($countries as $key => $name){
@@ -162,7 +163,7 @@ class ChangeInfo extends Register
                         'maxlength' => '10',
                 ),
         ));
-		
+
 		$this->add(array(
             'type' => 'Zend\Form\Element\DateTime',
             'name' => 'dob',
@@ -215,7 +216,7 @@ class ChangeInfo extends Register
     {
         return $this->createOptions;
     }
-    
+
     //TODO : factoriser + solution i18n
     public function getCountries()
     {
