@@ -10,11 +10,12 @@ class LoginControllerTest extends AbstractHttpControllerTestCase
 
     public function setUp()
     {
+        parent::setUp();
+
         $this->setApplicationConfig(
             include __DIR__ . '/../../TestConfig.php'
         );
 
-        parent::setUp();
     }
 
     public function testLoginActionNotAllowed()
