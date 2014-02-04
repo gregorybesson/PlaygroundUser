@@ -32,7 +32,7 @@ class Password extends AbstractDbMapper
     public function getEntityRepository()
     {
         if (null === $this->er) {
-            $this->er = $this->em->getRepository('\PlaygroundEmailCampaign\Entity\Email');
+            $this->er = $this->em->getRepository('\PlaygroundUser\Entity\Password');
         }
 
         return $this->er;
@@ -88,7 +88,7 @@ class Password extends AbstractDbMapper
 
     public function findByUserIdRequestKey($userId, $token)
     {
-       return $this->em->findOneBy(array('user_id'=>$userId, 'requestKey'=>$token));
+       return $this->getEntityRepository()->findOneBy(array('user_id'=>$userId, 'requestKey'=>$token));
     }
 
     public function insert($entity, $tableName = null, HydratorInterface $hydrator = null)
