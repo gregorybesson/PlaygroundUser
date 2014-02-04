@@ -56,7 +56,7 @@ class Password extends AbstractDbMapper
 
     public function findByRequestKey($key)
     {
-        return $this->em->findBy(array('requestKey'=>$key));
+        return $this->getEntityRepository()->findBy(array('requestKey'=>$key));
     }
 
     public function cleanExpiredForgotRequests($expiryTime=86400)
@@ -108,24 +108,6 @@ class Password extends AbstractDbMapper
     {
         return $this->persist($entity);
     }
-
-//     protected function fromRow($row)
-//     {
-//         if (!$row) return false;
-//         $evr = Model::fromArray($row->getArrayCopy());
-
-//         return $evr;
-//     }
-
-//     public function toScalarValueArray($passwordModel)
-//     {
-//         return new \ArrayObject(array(
-//             $this->keyField      => $passwordModel->getRequestKey(),
-//             $this->userField     => $passwordModel->getUserId(),
-//             $this->reqtimeField  => $passwordModel->getRequestTime()->format('Y-m-d H:i:s'),
-//         ));
-//     }
-
 
     public function getTableName() { return $this->tableName; }
     public function getPrimaryKey() { $this->keyField; }
