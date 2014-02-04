@@ -67,7 +67,7 @@ class UserController extends ZfcUserController
         $this->zfcUserAuthentication()->getAuthAdapter()->resetAdapters();
         $this->zfcUserAuthentication()->getAuthService()->clearIdentity();
 
-        return $this->forward()->dispatch(static::CONTROLLER_NAME, array('action' => 'authenticate'));
+        return $this->forward()->dispatch('playgrounduser_user', array('action' => 'authenticate'));
     }
 
     /**
@@ -75,6 +75,7 @@ class UserController extends ZfcUserController
      */
     public function registerAction ()
     {
+
         if ($this->zfcUserAuthentication()->hasIdentity()) {
         	return $this->redirect()->toUrl($this->url()->fromRoute($this->getOptions()->getLoginRedirectRoute(), array('channel' => $this->getEvent()->getRouteMatch()->getParam('channel'))));
         }
@@ -138,7 +139,7 @@ class UserController extends ZfcUserController
                     'firstname'   => $infoMe->firstName,
                     'lastname'    => $infoMe->lastName,
                     'email'       => $infoMe->email,
-                    'postal_code' => $infoMe->zip,
+                    'postalCode' => $infoMe->zip,
                 );
                 $socialCredentials = array(
                     'socialNetwork' => strtolower($socialnetwork),
@@ -198,7 +199,7 @@ class UserController extends ZfcUserController
                 $post['credential'] = isset($post['password'])?$post['password']:'';
                 $request->setPost(new Parameters($post));
 
-                return $this->forward()->dispatch('zfcuser', array(
+                return $this->forward()->dispatch('playgrounduser_user', array(
                     'action' => 'authenticate'
                 ));
             }
@@ -376,7 +377,7 @@ class UserController extends ZfcUserController
      */
     public function authenticateAction()
     {
-   
+
         if ($this->zfcUserAuthentication()->getAuthService()->hasIdentity()) {
             return $this->redirect()->toRoute($this->getOptions()->getLoginRedirectRoute(), array('channel' => $this->getEvent()->getRouteMatch()->getParam('channel')));
         }
@@ -385,7 +386,7 @@ class UserController extends ZfcUserController
         $routeLoginAdmin = $this->params()->fromPost('routeLoginAdmin', $this->params()->fromQuery('routeLoginAdmin', false));
 
         $result = $adapter->prepareForAuthentication($this->getRequest());
- 
+
         // Return early if an adapter returned a response
         if ($result instanceof Response) {
             return $result;
@@ -400,7 +401,7 @@ class UserController extends ZfcUserController
             if (!empty($routeLoginAdmin)) {
                 return $this->redirect()->toUrl($routeLoginAdmin);
             }
-            
+
             return $this->redirect()->toUrl($this->url()->fromRoute('frontend/login', array('channel' => $this->getEvent()->getRouteMatch()->getParam('channel')))
                 . ($redirect ? '?redirect='.$redirect : ''));
         }
@@ -428,7 +429,7 @@ class UserController extends ZfcUserController
     public function profileAction ()
     {
     	$translator = $this->getServiceLocator()->get('translator');
- 
+
         if (! $this->zfcUserAuthentication()->hasIdentity()) {
         	return $this->redirect()->toUrl(
         				$this->url()->fromRoute(
@@ -791,7 +792,7 @@ class UserController extends ZfcUserController
 
         return $viewModel;
     }
-    
+
     /**
      * Register a user from a social channel (only Facebook has been tested)
      */
@@ -800,15 +801,15 @@ class UserController extends ZfcUserController
         // The provider has to be set in the querystring of the request for hybridauth to work properly.
         $provider = $this->params()->fromRoute('provider');
         $this->getRequest()->getQuery()->provider = $provider;
-        
+
         $this->zfcUserAuthentication()->getAuthAdapter()->resetAdapters();
         $this->zfcUserAuthentication()->getAuthService()->clearIdentity();
-        
+
         $adapter = $this->zfcUserAuthentication()->getAuthAdapter();
         $adapter->prepareForAuthentication($this->getRequest());
 
         $auth = $this->zfcUserAuthentication()->getAuthService()->authenticate($adapter);
-        
+
         $user = $this->zfcUserAuthentication()->getIdentity();
 
         $viewModel = new ViewModel();
@@ -961,7 +962,7 @@ class UserController extends ZfcUserController
             );
         }
 
-        return $this->forward()->dispatch('zfcuser', array(
+        return $this->forward()->dispatch('playgrounduser_user', array(
             'action' => 'authenticate'
         ));
     }

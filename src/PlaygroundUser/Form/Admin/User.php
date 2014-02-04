@@ -132,7 +132,7 @@ class User extends Register
         ));
 
         $this->add(array(
-            'name' => 'postal_code',
+            'name' => 'postalCode',
             'options' => array(
                     'label' => $translator->translate('Postal Code', 'playgrounduser'),
             ),
@@ -152,7 +152,7 @@ class User extends Register
                         'placeholder' => $translator->translate('City', 'playgrounduser'),
                 ),
         ));
-        
+
         $countries = $this->getCountries();
         $countries_label = array();
         foreach($countries as $key => $name){
@@ -179,7 +179,7 @@ class User extends Register
                         'placeholder' => $translator->translate('Telephone', 'playgrounduser'),
                 ),
         ));
-		
+
 		$this->add(array(
             'type' => 'Zend\Form\Element\DateTime',
             'name' => 'dob',
@@ -270,7 +270,7 @@ class User extends Register
     {
         return $this->serviceManager;
     }
-    
+
     public function getCountries()
     {
     	return array (

@@ -80,7 +80,7 @@ class Password extends EventProvider implements ServiceManagerAwareInterface
         $renderer = $this->getServiceManager()->get('Zend\View\Renderer\RendererInterface');
         $skinUrl = $renderer->url('frontend', array(), array('force_canonical' => true));
 
-        $message = $mailService->createHtmlMessage($from, $to, $subject, 'playground-user/frontend/email/forgot', array('record' => $model, 'to' => $to, 'skinUrl' => $skinUrl));
+        $message = $mailService->createHtmlMessage($from, $to, $subject, 'playground-user/email/forgot', array('record' => $model, 'to' => $to, 'skinUrl' => $skinUrl));
 
         $mailService->send($message);
     }

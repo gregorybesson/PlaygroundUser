@@ -91,7 +91,7 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         $filter->get('title')->setRequired(FALSE);
         $filter->remove('firstname');
         $filter->remove('lastname');
-        $filter->remove('postal_code');
+        $filter->remove('postalCode');
         $filter->remove('dob');
         $form->setInputFilter($filter);
 
@@ -442,7 +442,7 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
             $this->sendVerificationEmailMessage($verification);
         }
         $this->getEventManager()->trigger(__FUNCTION__.'.post', $this, array('user' => $user, 'data' => $data));
-        
+
         // Is there a sponsor on this registration ?
         $session = new Container('sponsorship');
         // Is there a secretKey in session ?
@@ -653,7 +653,7 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
             $optinChange = true;
             $this->getEventManager()->trigger(__FUNCTION__.'.pre', $this, array('user' => $user, 'data' => $data));
         }
-        
+
         // I trigger an optinPartner event before updating user if it has changed
         if($user->getOptinPartner() != $data['optinPartner']){
             $optinPartnerChange = true;
@@ -676,10 +676,10 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         if($optinChange){
             $this->getEventManager()->trigger(__FUNCTION__.'.post', $this, array('user' => $user, 'data' => $data));
         }
-        
+
         if($optinPartnerChange){
             $this->getEventManager()->trigger(__FUNCTION__.'Partner.post', $this, array('user' => $user, 'data' => $data));
-        }  
+        }
 
         return $user;
     }
@@ -718,7 +718,7 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
     /**
     * findUserOrCreateByEmail : retrieve user with email or create user if not exist
     * @param string $email
-    * 
+    *
     * @return User $user
     */
     public function findUserOrCreateByEmail($email)

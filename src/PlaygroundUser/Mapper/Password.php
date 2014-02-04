@@ -3,6 +3,8 @@ namespace PlaygroundUser\Mapper;
 
 use ZfcBase\Mapper\AbstractDbMapper;
 use PlaygroundUser\Entity\Password as Model;
+
+use Zend\Stdlib\Hydrator\HydratorInterface;
 use Zend\Db\Sql\Sql;
 
 class Password extends AbstractDbMapper
@@ -12,91 +14,118 @@ class Password extends AbstractDbMapper
     protected $userField         = 'user_id';
     protected $reqtimeField      = 'request_time';
 
+    /**
+     * @var \Doctrine\ORM\EntityManager
+     */
+    protected $em;
+
+    /**
+     * @var \Doctrine\ORM\EntityRepository
+     */
+    protected $er;
+
+    public function __construct(\Doctrine\ORM\EntityManager $em)
+    {
+        $this->em      = $em;
+    }
+
+    public function getEntityRepository()
+    {
+        if (null === $this->er) {
+            $this->er = $this->em->getRepository('\PlaygroundEmailCampaign\Entity\Email');
+        }
+
+        return $this->er;
+    }
+
     public function remove($passwordModel)
     {
-        $sql = new Sql($this->getDbAdapter(), $this->tableName);
-        $delete= $sql->delete();
-        $delete->where->equalTo($this->keyField, $passwordModel->getRequestKey());
-        $statement = $sql->prepareStatementForSqlObject($delete);
-        $statement->execute();
-
-        return true;
+        $this->em->remove($passwordModel);
+        $this->em->flush();
     }
 
     public function findByUserId($userId)
     {
-        $select = $this->select()
-                       ->from($this->tableName)
-                       ->where(array($this->userField => $userId));
+        return $this->getEntityRepository()->findBy(array('user_id'=>$userId));
+    }
 
-        return $this->selectWith($select)->current();
+    public function findBy($array = array(), $sortArray = array())
+    {
+        return $this->getEntityRepository()->findBy($array, $sortArray);
     }
 
     public function findByRequestKey($key)
     {
-        $select = $this->select()
-                       ->from($this->tableName)
-                       ->where(array($this->keyField => $key));
-
-        return $this->selectWith($select)->current();
+        return $this->em->findBy(array('requestKey'=>$key));
     }
 
     public function cleanExpiredForgotRequests($expiryTime=86400)
     {
         $now = new \DateTime((int) $expiryTime . ' seconds ago');
+        $query = $this->em->createQuery(
+            'DELETE FROM PlaygroundUser\Entity\Password AS p
+                WHERE p.requestTime <= :now '
+        );
+        $query->setParameter('now', $now);
 
-        $sql = new Sql($this->getDbAdapter(), $this->tableName);
-        $delete = $sql->delete();
-        $delete ->where->lessThanOrEqualTo($this->reqtimeField, $now->format('Y-m-d H:i:s'));
-        $statement = $sql->prepareStatementForSqlObject($delete);
-        $statement->execute();
+        $query->execute();
 
         return true;
     }
 
     public function cleanPriorForgotRequests($userId)
     {
-        $sql = new Sql($this->getDbAdapter(), $this->tableName);
-        $delete = $sql->delete();
-        $delete ->where->equalTo($this->userField, $userId);
-        $statement = $sql->prepareStatementForSqlObject($delete);
-        $statement->execute();
+        $query = $this->em->createQuery(
+            'DELETE FROM PlaygroundUser\Entity\Password AS p
+                WHERE p.user_id = :userId '
+        );
+        $query->setParameter('userId', $userId);
+
+        $query->execute();
 
         return true;
     }
 
     public function findByUserIdRequestKey($userId, $token)
     {
-        $select = $this->getSelect()
-                       ->where(array($this->userField => $userId, $this->keyField => $token));
-
-        return $this->select($select)->current();
+       return $this->em->findOneBy(array('user_id'=>$userId, 'requestKey'=>$token));
     }
 
-    protected function fromRow($row)
+    public function insert($entity, $tableName = null, HydratorInterface $hydrator = null)
     {
-        if (!$row) return false;
-        $evr = Model::fromArray($row->getArrayCopy());
-
-        return $evr;
+        return $this->persist($entity);
     }
 
-    public function toScalarValueArray($passwordModel)
+    public function persist($entity)
     {
-        return new \ArrayObject(array(
-            $this->keyField      => $passwordModel->getRequestKey(),
-            $this->userField     => $passwordModel->getUserId(),
-            $this->reqtimeField  => $passwordModel->getRequestTime()->format('Y-m-d H:i:s'),
-        ));
+        $this->em->persist($entity);
+        $this->em->flush();
+
+        return $entity;
     }
 
-    /**
-     * @todo
-     */
-    public function persist($passwordModel)
+    public function update($entity, $where = null, $tableName = null, HydratorInterface $hydrator = null)
     {
-        return parent::insert($passwordModel);
+        return $this->persist($entity);
     }
+
+//     protected function fromRow($row)
+//     {
+//         if (!$row) return false;
+//         $evr = Model::fromArray($row->getArrayCopy());
+
+//         return $evr;
+//     }
+
+//     public function toScalarValueArray($passwordModel)
+//     {
+//         return new \ArrayObject(array(
+//             $this->keyField      => $passwordModel->getRequestKey(),
+//             $this->userField     => $passwordModel->getUserId(),
+//             $this->reqtimeField  => $passwordModel->getRequestTime()->format('Y-m-d H:i:s'),
+//         ));
+//     }
+
 
     public function getTableName() { return $this->tableName; }
     public function getPrimaryKey() { $this->keyField; }

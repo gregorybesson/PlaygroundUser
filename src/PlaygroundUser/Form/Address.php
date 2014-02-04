@@ -73,7 +73,7 @@ class Address extends Register
         ));
 
         $this->add(array(
-            'name' => 'postal_code',
+            'name' => 'postalCode',
             'options' => array(
                     'label' => $translator->translate('Postal Code', 'playgrounduser'),
             ),
@@ -81,7 +81,8 @@ class Address extends Register
                     'type' => 'text',
                     'placeholder' => $translator->translate('Postal Code', 'playgrounduser'),
                     'class' => 'number required',
-                    'maxlength' => '5',
+                    'minlength' => 5,
+                    'maxlength' => 10,
             ),
         ));
 
@@ -96,7 +97,7 @@ class Address extends Register
                         'class' => 'required',
                 ),
         ));
-        
+
         $countries = $this->getCountries();
         $countries_label = array();
         foreach($countries as $key => $name){
@@ -112,8 +113,8 @@ class Address extends Register
        			'label' => $translator->translate('Country', 'playgrounduser')
         	)
         ));
-        
-        
+
+
 
         $this->get('submit')->setLabel('Create');
     }
@@ -129,11 +130,11 @@ class Address extends Register
     {
         return $this->createOptions;
     }
-    
+
     public function getCountries()
     {
     	return array (
-    			'FR' => 'France',
+    	  'FR' => 'France',
 		  'AF' => 'Afghanistan',
 		  'ZA' => 'South Africa',
 		  'AL' => 'Albania',

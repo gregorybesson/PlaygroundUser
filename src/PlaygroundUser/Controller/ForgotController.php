@@ -73,26 +73,10 @@ class ForgotController extends AbstractActionController
             if ( $form->isValid() ) {
                 $userService = $this->getUserService();
 
-                $email = $this->getRequest()->getPost()->get('email');
-                $user = $userService->getUserMapper()->findByEmail($email);
+                $email = $form->getData()['email'];
 
-                $vm = new ViewModel();
-                $vm->setTemplate('playground-user/frontend/forgot/sent');
-                //only send request when email is found
-                if ($user != null) {
-                    $service->sendProcessForgotRequest($user->getId(), $email);
-                    $vm->setVariables(array(
-                    	'statusMail' => true,
-                    	'email' => $email
-                    ));
-                } else {
-                	$vm->setVariables(array(
-                		'statusMail' => false,
-                		'email' => $email
-                	));
-                }
-
-                return $vm;
+                return $this->redirect()->toRoute('frontend/zfcuser/sentpassword', array("email"=> $email,
+                        'channel' => $this->getEvent()->getRouteMatch()->getParam('channel')));
             } else {
                 $this->flashMessenger()->setNamespace('playgrounduser-forgot-form')->addMessage($this->failedMessage);
 
@@ -106,6 +90,30 @@ class ForgotController extends AbstractActionController
         return array(
             'forgotForm' => $form,
         );
+    }
+
+
+    public function sentAction()
+    {
+        $email = $this->getEvent()->getRouteMatch()->getParam('email');
+        $user = $this->getUserService()->getUserMapper()->findByEmail($email);
+
+        $vm = new ViewModel();
+        //only send request when email is found
+        if ($user != null) {
+            $this->getPasswordService()->sendProcessForgotRequest($user->getId(), $email);
+            $vm->setVariables(array(
+                'statusMail' => true,
+                'email' => $email
+            ));
+        } else {
+            $vm->setVariables(array(
+                'statusMail' => false,
+                'email' => $email
+            ));
+        }
+
+        return $vm;
     }
 
     public function resetAction()
@@ -133,11 +141,8 @@ class ForgotController extends AbstractActionController
             $form->setData($this->getRequest()->getPost());
             if ( $form->isValid() && $user !== null ) {
                 $service->resetPassword($password, $user, $form->getData());
-
-                $vm = new ViewModel(array('email' => $user->getEmail()));
-                $vm->setTemplate('playground-user/frontend/forgot/passwordchanged');
-
-                return $vm;
+                return $this->redirect()->toRoute('frontend/zfcuser/changedpassword', array("userId"=> $user->getId(),
+                        'channel' => $this->getEvent()->getRouteMatch()->getParam('channel')));
             }
         }
 
@@ -148,6 +153,14 @@ class ForgotController extends AbstractActionController
             'token'     => $token,
             'email'     => $user->getEmail(),
         );
+    }
+
+    public function passwordChangedAction()
+    {
+        $userId = $this->getEvent()->getRouteMatch()->getParam('userId');
+        $user = $this->getUserService->getUserMapper()->findById($userId);
+
+        return new ViewModel(array('email' => $user->getEmail()));
     }
 
     /**

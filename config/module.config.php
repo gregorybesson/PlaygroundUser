@@ -16,7 +16,7 @@ return array(
             )
         )
     ),
-    
+
     'assetic_configuration' => array(
         'modules' => array(
             'user_lib' => array(
@@ -25,7 +25,7 @@ return array(
                     __DIR__ . '/../view/lib',
                 ),
                 # collection of assets
-                'collections' => array(    
+                'collections' => array(
                     'fbregister_js' => array(
                         'assets' => array(
                             'js/fbregister.js',
@@ -142,6 +142,19 @@ return array(
 		                            ),
 		                        ),
 		                    ),
+		                    'sentpassword' => array(
+		                        'type' => 'Segment',
+		                        'options' => array(
+		                            'route' => '/envoi-mot-passe[/:email]',
+		                            'constraints' => array(
+                                        ':email' => '[a-zA-Z0-9_-@.]+',
+                                    ),
+		                            'defaults' => array(
+		                                'controller' => 'playgrounduser_forgot',
+		                                'action'     => 'sent',
+		                            ),
+		                        ),
+		                    ),
 		                    'ajaxlogin' => array(
 		                        'type' => 'Literal',
 		                        'options' => array(
@@ -219,6 +232,19 @@ return array(
 		                            'constraints' => array(
 		                                'userId'  => '[0-9]+',
 		                                'token' => '[A-F0-9]+',
+		                            ),
+		                        ),
+		                    ),
+		                    'changedpassword' => array(
+		                        'type' => 'Segment',
+		                        'options' => array(
+		                            'route' => '/changed-password/:userId',
+		                            'defaults' => array(
+		                                'controller' => 'playgrounduser_forgot',
+		                                'action'     => 'changedPassword',
+		                            ),
+		                            'constraints' => array(
+		                                'userId'  => '[0-9]+',
 		                            ),
 		                        ),
 		                    ),

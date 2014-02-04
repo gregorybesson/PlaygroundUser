@@ -35,7 +35,7 @@ interface UserInterface
     public function getAddress2();
     public function setAddress2($address2);
     public function getPostalCode();
-    public function setPostalCode($postal_code);
+    public function setPostalCode($postalCode);
     public function getCity();
     public function setCity($city);
     public function setRoles($roles);
