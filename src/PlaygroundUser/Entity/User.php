@@ -870,6 +870,9 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
                         'options' => array(
                             // Validate postCode - french / Us / canadian / Uk
                             'pattern' => '#^'.$regexUs.'|'.$regexUk.'|'.$regexCa.'$#',
+                            'messages' => array(
+                                'regexNotMatch' => "This is not a valid post code !",
+                            )
                         ),
                     ),
                 ),
