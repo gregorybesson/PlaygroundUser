@@ -131,7 +131,8 @@ class ForgotController extends AbstractActionController
 
         //no request for a new password found
         if ($password === null) {
-            return $this->redirect()->toRoute('frontend/zfcuser/forgotpassword');
+            return $this->redirect()->toRoute('frontend/zfcuser/forgotpassword', array("userId"=> $userId,
+                        'channel' => $this->getEvent()->getRouteMatch()->getParam('channel')));
         }
 
         $userService = $this->getUserService();
@@ -141,8 +142,10 @@ class ForgotController extends AbstractActionController
             $form->setData($this->getRequest()->getPost());
             if ( $form->isValid() && $user !== null ) {
                 $service->resetPassword($password, $user, $form->getData());
-                return $this->redirect()->toRoute('frontend/zfcuser/changedpassword', array("userId"=> $user->getId(),
-                        'channel' => $this->getEvent()->getRouteMatch()->getParam('channel')));
+                return $this->redirect()->toRoute('frontend',
+                        array('channel' => $this->getEvent()->getRouteMatch()->getParam('channel')),
+                        array('force_canonical'=>true)
+                        );
             }
         }
 
