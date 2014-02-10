@@ -428,15 +428,16 @@ class UserController extends ZfcUserController
      */
     public function profileAction ()
     {
-    	$translator = $this->getServiceLocator()->get('translator');
-
+        $translator = $this->getServiceLocator()->get('translator');
+        $channel = $this->getEvent()->getRouteMatch()->getParam('channel');
         if (! $this->zfcUserAuthentication()->hasIdentity()) {
-        	return $this->redirect()->toUrl(
-        				$this->url()->fromRoute(
-        					$this->getOptions()->getLoginRedirectRoute(),
-        					array('channel' => $this->getEvent()->getRouteMatch()->getParam('channel'))
-        				)
-        			);
+            return $this->redirect()->toUrl(
+                $this->url()->fromRoute(
+                    $this->getOptions()->getLoginRedirectRoute(),
+                    array('channel' => $channel),
+                    array('force_canonical' => true)
+                )
+            );
         }
         $formEmail     = $this->getChangeEmailForm();
         $formEmail->get('credential')
@@ -590,12 +591,21 @@ class UserController extends ZfcUserController
             return $this->redirect()->toUrl(
             		$this->url()->fromRoute(
             				'frontend/zfcuser/profile',
-            				array('channel' => $this->getEvent()->getRouteMatch()->getParam('channel'))
+                            array('channel' => $channel),
+                            array('force_canonical' => true)
             		)
             );
         }
 
-        $prg = $this->prg('frontend/zfcuser/profile');
+        $redirectUrl = $this->url()->fromRoute('frontend/zfcuser/profile',
+            array(
+                'channel' => $channel,
+                'statusPassword' => $statusPassword,
+                'statusEmail' => $statusEmail,
+                'statusInfo' => $statusInfo,
+        ));
+        $prg = $this->prg($redirectUrl, true);
+//         $prg = $this->prg('frontend/zfcuser/profile');
 
         if ($prg instanceof Response) {
             return $prg;
@@ -662,7 +672,8 @@ class UserController extends ZfcUserController
             return $this->redirect()->toUrl(
             		$this->url()->fromRoute(
             				'frontend/zfcuser/profile',
-            				array('channel' => $this->getEvent()->getRouteMatch()->getParam('channel'))
+                            array('channel' => $channel),
+                            array('force_canonical' => true)
             		)
             );
         } elseif (isset($prg['newIdentity'])) {
@@ -725,7 +736,8 @@ class UserController extends ZfcUserController
             return $this->redirect()->toUrl(
             		$this->url()->fromRoute(
             				'frontend/zfcuser/profile',
-            				array('channel' => $this->getEvent()->getRouteMatch()->getParam('channel'))
+                            array('channel' => $channel),
+                            array('force_canonical' => true)
             		)
             );
         }
