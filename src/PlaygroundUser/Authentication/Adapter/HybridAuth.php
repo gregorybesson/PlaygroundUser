@@ -357,11 +357,32 @@ class HybridAuth extends AbstractAdapter implements ServiceManagerAwareInterface
         $localUser = $this->instantiateLocalUser();
 
         $userName = ucfirst($userProfile->firstName) . " " . substr(ucfirst($userProfile->lastName),0,1);
-        
+
+        $birthDay = null;
+        if ($userProfile->birthDay && $userProfile->birthMonth && $userProfile->birthYear) {
+            $birthDay = new \DateTime(
+                (string)$userProfile->birthYear.'-'
+                .(string)$userProfile->birthMonth.'-'
+                .(string)$userProfile->birthDay);
+        }
+
         $localUser->setEmail($userProfile->emailVerified)
             ->setDisplayName($userProfile->displayName)
+            ->setFirstname($userProfile->firstName)
+            ->setLastname($userProfile->lastName)
+            ->setGender($userProfile->gender)
+            ->setMobile($userProfile->phone)
+            ->setAddress($userProfile->address)
+            ->setPostalCode($userProfile->zip)
+            ->setCity($userProfile->city)
+            ->setCountry($userProfile->country)
             ->setUsername($userName)
+            ->setAvatar($userProfile->photoURL)
             ->setPassword(__FUNCTION__);
+        if ($birthDay) {
+            $localUser->setDob($birthDay);
+        }
+
         $result = $this->insert($localUser, 'facebook', $userProfile);
 
         return $localUser;
