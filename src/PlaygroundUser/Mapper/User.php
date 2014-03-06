@@ -60,6 +60,14 @@ class User extends ZfcUserMapper
         return $er->findBy(array('title' => $title));
     }
 
+    public function findByToken($title)
+    {
+        $er = $this->em->getRepository($this->options->getUserEntityClass());
+
+        return $er->findBy(array('token' => $title));
+    }
+
+
     public function findByOptin($optin, $partner)
     {
         $er = $this->em->getRepository($this->options->getUserEntityClass());

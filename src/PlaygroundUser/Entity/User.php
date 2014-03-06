@@ -120,6 +120,12 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
      */
     protected $country;
 
+
+     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $token;
+
     /**
      * @var \Doctrine\Common\Collections\Collection
      * @ORM\ManyToMany(targetEntity="PlaygroundUser\Entity\Role")
@@ -617,6 +623,25 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
     public function setOptinPartner ($optinPartner)
     {
         $this->optinPartner = $optinPartner;
+
+        return $this;
+    }
+
+
+    /**
+     * @return the $token
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param field_type $city
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
 
         return $this;
     }

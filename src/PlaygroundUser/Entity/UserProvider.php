@@ -3,21 +3,46 @@ namespace PlaygroundUser\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/** @ORM\Entity @ORM\Table(name="user_provider") */
+/** @ORM\Entity @ORM\Table(name="user_provider",indexes={@ORM\index(name="search_idx", columns={"user_id"})})) */
 class UserProvider
 {
-    /** ORM\Id ORM\Column(type="integer",name="user_id") */
-	/**
-	 * @ORM\OneToOne(targetEntity="User")
-	 * @ORM\JoinColumn(name="user_id", referencedColumnName="user_id", onDelete="CASCADE")
-	 **/
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer", name="id");
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @ORM\OneToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="user_id", onDelete="CASCADE")
+     **/
     protected $user;
 
-    /** @ORM\Id @ORM\Column(type="string",length=50,name="provider_id") */
+    /** @ORM\Column(type="string",length=50,name="provider_id") */
     protected $providerId;
 
     /** @ORM\Column(type="string") */
     protected $provider;
+
+     /**
+     * @return the $id
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param  integer      $id
+     * @return UserProvider
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
 
     /**
      * @return the $userId
