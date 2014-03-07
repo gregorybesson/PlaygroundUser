@@ -10,15 +10,7 @@ use PlaygroundUser\Entity\User;
 class UserController extends AbstractActionController
 {
 
-    public function indexAction()
-    {
-
-        $return = array('status' => 0, 'message' => 0);
-       
-        return $this->sendResponse($return);
-    }
-
-    /**
+   /**
     * POST 
     * identity => thomas.roger@adfab.fr
     * credential => troger
@@ -56,7 +48,7 @@ class UserController extends AbstractActionController
         $user->setToken($token);
         $user = $this->getUserMapper()->update($user);
 
-        $return = array('status' => 0, 'message' => 0, 'token' => $token);
+        $return = array('status' => 0, 'message' => '', 'token' => $token);
        
         return $this->sendResponse($return);
     }
@@ -189,7 +181,7 @@ class UserController extends AbstractActionController
             $this->addProviderToUser($user, $data['facebook'], 'facebook');
         }
 
-        if(!empty($data['twitterId'])){
+        if(!empty($data['twitter'])){
             $this->addProviderToUser($user, $data['twitter'], 'twitter');
         }
 
@@ -197,10 +189,13 @@ class UserController extends AbstractActionController
             $this->addProviderToUser($user, $data['google'], 'google'); 
         }
 
+        try {
+            $this->sendNewEmailMessage($user->getEmail(), $data['password']);
+        } catch(\Exception $e) {
 
-        $this->sendNewEmailMessage($user->getEmail(), $data['password']);
+        }
 
-        $return = array('status' => 0, 'message' => 0, 'token' => $token);
+        $return = array('status' => 0, 'message' => '', 'token' => $token);
 
         return $this->sendResponse($return);
         
@@ -276,7 +271,7 @@ class UserController extends AbstractActionController
         }
 
         $users = $this->getUserMapper()->findByEmail($data['email']);
-        if(count($users) > 0) {
+        if(count($users) > 1) {
             $return = array('status' => 5 , 'message' => 'user is already exist');
 
             return $this->sendResponse($return);
@@ -308,7 +303,7 @@ class UserController extends AbstractActionController
             $this->addProviderToUser($user, $data['facebook'], 'facebook');
         }
 
-        if(!empty($data['twitterId'])){
+        if(!empty($data['twitter'])){
             $this->addProviderToUser($user, $data['twitter'], 'twitter');
         }
 
@@ -317,7 +312,7 @@ class UserController extends AbstractActionController
         }
 
         
-        $return = array('status' => 0, 'message' => 0, 'token' => $token);
+        $return = array('status' => 0, 'message' => '', 'token' => $token);
 
 
         return $this->sendResponse($return);
