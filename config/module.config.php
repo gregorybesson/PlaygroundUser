@@ -16,14 +16,10 @@ return array(
             )
         ),
     ),
-    
-    'migrations' => array(
-        'name' => 'Doctrine Sandbox Migrations',
-        'migrations_namespace ' => 'DoctrineMigrations',
-        'table_name' => 'doctrine_migration_versions',
-        'migrations_directory' => '/../src/PlaygroundUser/Migration',
-    ),
 
+    "migrations" => array(
+    ),
+    
     'assetic_configuration' => array(
         'modules' => array(
             'user_lib' => array(
@@ -479,10 +475,12 @@ return array(
                 ),
             ),
             'api' => array(
+                'type' => 'Literal',
                 'options' => array(
+                    'route' => '/api',
                     'defaults' => array(
-                        'controller' => 'playgrounduseradmin_login',
-                        'action'     => 'login',
+                        'controller' => 'playgrounduser_api_user',
+                        'action'     => 'index',
                     ),
                 ),
                 'child_routes' => array(
@@ -553,7 +551,7 @@ return array(
                         ),
                     ),
                 ),
-            )
+            ),
         ),
     ),
 

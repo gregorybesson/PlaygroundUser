@@ -9,6 +9,15 @@ use PlaygroundUser\Entity\User;
 
 class UserController extends AbstractActionController
 {
+
+    public function indexAction()
+    {
+
+        $return = array('status' => 0, 'message' => 0);
+       
+        return $this->sendResponse($return);
+    }
+
     /**
     * POST 
     * identity => thomas.roger@adfab.fr
@@ -35,7 +44,7 @@ class UserController extends AbstractActionController
         ));
 
         if (! $result) {
-            $return = array('status' => 1 , 'message' => 'user is not valid');
+            $return = array('status' => 2 , 'message' => 'user is not valid');
 
             return $this->sendResponse($return);
         } 
@@ -96,7 +105,7 @@ class UserController extends AbstractActionController
         $data = $this->getRequest()->getPost('data');
 
         if(empty($data)){
-            $return = array('status' => 1 , 'message' => 'data is required');
+            $return = array('status' => 3 , 'message' => 'data is required');
 
             return $this->sendResponse($return);
         }
@@ -104,14 +113,14 @@ class UserController extends AbstractActionController
         $data = json_decode($data, true);
 
         if (empty($data['email'])) {
-            $return = array('status' => 1 , 'message' => 'user is not valid');
+            $return = array('status' => 4 , 'message' => 'user is not valid');
 
             return $this->sendResponse($return);
         }
 
         $users = $this->getUserMapper()->findByEmail($data['email']);
         if(count($users) > 0) {
-            $return = array('status' => 1 , 'message' => 'user is already exist');
+            $return = array('status' => 5 , 'message' => 'user is already exist');
 
             return $this->sendResponse($return);
         }
@@ -123,7 +132,7 @@ class UserController extends AbstractActionController
         }
 
         if (empty($data['password'])) {
-            $return = array('status' => 1 , 'message' => 'user is not valid');
+            $return = array('status' => 6 , 'message' => 'user is not valid');
 
             return $this->sendResponse($return);
         }
@@ -261,14 +270,14 @@ class UserController extends AbstractActionController
         $data = json_decode($data, true);
 
         if (empty($data['email'])) {
-            $return = array('status' => 1 , 'message' => 'user is not valid');
+            $return = array('status' => 4 , 'message' => 'user is not valid');
 
             return $this->sendResponse($return);
         }
 
         $users = $this->getUserMapper()->findByEmail($data['email']);
         if(count($users) > 0) {
-            $return = array('status' => 1 , 'message' => 'user is already exist');
+            $return = array('status' => 5 , 'message' => 'user is already exist');
 
             return $this->sendResponse($return);
         }
@@ -345,7 +354,7 @@ class UserController extends AbstractActionController
     public function checkUser($data)
     {
         if(empty($data)){
-            $return = array('status' => 1 , 'message' => 'data is required');
+            $return = array('status' => 3, 'message' => 'data is required');
 
             return $this->sendResponse($return);
         }
@@ -353,21 +362,21 @@ class UserController extends AbstractActionController
         $data = json_decode($data, true);
 
         if(empty($data['token'])) {
-            $return = array('status' => 1 , 'message' => 'token is required');
+            $return = array('status' => 8, 'message' => 'token is required');
 
             return $this->sendResponse($return);
         }
 
         $id = $this->getServiceLocator()->get('playgrounduser_tokensecure_service')->checkToken($data['token']);
         if ($id === false) {
-            $return = array('status' => 1 , 'message' => 'user not recognized');
+            $return = array('status' => 9, 'message' => 'user not recognized');
 
             return $this->sendResponse($return);
         }
 
         $users = $this->getUserMapper()->findByToken($data['token']);
         if(empty($users)){
-            $return = array('status' => 1 , 'message' => 'user not recognized');
+            $return = array('status' => 9, 'message' => 'user not recognized');
 
             return $this->sendResponse($return);
         }
