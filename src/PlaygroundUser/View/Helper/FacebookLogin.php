@@ -83,7 +83,7 @@ class FacebookLogin extends AbstractHelper
         $script .= sprintf("var FbDomainAuthScope = '%s';\n", $this->config['providers']['Facebook']['scope']);
 
         $container->prependScript($script);
-        $container->appendFile($this->renderer->libAssetPath() . '/js/fbregister.js');
+        //$container->appendFile($this->renderer->libAssetPath() . '/js/fbregister.js');
 
         $this->rendered = true;
     }
