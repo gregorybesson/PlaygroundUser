@@ -182,7 +182,6 @@ class Module
                     'zfcuser_user_service'                         => 'PlaygroundUser\Service\User', // Extending ZfcUser service
                     'playgrounduser_cron_service'                  => 'PlaygroundUser\Service\Cron',
                     'playgrounduser_provider_service'              => 'PlaygroundUser\Service\Provider',
-                    'playgrounduser_tokensecure_service'           => 'PlaygroundUser\Service\TokenSecure',
                ),
 
             'factories' => array(

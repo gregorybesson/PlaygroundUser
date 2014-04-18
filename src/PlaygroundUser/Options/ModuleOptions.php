@@ -150,8 +150,6 @@ class ModuleOptions extends BaseModuleOptions implements
         'route_login_fail' => 'admin'
     );
 
-    protected $secretKey = "playgrounduser_secretKey";
-
     /**
      * @return the $emailVerification
      */
@@ -458,27 +456,6 @@ class ModuleOptions extends BaseModuleOptions implements
     public function getAdmin()
     {
         return $this->admin;
-    }
-
-
-    /**
-     *
-     * @param  string $secretKey
-     * @return \PlaygroundUser\Options\ModuleOptions
-     */
-    public function setSecretKey($secretKey)
-    {
-        $this->secretKey = $secretKey;
-        
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSecretKey()
-    {
-        return $this->secretKey;
     }
 
     /**

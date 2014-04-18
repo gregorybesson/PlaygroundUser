@@ -14,12 +14,9 @@ return array(
                     'PlaygroundUser\Entity'  => 'zfcuser_entity'
                 )
             )
-        ),
+        )
     ),
 
-    "migrations" => array(
-    ),
-    
     'assetic_configuration' => array(
         'modules' => array(
             'user_lib' => array(
@@ -116,8 +113,6 @@ return array(
             'playgrounduseradmin'       => 'PlaygroundUser\Controller\Admin\AdminController',
             'playgrounduser_user'       => 'PlaygroundUser\Controller\UserController',
             'playgrounduser_forgot'     => 'PlaygroundUser\Controller\ForgotController',
-
-            'playgrounduser_api_user'       => 'PlaygroundUser\Controller\API\UserController',
         ),
     ),
 
@@ -469,84 +464,6 @@ return array(
                                         'userId'     => 0
                                     ),
                                 ),
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-            'api' => array(
-                'type' => 'Literal',
-                'options' => array(
-                    'route' => '/api',
-                    'defaults' => array(
-                        'controller' => 'playgrounduser_api_user',
-                        'action'     => 'index',
-                    ),
-                ),
-                'child_routes' => array(
-                    'playgrounduser_create' => array(
-                        'type' => 'Literal',
-                        'priority' => 1000,
-                        'options' => array(
-                            'route' => '/user/create',
-                            'defaults' => array(
-                                'controller' => 'playgrounduser_api_user',
-                                'action'     => 'create',
-                            ),
-                        ),
-                    ),
-                    'playgrounduser_profile' => array(
-                        'type' => 'Literal',
-                        'priority' => 1000,
-                        'options' => array(
-                            'route' => '/user/profile',
-                            'defaults' => array(
-                                'controller' => 'playgrounduser_api_user',
-                                'action'     => 'profile',
-                            ),
-                        ),
-                    ),
-                    'playgrounduser_edit' => array(
-                        'type' => 'Literal',
-                        'priority' => 1000,
-                        'options' => array(
-                            'route' => '/user/edit',
-                            'defaults' => array(
-                                'controller' => 'playgrounduser_api_user',
-                                'action'     => 'edit',
-                            ),
-                        ),
-                    ),
-                    'playgrounduser_delete' => array(
-                        'type' => 'Literal',
-                        'priority' => 1000,
-                        'options' => array(
-                            'route' => '/user/delete',
-                            'defaults' => array(
-                                'controller' => 'playgrounduser_api_user',
-                                'action'     => 'delete',
-                            ),
-                        ),
-                    ),
-                    'playgrounduser_login' => array(
-                        'type' => 'Literal',
-                        'priority' => 1000,
-                        'options' => array(
-                            'route' => '/user/login',
-                            'defaults' => array(
-                                'controller' => 'playgrounduser_api_user',
-                                'action'     => 'login',
-                            ),
-                        ),
-                    ),
-                    'playgrounduser_logout' => array(
-                        'type' => 'Literal',
-                        'priority' => 1000,
-                        'options' => array(
-                            'route' => '/user/logout',
-                            'defaults' => array(
-                                'controller' => 'playgrounduser_api_user',
-                                'action'     => 'logout',
                             ),
                         ),
                     ),
