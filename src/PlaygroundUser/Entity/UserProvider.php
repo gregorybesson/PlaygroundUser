@@ -3,7 +3,7 @@ namespace PlaygroundUser\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/** @ORM\Entity @ORM\Table(name="user_provider") */
+/** @ORM\Entity @ORM\Table(name="user_provider",indexes={@ORM\index(name="search_idx", columns={"user_id"})})) */
 class UserProvider
 {
     /**
@@ -14,7 +14,7 @@ class UserProvider
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\OneToOne(targetEntity="User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="user_id", onDelete="CASCADE")
      **/
     protected $user;
