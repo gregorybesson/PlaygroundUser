@@ -32,7 +32,7 @@ class Password extends AbstractDbMapper
     public function getEntityRepository()
     {
         if (null === $this->er) {
-            $this->er = $this->em->getRepository('\PlaygroundEmailCampaign\Entity\Email');
+            $this->er = $this->em->getRepository('\PlaygroundUser\Entity\Password');
         }
 
         return $this->er;
@@ -56,7 +56,7 @@ class Password extends AbstractDbMapper
 
     public function findByRequestKey($key)
     {
-        return $this->em->findBy(array('requestKey'=>$key));
+        return $this->getEntityRepository()->findBy(array('requestKey'=>$key));
     }
 
     public function cleanExpiredForgotRequests($expiryTime=86400)
@@ -88,7 +88,7 @@ class Password extends AbstractDbMapper
 
     public function findByUserIdRequestKey($userId, $token)
     {
-       return $this->em->findOneBy(array('user_id'=>$userId, 'requestKey'=>$token));
+       return $this->getEntityRepository()->findOneBy(array('user_id'=>$userId, 'requestKey'=>$token));
     }
 
     public function insert($entity, $tableName = null, HydratorInterface $hydrator = null)
@@ -108,24 +108,6 @@ class Password extends AbstractDbMapper
     {
         return $this->persist($entity);
     }
-
-//     protected function fromRow($row)
-//     {
-//         if (!$row) return false;
-//         $evr = Model::fromArray($row->getArrayCopy());
-
-//         return $evr;
-//     }
-
-//     public function toScalarValueArray($passwordModel)
-//     {
-//         return new \ArrayObject(array(
-//             $this->keyField      => $passwordModel->getRequestKey(),
-//             $this->userField     => $passwordModel->getUserId(),
-//             $this->reqtimeField  => $passwordModel->getRequestTime()->format('Y-m-d H:i:s'),
-//         ));
-//     }
-
 
     public function getTableName() { return $this->tableName; }
     public function getPrimaryKey() { $this->keyField; }
