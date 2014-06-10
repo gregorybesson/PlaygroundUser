@@ -7,7 +7,7 @@ use Zend\Form\Element;
 use ZfcBase\Form\ProvidesEventsForm;
 use ZfcUser\Options\AuthenticationOptionsInterface;
 use ZfcUser\Module as ZfcUser;
-use Zend\I18n\Translator\Translator;
+use Zend\Mvc\I18n\Translator;
 
 class Login extends ProvidesEventsForm
 {
