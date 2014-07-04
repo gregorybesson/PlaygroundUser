@@ -4,7 +4,7 @@ namespace PlaygroundUser\Form;
 
 use Zend\InputFilter\InputFilter;
 use PlaygroundUser\Options\ForgotOptionsInterface;
-use Zend\I18n\Translator\Translator;
+use Zend\Mvc\I18n\Translator;
 
 class ResetFilter extends InputFilter
 {

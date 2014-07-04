@@ -5,7 +5,7 @@ use Zend\Form\Form;
 use Zend\Form\Element;
 use ZfcUser\Options\RegistrationOptionsInterface;
 use ZfcBase\Form\ProvidesEventsForm;
-use Zend\I18n\Translator\Translator;
+use Zend\Mvc\I18n\Translator;
 
 class Newsletter extends ProvidesEventsForm
 {
