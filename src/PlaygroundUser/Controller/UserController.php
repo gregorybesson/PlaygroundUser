@@ -402,7 +402,7 @@ class UserController extends ZfcUserController
                 return $this->redirect()->toUrl($routeLoginAdmin);
             }
 
-            return $this->redirect()->toUrl($this->url()->fromRoute('frontend/login', array('channel' => $this->getEvent()->getRouteMatch()->getParam('channel')))
+            return $this->redirect()->toUrl($this->url()->fromRoute('frontend/zfcuser/login', array('channel' => $this->getEvent()->getRouteMatch()->getParam('channel')))
                 . ($redirect ? '?redirect='.$redirect : ''));
         }
 
