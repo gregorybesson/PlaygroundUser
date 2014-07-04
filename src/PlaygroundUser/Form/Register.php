@@ -4,7 +4,7 @@ namespace PlaygroundUser\Form;
 use Zend\Form\Form;
 use PlaygroundUser\Options\UserCreateOptionsInterface;
 use ZfcUser\Options\RegistrationOptionsInterface;
-use Zend\I18n\Translator\Translator;
+use Zend\Mvc\I18n\Translator;
 
 class Register extends \ZfcUser\Form\Register
 {
