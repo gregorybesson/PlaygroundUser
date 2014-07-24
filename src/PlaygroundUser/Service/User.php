@@ -796,7 +796,7 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
             $record->getEmailAddress(),
             $subject,
             'playground-user/email/verification',
-            array('record' => $record, 'user' => $user, 'userFirstName' => $user->getFirstname())
+            array('record' => $record, 'user' => $user))
         );
 
         $mailService->send($message);
