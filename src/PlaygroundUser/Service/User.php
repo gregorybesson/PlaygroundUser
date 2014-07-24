@@ -786,7 +786,6 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         $mailService = $this->getServiceManager()->get('playgrounduser_message');
 
         $user = $this->getUserMapper()->findByEmail($record->getEmailAddress());
-        $userFirstName = $user->getFirstname();
 
         $from = $this->getOptions()->getEmailFromAddress();
         //$subject = $this->getOptions()->getRegisterEmailSubjectLine();
@@ -797,7 +796,7 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
             $record->getEmailAddress(),
             $subject,
             'playground-user/email/verification',
-            array('record' => $record, 'userFirstName' => $userFirstName)
+            array('record' => $record, 'user' => $user)
         );
 
         $mailService->send($message);
