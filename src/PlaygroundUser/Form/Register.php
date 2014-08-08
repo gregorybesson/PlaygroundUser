@@ -25,18 +25,25 @@ class Register extends \ZfcUser\Form\Register
         if($this->has('username')){
         	$this->get('username')
         	->setLabel($translator->translate('Username', 'playgrounduser'))
-        	->setAttributes(array('placeholder' => 'Your username'));
+        	->setAttributes(array(
+        	   'id' => 'username',
+        	   'placeholder' => 'Your username')
+           );
         }
 
         $this->get('email')
             ->setLabel($translator->translate('Your Email', 'playgrounduser'))
-            ->setAttributes(array('type' => 'email', 'class' => 'large-input required email', 'placeholder' => $translator->translate('Your Email', 'playgrounduser')));
+            ->setAttributes(array('id' => 'email', 'type' => 'email', 'class' => 'large-input required email', 'placeholder' => $translator->translate('Your Email', 'playgrounduser')));
         $this->get('password')
             ->setLabel($translator->translate('Your Password', 'playgrounduser'))
             ->setAttributes(array('id' => 'password', 'class' => 'large-input required security', 'placeholder' => $translator->translate('Your password', 'playgrounduser')));
         $this->get('passwordVerify')
             ->setLabel($translator->translate('Confirm your Password', 'playgrounduser'))
-            ->setAttributes(array('id' => 'passwordVerify', 'class' => 'large-input required', 'placeholder' => $translator->translate('Confirm your Password', 'playgrounduser')));
+            ->setAttributes(array(
+                'id' => 'passwordVerify',
+                'class' => 'large-input required',
+                'placeholder' => $translator->translate('Confirm your Password', 'playgrounduser'))
+            );
 
         $this->add(array(
             'name' => 'firstname',
@@ -44,6 +51,7 @@ class Register extends \ZfcUser\Form\Register
                 'label' => $translator->translate('First Name', 'playgrounduser')
             ),
             'attributes' => array(
+                'id' => 'firstname',
                 'type' => 'text',
                 'class' => 'large-input required',
                 'placeholder' => $translator->translate('Your first name', 'playgrounduser')
@@ -56,6 +64,7 @@ class Register extends \ZfcUser\Form\Register
                 'label' => $translator->translate('Last Name', 'playgrounduser')
             ),
             'attributes' => array(
+                'id' => 'lastname',
                 'type' => 'text',
                 'class'=> 'large-input required',
                 'placeholder' => $translator->translate('Your last name', 'playgrounduser')
@@ -100,6 +109,7 @@ class Register extends \ZfcUser\Form\Register
 				'format' => 'd/m/Y'
 			),
 			'attributes' => array(
+			    'id' => 'dob',
 				'type' => 'text',
 				'placeholder' => $translator->translate('Date of birth', 'playgrounduser'),
 				'class'=> 'date required'
@@ -117,6 +127,7 @@ class Register extends \ZfcUser\Form\Register
                 ),
             ),
             'attributes' => array(
+                'id' => 'optin',
                 'class'=> 'required',
             ),
         ));
@@ -132,6 +143,7 @@ class Register extends \ZfcUser\Form\Register
                 ),
             ),
             'attributes' => array(
+                'id' => 'optinPartner',
                 'class'=> 'required',
             ),
         ));
