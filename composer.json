@@ -27,6 +27,7 @@
 		"zendframework/zendframework" : "2.*",
 		"playground/core" : "dev-master",
 		"playground/hybridauth" : "dev-master",
+		"playground/design" : "dev-master",
 		"zf-commons/zfc-user" : "0.*"
 	},
 	"require-dev" : {
