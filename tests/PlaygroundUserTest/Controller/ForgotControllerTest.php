@@ -47,6 +47,30 @@ class ForgotControllerTest extends AbstractHttpControllerTestCase
 
     public function testSentPasswordWrongMail()
     {
+        $serviceManager = $this->getApplicationServiceLocator();
+        $serviceManager->setAllowOverride(true);
+        
+        //mocking the method cleanExpiredForgotRequests
+        $f = $this->getMockBuilder('PlaygroundUser\Service\User')
+        ->setMethods(array('getUserMapper'))
+        ->disableOriginalConstructor()
+        ->getMock();
+        
+        $serviceManager->setService('zfcuser_user_service', $f);
+        
+        $userMock = $this->getMockBuilder('PlaygroundUser\Mapper\User')
+        ->disableOriginalConstructor()
+        ->getMock();
+        
+        // I check that the array in findOneBy contains the parameter 'active' = 1
+        $f->expects($this->once())
+        ->method('getUserMapper')
+        ->will($this->returnValue($userMock));
+        
+        $userMock->expects($this->any())
+        ->method('findById')
+        ->will($this->returnValue(false));
+        
         $this->dispatch('/mon-compte/envoi-mot-passe/fake.mail@address');
         $this->assertResponseStatusCode(200);
 
