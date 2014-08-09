@@ -19,6 +19,22 @@ class ForgotControllerTest extends AbstractHttpControllerTestCase
 
     public function testForgotPasswordFormAccessed()
     {
+        $serviceManager = $this->getApplicationServiceLocator();
+        $serviceManager->setAllowOverride(true);
+        
+        //mocking the method cleanExpiredForgotRequests
+        $f = $this->getMockBuilder('PlaygroundUser\Service\Password')
+        ->setMethods(array('cleanExpiredForgotRequests'))
+        ->disableOriginalConstructor()
+        ->getMock();
+        
+        $serviceManager->setService('playgrounduser_password_service', $f);
+        
+        // I check that the array in findOneBy contains the parameter 'active' = 1
+        $f->expects($this->once())
+        ->method('cleanExpiredForgotRequests')
+        ->will($this->returnValue(true));
+        
         $this->dispatch('/mon-compte/mot-passe-oublie');
         $this->assertResponseStatusCode(200);
 
