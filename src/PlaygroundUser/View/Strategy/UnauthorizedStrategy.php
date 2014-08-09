@@ -20,12 +20,12 @@ class UnauthorizedStrategy implements ListenerAggregateInterface, ServiceLocator
     protected $serviceLocator;
     protected $options = null;
 
-    public function getServiceLocator ()
+    public function getServiceLocator()
     {
         return $this->serviceLocator;
     }
 
-    public function setServiceLocator (ServiceLocatorInterface $serviceLocator)
+    public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
     {
         $this->serviceLocator = $serviceLocator;
     }
@@ -53,7 +53,7 @@ class UnauthorizedStrategy implements ListenerAggregateInterface, ServiceLocator
         if ($result instanceof Response) {
             return;
         }
-        
+
         $router = $e->getRouter();
         $match  = $e->getRouteMatch();
 
@@ -72,7 +72,7 @@ class UnauthorizedStrategy implements ListenerAggregateInterface, ServiceLocator
             $response = new HttpResponse();
             $e->setResponse($response);
         }
-        
+
         // Don't redirect in case of dev.
         $environnement = getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : null;
         if ($environnement !== 'development') {

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 class UserProvider
 {
     /** ORM\Id ORM\Column(type="integer",name="user_id") */
-	/**
+    /**
 	 * @ORM\OneToOne(targetEntity="User")
 	 * @ORM\JoinColumn(name="user_id", referencedColumnName="user_id", onDelete="CASCADE")
 	 **/

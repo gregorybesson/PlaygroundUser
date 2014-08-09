@@ -18,7 +18,7 @@ class Newsletter extends ProvidesEventsForm
 
     protected $serviceManager;
 
-    public function __construct ($name = null, RegistrationOptionsInterface $registerOptions, Translator $translator)
+    public function __construct($name = null, RegistrationOptionsInterface $registerOptions, Translator $translator)
     {
         parent::__construct($name);
 
@@ -58,12 +58,12 @@ class Newsletter extends ProvidesEventsForm
         ));
     }
 
-    public function setServiceManager ($serviceManager)
+    public function setServiceManager($serviceManager)
     {
         $this->serviceManager = $serviceManager;
     }
 
-    public function getServiceManager ()
+    public function getServiceManager()
     {
         return $this->serviceManager;
     }

@@ -20,7 +20,7 @@ class ModuleOptions extends BaseModuleOptions implements
      * @var string
      */
     protected $social = array();
-    
+
     /**
      * @var bool
      * true = create user automaticaly after social authentication
@@ -137,7 +137,7 @@ class ModuleOptions extends BaseModuleOptions implements
      * @var string
      */
     protected $defaultRegisterRole = 'user';
-    
+
     /**
      * @var array
      */
@@ -302,15 +302,15 @@ class ModuleOptions extends BaseModuleOptions implements
     {
         return $this->createUserAutoPassword;
     }
-    
+
     public function setCreateUserAutoSocial($createUserAutoSocial)
     {
-    	$this->createUserAutoSocial = $createUserAutoSocial;
+        $this->createUserAutoSocial = $createUserAutoSocial;
     }
-    
+
     public function getCreateUserAutoSocial()
     {
-    	return $this->createUserAutoSocial;
+        return $this->createUserAutoSocial;
     }
 
     public function setCookieExpire($seconds)
@@ -437,7 +437,7 @@ class ModuleOptions extends BaseModuleOptions implements
 
         return $this;
     }
-    
+
     /**
      *
      * @param  array $admin
@@ -446,7 +446,7 @@ class ModuleOptions extends BaseModuleOptions implements
     public function setAdmin($admin)
     {
         $this->admin = $admin;
-        
+
         return $this;
     }
 

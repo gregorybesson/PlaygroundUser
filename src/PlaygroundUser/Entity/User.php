@@ -150,7 +150,7 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
      */
     protected $updated_at;
 
-	 /**
+     /**
      * @ORM\Column(name="registration_source", type="string", length=255, nullable=true)
      */
      protected $registrationSource;
@@ -522,7 +522,7 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
      */
     public function getCountry()
     {
-    	return $this->country;
+        return $this->country;
     }
 
     /**
@@ -530,9 +530,9 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
      */
     public function setCountry($country)
     {
-    	$this->country = $country;
+        $this->country = $country;
 
-    	return $this;
+        return $this;
     }
 
     /**
@@ -585,7 +585,7 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
      *
      * @return the $optin
      */
-    public function getOptin ()
+    public function getOptin()
     {
         return $this->optin;
     }
@@ -594,7 +594,7 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
      *
      * @param field_type $optin
      */
-    public function setOptin ($optin)
+    public function setOptin($optin)
     {
         $this->optin = $optin;
 
@@ -605,7 +605,7 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
      *
      * @return the $optinPartner
      */
-    public function getOptinPartner ()
+    public function getOptinPartner()
     {
         return $this->optinPartner;
     }
@@ -614,7 +614,7 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
      *
      * @param field_type $optinPartner
      */
-    public function setOptinPartner ($optinPartner)
+    public function setOptinPartner($optinPartner)
     {
         $this->optinPartner = $optinPartner;
 
@@ -657,7 +657,7 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
         return $this;
     }
 
- 	/**
+    /**
      * Get registration_source
      */
     public function getRegistrationSource()
@@ -684,7 +684,7 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
     {
         $obj_vars = get_object_vars($this);
 
-		if (isset($obj_vars['dob']) && $obj_vars['dob'] != null) {
+        if (isset($obj_vars['dob']) && $obj_vars['dob'] != null) {
             $obj_vars['dob'] = $obj_vars['dob']->format('d/m/Y');
         }
 
@@ -698,7 +698,7 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
      */
     public function populate($data = array())
     {
-   		if (isset($data['id']) && $data['id'] != null) {
+        if (isset($data['id']) && $data['id'] != null) {
             $this->id    = $data['id'];
         }
 
@@ -715,52 +715,52 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
             $this->postalCode    = $data['postalCode'];
         }
 
-		if (isset($data['dob']) && $data['dob'] != null) {
-			$this->dob = DateTime::createFromFormat('Y-m-d', $data['dob']);
-		}
+        if (isset($data['dob']) && $data['dob'] != null) {
+            $this->dob = DateTime::createFromFormat('Y-m-d', $data['dob']);
+        }
 
-		if (isset($data['optin']) && $data['optin'] != null) {
-			$this->optin    = $data['optin'];
-		}
-		if (isset($data['optinPartner']) && $data['optinPartner'] != null) {
-			$this->optinPartner    = $data['optinPartner'];
-		}
-		if (isset($data['username']) && $data['username'] != null) {
-			$this->username    = $data['username'];
-		}
-		if (isset($data['email']) && $data['email'] != null) {
-			$this->email    = $data['email'];
-		}
-		if (isset($data['displayName']) && $data['displayName'] != null) {
-			$this->displayName    = $data['displayName'];
-		}
-		if (isset($data['firstname']) && $data['firstname'] != null) {
-			$this->firstname    = $data['firstname'];
-		}
-		if (isset($data['lastname']) && $data['lastname'] != null) {
-			$this->lastname    = $data['lastname'];
-		}
-		if (isset($data['title']) && $data['title'] != null) {
-			$this->title    = $data['title'];
-		}
-		if (isset($data['address']) && $data['address'] != null) {
-			$this->address    = $data['address'];
-		}
-		if (isset($data['address2'])) {
-			$this->address2    = $data['address2'];
-		}
-		if (isset($data['city']) && $data['city'] != null) {
-			$this->city    = $data['city'];
-		}
-		if (isset($data['country']) && $data['country'] != null) {
-			$this->country    = $data['country'];
-		}
-		if (isset($data['telephone']) && $data['telephone'] != null) {
-			$this->telephone    = $data['telephone'];
-		}
-		if (isset($data['mobile']) && $data['mobile'] != null) {
-			$this->mobile    = $data['mobile'];
-		}
+        if (isset($data['optin']) && $data['optin'] != null) {
+            $this->optin    = $data['optin'];
+        }
+        if (isset($data['optinPartner']) && $data['optinPartner'] != null) {
+            $this->optinPartner    = $data['optinPartner'];
+        }
+        if (isset($data['username']) && $data['username'] != null) {
+            $this->username    = $data['username'];
+        }
+        if (isset($data['email']) && $data['email'] != null) {
+            $this->email    = $data['email'];
+        }
+        if (isset($data['displayName']) && $data['displayName'] != null) {
+            $this->displayName    = $data['displayName'];
+        }
+        if (isset($data['firstname']) && $data['firstname'] != null) {
+            $this->firstname    = $data['firstname'];
+        }
+        if (isset($data['lastname']) && $data['lastname'] != null) {
+            $this->lastname    = $data['lastname'];
+        }
+        if (isset($data['title']) && $data['title'] != null) {
+            $this->title    = $data['title'];
+        }
+        if (isset($data['address']) && $data['address'] != null) {
+            $this->address    = $data['address'];
+        }
+        if (isset($data['address2'])) {
+            $this->address2    = $data['address2'];
+        }
+        if (isset($data['city']) && $data['city'] != null) {
+            $this->city    = $data['city'];
+        }
+        if (isset($data['country']) && $data['country'] != null) {
+            $this->country    = $data['country'];
+        }
+        if (isset($data['telephone']) && $data['telephone'] != null) {
+            $this->telephone    = $data['telephone'];
+        }
+        if (isset($data['mobile']) && $data['mobile'] != null) {
+            $this->mobile    = $data['mobile'];
+        }
     }
 
     public function setInputFilter(InputFilterInterface $inputFilter)
@@ -830,10 +830,10 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
                 ),
             )));
 
-			$inputFilter->add($factory->createInput(array(
+            $inputFilter->add($factory->createInput(array(
                 'name' => 'dob',
                 'required' => false,
-				'allowEmpty' => true,
+                'allowEmpty' => true,
                 /*'validators' => array(
 					array(
 						'name' => 'Date',
@@ -842,12 +842,12 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
 				),*/
             )));
 
-			// US post code (also match french one)
-			$regexUs = '\d{5}-\d{4}|\d{5}';
-			// canadian post code
-			$regexCa = '[A-Z]\d[A-Z] \d[A-Z]\d';
-			// UK post code
-			$regexUk = '([A-Z]\d|[A-Z]\d{2}|[A-Z]\d[A-Z]|[A-Z]{2}\d|[A-Z]{2}\d{2}|[A-Z]{2}\d[A-Z]) \d[A-Z]{2}';
+            // US post code (also match french one)
+            $regexUs = '\d{5}-\d{4}|\d{5}';
+            // canadian post code
+            $regexCa = '[A-Z]\d[A-Z] \d[A-Z]\d';
+            // UK post code
+            $regexUk = '([A-Z]\d|[A-Z]\d{2}|[A-Z]\d[A-Z]|[A-Z]{2}\d|[A-Z]{2}\d{2}|[A-Z]{2}\d[A-Z]) \d[A-Z]{2}';
 
             $inputFilter->add($factory->createInput(array(
                 'name'     => 'postalCode',
@@ -879,73 +879,73 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
             )));
 
             $inputFilter->add(array(
-            	'name'       => 'country',
-            	'required'   => false,
-            	'allowEmpty' => true,
-           		'filters'    => array(array('name' => 'StringTrim')),
-           		'validators' => array(
-       				array(
-           				'name'    => 'StringLength',
-           				'options' => array(
-           					'min' => 2,
-       						'max' => 2,
-       					),
-           			),
-           		),
+                'name'       => 'country',
+                'required'   => false,
+                'allowEmpty' => true,
+                   'filters'    => array(array('name' => 'StringTrim')),
+                   'validators' => array(
+                       array(
+                           'name'    => 'StringLength',
+                           'options' => array(
+                               'min' => 2,
+                               'max' => 2,
+                           ),
+                       ),
+                   ),
             ));
 
             $inputFilter->add($factory->createInput(array(
                 'name'     => 'title',
                 'required' => false,
-            	'allowEmpty' => true,
+                'allowEmpty' => true,
             )));
 
             $inputFilter->add($factory->createInput(array(
-            		'name'     => 'displayName',
-            		'required' => false,
-            		'allowEmpty' => true,
+                    'name'     => 'displayName',
+                    'required' => false,
+                    'allowEmpty' => true,
             )));
 
             $inputFilter->add($factory->createInput(array(
-            		'name'     => 'gender',
-            		'required' => false,
-            		'allowEmpty' => true,
+                    'name'     => 'gender',
+                    'required' => false,
+                    'allowEmpty' => true,
             )));
 
             $inputFilter->add($factory->createInput(array(
-            		'name'     => 'avatar',
-            		'required' => false,
-            		'allowEmpty' => true,
+                    'name'     => 'avatar',
+                    'required' => false,
+                    'allowEmpty' => true,
             )));
 
             $inputFilter->add($factory->createInput(array(
-            		'name'     => 'telephone',
-            		'required' => false,
-            		'allowEmpty' => true,
+                    'name'     => 'telephone',
+                    'required' => false,
+                    'allowEmpty' => true,
             )));
 
             $inputFilter->add($factory->createInput(array(
-            		'name'     => 'mobile',
-            		'required' => false,
-            		'allowEmpty' => true,
+                    'name'     => 'mobile',
+                    'required' => false,
+                    'allowEmpty' => true,
             )));
 
             $inputFilter->add($factory->createInput(array(
-            		'name'     => 'address',
-            		'required' => false,
-            		'allowEmpty' => true,
+                    'name'     => 'address',
+                    'required' => false,
+                    'allowEmpty' => true,
             )));
 
             $inputFilter->add($factory->createInput(array(
-            		'name'     => 'address2',
-            		'required' => false,
-            		'allowEmpty' => true,
+                    'name'     => 'address2',
+                    'required' => false,
+                    'allowEmpty' => true,
             )));
 
             $inputFilter->add($factory->createInput(array(
-            		'name'     => 'city',
-            		'required' => false,
-            		'allowEmpty' => true,
+                    'name'     => 'city',
+                    'required' => false,
+                    'allowEmpty' => true,
             )));
 
             $inputFilter->add($factory->createInput(array(

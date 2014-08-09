@@ -23,26 +23,26 @@ class LoginController extends ZfcUserController
         $authAdminConfig = $this->getOptions()->getAdmin();
 
         if($user && $this->isAllowed($authAdminConfig['resource'], $authAdminConfig['privilege'])){
-        	return $this->forward()->dispatch($authAdminConfig['controller'], array('action' => $authAdminConfig['action']));
+            return $this->forward()->dispatch($authAdminConfig['controller'], array('action' => $authAdminConfig['action']));
         }
 
         if ($request->isPost()) {
-	        $form->setData($request->getPost());
+            $form->setData($request->getPost());
 
-	        if (!$form->isValid()) {
-	            $this->flashMessenger()->setNamespace('zfcuser-login-form')->addMessage($this->failedLoginMessage);
+            if (!$form->isValid()) {
+                $this->flashMessenger()->setNamespace('zfcuser-login-form')->addMessage($this->failedLoginMessage);
 
-	            return $this->redirect()->toUrl($this->url()->fromRoute($authAdminConfig['route_login']));
-	        }
+                return $this->redirect()->toUrl($this->url()->fromRoute($authAdminConfig['route_login']));
+            }
 
-	        // clear adapters
-	        $this->zfcUserAuthentication()->getAuthAdapter()->resetAdapters();
-	        $this->zfcUserAuthentication()->getAuthService()->clearIdentity();
+            // clear adapters
+            $this->zfcUserAuthentication()->getAuthAdapter()->resetAdapters();
+            $this->zfcUserAuthentication()->getAuthService()->clearIdentity();
 
             $request->getQuery()->redirect = $this->url()->fromRoute($authAdminConfig['route_login']);
             $request->getQuery()->routeLoginAdmin = $authAdminConfig['route_login'];
 
-	        return $this->forward()->dispatch("playgrounduser_user", array('action' => 'authenticate')); 
+            return $this->forward()->dispatch("playgrounduser_user", array('action' => 'authenticate'));
         }
 
         return array(

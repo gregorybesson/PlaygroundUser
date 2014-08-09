@@ -58,7 +58,7 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
      */
     public function create(array $data)
     {
-    	$entityManager = $this->getServiceManager()->get('doctrine.entitymanager.orm_default');
+        $entityManager = $this->getServiceManager()->get('doctrine.entitymanager.orm_default');
         $zfcUserOptions = $this->getServiceManager()->get('zfcuser_module_options');
         $class = $zfcUserOptions->getUserEntityClass();
         $user  = new $class;
@@ -88,7 +88,7 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         $filter = $user->getInputFilter();
         $filter->remove('password');
         $filter->remove('passwordVerify');
-        $filter->get('title')->setRequired(FALSE);
+        $filter->get('title')->setRequired(false);
         $filter->remove('firstname');
         $filter->remove('lastname');
         $filter->remove('postalCode');
@@ -97,9 +97,9 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
 
         $emailInput = $form->getInputFilter()->get('email');
         $noObjectExistsValidator = new NoObjectExistsValidator(array(
-        		'object_repository' => $entityManager->getRepository($class),
-        		'fields'            => 'email',
-        		'messages'          => array('objectFound' => 'This email already exists !')
+                'object_repository' => $entityManager->getRepository($class),
+                'fields'            => 'email',
+                'messages'          => array('objectFound' => 'This email already exists !')
         ));
 
         $emailInput->getValidatorChain()->addValidator($noObjectExistsValidator);
@@ -134,8 +134,8 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
             $data['username'] = ucfirst($data['firstname']) . " " . substr(ucfirst($data['lastname']),0,1);
         }
 
-		// Convert birth date format
-		if (isset($data['dob']) && $data['dob']) {
+        // Convert birth date format
+        if (isset($data['dob']) && $data['dob']) {
             $tmpDate = \DateTime::createFromFormat('d/m/Y', $data['dob']);
             $data['dob'] = $tmpDate->format('Y-m-d');
         }
@@ -143,11 +143,11 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         $form->setData($data);
 
         if (!$form->isValid()) {
-        	if (isset($data['dob']) && $data['dob']) {
-	            $tmpDate = \DateTime::createFromFormat('Y-m-d', $data['dob']);
-	            $data['dob'] = $tmpDate->format('d/m/Y');
-				$form->setData(array('dob' => $data['dob']));
-	        }
+            if (isset($data['dob']) && $data['dob']) {
+                $tmpDate = \DateTime::createFromFormat('Y-m-d', $data['dob']);
+                $data['dob'] = $tmpDate->format('d/m/Y');
+                $form->setData(array('dob' => $data['dob']));
+            }
             return false;
         }
 
@@ -167,18 +167,18 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
 
             if (!$adapter->isValid()) {
                 $dataError = $adapter->getMessages();
-				if(isset($dataError['fileSizeTooBig'])) {
-					$dataError['fileSizeTooBig'] = 'Votre fichier dépasse le poids autorisé';
-				}
+                if(isset($dataError['fileSizeTooBig'])) {
+                    $dataError['fileSizeTooBig'] = 'Votre fichier dépasse le poids autorisé';
+                }
                 $error = array();
                 foreach ($dataError as $key=>$row) {
                     $error[] = $row;
                 }
-				if (isset($data['dob']) && $data['dob']) {
-		            $tmpDate = \DateTime::createFromFormat('Y-m-d', $data['dob']);
-		            $data['dob'] = $tmpDate->format('d/m/Y');
-					$form->setData(array('dob' => $data['dob']));
-		        }
+                if (isset($data['dob']) && $data['dob']) {
+                    $tmpDate = \DateTime::createFromFormat('Y-m-d', $data['dob']);
+                    $data['dob'] = $tmpDate->format('d/m/Y');
+                    $form->setData(array('dob' => $data['dob']));
+                }
                 $form->setMessages(array('avatar'=>$error ));
             } else {
                 $adapter->setDestination($avatarPath);
@@ -201,9 +201,9 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
 
     public function edit(array $data, $user)
     {
-    	$entityManager 		  = $this->getServiceManager()->get('doctrine.entitymanager.orm_default');
-    	$zfcUserOptions = $this->getServiceManager()->get('zfcuser_module_options');
-    	$class 				  = $zfcUserOptions->getUserEntityClass();
+        $entityManager          = $this->getServiceManager()->get('doctrine.entitymanager.orm_default');
+        $zfcUserOptions = $this->getServiceManager()->get('zfcuser_module_options');
+        $class                  = $zfcUserOptions->getUserEntityClass();
         $path                 = $this->getOptions()->getAvatarPath() . DIRECTORY_SEPARATOR;
         $avatar_url           = $this->getOptions()->getAvatarUrl() . '/';
         $roleMapper           = $this->getRoleMapper();
@@ -216,19 +216,19 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         $filter = $user->getInputFilter();
         $filter->remove('password');
         $filter->remove('passwordVerify');
-        $filter->get('firstname')->setRequired(FALSE);
-        $filter->get('lastname')->setRequired(FALSE);
+        $filter->get('firstname')->setRequired(false);
+        $filter->get('lastname')->setRequired(false);
         $form->setInputFilter($filter);
 
         $emailInput = $form->getInputFilter()->get('email');
         $noObjectExistsValidator = new NoObjectExistsValidator(array(
-        		'object_repository' => $entityManager->getRepository($class),
-        		'fields'            => 'email',
-        		'messages'          => array('objectFound' => 'This email already exists !')
+                'object_repository' => $entityManager->getRepository($class),
+                'fields'            => 'email',
+                'messages'          => array('objectFound' => 'This email already exists !')
         ));
 
         if($user->getEmail() != $data['email']){
-        	$emailInput->getValidatorChain()->addValidator($noObjectExistsValidator);
+            $emailInput->getValidatorChain()->addValidator($noObjectExistsValidator);
         }
 
         // If avatar is set, I prepend the url path to the image
@@ -241,8 +241,8 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
             $data['username'] = ucfirst($data['firstname']) . " " . substr(ucfirst($data['lastname']),0,1);
         }
 
-		// Convert birth date format
-		if (isset($data['dob']) && $data['dob']) {
+        // Convert birth date format
+        if (isset($data['dob']) && $data['dob']) {
             $tmpDate = \DateTime::createFromFormat('d/m/Y', $data['dob']);
             $data['dob'] = $tmpDate->format('Y-m-d');
         }
@@ -250,12 +250,12 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         $form->bind($user);
         $form->setData($data);
 
-		if (!$form->isValid()) {
-        	if (isset($data['dob']) && $data['dob']) {
-	            $tmpDate = \DateTime::createFromFormat('Y-m-d', $data['dob']);
-	            $data['dob'] = $tmpDate->format('d/m/Y');
-				$form->setData(array('dob' => $data['dob']));
-	        }
+        if (!$form->isValid()) {
+            if (isset($data['dob']) && $data['dob']) {
+                $tmpDate = \DateTime::createFromFormat('Y-m-d', $data['dob']);
+                $data['dob'] = $tmpDate->format('d/m/Y');
+                $form->setData(array('dob' => $data['dob']));
+            }
 
             return false;
         }
@@ -268,24 +268,24 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
             $role = $roleMapper->findByRoleId($defaultRegisterRole);
         }
 
-		if ($fileName) {
+        if ($fileName) {
             $adapter = new \Zend\File\Transfer\Adapter\Http();
             $size = new Size(array('max'=>'500kb'));
             $adapter->setValidators(array($size), $fileName);
             if (!$adapter->isValid()) {
                 $dataError = $adapter->getMessages();
-				if(isset($dataError['fileSizeTooBig'])) {
-					$dataError['fileSizeTooBig'] = 'Votre fichier dépasse le poids autorisé';
-				}
+                if(isset($dataError['fileSizeTooBig'])) {
+                    $dataError['fileSizeTooBig'] = 'Votre fichier dépasse le poids autorisé';
+                }
                 $error = array();
                 foreach ($dataError as $key=>$row) {
                     $error[] = $row;
                 }
-				if (isset($data['dob']) && $data['dob']) {
-		            $tmpDate = \DateTime::createFromFormat('Y-m-d', $data['dob']);
-		            $data['dob'] = $tmpDate->format('d/m/Y');
-					$form->setData(array('dob' => $data['dob']));
-		        }
+                if (isset($data['dob']) && $data['dob']) {
+                    $tmpDate = \DateTime::createFromFormat('Y-m-d', $data['dob']);
+                    $data['dob'] = $tmpDate->format('d/m/Y');
+                    $form->setData(array('dob' => $data['dob']));
+                }
                 $form->setMessages(array('avatar'=>$error ));
             } else {
                 $adapter->setDestination($path);
@@ -324,8 +324,8 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         $form  = $this->getRegisterForm();
         $form->get('dob')->setOptions(array('format' => 'Y-m-d'));
 
-		// Convert birth date format
-		if (isset($data['dob']) && $data['dob']) {
+        // Convert birth date format
+        if (isset($data['dob']) && $data['dob']) {
             $tmpDate = \DateTime::createFromFormat('d/m/Y', $data['dob']);
             $data['dob'] = $tmpDate->format('Y-m-d');
         }
@@ -353,11 +353,11 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         $form->setInputFilter($filter);
 
         if (!$form->isValid()) {
-        	if (isset($data['dob']) && $data['dob']) {
-	            $tmpDate = \DateTime::createFromFormat('Y-m-d', $data['dob']);
-	            $data['dob'] = $tmpDate->format('d/m/Y');
-				$form->setData(array('dob' => $data['dob']));
-	        }
+            if (isset($data['dob']) && $data['dob']) {
+                $tmpDate = \DateTime::createFromFormat('Y-m-d', $data['dob']);
+                $data['dob'] = $tmpDate->format('d/m/Y');
+                $form->setData(array('dob' => $data['dob']));
+            }
             return false;
         }
 
@@ -376,8 +376,8 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         if ($zfcUserOptions->getEnableUsername()) {
             if (!isset($data['username']) || $data['username'] == '' ) {
                 if(isset($data['firstname']) && isset($data['lastname'])){
-                	$user->setUsername(ucfirst($data['firstname']) . " " . substr(ucfirst($data['lastname']),0,1));
-				}
+                    $user->setUsername(ucfirst($data['firstname']) . " " . substr(ucfirst($data['lastname']),0,1));
+                }
             } else {
                 $user->setUsername($data['username']);
             }
@@ -539,8 +539,8 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
             $data['username'] = ucfirst($data['firstname']) . " " . substr(ucfirst($data['lastname']),0,1);
         }
 
-		// Convert birth date format
-		if (isset($data['dob']) && $data['dob']) {
+        // Convert birth date format
+        if (isset($data['dob']) && $data['dob']) {
             $tmpDate = \DateTime::createFromFormat('d/m/Y', $data['dob']);
             $data['dob'] = $tmpDate->format('Y-m-d');
         }
@@ -553,11 +553,11 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         $form->setInputFilter($filter);
 
         if (!$form->isValid()) {
-        	if (isset($data['dob']) && $data['dob']) {
-	            $tmpDate = \DateTime::createFromFormat('Y-m-d', $data['dob']);
-	            $data['dob'] = $tmpDate->format('d/m/Y');
-				$form->setData(array('dob' => $data['dob']));
-	        }
+            if (isset($data['dob']) && $data['dob']) {
+                $tmpDate = \DateTime::createFromFormat('Y-m-d', $data['dob']);
+                $data['dob'] = $tmpDate->format('d/m/Y');
+                $form->setData(array('dob' => $data['dob']));
+            }
 
             return false;
         }
@@ -569,18 +569,18 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
 
             if (!$adapter->isValid()) {
                 $dataError = $adapter->getMessages();
-				if(isset($dataError['fileSizeTooBig'])) {
-					$dataError['fileSizeTooBig'] = 'Votre fichier dépasse le poids autorisé';
-				}
+                if(isset($dataError['fileSizeTooBig'])) {
+                    $dataError['fileSizeTooBig'] = 'Votre fichier dépasse le poids autorisé';
+                }
                 $error = array();
                 foreach ($dataError as $key=>$row) {
                     $error[] = $row;
                 }
-				if (isset($data['dob']) && $data['dob']) {
-		            $tmpDate = \DateTime::createFromFormat('Y-m-d', $data['dob']);
-		            $data['dob'] = $tmpDate->format('d/m/Y');
-					$form->setData(array('dob' => $data['dob']));
-		        }
+                if (isset($data['dob']) && $data['dob']) {
+                    $tmpDate = \DateTime::createFromFormat('Y-m-d', $data['dob']);
+                    $data['dob'] = $tmpDate->format('d/m/Y');
+                    $form->setData(array('dob' => $data['dob']));
+                }
                 $form->setMessages(array('avatar'=>$error ));
             } else {
                 $adapter->setDestination($avatarPath);
