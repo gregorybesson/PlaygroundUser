@@ -16,6 +16,23 @@ return array(
             )
         )
     ),
+    
+    'bjyauthorize' => array(
+        'default_role' => 'guest',
+        'identity_provider' => 'BjyAuthorize\Provider\Identity\AuthenticationDoctrineEntity',
+        'role_providers' => array(
+            'BjyAuthorize\Provider\Role\Config' => array(
+                'guest' => array(),
+                'user'  => array('children' => array(
+                    'admin' =>  array(),
+                ))
+            ),
+    
+            'BjyAuthorize\Provider\Role\DoctrineEntity' => array(
+                'role_entity_class' => 'PlaygroundUser\Entity\Role',
+            ),
+        ),
+    ),
 
     'assetic_configuration' => array(
         'modules' => array(
