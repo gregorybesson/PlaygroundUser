@@ -103,6 +103,7 @@ class Module
                 } else {
                     $anonymousId = uniqid('pg_', true);
                 }
+
                 // Set the cookie as long as possible (limited by integer max in 32 bits
                 $cookie = new \Zend\Http\Header\SetCookie('pg_anonymous', $anonymousId, 2147483647,'/');
                 $e->getResponse()->getHeaders()->addHeader($cookie);
