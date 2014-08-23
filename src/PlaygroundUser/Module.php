@@ -75,7 +75,7 @@ class Module
         if ((get_class($e->getRequest()) == 'Zend\Console\Request')) {
             return;
         }
-        $em->attach("dispatch", function($e) {
+        $em->attach("dispatch", function ($e) {
             $session = new Container('sponsorship');
             $key = $e->getRequest()->getQuery()->get('key');
             if ($key) {
@@ -84,7 +84,7 @@ class Module
         });
 
         // Automatically add Facebook app_id and scope for authentication
-        $e->getApplication()->getEventManager()->attach(\Zend\Mvc\MvcEvent::EVENT_RENDER, function(\Zend\Mvc\MvcEvent $e) use ($sm) {
+        $e->getApplication()->getEventManager()->attach(\Zend\Mvc\MvcEvent::EVENT_RENDER, function (\Zend\Mvc\MvcEvent $e) use ($sm) {
             $view   = $sm->get('ViewHelperManager');
             $plugin = $view->get('facebookLogin');
             $plugin();
@@ -103,7 +103,9 @@ class Module
                 } else {
                     $anonymousId = uniqid('pg_', true);
                 }
-                $cookie = new \Zend\Http\Header\SetCookie('pg_anonymous', $anonymousId, time() + 60*60*24*365,'/');
+
+                // Set the cookie as long as possible (limited by integer max in 32 bits
+                $cookie = new \Zend\Http\Header\SetCookie('pg_anonymous', $anonymousId, 2147483647,'/');
                 $e->getResponse()->getHeaders()->addHeader($cookie);
             }
         }
@@ -153,7 +155,7 @@ class Module
 
                     return $viewHelper;
                 },
-                'facebookLogin' => function($sm) {
+                'facebookLogin' => function ($sm) {
                     $config = $sm->getServiceLocator()->get('SocialConfig');
                     $renderer = $sm->getServiceLocator()->get('Zend\View\Renderer\RendererInterface');
 
@@ -199,7 +201,7 @@ class Module
                         $sm->get('zfcuser_module_options')
                     );
                 },
-                'zfcuser_login_form' => function($sm) {
+                'zfcuser_login_form' => function ($sm) {
                     $translator = $sm->get('translator');
                     $options = $sm->get('zfcuser_module_options');
                     $form = new Form\Login(null, $options, $translator);
@@ -229,10 +231,10 @@ class Module
                 },
 
                 'PlaygroundUser\View\Strategy\UnauthorizedStrategy' => function ($sm) {
-                	return new View\Strategy\UnauthorizedStrategy;
+                    return new View\Strategy\UnauthorizedStrategy;
                 },
 
-                'SocialConfig' => function($sm) {
+                'SocialConfig' => function ($sm) {
                 $config = $sm->get('Config');
                 $config = isset($config['playgrounduser']['social']) ? $config['playgrounduser']['social'] : array('providers'=>array());
 
@@ -268,13 +270,13 @@ class Module
                 return $config;
                 },
 
-                'HybridAuth' => function($sm) {
+                'HybridAuth' => function ($sm) {
                     $config = $sm->get('SocialConfig');
 
                    try{
-                    	$auth = new \Hybrid_Auth($config);
+                        $auth = new \Hybrid_Auth($config);
                     }catch(\Exception $e){
-                    	throw new \Exception($e->getMessage(), $e->getCode());
+                        throw new \Exception($e->getMessage(), $e->getCode());
                     }
                     return $auth;
                 },
@@ -293,7 +295,7 @@ class Module
                     return $form;
                 },
 
-                'playgrounduseradmin_register_form' => function($sm) {
+                'playgrounduseradmin_register_form' => function ($sm) {
                     $translator = $sm->get('translator');
                     $zfcUserOptions = $sm->get('zfcuser_module_options');
                     $playgroundUserOptions = $sm->get('playgrounduser_module_options');
@@ -344,7 +346,7 @@ class Module
                     );
                 },
 
-                'playgrounduser_forgot_form' => function($sm) {
+                'playgrounduser_forgot_form' => function ($sm) {
                     $options = $sm->get('playgrounduser_module_options');
                     $translator = $sm->get('translator');
                     $form = new Form\Forgot(null, $options, $translator);
@@ -353,7 +355,7 @@ class Module
                     return $form;
                 },
 
-                'playgrounduser_reset_form' => function($sm) {
+                'playgrounduser_reset_form' => function ($sm) {
                     $options = $sm->get('playgrounduser_module_options');
                     $translator = $sm->get('translator');
                     $form = new Form\Reset(null, $options, $translator);
@@ -362,7 +364,7 @@ class Module
                     return $form;
                 },
 
-                'playgrounduser_change_info_form' => function($sm) {
+                'playgrounduser_change_info_form' => function ($sm) {
                     $translator = $sm->get('translator');
                     $options = $sm->get('playgrounduser_module_options');
                     $form = new Form\ChangeInfo(null, $options, $translator);
@@ -370,7 +372,7 @@ class Module
                     return $form;
                 },
 
-                'playgrounduser_blockaccount_form' => function($sm) {
+                'playgrounduser_blockaccount_form' => function ($sm) {
                     $translator = $sm->get('translator');
                     $options = $sm->get('zfcuser_module_options');
                     $form = new Form\BlockAccount(null, $sm->get('zfcuser_module_options'), $translator);
@@ -379,7 +381,7 @@ class Module
                     return $form;
                 },
 
-                'playgrounduser_newsletter_form' => function($sm) {
+                'playgrounduser_newsletter_form' => function ($sm) {
                     $translator = $sm->get('translator');
                     $options = $sm->get('zfcuser_module_options');
                     $form = new Form\Newsletter(null, $sm->get('zfcuser_module_options'), $translator);
@@ -388,7 +390,7 @@ class Module
                     return $form;
                 },
 
-                'playgrounduser_address_form' => function($sm) {
+                'playgrounduser_address_form' => function ($sm) {
                     $translator = $sm->get('translator');
                     $options = $sm->get('playgrounduser_module_options');
                     $form = new Form\Address(null, $options, $translator);

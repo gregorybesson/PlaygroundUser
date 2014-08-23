@@ -34,24 +34,24 @@ class FacebookLogin extends AbstractHelper
     protected $request;
     protected $renderer;
 
-    public function __construct ($config, RequestInterface $request, $renderer)
+    public function __construct($config, RequestInterface $request, $renderer)
     {
         $this->config  = $config;
         $this->request = $request;
         $this->renderer = $renderer;
     }
 
-    public function getContainer ()
+    public function getContainer()
     {
         return $this->container;
     }
 
-    public function setContainer ($container)
+    public function setContainer($container)
     {
         $this->container = $container;
     }
 
-    public function __invoke ()
+    public function __invoke()
     {
         // Do not render the script twice
         if ($this->rendered) {
@@ -60,13 +60,13 @@ class FacebookLogin extends AbstractHelper
 
         // We return if we are in a console request
         if ((get_class($this->request) == 'Zend\Console\Request')) {
-            
+
             return;
         }
-        
+
         //print_r($this->config);
         if(!isset($this->config['providers']['Facebook']) || !$this->config['providers']['Facebook']['enabled'] ){
-            
+
             return;
         }
 

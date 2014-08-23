@@ -54,7 +54,7 @@ class Cron extends EventProvider implements ServiceManagerAwareInterface
         // I Have to know what is the User Class used
         $zfcUserOptions = $this->getServiceManager()->get('zfcuser_module_options');
         $userClass = $zfcUserOptions->getUserEntityClass();
-        
+
         // Users with disable pending since n days
         $query = $em->createQuery('SELECT u FROM ' . $userClass . ' u WHERE (u.updated_at <= :date AND u.state = 2)');
         $query->setParameter('date', $period);

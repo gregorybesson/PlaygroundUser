@@ -5,7 +5,7 @@ use Zend\Form\Form;
 use Zend\Form\Element;
 use ZfcUser\Options\RegistrationOptionsInterface;
 use ZfcBase\Form\ProvidesEventsForm;
-use Zend\I18n\Translator\Translator;
+use Zend\Mvc\I18n\Translator;
 
 class Newsletter extends ProvidesEventsForm
 {
@@ -18,7 +18,7 @@ class Newsletter extends ProvidesEventsForm
 
     protected $serviceManager;
 
-    public function __construct ($name = null, RegistrationOptionsInterface $registerOptions, Translator $translator)
+    public function __construct($name = null, RegistrationOptionsInterface $registerOptions, Translator $translator)
     {
         parent::__construct($name);
 
@@ -58,12 +58,12 @@ class Newsletter extends ProvidesEventsForm
         ));
     }
 
-    public function setServiceManager ($serviceManager)
+    public function setServiceManager($serviceManager)
     {
         $this->serviceManager = $serviceManager;
     }
 
-    public function getServiceManager ()
+    public function getServiceManager()
     {
         return $this->serviceManager;
     }

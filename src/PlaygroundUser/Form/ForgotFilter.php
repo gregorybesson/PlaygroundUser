@@ -12,7 +12,7 @@ class ForgotFilter extends InputFilter
      */
     protected $options;
 
-    public function __construct( ForgotOptionsInterface $options)
+    public function __construct(ForgotOptionsInterface $options)
     {
         $this->setOptions($options);
 

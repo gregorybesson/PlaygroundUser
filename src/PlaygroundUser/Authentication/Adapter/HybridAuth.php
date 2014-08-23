@@ -84,28 +84,28 @@ class HybridAuth extends AbstractAdapter implements ServiceManagerAwareInterface
         try {
             $adapter = $this->getHybridAuth()->authenticate($provider);
             if ($adapter->isUserConnected()) {
-            	$userProfile = $adapter->getUserProfile();
+                $userProfile = $adapter->getUserProfile();
             }
         } catch (\Exception $ex) {
-        	// The following retry is efficient in case a user previously registered on his social account
-        	// with the app has unsubsribed from the app
-        	// cf http://hybridauth.sourceforge.net/userguide/HybridAuth_Sessions.html
+            // The following retry is efficient in case a user previously registered on his social account
+            // with the app has unsubsribed from the app
+            // cf http://hybridauth.sourceforge.net/userguide/HybridAuth_Sessions.html
 
-        	if ( ($ex->getCode() == 6) || ($ex->getCode() == 7) ){
-        		// Réinitialiser la session HybridAuth
-        		$this->getHybridAuth()->getAdapter($provider)->logout();
-        		// Essayer de se connecter à nouveau
-        		$adapter = $this->getHybridAuth()->authenticate($provider);
-        		if ($adapter->isUserConnected()) {
-        			$userProfile = $adapter->getUserProfile();
-        		}
-        	} else{
-        		$authEvent->setCode(Result::FAILURE)
-        		->setMessages(array('Invalid provider'));
-        		$this->setSatisfied(false);
+            if ( ($ex->getCode() == 6) || ($ex->getCode() == 7) ){
+                // Réinitialiser la session HybridAuth
+                $this->getHybridAuth()->getAdapter($provider)->logout();
+                // Essayer de se connecter à nouveau
+                $adapter = $this->getHybridAuth()->authenticate($provider);
+                if ($adapter->isUserConnected()) {
+                    $userProfile = $adapter->getUserProfile();
+                }
+            } else{
+                $authEvent->setCode(Result::FAILURE)
+                ->setMessages(array('Invalid provider'));
+                $this->setSatisfied(false);
 
-        		return false;
-        	}
+                return false;
+            }
         }
 
         if (!$userProfile) {
@@ -186,7 +186,7 @@ class HybridAuth extends AbstractAdapter implements ServiceManagerAwareInterface
         return $this->hybridAuth;
     }
 
-	/**
+    /**
      * Set the Hybrid_Auth object
      *
      * @param  Hybrid_Auth    $hybridAuth
@@ -196,7 +196,7 @@ class HybridAuth extends AbstractAdapter implements ServiceManagerAwareInterface
      * the creation of the object in the factory (ie. FB : I refuse the options given on registration => error)
      * In this type of case, getHybridAuth use the serviceManager to grab a new HybridAuth instance
      */
-    public function setHybridAuth( $hybridAuth)
+    public function setHybridAuth($hybridAuth)
     {
         $this->hybridAuth = $hybridAuth;
 
@@ -551,10 +551,10 @@ class HybridAuth extends AbstractAdapter implements ServiceManagerAwareInterface
      */
     public function getRoleMapper()
     {
-    	if (null === $this->roleMapper) {
-    		$this->roleMapper = $this->getServiceManager()->get('playgrounduser_role_mapper');
-    	}
+        if (null === $this->roleMapper) {
+            $this->roleMapper = $this->getServiceManager()->get('playgrounduser_role_mapper');
+        }
 
-    	return $this->roleMapper;
+        return $this->roleMapper;
     }
 }

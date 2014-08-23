@@ -4,7 +4,7 @@ namespace PlaygroundUser\Form;
 use Zend\Form\Form;
 use PlaygroundUser\Options\UserCreateOptionsInterface;
 use ZfcUser\Options\RegistrationOptionsInterface;
-use Zend\I18n\Translator\Translator;
+use Zend\Mvc\I18n\Translator;
 
 class Register extends \ZfcUser\Form\Register
 {
@@ -17,15 +17,15 @@ class Register extends \ZfcUser\Form\Register
 
     protected $serviceManager;
 
-    public function __construct ($name = null, RegistrationOptionsInterface $registerOptions, Translator $translator, $serviceManager)
+    public function __construct($name = null, RegistrationOptionsInterface $registerOptions, Translator $translator, $serviceManager)
     {
         $this->setServiceManager($serviceManager);
         parent::__construct($name, $registerOptions);
 
         if($this->has('username')){
-        	$this->get('username')
-        	->setLabel($translator->translate('Username', 'playgrounduser'))
-        	->setAttributes(array('placeholder' => 'Your username'));
+            $this->get('username')
+            ->setLabel($translator->translate('Username', 'playgrounduser'))
+            ->setAttributes(array('placeholder' => 'Your username'));
         }
 
         $this->get('email')
@@ -93,17 +93,17 @@ class Register extends \ZfcUser\Form\Register
         ));
 
         $this->add(array(
-			'type' => 'Zend\Form\Element\DateTime',
-			'name' => 'dob',
-			'options' => array(
-				'label' => $translator->translate('Date of birth', 'playgrounduser'),
-				'format' => 'd/m/Y'
-			),
-			'attributes' => array(
-				'type' => 'text',
-				'placeholder' => $translator->translate('Date of birth', 'playgrounduser'),
-				'class'=> 'date required'
-			)
+            'type' => 'Zend\Form\Element\DateTime',
+            'name' => 'dob',
+            'options' => array(
+                'label' => $translator->translate('Date of birth', 'playgrounduser'),
+                'format' => 'd/m/Y'
+            ),
+            'attributes' => array(
+                'type' => 'text',
+                'placeholder' => $translator->translate('Date of birth', 'playgrounduser'),
+                'class'=> 'date required'
+            )
         ));
 
         $this->add(array(
@@ -143,24 +143,24 @@ class Register extends \ZfcUser\Form\Register
             ));
     }
 
-    public function setCreateOptions (UserCreateOptionsInterface $createOptionsOptions)
+    public function setCreateOptions(UserCreateOptionsInterface $createOptionsOptions)
     {
         $this->createOptions = $createOptionsOptions;
 
         return $this;
     }
 
-    public function getCreateOptions ()
+    public function getCreateOptions()
     {
         return $this->createOptions;
     }
 
-    public function setServiceManager ($serviceManager)
+    public function setServiceManager($serviceManager)
     {
         $this->serviceManager = $serviceManager;
     }
 
-    public function getServiceManager ()
+    public function getServiceManager()
     {
         return $this->serviceManager;
     }

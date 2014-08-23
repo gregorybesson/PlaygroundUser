@@ -67,14 +67,14 @@ class User extends ZfcUserMapper
         if ($partner == true) {
             if ($optin == true) {
                 return $er->findBy(array('optinPartner' => $optin, 'optin' => $optin));
-            } 
+            }
             return $er->findBy(array('optinPartner' => $optin));
         } else {
             return $er->findBy(array('optin' => $optin));
         }
     }
-	
-	public function findOneBy($array)
+
+    public function findOneBy($array)
     {
         $er = $this->em->getRepository($this->options->getUserEntityClass());
 

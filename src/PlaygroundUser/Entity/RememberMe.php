@@ -18,7 +18,7 @@ class RememberMe
     public function setSid($sid)
     {
         $this->sid = $sid;
-        
+
         return $this;
     }
 
@@ -30,14 +30,14 @@ class RememberMe
     public function setToken($token)
     {
         $this->token = $token;
-        
+
         return $this;
     }
 
     public function setUserId($user_id)
     {
         $this->user_id = $user_id;
-        
+
         return $this;
     }
 

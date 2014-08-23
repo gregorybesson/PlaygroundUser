@@ -40,7 +40,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $user->setPassword($pass);
 
         $user->addRole(
-			$this->getReference('admin-role') // load the stored reference
+            $this->getReference('admin-role') // load the stored reference
         );
 
         $manager->persist($user);

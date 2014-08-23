@@ -54,7 +54,7 @@ class Role implements HierarchicalRoleInterface
     public function setId($id)
     {
         $this->id = (int) $id;
-        
+
         return $this;
     }
 
@@ -78,7 +78,7 @@ class Role implements HierarchicalRoleInterface
     public function setRoleId($roleId)
     {
         $this->roleId = (string) $roleId;
-        
+
         return $this;
     }
 
@@ -102,7 +102,7 @@ class Role implements HierarchicalRoleInterface
     public function setParent(Role $parent)
     {
         $this->parent = $parent;
-        
+
         return $this;
     }
 }

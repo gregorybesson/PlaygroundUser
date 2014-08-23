@@ -15,11 +15,11 @@ class AdminController extends AbstractActionController
 
     public function listAction()
     {
-        $filter		= $this->getEvent()->getRouteMatch()->getParam('filter');
-        $roleId		= $this->getEvent()->getRouteMatch()->getParam('roleId');
-        $search 	= $this->params()->fromQuery('name');
+        $filter        = $this->getEvent()->getRouteMatch()->getParam('filter');
+        $roleId        = $this->getEvent()->getRouteMatch()->getParam('roleId');
+        $search    = $this->params()->fromQuery('name');
 
-        $role 		= $this->getAdminUserService()->getRoleMapper()->findByRoleId($roleId);
+        $role        = $this->getAdminUserService()->getRoleMapper()->findByRoleId($roleId);
 
         $adapter = new DoctrineAdapter(new ORMPaginator($this->getAdminUserService()->getQueryUsersByRole($role, null, $search)));
 
@@ -32,8 +32,8 @@ class AdminController extends AbstractActionController
             array(
                 'users' => $paginator,
                 'userlistElements' => $this->getOptions()->getUserListElements(),
-                'filter'	=> $filter,
-                'roleId' 	=> $roleId,
+                'filter'    => $filter,
+                'roleId'    => $roleId,
                 'search'    => $search,
             )
         );

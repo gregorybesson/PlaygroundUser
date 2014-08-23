@@ -73,7 +73,8 @@ class ForgotController extends AbstractActionController
             if ( $form->isValid() ) {
                 $userService = $this->getUserService();
 
-                $email = $form->getData()['email'];
+                $email = $form->getData();
+                $email = $email['email'];
 
                 return $this->redirect()->toRoute('frontend/zfcuser/sentpassword', array("email"=> $email,
                         'channel' => $this->getEvent()->getRouteMatch()->getParam('channel')));
