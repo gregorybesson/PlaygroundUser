@@ -1,0 +1,21 @@
+<?php $this->plugin('translate')->setTranslatorTextDomain('playgroundcore');// Pour le texte ?>
+<!-- CONTACT-US -->
+<div id="contact-us" class="row-fluid">
+
+	<h1><?php echo $this->translate('Contact us'); ?></h1>
+	<h2><?php echo $this->translate('A question to ask ?'); ?></h2>
+
+	<div id="contact-inner" class="backgrey row-fluid">
+		<div class="message-confirm">
+			<p><?php echo $this->translate('Your request has been sent, we will process it as soon as possible'); ?>.</p>
+			<p><?php echo $this->translate('Thanks'); ?>.</p>
+			<p><?php echo $this->translate('Playground team'); ?></p>
+		</div>
+		<div id="btn-send" class="row-fluid">
+			<div class="span3 center">
+				<a href="<?php echo $this->url('frontend', array('channel' => $this->channel));?>" class="btn btn-success"><?php echo $this->translate('continue'); ?></a>
+			</div>
+		</div>
+	</div>
+
+</div>

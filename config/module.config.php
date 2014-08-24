@@ -72,12 +72,13 @@ return array(
         
         'guards' => array(
             'BjyAuthorize\Guard\Controller' => array(
-                array('controller' => 'playgrounduser_user',                                   'roles' => array('guest', 'user')),
-                array('controller' => 'playgrounduser_forgot',                                 'roles' => array('guest', 'user')),
-        
+                array('controller' => 'playgrounduser_user',   'roles' => array('guest', 'user')),
+                array('controller' => 'playgrounduser_forgot', 'roles' => array('guest', 'user')),
+                array('controller' => 'PlaygroundUser\Controller\Frontend\Contact', 'roles' => array('guest', 'user')),
+                
                 // Admin area
-                array('controller' => 'playgrounduseradmin_login',                             'roles' => array('guest', 'user')),
-                array('controller' => 'playgrounduseradmin',                                    'roles' => array('admin')),
+                array('controller' => 'playgrounduseradmin_login', 'roles' => array('guest', 'user')),
+                array('controller' => 'playgrounduseradmin',       'roles' => array('admin')),
             ),
         ),
     ),
@@ -138,10 +139,11 @@ return array(
 
     'controllers' => array(
         'invokables' => array(
-        	'playgrounduseradmin_login' => 'PlaygroundUser\Controller\Admin\LoginController',
-            'playgrounduseradmin'       => 'PlaygroundUser\Controller\Admin\AdminController',
-            'playgrounduser_user'       => 'PlaygroundUser\Controller\UserController',
-            'playgrounduser_forgot'     => 'PlaygroundUser\Controller\ForgotController',
+        	'playgrounduseradmin_login'                  => 'PlaygroundUser\Controller\Admin\LoginController',
+            'playgrounduseradmin'                        => 'PlaygroundUser\Controller\Admin\AdminController',
+            'playgrounduser_user'                        => 'PlaygroundUser\Controller\UserController',
+            'playgrounduser_forgot'                      => 'PlaygroundUser\Controller\ForgotController',
+            'PlaygroundUser\Controller\Frontend\Contact' => 'PlaygroundUser\Controller\Frontend\ContactController'
         ),
     ),
 
@@ -149,6 +151,29 @@ return array(
         'routes' => array(
         	'frontend' => array(
        			'child_routes' => array(
+       			    'contact' => array(
+       			        'type' => 'Literal',
+       			        'options' => array(
+       			            'route' => 'contactez-nous',
+       			            'defaults' => array(
+       			                'controller' => 'PlaygroundUser\Controller\Frontend\Contact',
+       			                'action'     => 'index',
+       			            ),
+       			        ),
+       			        'may_terminate' => true,
+       			        'child_routes' => array(
+       			            'confirmation' => array(
+       			                'type'    => 'Literal',
+       			                'options' => array(
+       			                    'route'    => '/confirmation',
+       			                    'defaults' => array(
+       			                        'controller' => 'PlaygroundUser\Controller\Frontend\Contact',
+       			                        'action'     => 'confirmation',
+       			                    ),
+       			                ),
+       			            ),
+       			        ),
+       			    ),
 		            'zfcuser' => array(
 		                'type' => 'Literal',
 		                'priority' => 1000,

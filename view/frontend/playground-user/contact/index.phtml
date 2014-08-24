@@ -1,0 +1,77 @@
+<?php $this->plugin('translate')->setTranslatorTextDomain('playgroundcore');// Pour le texte ?>
+<!-- CONTACT-US -->
+<div id="contact-us" class="row">
+	<h1>
+	    <?php echo $this->translate('Contact us'); ?>
+	</h1>
+	<div class="wrap-form">
+		<h2><?php echo $this->translate('A question to ask ?'); ?></h2>
+		
+		<?php $form = $this->form;?>
+	    <?php $form->prepare();?>
+	    <?php $form->setAttribute('action', $this->url('frontend/contact', array('channel' => $this->channel))); ?>
+	    <?php $form->setAttribute('class', 'validate');?>
+		<?php echo $this->form()->openTag($form); ?>
+		<div id="contact-inner">
+			<div class="row">
+				<!-- <div class="block-left col-md-4">
+				    <?php //echo $this->formLabel($form->get('lastname')); ?> 
+				    <span>*</span> :
+				</div> -->
+				<div class="block-right col-md-7 lastname">
+					<?php echo $this->formInput($form->get('lastname')->setAttributes(array('class' => 'form-control'))); ?>
+					<?php echo $this->formElementErrors($form->get('lastname')) ?>
+				</div>
+			</div>
+			<div class="row">
+				<!-- <div class="block-left col-md-4">
+				    <?php //echo $this->formLabel($form->get('firstname')); ?> 
+				    <span>*</span> :
+				</div> -->
+				<div class="block-right col-md-7 firstname">
+					<?php echo $this->formInput($form->get('firstname')->setAttributes(array('class' => 'form-control'))); ?>
+					<?php echo $this->formElementErrors($form->get('firstname')) ?>
+				</div>
+			</div>
+			<div class="row">
+				<!-- <div class="block-left col-md-4">
+				    <?php //echo $this->formLabel($form->get('email')->setAttributes(array('class' => 'form-control'))); ?> 
+				    <span>*</span> :
+				</div> -->
+				<div class="block-right col-md-7 email">
+					<?php echo $this->formInput($form->get('email')); ?>
+					<?php echo $this->formElementErrors($form->get('email')) ?>			
+				</div>
+			</div>
+			<div class="row">
+				<!-- <div class="block-left col-md-4">
+				    <?php //echo $this->formLabel($form->get('object')); ?> 
+				    <span>*</span> :
+				</div> -->
+				<div class="block-right col-md-7 mobile contact-select">
+					<?php echo $this->formSelect($form->get('object')->setAttributes(array('class' => 'form-control'))) ?>
+					<?php echo $this->formElementErrors($form->get('object')) ?>
+				</div>
+			</div>
+			<div class="row">
+				<!-- <div class="block-left col-md-4">
+				    <?php //echo $this->formLabel($form->get('message')); ?> 
+				    <span>*</span> :
+				</div>-->
+				 <div class="block-right col-md-11 contact-textarea">
+	             	<?php echo $this->formTextarea($form->get('message')->setAttributes(array('class' => 'form-control'))) ?>
+	             	<?php echo $this->formElementErrors($form->get('message')) ?>
+	             </div>	
+	        </div>
+			<div id="btn-send" class="row">
+				<div class="col-md-12">
+					<?php echo $this->formButton($form->get('submit')->setAttributes(array('class' => 'btn btn-default'))) ?>
+				</div>
+			</div>
+		</div>
+		<?php echo $this->form()->closeTag() ?>
+		<!-- <p id="annotation">
+		    * <?php //echo $this->translate('required fields')?>
+		</p> -->
+	</div>
+</div>

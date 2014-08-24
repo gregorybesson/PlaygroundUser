@@ -1,4 +1,4 @@
-AdfabUser
+PlaygroundUser
 =========
 
 [![Develop Branch Build Status](https://travis-ci.org/gregorybesson/PlaygroundUser.svg)](http://travis-ci.org/gregorybesson/PlaygroundUser)

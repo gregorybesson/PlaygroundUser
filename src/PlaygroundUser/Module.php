@@ -418,6 +418,13 @@ class Module
                         $sm->get('playgrounduser_module_options')
                     );
                 },
+                
+                'playgrounduser_contact_form' => function($sm) {
+                    $translator = $sm->get('translator');
+                    $form = new Form\Contact(null, $sm, $translator);
+                
+                    return $form;
+                },
             ),
         );
     }
