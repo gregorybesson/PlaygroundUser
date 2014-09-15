@@ -19,20 +19,15 @@ return array(
 
     'assetic_configuration' => array(
         'modules' => array(
-            'user_lib' => array(
-                # module root path for your css and js files
-                'root_path' => array(
-                    __DIR__ . '/../view/lib',
-                ),
-                # collection of assets
+            'lib' => array(
                 'collections' => array(
                     'fbregister_js' => array(
                         'assets' => array(
-                            'js/fbregister.js',
+                            __DIR__ . '/../view/lib/js/fbregister.js',
                         ),
                         'options' => array(
                             'move_raw' => true,
-                            'output' => 'lib',
+                            'output' => 'lib/js',
                         )
                     ),
                 ),
