@@ -106,7 +106,7 @@ class ModuleOptions extends BaseModuleOptions implements
     /**
      * @var string
      */
-    protected $newEmailSubjectLine = 'Votre nouveau mot de passe';
+    protected $newEmailSubjectLine = 'Your new pasword';
 
     /**
      * @var string
