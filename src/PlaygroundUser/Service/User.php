@@ -313,15 +313,21 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
      * Register the user (associated with a default). It can be a social registration
      *
      * @param  array $data
+     * @param  string $formClass
      * @return \playgroundUser\Entity\UserInterface
      * @throws Exception\InvalidArgumentException
      */
-    public function register(array $data)
+    public function register(array $data, $formClass=false)
     {
         $zfcUserOptions = $this->getServiceManager()->get('zfcuser_module_options');
         $class = $zfcUserOptions->getUserEntityClass();
         $user  = new $class;
-        $form  = $this->getRegisterForm();
+
+        if($formClass){
+            $form = $this->getServiceManager()->get($formClass);
+        } else {
+            $form  = $this->getRegisterForm();
+        }
         $form->get('dob')->setOptions(array('format' => 'Y-m-d'));
 
         // Convert birth date format
