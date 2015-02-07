@@ -655,15 +655,17 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         $optinPartnerChange = false;
 
         // I trigger an optin event before updating user if it has changed .
-        if($user->getOptin() != $data['optin']){
+        if(isset($data['optin']) && $user->getOptin() != $data['optin']){
             $optinChange = true;
             $this->getEventManager()->trigger(__FUNCTION__.'.pre', $this, array('user' => $user, 'data' => $data));
+            $user->setOptin($data['optin']);
         }
 
         // I trigger an optinPartner event before updating user if it has changed
-        if($user->getOptinPartner() != $data['optinPartner']){
+        if(isset($data['optinPartner']) && $user->getOptinPartner() != $data['optinPartner']){
             $optinPartnerChange = true;
             $this->getEventManager()->trigger(__FUNCTION__.'Partner.pre', $this, array('user' => $user, 'data' => $data));
+            $user->setOptin($data['optinPartner']);
         }
 
         $form  = $this->getServiceManager()->get('playgrounduser_newsletter_form');
@@ -674,9 +676,6 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         /*if (!$form->isValid()) {
             return false;
         }*/
-
-        $user->setOptin($data['optin'])
-            ->setOptinPartner($data['optinPartner']);
 
         $user = $this->getUserMapper()->update($user);
         if($optinChange){
