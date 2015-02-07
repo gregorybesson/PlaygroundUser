@@ -204,6 +204,16 @@ return array(
 		                            ),
 		                        ),
 		                    ),
+		                    'ajaxrenewpassword' => array(
+		                        'type' => 'Segment',
+		                        'options' => array(
+		                            'route' => '/ajax-renew-password',
+		                            'defaults' => array(
+		                                'controller' => 'playgrounduser_forgot',
+		                                'action'     => 'ajaxrenewPassword',
+		                            ),
+		                        ),
+		                    ),
 		                    'ajaxlogin' => array(
 		                        'type' => 'Literal',
 		                        'options' => array(

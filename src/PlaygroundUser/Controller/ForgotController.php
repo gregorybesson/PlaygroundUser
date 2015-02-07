@@ -93,6 +93,35 @@ class ForgotController extends AbstractActionController
         );
     }
 
+    public function ajaxrenewPasswordAction()
+    {
+        $response = $this->getResponse();
+
+        $email = ($this->params()->fromPost('email'))?$this->params()->fromPost('email'):null;
+        $user = $this->getUserService()->getUserMapper()->findByEmail($email);
+        $options = $this->getServiceLocator()->get('playgrounduser_module_options');
+
+        if ( $this->getRequest()->isPost() && $user != null ) {
+
+            $password = strtolower(substr(sha1(uniqid('gb', true).'####'.time()),0,7));
+            $this->getPasswordService()->resetPassword(new \PlaygroundUser\Entity\Password, $user, array('newCredential' => $password));
+
+            $this->getPasswordService()->sendForgotEmailMessage($email, $password);
+
+            $response->setContent(\Zend\Json\Json::encode(array(
+                'statusMail' => true,
+                'email' => $password
+            )));
+
+        } else {
+            $response->setContent(\Zend\Json\Json::encode(array(
+                'statusMail' => false,
+                'email' => $email
+            )));
+        }
+
+        return $response;
+    }
 
     public function sentAction()
     {
