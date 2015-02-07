@@ -665,7 +665,7 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         if(isset($data['optinPartner']) && $user->getOptinPartner() != $data['optinPartner']){
             $optinPartnerChange = true;
             $this->getEventManager()->trigger(__FUNCTION__.'Partner.pre', $this, array('user' => $user, 'data' => $data));
-            $user->setOptin($data['optinPartner']);
+            $user->setOptinPartner($data['optinPartner']);
         }
 
         $form  = $this->getServiceManager()->get('playgrounduser_newsletter_form');
