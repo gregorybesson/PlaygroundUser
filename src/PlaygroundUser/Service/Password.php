@@ -78,7 +78,7 @@ class Password extends EventProvider implements ServiceManagerAwareInterface
         $subject = $this->getOptions()->getResetEmailSubjectLine();
 
         $renderer = $this->getServiceManager()->get('Zend\View\Renderer\RendererInterface');
-        $skinUrl = $renderer->url('frontend', array(), array('force_canonical' => true));
+        $skinUrl = $renderer->url('frontend', array('channel'=>null), array('force_canonical' => true));
 
         $message = $mailService->createHtmlMessage($from, $to, $subject, 'playground-user/email/forgot', array('record' => $model, 'to' => $to, 'skinUrl' => $skinUrl));
 
