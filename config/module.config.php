@@ -524,6 +524,31 @@ return array(
                                     ),
                                 ),
                             ),
+                            'listrole' => array(
+                                'type' => 'Segment',
+                                'options' => array(
+                                    'route' => '/list[/:filter][/:p]',
+                                    'defaults' => array(
+                                        'controller' => 'playgrounduseradmin',
+                                        'action'     => 'listRole',
+                                        'filter' 	 => 'DESC'
+                                    ),
+                                    'constraints' => array(
+                                        'filter' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                    ),
+                                ),
+                            ),
+                            'createrole' => array(
+                                'type' => 'Segment',
+                                'options' => array(
+                                    'route' => '/createrole/:roleId',
+                                    'defaults' => array(
+                                        'controller' => 'playgrounduseradmin',
+                                        'action'     => 'createRole',
+                                        'roleId'     => 0
+                                    ),
+                                ),
+                            ),
                         ),
                     ),
                 ),
@@ -594,6 +619,12 @@ return array(
                         'label' => 'Edit user',
                         'route' => 'admin/playgrounduser/edit',
                         'privilege' => 'edit',
+                    ),
+                    'listrole' => array(
+                        'label' => 'Roles list',
+                        'route' => 'admin/playgrounduser/listrole',
+                        'resource' => 'user',
+                        'privilege' => 'list',
                     ),
                 ),
             ),
