@@ -527,7 +527,7 @@ return array(
                             'listrole' => array(
                                 'type' => 'Segment',
                                 'options' => array(
-                                    'route' => '/list[/:filter][/:p]',
+                                    'route' => '/listrole[/:filter][/:p]',
                                     'defaults' => array(
                                         'controller' => 'playgrounduseradmin',
                                         'action'     => 'listRole',
