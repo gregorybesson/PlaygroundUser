@@ -319,6 +319,15 @@ class Module
                     return $form;
                 },
 
+                'playgrounduseradmin_role_form' => function ($sm) {
+                    $translator = $sm->get('translator');
+                    $zfcUserOptions = $sm->get('zfcuser_module_options');
+                    $playgroundUserOptions = $sm->get('playgrounduser_module_options');
+                    $form = new Form\Admin\Role(null, $playgroundUserOptions, $translator, $sm );
+
+                    return $form;
+                },
+
                 'playgrounduser_rememberme_mapper' => function ($sm) {
                     $options = $sm->get('zfcuser_module_options');
                     $rememberOptions = $sm->get('playgrounduser_module_options');

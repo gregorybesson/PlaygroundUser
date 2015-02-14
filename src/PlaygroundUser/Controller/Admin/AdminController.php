@@ -165,6 +165,50 @@ class AdminController extends AbstractActionController
         return $this->redirect()->toRoute('admin/playgrounduser/list');
     }
 
+    public function listRoleAction()
+    {
+        $filter        = $this->getEvent()->getRouteMatch()->getParam('filter');
+
+        $adapter = new \Zend\Paginator\Adapter\ArrayAdapter($this->getAdminUserService()->getRoleMapper()->findAll());
+
+        $paginator = new \Zend\Paginator\Paginator($adapter);
+        $paginator->setItemCountPerPage(100);
+        $paginator->setCurrentPageNumber($this->getEvent()->getRouteMatch()->getParam('p'));
+
+
+        return new ViewModel(
+            array(
+                'roles' => $paginator,
+                'filter'    => $filter,
+            )
+        );
+    }
+
+    public function createRoleAction()
+    {
+        $service = $this->getAdminUserService();
+        $request = $this->getRequest();
+        $form = $this->getServiceLocator()->get('playgrounduseradmin_role_form');
+        $form->setAttribute('action', $this->url()->fromRoute('admin/playgrounduser/createrole', array('roleId' => 0)));
+        $form->setAttribute('method', 'post');
+
+        $viewModel = new ViewModel();
+        $viewModel->setTemplate('playground-user/admin/role');
+
+        if ($request->isPost()) {
+            $data = $request->getPost()->toArray();
+            $role = $this->getAdminUserService()->createRole($data);
+            if ($role) {
+                $this->flashMessenger()->setNamespace('playgrounduser')->addMessage('The role has been created');
+
+                return $this->redirect()->toRoute('admin/playgrounduser/listrole');
+            }
+        }
+
+        return $viewModel->setVariables(array('form' => $form,'roleId' => 0));
+
+    }
+
     public function setOptions(ModuleOptions $options)
     {
         $this->options = $options;

@@ -3,6 +3,10 @@ namespace PlaygroundUser\Entity;
 
 use BjyAuthorize\Acl\HierarchicalRoleInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Zend\InputFilter\InputFilter;
+use Zend\InputFilter\Factory as InputFactory;
+use Zend\InputFilter\InputFilterAwareInterface;
+use Zend\InputFilter\InputFilterInterface;
 
 /**
  * An example entity that represents a role.
@@ -12,8 +16,10 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @author Tom Oram <tom@scl.co.uk>
  */
-class Role implements HierarchicalRoleInterface
+class Role implements HierarchicalRoleInterface, InputFilterAwareInterface
 {
+    protected $inputFilter;
+
     /**
      * @var int
      * @ORM\Id
@@ -104,5 +110,91 @@ class Role implements HierarchicalRoleInterface
         $this->parent = $parent;
 
         return $this;
+    }
+
+    /**
+     * Convert the object to an array.
+     *
+     * @return array
+     */
+    public function getArrayCopy()
+    {
+        $obj_vars = get_object_vars($this);
+
+        return $obj_vars;
+    }
+
+    /**
+     * Populate from an array.
+     *
+     * @param array $data
+     */
+    public function populate($data = array())
+    {
+        if (isset($data['id']) && $data['id'] != null) {
+            $this->id    = $data['id'];
+        }
+
+        if (isset($data['roleId']) && $data['roleId'] != null) {
+            $this->roleId    = $data['roleId'];
+        }
+        if (isset($data['parent']) && $data['parent'] != null) {
+            $this->parent    = $data['parent'];
+        }
+    }
+
+    public function setInputFilter(InputFilterInterface $inputFilter)
+    {
+        throw new \Exception("Not used");
+    }
+
+    public function getInputFilter()
+    {
+        if (!$this->inputFilter) {
+            $inputFilter = new InputFilter();
+            $factory = new InputFactory();
+
+            $inputFilter->add($factory->createInput(array(
+                    'name'       => 'id',
+                    'required'   => false,
+                    'filters' => array(
+                        array('name'    => 'Int'),
+                    ),
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name'     => 'roleId',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                        'name'    => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min'      => 1,
+                            'max'      => 255,
+                        ),
+                    ),
+                    array(
+                        'name'    => 'Regex',
+                        'options' => array(
+                            'pattern' => '/^[a-zA-Z\'àâéèêôùûçÀÂÉÈÔÙÛÇ[:blank:]-]+$/', // Validate firstname
+                        ),
+                    ),
+                ),
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'parentRoleId',
+                'required' => false,
+                'allowEmpty' => true,
+            )));
+
+            $this->inputFilter = $inputFilter;
+        }
+
+        return $this->inputFilter;
     }
 }

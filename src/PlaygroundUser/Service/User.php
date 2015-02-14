@@ -13,6 +13,7 @@ use Zend\Validator\File\Size;
 use DoctrineModule\Validator\NoObjectExists as NoObjectExistsValidator;
 use Zend\Session\Container;
 use PlaygroundUser\Entity\User as UserEntity;
+use PlaygroundUser\Entity\Role;
 
 class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
 {
@@ -687,6 +688,49 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         }
 
         return $user;
+    }
+
+    /**
+     * @param  array           $data
+     * @return boolean|unknown
+     */
+    public function createRole(array $data)
+    {
+        $entityManager = $this->getServiceManager()->get('doctrine.entitymanager.orm_default');
+
+        $role  = new Role;
+        $form  = $this->getServiceManager()->get('playgrounduseradmin_role_form');
+
+        $form->bind($role);
+
+        $roleId = $form->getInputFilter()->get('roleId');
+        $noObjectExistsValidator = new NoObjectExistsValidator(array(
+                'object_repository' => $entityManager->getRepository('\PlaygroundUser\Entity\Role'),
+                'fields'            => 'roleId',
+                'messages'          => array('objectFound' => 'This role already exists !')
+        ));
+
+        $roleId->getValidatorChain()->addValidator($noObjectExistsValidator);
+
+        $form->setData($data);
+
+        if (!$form->isValid()) {
+
+            return false;
+        }
+
+        $roleMapper          = $this->getRoleMapper();
+        $defaultRegisterRole = $this->getOptions()->getDefaultRegisterRole();
+        if (isset($data['parentRoleId'])) {
+            $parentRole = $roleMapper->findByRoleId($data['parentRoleId']);
+        } else {
+            $parentRole = $roleMapper->findByRoleId($defaultRegisterRole);
+        }
+        if ($parentRole) $role->setParent($parentRole);
+
+        $role = $roleMapper->insert($role);
+
+        return $role;
     }
 
     public function getQueryUsersByRole($role=1, $order=null, $search='')
