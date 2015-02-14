@@ -24,7 +24,7 @@ class AdminController extends AbstractActionController
         $adapter = new DoctrineAdapter(new ORMPaginator($this->getAdminUserService()->getQueryUsersByRole($role, null, $search)));
 
         $paginator = new Paginator($adapter);
-        $paginator->setItemCountPerPage(100);
+        $paginator->setItemCountPerPage(50);
         $paginator->setCurrentPageNumber($this->getEvent()->getRouteMatch()->getParam('p'));
 
 

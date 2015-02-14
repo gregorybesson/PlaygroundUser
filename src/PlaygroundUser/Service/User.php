@@ -733,13 +733,18 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         return $role;
     }
 
-    public function getQueryUsersByRole($role=1, $order=null, $search='')
+    public function getQueryUsersByRole($role=null, $order=null, $search='')
     {
         $em = $this->getServiceManager()->get('doctrine.entitymanager.orm_default');
         $filterSearch = '';
+        $roleSearch = '1=1 ';
 
         if ($search != '') {
             $filterSearch = " AND (u.username like '%" . $search . "%' OR u.lastname like '%" . $search . "%' OR u.firstname like '%" . $search . "%' OR u.email like '%" . $search . "%')";
+        }
+
+        if ($role) {
+            $roleSearch = "r.id = " . $role->getId();
         }
 
         // I Have to know what is the User Class used
@@ -748,12 +753,11 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
 
         $query = $em->createQuery('
             SELECT u FROM ' . $userClass . ' u
-            JOIN u.roles r
-            WHERE r.id = :role' .
+            LEFT JOIN u.roles r
+            WHERE ' . $roleSearch .
                 $filterSearch .
                 (in_array($order,array('ASC','DESC'))?' ORDER BY u.created_at '.$order:'').'
         ');
-        $query->setParameter('role', $role);
         return $query;
     }
 

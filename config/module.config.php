@@ -444,11 +444,11 @@ return array(
                             'list' => array(
                                 'type' => 'Segment',
                                 'options' => array(
-                                    'route' => '/list/:roleId[/:filter][/:p]',
+                                    'route' => '/list[/:roleId][/:filter][/:p]',
                                     'defaults' => array(
                                         'controller' => 'playgrounduseradmin',
                                         'action'     => 'list',
-                                        'roleId' 	 => 'user',
+                                        //'roleId' 	 => 'user',
                                         'filter' 	 => 'DESC'
                                     ),
                                     'constraints' => array(
