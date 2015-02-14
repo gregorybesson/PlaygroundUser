@@ -17,7 +17,7 @@ class AdminController extends AbstractActionController
     {
         $filter        = $this->getEvent()->getRouteMatch()->getParam('filter');
         $roleId        = $this->getEvent()->getRouteMatch()->getParam('roleId');
-        $search    = $this->params()->fromQuery('name');
+        $search        = $this->params()->fromQuery('name');
 
         $role        = $this->getAdminUserService()->getRoleMapper()->findByRoleId($roleId);
 
