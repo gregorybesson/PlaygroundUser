@@ -2,67 +2,96 @@
 
 namespace PlaygroundUser\Mapper;
 
+use Doctrine\ORM\EntityManager;
+use PlaygroundUser\Options\ModuleOptions;
+use Zend\Stdlib\Hydrator\HydratorInterface;
 use ZfcBase\Mapper\AbstractDbMapper;
 
 class RememberMe extends AbstractDbMapper
 {
-    protected $tableName  = 'user_remember_me';
+    /**
+     * @var \Doctrine\ORM\EntityManager
+     */
+    protected $em;
 
-    public function findById($userId)
+    /**
+     * @var \PlaygroundUser\Options\ModuleOptions
+     */
+    protected $options;
+
+    public function __construct(EntityManager $em, ModuleOptions $options)
     {
-        $select = $this->getSelect()
-            ->where(array('user_id' => $userId));
+        $this->em      = $em;
+        $this->options = $options;
+    }
 
-        $entity = $this->select($select)->current();
-        $this->getEventManager()->trigger('find', $this, array('entity' => $entity));
+    public function findById($id)
+    {
 
-        return $entity;
+        return $this->getRepository()->find($id);
+    }
+
+    public function findBy($array = array(), $sortArray = array())
+    {
+        return $this->getRepository()->findBy($array, $sortArray);
     }
 
     public function findByIdSerie($userId, $serieId)
     {
-        $select = $this->getSelect()
-            ->where(array('user_id' => $userId, 'sid' => $serieId));
-
-        $entity = $this->select($select)->current();
-        $this->getEventManager()->trigger('find', $this, array('entity' => $entity));
-
-        return $entity;
-    }
-
-    public function updateSerie($entity)
-    {
-        $where = 'user_id = ' . $entity->getUserId() . ' && sid = "' . $entity->getSid() . '"';
-        $hydrator = new RememberMeHydrator;
-
-        return parent::update($entity, $where, $this->tableName, $hydrator);
-    }
-
-    public function createSerie($entity)
-    {
-        $hydrator = new RememberMeHydrator;
-
-        return parent::insert($entity, $this->tableName, $hydrator);
+        
+        return $this->getRepository()->findOneBy(array('userId' => $userId, 'sid' => $serieId));
     }
 
     public function removeAll($userId)
     {
-        $where = 'user_id = ' . $userId;
-
-        return parent::delete($where, $this->tableName);
-    }
-
-    public function remove($entity)
-    {
-        $where = 'user_id = ' . $entity->getUserId() . ' && sid = "' . $entity->getSid() . '" && token = "' . $entity->getToken() . '"';
-
-        return parent::delete($where, $this->tableName);
+        $elements = $this->findBy(array('userId' => $userId));
+        foreach ($elements as $element) {
+            $this->em->remove($element);
+        }
+        $this->em->flush();
     }
 
     public function removeSerie($userId, $serieId)
     {
-        $where = 'user_id = ' . $userId . ' && sid = "' . $serieId . '"';
 
-        return parent::delete($where, $this->tableName);
+        $elements = $this->findBy(array('userId' => $userId, 'sid' => $serieId));
+        foreach ($elements as $element) {
+            $this->em->remove($element);
+        }
+        $this->em->flush();
+    }
+
+    public function insert($entity, $tableName = null, HydratorInterface $hydrator = null)
+    {
+        return $this->persist($entity);
+    }
+
+    public function update($entity, $where = null, $tableName = null, HydratorInterface $hydrator = null)
+    {
+        return $this->persist($entity);
+    }
+
+    protected function persist($entity)
+    {
+        $this->em->persist($entity);
+        $this->em->flush();
+
+        return $entity;
+    }
+
+    public function findAll()
+    {
+        return $this->getRepository()->findAll();
+    }
+
+    public function remove($entity)
+    {
+        $this->em->remove($entity);
+        $this->em->flush();
+    }
+
+    public function getRepository()
+    {
+        return $this->em->getRepository('\PlaygroundUser\Entity\RememberMe');
     }
 }
