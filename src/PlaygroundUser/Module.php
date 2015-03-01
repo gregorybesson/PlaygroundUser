@@ -35,15 +35,15 @@ class Module
         $evm->addEventListener(\Doctrine\ORM\Events::loadClassMetadata, $listener);
         */
 
-        // Remember me feature
-
-        $session = new \Zend\Session\Container('zfcuser');
-        $cookieLogin = $session->offsetGet("cookieLogin");
-
-        $cookie = $e->getRequest()->getCookie();
-        // do autologin only if not done before and cookie is present
-
         if (PHP_SAPI !== 'cli') {
+            // Remember me feature
+
+            $session = new \Zend\Session\Container('zfcuser');
+            $cookieLogin = $session->offsetGet("cookieLogin");
+
+            $cookie = $e->getRequest()->getCookie();
+            // do autologin only if not done before and cookie is present
+
             if (isset($cookie['remember_me']) && $cookieLogin == false) {
                $adapter = $e->getApplication()->getServiceManager()->get('ZfcUser\Authentication\Adapter\AdapterChain');
                 $adapter->prepareForAuthentication($e->getRequest());
