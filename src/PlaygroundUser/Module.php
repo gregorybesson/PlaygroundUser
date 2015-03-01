@@ -204,7 +204,7 @@ class Module
                     $translator = $sm->get('translator');
                     $options = $sm->get('zfcuser_module_options');
                     $form = new Form\Login(null, $options, $translator);
-                    $form->setInputFilter(new \ZfcUser\Form\LoginFilter($options));
+                    $form->setInputFilter(new \PlaygroundUser\Form\LoginFilter($options));
 
                     return $form;
                 },

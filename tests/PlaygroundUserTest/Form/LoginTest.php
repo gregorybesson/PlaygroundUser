@@ -40,7 +40,7 @@ class LoginTest extends \PHPUnit_Framework_TestCase
         $translator = $this->sm->get('translator');
         $options = $this->sm->get('zfcuser_module_options');
         $form = new \PlaygroundUser\Form\Login(null, $options, $translator);
-        $form->setInputFilter(new \ZfcUser\Form\LoginFilter($options));
+        $form->setInputFilter(new \PlaygroundUser\Form\LoginFilter($options));
 
         $this->form = $form;
 
