@@ -21,8 +21,8 @@ $form->setAttribute('id', 'header-login');
         				<div class="input-login-error"></div>
                         <?php echo $this->formInput($form->get('identity')) ?>
     					<?php echo $this->formInput($form->get('credential')) ?>
-    					<?php //echo $this->formLabel($form->get('remember_me')) ?>
-    					<?php //echo $this->formCheckbox($form->get('remember_me')) ?>
+    					<?php echo $this->formLabel($form->get('remember_me')) ?>
+    					<?php echo $this->formCheckbox($form->get('remember_me')) ?>
     					<?php if ($this->redirect): ?><input type="hidden" name="redirect" value="<?php echo $this->redirect ?>" /><?php endif ?>
     				</div>
     			</div>

@@ -35,7 +35,6 @@ class Module
         $evm->addEventListener(\Doctrine\ORM\Events::loadClassMetadata, $listener);
         */
 
-        /*
         // Remember me feature
 
         $session = new \Zend\Session\Container('zfcuser');
@@ -50,7 +49,7 @@ class Module
             $authService = $e->getApplication()->getServiceManager()->get('zfcuser_auth_service');
 
             $auth = $authService->authenticate($adapter);
-        }*/
+        }
         $sm = $e->getApplication()->getServiceManager();
         $em = $e->getApplication()->getEventManager();
 
@@ -329,16 +328,11 @@ class Module
                 },
 
                 'playgrounduser_rememberme_mapper' => function ($sm) {
-                    $options = $sm->get('zfcuser_module_options');
-                    $rememberOptions = $sm->get('playgrounduser_module_options');
-                    $mapper = new Mapper\RememberMe;
-                    $mapper->setDbAdapter($sm->get('zfcuser_zend_db_adapter'));
-
-                    $entityClass = $rememberOptions->getRememberMeEntityClass();
-                    $mapper->setEntityPrototype(new $entityClass);
-                    $mapper->setHydrator(new Mapper\RememberMeHydrator());
-
-                    return $mapper;
+                    
+                    return new \PlaygroundUser\Mapper\RememberMe(
+                        $sm->get('doctrine.entitymanager.orm_default'),
+                        $sm->get('playgrounduser_module_options')
+                    );
                 },
 
                 'playgrounduser_emailverification_mapper' => function ($sm) {

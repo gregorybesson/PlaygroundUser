@@ -55,7 +55,7 @@ class Login extends ProvidesEventsForm
 
         //remember_me
         // TODO : le rendre optionnel
-        /*$this->add(array(
+        $this->add(array(
              'type' => 'Zend\Form\Element\Checkbox',
              'name' => 'remember_me',
              'options' => array(
@@ -64,7 +64,7 @@ class Login extends ProvidesEventsForm
                      'checked_value' => '1',
                      'unchecked_value' => '0'
              )
-        ));*/
+        ));
 
         // @todo: Fix this
         // 1) getValidator() is a protected method

@@ -36,7 +36,7 @@ class RememberMe extends EventProvider implements ServiceManagerAwareInterface
             $token = $this->createToken();
             $rememberMe->setToken($token);
             $this->setCookie($rememberMe);
-            $this->getMapper()->updateSerie($rememberMe);
+            $this->getMapper()->update($rememberMe);
 
             return $token;
         }
@@ -50,13 +50,10 @@ class RememberMe extends EventProvider implements ServiceManagerAwareInterface
         $serieId = $this->createSerieId();
 
         $class = $this->getOptions()->getRememberMeEntityClass();
-        $rememberMe = new $class;
-        $rememberMe->setUserId($userId)
-            ->setSid($serieId)
-            ->setToken($token);
+        $rememberMe = new $class($userId, $serieId, $token);
 
         if ($this->setCookie($rememberMe)) {
-            $rememberMe = $this->getMapper()->createSerie($rememberMe);
+            $rememberMe = $this->getMapper()->insert($rememberMe);
 
             return $rememberMe;
         }
