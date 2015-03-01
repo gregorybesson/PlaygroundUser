@@ -43,12 +43,14 @@ class Module
         $cookie = $e->getRequest()->getCookie();
         // do autologin only if not done before and cookie is present
 
-        if (isset($cookie['remember_me']) && $cookieLogin == false) {
-           $adapter = $e->getApplication()->getServiceManager()->get('ZfcUser\Authentication\Adapter\AdapterChain');
-            $adapter->prepareForAuthentication($e->getRequest());
-            $authService = $e->getApplication()->getServiceManager()->get('zfcuser_auth_service');
+        if (PHP_SAPI !== 'cli') {
+            if (isset($cookie['remember_me']) && $cookieLogin == false) {
+               $adapter = $e->getApplication()->getServiceManager()->get('ZfcUser\Authentication\Adapter\AdapterChain');
+                $adapter->prepareForAuthentication($e->getRequest());
+                $authService = $e->getApplication()->getServiceManager()->get('zfcuser_auth_service');
 
-            $auth = $authService->authenticate($adapter);
+                $auth = $authService->authenticate($adapter);
+            }
         }
         $sm = $e->getApplication()->getServiceManager();
         $em = $e->getApplication()->getEventManager();
