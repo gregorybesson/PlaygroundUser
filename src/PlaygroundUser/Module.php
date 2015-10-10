@@ -169,23 +169,6 @@ class Module
 
     }
 
-    public function getControllerConfig()
-    {
-        return array(
-            'factories' => array(
-                'playgrounduser_user' => function($controllerManager) {
-                        /* @var ControllerManager $controllerManager*/
-                        $serviceManager = $controllerManager->getServiceLocator();
-                        /* @var RedirectCallback $redirectCallback */
-                        $redirectCallback = $serviceManager->get('zfcuser_redirect_callback');
-                        /* @var \PlaygroundUser\Controller\UserController $controller */
-                        $controller = new \PlaygroundUser\Controller\UserController ($redirectCallback);
-                        return $controller;
-                    },
-            ),
-        );
-    }
-
     public function getServiceConfig()
     {
         return array(
