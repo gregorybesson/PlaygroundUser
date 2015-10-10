@@ -67,6 +67,7 @@ return array(
         
         'guards' => array(
             'BjyAuthorize\Guard\Controller' => array(
+            	array('controller' => 'zfcuser',   'roles' => array('guest', 'user')),
                 array('controller' => 'playgrounduser_user',   'roles' => array('guest', 'user')),
                 array('controller' => 'playgrounduser_forgot', 'roles' => array('guest', 'user')),
                 array('controller' => 'PlaygroundUser\Controller\Frontend\Contact', 'roles' => array('guest', 'user')),
