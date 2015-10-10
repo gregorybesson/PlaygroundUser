@@ -136,7 +136,6 @@ return array(
         'invokables' => array(
         	'playgrounduseradmin_login'                  => 'PlaygroundUser\Controller\Admin\LoginController',
             'playgrounduseradmin'                        => 'PlaygroundUser\Controller\Admin\AdminController',
-            'playgrounduser_user'                        => 'PlaygroundUser\Controller\UserController',
             'playgrounduser_forgot'                      => 'PlaygroundUser\Controller\ForgotController',
             'PlaygroundUser\Controller\Frontend\Contact' => 'PlaygroundUser\Controller\Frontend\ContactController'
         ),
