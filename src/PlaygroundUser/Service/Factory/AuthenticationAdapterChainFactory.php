@@ -13,7 +13,7 @@ class AuthenticationAdapterChainFactory implements FactoryInterface
         $factory = new AdapterChainServiceFactory();
         $chain = $factory->createService($services);
         $adapter = $services->get('playgrounduser_authentication_hybridauth');
-        $chain->getEventManager()->attach('authenticate', array($adapter, 'authenticate'), 1000);
+        $chain->getEventManager()->attach('authenticate', array($adapter, 'authenticate'), 90);
         $adapter = $services->get('playgrounduser_authentication_emailvalidation');
         $chain->getEventManager()->attach('authenticate', array($adapter, 'authenticate'), 1100);
 
