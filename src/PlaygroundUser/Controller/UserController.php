@@ -343,7 +343,8 @@ class UserController extends ZfcUserController
             array('hauth_return_to' => $redirectUrl)
         );
 
-        return $this->redirect()->toUrl($redirectUrl);
+        $go = $this->frontendUrl()->fromRoute('', array('channel' => $this->getEvent()->getRouteMatch()->getParam('channel')));
+        return $this->redirect()->toUrl($go);
     }
 
     public function logoutAction()
