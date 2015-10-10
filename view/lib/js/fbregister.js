@@ -6,60 +6,56 @@ $(function(){
     
     /**** Facebook init */
     window.fbAsyncInit = function() {
-      // init the FB JS SDK
-      FB.init({
-        appId      : APP_ID, // App ID from the App Dashboard
-        status     : true, // check the login status upon init?
-        cookie     : true, // set sessions cookies to allow your server to access the session?
-        xfbml      : true  // parse XFBML tags on this page?
-      });
-      FB.Canvas.setAutoGrow();
-      FB.Canvas.getPageInfo(function (pageInfo)
-      {
-         $({y: pageInfo.scrollTop}).animate(
-            {y: 0},
-            {
-                duration: 0,
-                step: function (offset)
+        FB.init({
+          appId      : APP_ID,
+          version    : 'v2.5',
+          status     : true, // check the login status upon init?
+          cookie     : true, // set sessions cookies to allow your server to access the session?
+          xfbml      : true  // parse XFBML tags on this page?
+        });
+
+        FB.Canvas.setAutoGrow();
+        FB.Canvas.getPageInfo(function (pageInfo) {
+            $({y: pageInfo.scrollTop}).animate(
+                {y: 0},
                 {
-                    FB.Canvas.scrollTo(0, offset);
+                    duration: 0,
+                    step: function (offset)
+                    {
+                        FB.Canvas.scrollTo(0, offset);
+                    }
                 }
-            }
-         );
-      });
+            );
+        });
     };
+
+    (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
     
     $('#fb-play').click(function(event){
         event.preventDefault();
         _this = $(this);
         FB.login(function(response) {
             if (response.authResponse) {
-                //If you want the user's Facebook ID or their access token, this is how you get them.
+                //user just authorized your app
+                $('#fb-play').style.display = 'none';
                 var uid = response.authResponse.userID;
                 var access_token = response.authResponse.accessToken;
                 window.location = _this.find('a').attr('href');
-            } else {
-                $('#alert-auth').fadeIn();
-                $('#alert-auth #close-button, #fb-play').click(function(){
-                    $('#alert-auth').fadeOut();
-                });
-                return false;
+                getUserData();
             }
-        }, {scope: APP_SCOPE});
+        }, {scope: 'email,public_profile', return_scopes: true});      
         return false;
     });
-    
-    /**** Connect FB in popup */
-    /*$('#fb-connect a').click(function(e){
-        e.preventDefault();
-        window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=550');
-    });*/
 
-    (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/fr_FR/all.js#xfbml=1";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
+    function getUserData() {
+        FB.api('/me?fields=id,birthday,name,first_name,last_name,link,website,gender,locale,about,email,hometown,location', function(response) {
+            $('#response').innerHTML = 'Hello ' + response.name;
+        });
+    }
 });

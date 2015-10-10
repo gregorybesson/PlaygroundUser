@@ -68,15 +68,17 @@ class HybridAuth extends AbstractAdapter implements ServiceManagerAwareInterface
 
             return;
         }
+        
+        $provider = $authEvent->getRequest()->getQuery()->get('provider');
+        if (empty($provider)) {
+            return;
+        }
 
         $enabledProviders = $this->getOptions()->getEnabledProviders();
-        $provider = $authEvent->getRequest()->getQuery()->get('provider');
-
-        if (empty($provider) || !in_array($provider, $enabledProviders)) {
+        if (!in_array($provider, $enabledProviders)) {
             $authEvent->setCode(Result::FAILURE)
               ->setMessages(array('Invalid provider'));
             $this->setSatisfied(false);
-
             return false;
         }
 
