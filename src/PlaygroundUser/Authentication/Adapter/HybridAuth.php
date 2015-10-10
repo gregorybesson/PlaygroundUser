@@ -167,9 +167,7 @@ class HybridAuth extends AbstractAdapter implements ServiceManagerAwareInterface
         $storage = $this->getStorage()->read();
         $storage['identity'] = $authEvent->getIdentity();
         $this->getStorage()->write($storage);
-        $authEvent->setCode(Result::SUCCESS)
-          ->setMessages(array('Authentication successful.'))
-          ->stopPropagation();
+        $authEvent->setCode(Result::SUCCESS)->setMessages(array('Authentication successful.'));
     }
 
     /**
@@ -245,7 +243,7 @@ class HybridAuth extends AbstractAdapter implements ServiceManagerAwareInterface
     public function getOptions()
     {
         if (!$this->options instanceof ModuleOptions) {
-            $this->setOptions($this->getServiceLocator()->get('playgrounduser_module_options'));
+            $this->setOptions($this->getServiceManager()->get('playgrounduser_module_options'));
         }
 
         return $this->options;
@@ -295,7 +293,7 @@ class HybridAuth extends AbstractAdapter implements ServiceManagerAwareInterface
     public function getMapper()
     {
         if (!$this->mapper instanceof UserProvider) {
-            $this->setMapper($this->getServiceLocator()->get('playgrounduser_userprovider_mapper'));
+            $this->setMapper($this->getServiceManager()->get('playgrounduser_userprovider_mapper'));
         }
 
         return $this->mapper;
@@ -322,7 +320,7 @@ class HybridAuth extends AbstractAdapter implements ServiceManagerAwareInterface
     public function getZfcUserMapper()
     {
         if (!$this->zfcUserMapper instanceof UserMapperInterface) {
-            $this->setZfcUserMapper($this->getServiceLocator()->get('zfcuser_user_mapper'));
+            $this->setZfcUserMapper($this->getServiceManager()->get('zfcuser_user_mapper'));
         }
 
         return $this->zfcUserMapper;
