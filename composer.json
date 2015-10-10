@@ -28,7 +28,7 @@
 		"playground/core" : "2.*",
 		"playground/design" : "2.*",
 		"playground/hybridauth" : "2.*",
-		"zf-commons/zfc-user" : "1.*"
+		"zf-commons/zfc-user" : "0.*"
 	},
 	"require-dev" : {
 		"phpunit/phpunit" : "3.7.*"
