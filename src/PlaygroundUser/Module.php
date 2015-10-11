@@ -97,7 +97,7 @@ class Module
 
         if (PHP_SAPI !== 'cli') {
 
-            if(!empty($config['playgrounduser']['anonymous_tracking'])){
+            if(!empty($config['playgrounduser']['anonymous_tracking']) && $config['playgrounduser']['anonymous_tracking']){
                 // We set an anonymous cookie. No usage yet else but persisting it in a game entry.
                 if ($e->getRequest()->getCookie() && $e->getRequest()->getCookie()->offsetExists('pg_anonymous')) {
                     $anonymousId = $e->getRequest()->getCookie()->offsetGet('pg_anonymous');
