@@ -50,6 +50,22 @@ class LoginController extends ZfcUserController
         );
     }
 
+    public function logoutAction()
+    {
+        $user = $this->zfcUserAuthentication()->getIdentity();
+
+        $this->zfcUserAuthentication()->getAuthAdapter()->resetAdapters();
+        $this->zfcUserAuthentication()->getAuthAdapter()->logoutAdapters();
+        $this->zfcUserAuthentication()->getAuthService()->clearIdentity();
+
+        if($user){
+            $this->getEventManager()->trigger('logout.post', $this, array('user' => $user));
+        }
+
+        return $this->redirect()->toUrl($this->url()->fromRoute('admin'));
+
+    }
+
     public function getOptions()
     {
         if($this->options === null){

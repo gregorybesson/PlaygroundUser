@@ -431,6 +431,16 @@ return array(
             		),
             	),
                 'child_routes' => array(
+                	'logout' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route' => '/logout',
+                            'defaults' => array(
+                                'controller' => 'playgrounduseradmin_login',
+                                'action'     => 'logout',
+                            ),
+                        ),
+                    ),
                     'playgrounduser' => array(
                         'type' => 'Literal',
                         'priority' => 1000,
