@@ -11,6 +11,7 @@ use Zend\Http\Request as HttpRequest;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use Doctrine\Common\Annotations\AnnotationReader;
 use ZfcUser\Module as ZfcUser;
+use BjyAuthorize\View\RedirectionStrategy;
 use Zend\Validator\AbstractValidator;
 
 class Module
@@ -109,6 +110,10 @@ class Module
                 $cookie = new \Zend\Http\Header\SetCookie('pg_anonymous', $anonymousId, 2147483647,'/');
                 $e->getResponse()->getHeaders()->addHeader($cookie);
             }
+
+            $strategy = new RedirectionStrategy();
+            $strategy->setRedirectRoute('admin');
+            $e->getApplication()->getEventManager()->attach($strategy);
         }
     }
 
