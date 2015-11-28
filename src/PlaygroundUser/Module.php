@@ -46,7 +46,7 @@ class Module
             // do autologin only if not done before and cookie is present
 
             if (isset($cookie['remember_me']) && $cookieLogin == false) {
-               $adapter = $e->getApplication()->getServiceManager()->get('ZfcUser\Authentication\Adapter\AdapterChain');
+                $adapter = $e->getApplication()->getServiceManager()->get('ZfcUser\Authentication\Adapter\AdapterChain');
                 $adapter->prepareForAuthentication($e->getRequest());
                 $authService = $e->getApplication()->getServiceManager()->get('zfcuser_auth_service');
 
@@ -70,7 +70,7 @@ class Module
             $translate = $sm->get('viewhelpermanager')->get('translate');
             $translate->getTranslator()->setLocale($locale);
         }
-        AbstractValidator::setDefaultTranslator($translator,'playgrounduser');
+        AbstractValidator::setDefaultTranslator($translator, 'playgrounduser');
 
         // If cron is called, the $e->getRequest()->getQuery()->get('key'); produces an error so I protect it with
         // this test
@@ -81,7 +81,7 @@ class Module
             $session = new Container('sponsorship');
             $key = $e->getRequest()->getQuery()->get('key');
             if ($key) {
-                $session->offsetSet('key',  $key);
+                $session->offsetSet('key', $key);
             }
         });
 
@@ -93,12 +93,11 @@ class Module
         });
 
         // I can post cron tasks to be scheduled by the core cron service
-        $em->getSharedManager()->attach('Zend\Mvc\Application','getCronjobs', array($this, 'addCronjob'));
+        $em->getSharedManager()->attach('Zend\Mvc\Application', 'getCronjobs', array($this, 'addCronjob'));
 
 
         if (PHP_SAPI !== 'cli') {
-
-            if(!empty($config['playgrounduser']['anonymous_tracking']) && $config['playgrounduser']['anonymous_tracking']){
+            if (!empty($config['playgrounduser']['anonymous_tracking']) && $config['playgrounduser']['anonymous_tracking']) {
                 // We set an anonymous cookie. No usage yet else but persisting it in a game entry.
                 if ($e->getRequest()->getCookie() && $e->getRequest()->getCookie()->offsetExists('pg_anonymous')) {
                     $anonymousId = $e->getRequest()->getCookie()->offsetGet('pg_anonymous');
@@ -107,7 +106,7 @@ class Module
                 }
 
                 // Set the cookie as long as possible (limited by integer max in 32 bits
-                $cookie = new \Zend\Http\Header\SetCookie('pg_anonymous', $anonymousId, 2147483647,'/');
+                $cookie = new \Zend\Http\Header\SetCookie('pg_anonymous', $anonymousId, 2147483647, '/');
                 $e->getResponse()->getHeaders()->addHeader($cookie);
             }
 
@@ -219,7 +218,7 @@ class Module
                 'zfcuser_register_form' => function ($sm) {
                     $translator = $sm->get('translator');
                     $zfcUserOptions = $sm->get('zfcuser_module_options');
-                    $form = new Form\Register(null, $zfcUserOptions, $translator, $sm );
+                    $form = new Form\Register(null, $zfcUserOptions, $translator, $sm);
                     //$form->setCaptchaElement($sm->get('zfcuser_captcha_element'));
                     $form->setInputFilter(new \ZfcUser\Form\RegisterFilter(
                         new \ZfcUser\Validator\NoRecordExists(array(
@@ -241,47 +240,47 @@ class Module
                 },
 
                 'SocialConfig' => function ($sm) {
-                $config = $sm->get('Config');
-                $config = isset($config['playgrounduser']['social']) ? $config['playgrounduser']['social'] : array('providers'=>array());
+                    $config = $sm->get('Config');
+                    $config = isset($config['playgrounduser']['social']) ? $config['playgrounduser']['social'] : array('providers'=>array());
 
-                $router = $sm->get('Router');
+                    $router = $sm->get('Router');
                 // Bug when using doctrine from console https://github.com/SocalNick/ScnSocialAuth/issues/67
-                if ($router instanceof \Zend\Mvc\Router\Http\TreeRouteStack) {
-                    $request = $sm->get('Request');
-                    if (!$router->getRequestUri() && method_exists($request, 'getUri')) {
-                        $router->setRequestUri($request->getUri());
-                    }
-                    if (!$router->getBaseUrl() && method_exists($request, 'getBaseUrl')) {
-                        $router->setBaseUrl($request->getBaseUrl());
-                    }
-                    $config['base_url'] = $router->assemble(
-                        array('channel' => ''),
-                        array(
+                    if ($router instanceof \Zend\Mvc\Router\Http\TreeRouteStack) {
+                        $request = $sm->get('Request');
+                        if (!$router->getRequestUri() && method_exists($request, 'getUri')) {
+                            $router->setRequestUri($request->getUri());
+                        }
+                        if (!$router->getBaseUrl() && method_exists($request, 'getBaseUrl')) {
+                            $router->setBaseUrl($request->getBaseUrl());
+                        }
+                        $config['base_url'] = $router->assemble(
+                            array(),
+                            array(
                             'name' => 'frontend/zfcuser/backend',
                             'force_canonical' => true,
-                        )
-                    );
-                }
+                            )
+                        );
+                    }
 
                 // If it's a console request (phpunit or doctrine console)...
-                if (PHP_SAPI === 'cli') {
-                    $_SERVER['HTTP_HOST'] = '127.0.0.1'.
-                    $_SERVER['REQUEST_URI'] = 'backend';
-                }
+                    if (PHP_SAPI === 'cli') {
+                        $_SERVER['HTTP_HOST'] = '127.0.0.1'.
+                        $_SERVER['REQUEST_URI'] = 'backend';
+                    }
 
                 // this following config doesn't work with bjyprofiler
                 //https://github.com/SocalNick/ScnSocialAuth/issues/57
                 //$urlHelper = $sm->get('viewhelpermanager')->get('url');
-                //$config['base_url'] = $urlHelper('frontend/zfcuser/backend',array('channel' => $this->getEvent()->getRouteMatch()->getParam('channel')), array('force_canonical' => true));
-                return $config;
+                //$config['base_url'] = $urlHelper('frontend/zfcuser/backend',array(), array('force_canonical' => true));
+                    return $config;
                 },
 
                 'HybridAuth' => function ($sm) {
                     $config = $sm->get('SocialConfig');
 
-                   try{
+                    try {
                         $auth = new \Hybrid_Auth($config);
-                    }catch(\Exception $e){
+                    } catch (\Exception $e) {
                         throw new \Exception($e->getMessage(), $e->getCode());
                     }
                     return $auth;
@@ -305,7 +304,7 @@ class Module
                     $translator = $sm->get('translator');
                     $zfcUserOptions = $sm->get('zfcuser_module_options');
                     $playgroundUserOptions = $sm->get('playgrounduser_module_options');
-                    $form = new Form\Admin\User(null, $playgroundUserOptions, $zfcUserOptions, $translator, $sm );
+                    $form = new Form\Admin\User(null, $playgroundUserOptions, $zfcUserOptions, $translator, $sm);
                     $filter = new \ZfcUser\Form\RegisterFilter(
                         new \ZfcUser\Validator\NoRecordExists(array(
                             'mapper' => $sm->get('zfcuser_user_mapper'),
@@ -329,7 +328,7 @@ class Module
                     $translator = $sm->get('translator');
                     $zfcUserOptions = $sm->get('zfcuser_module_options');
                     $playgroundUserOptions = $sm->get('playgrounduser_module_options');
-                    $form = new Form\Admin\Role(null, $playgroundUserOptions, $translator, $sm );
+                    $form = new Form\Admin\Role(null, $playgroundUserOptions, $translator, $sm);
 
                     return $form;
                 },
@@ -429,7 +428,7 @@ class Module
                     );
                 },
                 
-                'playgrounduser_contact_form' => function($sm) {
+                'playgrounduser_contact_form' => function ($sm) {
                     $translator = $sm->get('translator');
                     $form = new Form\Contact(null, $sm, $translator);
                 

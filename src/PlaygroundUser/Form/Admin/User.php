@@ -35,7 +35,7 @@ class User extends Register
                 'selected' => false,
             );
         }
-        $this->setAttribute('enctype','multipart/form-data');
+        $this->setAttribute('enctype', 'multipart/form-data');
 
         $this->add(array(
             'name' => 'id',
@@ -155,7 +155,7 @@ class User extends Register
 
         $countries = $this->getCountries();
         $countries_label = array();
-        foreach($countries as $key => $name){
+        foreach ($countries as $key => $name) {
             $countries_label[$key] = $translator->translate($name, 'playgrounduser');
         }
         asort($countries_label);
@@ -201,7 +201,7 @@ class User extends Register
                         'label' => $translator->translate('Newsletter', 'playgrounduser'),
                         'value_options' => array(
                                 '1'  => $translator->translate('Yes', 'playgrounduser'),
-                                '0'  => $translator->translate('No','playgrounduser'),
+                                '0'  => $translator->translate('No', 'playgrounduser'),
                         ),
                 ),
         ));
@@ -213,7 +213,7 @@ class User extends Register
                         'label' => $translator->translate('Partners Newsletter', 'playgrounduser'),
                         'value_options' => array(
                                 '1'  => $translator->translate('Yes', 'playgrounduser'),
-                                '0'  => $translator->translate('No','playgrounduser'),
+                                '0'  => $translator->translate('No', 'playgrounduser'),
                         ),
                 ),
         ));

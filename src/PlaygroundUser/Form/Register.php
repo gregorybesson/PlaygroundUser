@@ -22,7 +22,7 @@ class Register extends \ZfcUser\Form\Register
         $this->setServiceManager($serviceManager);
         parent::__construct($name, $registerOptions);
 
-        if($this->has('username')){
+        if ($this->has('username')) {
             $this->get('username')
             ->setLabel($translator->translate('Username', 'playgrounduser'))
             ->setAttributes(array('placeholder' => 'Your username'));

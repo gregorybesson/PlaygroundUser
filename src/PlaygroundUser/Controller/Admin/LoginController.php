@@ -22,7 +22,7 @@ class LoginController extends ZfcUserController
         $user = $this->zfcUserAuthentication()->getIdentity();
         $authAdminConfig = $this->getOptions()->getAdmin();
 
-        if($user && $this->isAllowed($authAdminConfig['resource'], $authAdminConfig['privilege'])){
+        if ($user && $this->isAllowed($authAdminConfig['resource'], $authAdminConfig['privilege'])) {
             return $this->forward()->dispatch($authAdminConfig['controller'], array('action' => $authAdminConfig['action']));
         }
 
@@ -58,7 +58,7 @@ class LoginController extends ZfcUserController
         $this->zfcUserAuthentication()->getAuthAdapter()->logoutAdapters();
         $this->zfcUserAuthentication()->getAuthService()->clearIdentity();
 
-        if($user){
+        if ($user) {
             $this->getEventManager()->trigger('logout.post', $this, array('user' => $user));
         }
 
@@ -68,7 +68,7 @@ class LoginController extends ZfcUserController
 
     public function getOptions()
     {
-        if($this->options === null){
+        if ($this->options === null) {
             $this->options = $this->getServiceLocator()->get('playgrounduser_module_options');
         }
 

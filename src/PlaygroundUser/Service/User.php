@@ -131,8 +131,8 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
             $data['avatar'] = $avatarUrl . $fileName;
         }
 
-        if (!isset($data['username']) || $data['username'] == '' ) {
-            $data['username'] = ucfirst($data['firstname']) . " " . substr(ucfirst($data['lastname']),0,1);
+        if (!isset($data['username']) || $data['username'] == '') {
+            $data['username'] = ucfirst($data['firstname']) . " " . substr(ucfirst($data['lastname']), 0, 1);
         }
 
         // Convert birth date format
@@ -159,7 +159,9 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         } else {
             $role = $roleMapper->findByRoleId($defaultRegisterRole);
         }
-        if ($role) $user->addRole($role);
+        if ($role) {
+            $user->addRole($role);
+        }
 
         if ($fileName) {
             $adapter = new \Zend\File\Transfer\Adapter\Http();
@@ -168,11 +170,11 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
 
             if (!$adapter->isValid()) {
                 $dataError = $adapter->getMessages();
-                if(isset($dataError['fileSizeTooBig'])) {
+                if (isset($dataError['fileSizeTooBig'])) {
                     $dataError['fileSizeTooBig'] = 'Votre fichier dépasse le poids autorisé';
                 }
                 $error = array();
-                foreach ($dataError as $key=>$row) {
+                foreach ($dataError as $key => $row) {
                     $error[] = $row;
                 }
                 if (isset($data['dob']) && $data['dob']) {
@@ -185,14 +187,14 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
                 $adapter->setDestination($avatarPath);
                 if ($adapter->receive($fileName)) {
                     $user = $this->getUserMapper()->insert($user);
-                    $this->sendNewEmailMessage($user->getEmail(),$clearPassword);
+                    $this->sendNewEmailMessage($user->getEmail(), $clearPassword);
 
                     return $user;
                 }
             }
         } else {
             $user = $this->getUserMapper()->insert($user);
-            $this->sendNewEmailMessage($user->getEmail(),$clearPassword);
+            $this->sendNewEmailMessage($user->getEmail(), $clearPassword);
 
             return $user;
         }
@@ -228,7 +230,7 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
                 'messages'          => array('objectFound' => 'This email already exists !')
         ));
 
-        if($user->getEmail() != $data['email']){
+        if ($user->getEmail() != $data['email']) {
             $emailInput->getValidatorChain()->addValidator($noObjectExistsValidator);
         }
 
@@ -238,8 +240,8 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
             $data['avatar'] = $avatar_url . $fileName;
         }
 
-        if (!isset($data['username']) || $data['username'] == '' ) {
-            $data['username'] = ucfirst($data['firstname']) . " " . substr(ucfirst($data['lastname']),0,1);
+        if (!isset($data['username']) || $data['username'] == '') {
+            $data['username'] = ucfirst($data['firstname']) . " " . substr(ucfirst($data['lastname']), 0, 1);
         }
 
         // Convert birth date format
@@ -275,11 +277,11 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
             $adapter->setValidators(array($size), $fileName);
             if (!$adapter->isValid()) {
                 $dataError = $adapter->getMessages();
-                if(isset($dataError['fileSizeTooBig'])) {
+                if (isset($dataError['fileSizeTooBig'])) {
                     $dataError['fileSizeTooBig'] = 'Votre fichier dépasse le poids autorisé';
                 }
                 $error = array();
-                foreach ($dataError as $key=>$row) {
+                foreach ($dataError as $key => $row) {
                     $error[] = $row;
                 }
                 if (isset($data['dob']) && $data['dob']) {
@@ -318,13 +320,13 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
      * @return \playgroundUser\Entity\UserInterface
      * @throws Exception\InvalidArgumentException
      */
-    public function register(array $data, $formClass=false)
+    public function register(array $data, $formClass = false)
     {
         $zfcUserOptions = $this->getServiceManager()->get('zfcuser_module_options');
         $class = $zfcUserOptions->getUserEntityClass();
         $user  = new $class;
 
-        if($formClass){
+        if ($formClass) {
             $form = $this->getServiceManager()->get($formClass);
         } else {
             $form  = $this->getRegisterForm();
@@ -381,9 +383,9 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         }
 
         if ($zfcUserOptions->getEnableUsername()) {
-            if (!isset($data['username']) || $data['username'] == '' ) {
-                if(isset($data['firstname']) && isset($data['lastname'])){
-                    $user->setUsername(ucfirst($data['firstname']) . " " . substr(ucfirst($data['lastname']),0,1));
+            if (!isset($data['username']) || $data['username'] == '') {
+                if (isset($data['firstname']) && isset($data['lastname'])) {
+                    $user->setUsername(ucfirst($data['firstname']) . " " . substr(ucfirst($data['lastname']), 0, 1));
                 }
             } else {
                 $user->setUsername($data['username']);
@@ -422,12 +424,13 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         $roleMapper  = $this->getRoleMapper();
         $defaultRegisterRole = $zfcUserOptions->getDefaultRegisterRole();
         $role        = $roleMapper->findByRoleId($defaultRegisterRole);
-        if ($role) $user->addRole($role);
+        if ($role) {
+            $user->addRole($role);
+        }
 
         $user = $this->getUserMapper()->insert($user);
 
         if (isset($data['socialNetwork']) && $user->getId()) {
-
             $userProvider = new \PlaygroundUser\Entity\UserProvider();
             $userProvider->setProvider($data['socialNetwork'])
                 ->setProviderId($data['socialId'])
@@ -472,7 +475,7 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         $user->setPassword($pass);
 
         $user = $this->getUserMapper()->update($user);
-        $this->sendNewEmailMessage($user->getEmail(),$clearPassword);
+        $this->sendNewEmailMessage($user->getEmail(), $clearPassword);
 
         return true;
     }
@@ -542,8 +545,8 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
             $data['avatar'] = $avatarUrl . $fileName;
         }
 
-        if (!isset($data['username']) || $data['username'] == '' ) {
-            $data['username'] = ucfirst($data['firstname']) . " " . substr(ucfirst($data['lastname']),0,1);
+        if (!isset($data['username']) || $data['username'] == '') {
+            $data['username'] = ucfirst($data['firstname']) . " " . substr(ucfirst($data['lastname']), 0, 1);
         }
 
         // Convert birth date format
@@ -576,11 +579,11 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
 
             if (!$adapter->isValid()) {
                 $dataError = $adapter->getMessages();
-                if(isset($dataError['fileSizeTooBig'])) {
+                if (isset($dataError['fileSizeTooBig'])) {
                     $dataError['fileSizeTooBig'] = 'Votre fichier dépasse le poids autorisé';
                 }
                 $error = array();
-                foreach ($dataError as $key=>$row) {
+                foreach ($dataError as $key => $row) {
                     $error[] = $row;
                 }
                 if (isset($data['dob']) && $data['dob']) {
@@ -656,14 +659,14 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         $optinPartnerChange = false;
 
         // I trigger an optin event before updating user if it has changed .
-        if(isset($data['optin']) && $user->getOptin() != $data['optin']){
+        if (isset($data['optin']) && $user->getOptin() != $data['optin']) {
             $optinChange = true;
             $this->getEventManager()->trigger(__FUNCTION__.'.pre', $this, array('user' => $user, 'data' => $data));
             $user->setOptin($data['optin']);
         }
 
         // I trigger an optinPartner event before updating user if it has changed
-        if(isset($data['optinPartner']) && $user->getOptinPartner() != $data['optinPartner']){
+        if (isset($data['optinPartner']) && $user->getOptinPartner() != $data['optinPartner']) {
             $optinPartnerChange = true;
             $this->getEventManager()->trigger(__FUNCTION__.'Partner.pre', $this, array('user' => $user, 'data' => $data));
             $user->setOptinPartner($data['optinPartner']);
@@ -679,11 +682,11 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         }*/
 
         $user = $this->getUserMapper()->update($user);
-        if($optinChange){
+        if ($optinChange) {
             $this->getEventManager()->trigger(__FUNCTION__.'.post', $this, array('user' => $user, 'data' => $data));
         }
 
-        if($optinPartnerChange){
+        if ($optinPartnerChange) {
             $this->getEventManager()->trigger(__FUNCTION__.'Partner.post', $this, array('user' => $user, 'data' => $data));
         }
 
@@ -715,7 +718,6 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         $form->setData($data);
 
         if (!$form->isValid()) {
-
             return false;
         }
 
@@ -726,14 +728,16 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         } else {
             $parentRole = $roleMapper->findByRoleId($defaultRegisterRole);
         }
-        if ($parentRole) $role->setParent($parentRole);
+        if ($parentRole) {
+            $role->setParent($parentRole);
+        }
 
         $role = $roleMapper->insert($role);
 
         return $role;
     }
 
-    public function getQueryUsersByRole($role=null, $order=null, $search='')
+    public function getQueryUsersByRole($role = null, $order = null, $search = '')
     {
         $em = $this->getServiceManager()->get('doctrine.entitymanager.orm_default');
         $filterSearch = '';
@@ -756,12 +760,12 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
             LEFT JOIN u.roles r
             WHERE ' . $roleSearch .
                 $filterSearch .
-                (in_array($order,array('ASC','DESC'))?' ORDER BY u.created_at '.$order:'').'
+                (in_array($order, array('ASC','DESC'))?' ORDER BY u.created_at '.$order:'').'
         ');
         return $query;
     }
 
-    public function getUsersByRole($role=1, $order='DESC', $search='')
+    public function getUsersByRole($role = 1, $order = 'DESC', $search = '')
     {
         $query = $this->getQueryUsersByRole();
         $result = $query->getResult();
@@ -777,7 +781,7 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
     public function findUserOrCreateByEmail($email)
     {
         $user = $this->getUserMapper()->findByEmail($email);
-        if(empty($user)) {
+        if (empty($user)) {
             // Pas d'utilisateur playground : alors on en crée un
             $user = new UserEntity();
             $user->setEmail($email);
@@ -809,7 +813,7 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         return $this->getEmailVerificationMapper()->findByEmail($email);
     }
 
-     public function findByState($state)
+    public function findByState($state)
     {
         return $this->getUserMapper()->findByState($state);
     }
@@ -978,5 +982,4 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
 
         return $this;
     }
-
 }

@@ -48,13 +48,13 @@ class EmailVerificationTest extends \PHPUnit_Framework_TestCase
             $this->emailData['email_address'] .
             '####' .
             $this->emailData['request_time']
-        ),0,15));
+        ), 0, 15));
 
         $emailEntityMocked->expects($this->any())
             ->method('generateRequestKey')
-            ->will($this->returnValue($return));   
+            ->will($this->returnValue($return));
 
-        $email->setRequestKey($emailEntityMocked->generateRequestKey());        
+        $email->setRequestKey($emailEntityMocked->generateRequestKey());
 
         $email = $this->tm->insert($email);
    
@@ -93,13 +93,13 @@ class EmailVerificationTest extends \PHPUnit_Framework_TestCase
             $this->emailData['email_address'] .
             '####' .
             $date
-        ),0,15));
+        ), 0, 15));
 
         $emailEntityMocked->expects($this->any())
             ->method('generateRequestKey')
-            ->will($this->returnValue($return));   
+            ->will($this->returnValue($return));
 
-        $email->setRequestKey($emailEntityMocked->generateRequestKey());        
+        $email->setRequestKey($emailEntityMocked->generateRequestKey());
 
         $email = $this->tm->insert($email);
         
@@ -122,6 +122,4 @@ class EmailVerificationTest extends \PHPUnit_Framework_TestCase
         unset($this->em);
         parent::tearDown();
     }
-
-
 }

@@ -1,5 +1,6 @@
 <?php
 namespace PlaygroundUser\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -45,7 +46,7 @@ class Password
             $this->getUserId() .
             '####' .
             $this->getRequestTime()->getTimestamp()
-        ),0,15)));
+        ), 0, 15)));
     }
 
     public function setUserId($user_id)

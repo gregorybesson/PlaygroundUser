@@ -93,5 +93,4 @@ class UserLoginWidget extends AbstractHelper
 
         return $this;
     }
-
 }

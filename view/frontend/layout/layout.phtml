@@ -14,8 +14,6 @@ $ourView  = $children[0];
         <div id="container">
             <div id="fb-root"></div>
     		<div id="content" class="row-fluid">
-                <?php //echo $this->header(array('adserving' => $this->adserving, 'currentPage' => $this->currentPage, 'channel' => $this->channel));?>
-
                 <!-- CONTENT PAGE -->
                 <div id="containerpage">
 	                <?php if (isset($ourView->flashMessages) && count($ourView->flashMessages)) : ?>
@@ -27,9 +25,6 @@ $ourView  = $children[0];
 	                <?php endif; ?>
                 	<?php echo $this->content; ?>
                 </div><!-- END CONTENT PAGE -->
-
-                <?php //echo $this->footer(array('channel' => $this->channel));?>
-
             </div><!-- END CONTENT -->
         </div>
         <?php echo $this->inlineScript() ?>

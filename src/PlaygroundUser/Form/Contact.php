@@ -13,7 +13,7 @@ class Contact extends ProvidesEventsForm
 
     protected $serviceManager;
 
-    public function __construct ($name = null, ServiceManager $sm, Translator $translator)
+    public function __construct($name = null, ServiceManager $sm, Translator $translator)
     {
 
         parent::__construct($name);
@@ -61,11 +61,11 @@ class Contact extends ProvidesEventsForm
                 'options' => array(
                     'label' => $translator->translate('Objet', 'playgroundcore'),
                     'value_options' => array(
-                                                'technical-pb'	=>	$translator->translate('I have a technical problem', 'playgroundcore'),
-                                                'games-questions'	=>	$translator->translate('I have a question about games', 'playgroundcore'),
-                                                'no-invit'	=>	$translator->translate('I have not received my lot or my invitation', 'playgroundcore'),
-                                                'comment'	=>	$translator->translate('I have a comment or suggestion', 'playgroundcore'),
-                                                'other'	=>	$translator->translate('Other', 'playgroundcore'),
+                                                'technical-pb'  =>  $translator->translate('I have a technical problem', 'playgroundcore'),
+                                                'games-questions'   =>  $translator->translate('I have a question about games', 'playgroundcore'),
+                                                'no-invit'  =>  $translator->translate('I have not received my lot or my invitation', 'playgroundcore'),
+                                                'comment'   =>  $translator->translate('I have a comment or suggestion', 'playgroundcore'),
+                                                'other'     =>  $translator->translate('Other', 'playgroundcore'),
                                             ),
                     'empty_option' => $translator->translate('Select', 'playgroundcore'),
                 ),
@@ -91,7 +91,7 @@ class Contact extends ProvidesEventsForm
             ->setAttributes(array(
             'type' => 'submit',
             'class'=> 'btn btn-success'
-        ));
+            ));
 
         $this->add($submitElement, array(
             //'priority' => - 100
@@ -104,7 +104,7 @@ class Contact extends ProvidesEventsForm
      *
      * @return ServiceManager
      */
-    public function getServiceManager ()
+    public function getServiceManager()
     {
         return $this->serviceManager;
     }
@@ -115,11 +115,10 @@ class Contact extends ProvidesEventsForm
      * @param  ServiceManager $serviceManager
      * @return User
      */
-    public function setServiceManager (ServiceManager $serviceManager)
+    public function setServiceManager(ServiceManager $serviceManager)
     {
         $this->serviceManager = $serviceManager;
 
         return $this;
     }
-
 }

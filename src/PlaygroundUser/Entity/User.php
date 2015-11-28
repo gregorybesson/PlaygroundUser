@@ -153,7 +153,7 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
      /**
      * @ORM\Column(name="registration_source", type="string", length=255, nullable=true)
      */
-     protected $registrationSource;
+    protected $registrationSource;
 
     public function __construct()
     {

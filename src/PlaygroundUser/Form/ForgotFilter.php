@@ -46,5 +46,4 @@ class ForgotFilter extends InputFilter
     {
         return $this->options;
     }
-
 }

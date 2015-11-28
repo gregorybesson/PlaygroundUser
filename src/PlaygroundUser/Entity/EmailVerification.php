@@ -1,6 +1,7 @@
 <?php
 
 namespace PlaygroundUser\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -46,7 +47,7 @@ class EmailVerification
             $this->getEmailAddress() .
             '####' .
             $this->getRequestTime()->getTimestamp()
-        ),0,15)));
+        ), 0, 15)));
     }
 
     public function setEmailAddress($email)

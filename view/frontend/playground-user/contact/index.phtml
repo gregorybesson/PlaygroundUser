@@ -9,7 +9,7 @@
 		
 		<?php $form = $this->form;?>
 	    <?php $form->prepare();?>
-	    <?php $form->setAttribute('action', $this->url('frontend/contact', array('channel' => $this->channel))); ?>
+	    <?php $form->setAttribute('action', $this->url('frontend/contact')); ?>
 	    <?php $form->setAttribute('class', 'validate');?>
 		<?php echo $this->form()->openTag($form); ?>
 		<div id="contact-inner">

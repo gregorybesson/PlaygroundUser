@@ -44,7 +44,7 @@ class PasswordTest extends \PHPUnit_Framework_TestCase
             $this->passwordData['user_id'] .
             '####' .
             $this->passwordData['requestTime']
-        ),0,15));
+        ), 0, 15));
 
         $passwordEntityMocked->expects($this->any())
             ->method('generateRequestKey')

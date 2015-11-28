@@ -59,7 +59,7 @@ class Password extends AbstractDbMapper
         return $this->getEntityRepository()->findBy(array('requestKey'=>$key));
     }
 
-    public function cleanExpiredForgotRequests($expiryTime=86400)
+    public function cleanExpiredForgotRequests($expiryTime = 86400)
     {
         $now = new \DateTime((int) $expiryTime . ' seconds ago');
         $query = $this->em->createQuery(
@@ -88,7 +88,7 @@ class Password extends AbstractDbMapper
 
     public function findByUserIdRequestKey($userId, $token)
     {
-       return $this->getEntityRepository()->findOneBy(array('user_id'=>$userId, 'requestKey'=>$token));
+        return $this->getEntityRepository()->findOneBy(array('user_id'=>$userId, 'requestKey'=>$token));
     }
 
     public function insert($entity, $tableName = null, HydratorInterface $hydrator = null)
@@ -109,8 +109,19 @@ class Password extends AbstractDbMapper
         return $this->persist($entity);
     }
 
-    public function getTableName() { return $this->tableName; }
-    public function getPrimaryKey() { $this->keyField; }
-    public function getPaginatorAdapter(array $params) { }
-    public function getClassName() { return 'PlaygroundUser\Entity\Password'; }
+    public function getTableName()
+    {
+        return $this->tableName;
+    }
+    public function getPrimaryKey()
+    {
+        $this->keyField;
+    }
+    public function getPaginatorAdapter(array $params)
+    {
+    }
+    public function getClassName()
+    {
+        return 'PlaygroundUser\Entity\Password';
+    }
 }

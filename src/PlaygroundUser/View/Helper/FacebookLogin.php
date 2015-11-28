@@ -60,13 +60,11 @@ class FacebookLogin extends AbstractHelper
 
         // We return if we are in a console request
         if ((get_class($this->request) == 'Zend\Console\Request')) {
-
             return;
         }
 
         //print_r($this->config);
-        if(!isset($this->config['providers']['Facebook']) || !$this->config['providers']['Facebook']['enabled'] ){
-
+        if (!isset($this->config['providers']['Facebook']) || !$this->config['providers']['Facebook']['enabled']) {
             return;
         }
 
@@ -75,7 +73,7 @@ class FacebookLogin extends AbstractHelper
         if (!$container instanceof HeadScript) {
             throw new RuntimeException(sprintf(
                 'Container %s does not extend HeadScript view helper',
-                 $this->getContainer()
+                $this->getContainer()
             ));
         }
 

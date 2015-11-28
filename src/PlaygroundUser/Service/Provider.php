@@ -159,7 +159,7 @@ class Provider implements ServiceManagerAwareInterface, EventManagerAwareInterfa
                 // with the app has unsubsribed from the app
                 // cf http://hybridauth.sourceforge.net/userguide/HybridAuth_Sessions.html
 
-                if ( ($ex->getCode() == 6) || ($ex->getCode() == 7) ){
+                if (($ex->getCode() == 6) || ($ex->getCode() == 7)) {
                     // Réinitialiser la session HybridAuth
                     $this->getHybridAuth()->getAdapter($provider)->logout();
                     // Essayer de se connecter à nouveau
@@ -167,7 +167,7 @@ class Provider implements ServiceManagerAwareInterface, EventManagerAwareInterfa
                     if ($adapter->isUserConnected()) {
                         $infoMe = $adapter->getUserProfile();
                     }
-                } else{
+                } else {
                     $authEvent->setCode(Result::FAILURE)
                     ->setMessages(array('Invalid provider'));
                     $this->setSatisfied(false);
