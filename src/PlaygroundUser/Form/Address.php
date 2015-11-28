@@ -100,7 +100,7 @@ class Address extends Register
 
         $countries = $this->getCountries();
         $countries_label = array();
-        foreach($countries as $key => $name){
+        foreach ($countries as $key => $name) {
             $countries_label[$key] = $translator->translate($name, 'playgrounduser');
         }
         asort($countries_label);
@@ -111,7 +111,7 @@ class Address extends Register
                    'empty_option' => $translator->translate('Select your country', 'playgrounduser'),
                    'value_options' => $countries_label,
                    'label' => $translator->translate('Country', 'playgrounduser')
-            )
+               )
         ));
 
 

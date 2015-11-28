@@ -39,15 +39,14 @@ class ContactController extends AbstractActionController
                 $result = $mailService->createHtmlMessage($from, $to, $subject, 'playground-user/email/question', array('data' => $data));
 
                 if ($result) {
-                   return $this->redirect()->toRoute('frontend/contact/confirmation', array('channel' => $this->getEvent()->getRouteMatch()->getParam('channel')));
+                    return $this->redirect()->toRoute('frontend/contact/confirmation');
                 }
             }
         }
 
         return new ViewModel(array(
                 'form' => $form,
-            )
-        );
+            ));
     }
 
     public function confirmationAction()

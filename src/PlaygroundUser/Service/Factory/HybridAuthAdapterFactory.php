@@ -14,9 +14,9 @@ class HybridAuthAdapterFactory implements FactoryInterface
 {
     public function createService(ServiceLocatorInterface $services)
     {
-         try{
+        try {
             $hybridAuth = $services->get('HybridAuth');
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             // In some cases (ie. FB registration, the user refuses the options)
             $hybridAuth = null;
         }

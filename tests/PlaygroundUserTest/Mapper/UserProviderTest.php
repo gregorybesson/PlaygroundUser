@@ -65,7 +65,7 @@ class UserProviderTest extends \PHPUnit_Framework_TestCase
 
         $newProvider = "provider2";
         $userProvider->setProvider($newProvider);
-        $userProvider = $this->tm->update($userProvider); 
+        $userProvider = $this->tm->update($userProvider);
         $this->assertEquals($newProvider, $userProvider->getProvider());
 
 
@@ -103,7 +103,7 @@ class UserProviderTest extends \PHPUnit_Framework_TestCase
         $providers = $this->tm->findProviderByUser($user, $providerName);
         $this->assertEquals(1, count($providers));
 
-      }
+    }
 
     public function tearDown()
     {

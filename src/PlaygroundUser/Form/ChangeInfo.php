@@ -20,7 +20,7 @@ class ChangeInfo extends Register
         $this->setCreateOptions($createOptions);
         parent::__construct($name, $createOptions);
 
-        $this->setAttribute('enctype','multipart/form-data');
+        $this->setAttribute('enctype', 'multipart/form-data');
         $this->remove('password');
         $this->remove('passwordVerify');
         $this->remove('username');
@@ -137,7 +137,7 @@ class ChangeInfo extends Register
 
         $countries = $this->getCountries();
         $countries_label = array();
-        foreach($countries as $key => $name){
+        foreach ($countries as $key => $name) {
             $countries_label[$key] = $translator->translate($name, 'playgrounduser');
         }
         asort($countries_label);

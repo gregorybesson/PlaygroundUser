@@ -175,5 +175,4 @@ class Cookie extends AbstractAdapter implements ServiceManagerAwareInterface
             $this->getRememberMeService()->removeCookie();
         }
     }
-
 }

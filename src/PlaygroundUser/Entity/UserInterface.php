@@ -43,10 +43,10 @@ interface UserInterface
     public function setTelephone($telephone);
     public function getMobile();
     public function setMobile($mobile);
-    public function getOptin ();
-    public function setOptin ($optin);
-    public function getOptinPartner ();
-    public function setOptinPartner ($optinPartner);
+    public function getOptin();
+    public function setOptin($optin);
+    public function getOptinPartner();
+    public function setOptinPartner($optinPartner);
     public function getCreatedAt();
     public function setCreatedAt($created_at);
     public function getUpdatedAt();

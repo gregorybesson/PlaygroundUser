@@ -40,17 +40,17 @@ class userTest extends \PHPUnit_Framework_TestCase
         $tool->createSchema($classes);
 
         $this->userData = array(
-        	'email' => 'correct@test.com',
-        	'firstname' => 'Jo',
-       		'lastname'  => 'Lindien',
-       		'telephone' => '0123456789',
-        	'mobile' => '0623456789',
-        	'avatar' => 'correct@test.com',
-        	'state' => '1',
-       		'postalCode'  => '77000',
-       		'optin' => '1',
-        	'optinPartner' => '1',
-        	'username'  => 'jolindien',
+            'email' => 'correct@test.com',
+            'firstname' => 'Jo',
+            'lastname'  => 'Lindien',
+            'telephone' => '0123456789',
+            'mobile' => '0623456789',
+            'avatar' => 'correct@test.com',
+            'state' => '1',
+            'postalCode'  => '77000',
+            'optin' => '1',
+            'optinPartner' => '1',
+            'username'  => 'jolindien',
         );
     }
 

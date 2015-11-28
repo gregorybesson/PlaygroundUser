@@ -83,7 +83,7 @@ class UnauthorizedStrategy implements ListenerAggregateInterface, ServiceLocator
 
     public function getOptions()
     {
-        if($this->options === null){
+        if ($this->options === null) {
             $this->options = $this->getServiceLocator()->get('playgrounduser_module_options');
         }
 

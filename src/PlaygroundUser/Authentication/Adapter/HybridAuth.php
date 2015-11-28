@@ -93,7 +93,7 @@ class HybridAuth extends AbstractAdapter implements ServiceManagerAwareInterface
             // with the app has unsubsribed from the app
             // cf http://hybridauth.sourceforge.net/userguide/HybridAuth_Sessions.html
 
-            if ( ($ex->getCode() == 6) || ($ex->getCode() == 7) ){
+            if (($ex->getCode() == 6) || ($ex->getCode() == 7)) {
                 // Réinitialiser la session HybridAuth
                 $this->getHybridAuth()->getAdapter($provider)->logout();
                 // Essayer de se connecter à nouveau
@@ -101,7 +101,7 @@ class HybridAuth extends AbstractAdapter implements ServiceManagerAwareInterface
                 if ($adapter->isUserConnected()) {
                     $userProfile = $adapter->getUserProfile();
                 }
-            } else{
+            } else {
                 $authEvent->setCode(Result::FAILURE)
                 ->setMessages(array('Invalid provider'));
                 $this->setSatisfied(false);
@@ -137,7 +137,9 @@ class HybridAuth extends AbstractAdapter implements ServiceManagerAwareInterface
                 $localUser = $this->instantiateLocalUser();
                 $localUser->setDisplayName($userProfile->displayName)
                           ->setPassword($provider);
-                if ($userProfile->emailVerified) $localUser->setEmail($userProfile->emailVerified);
+                if ($userProfile->emailVerified) {
+                    $localUser->setEmail($userProfile->emailVerified);
+                }
                 $result = $this->insert($localUser, 'other', $userProfile);
             }
 
@@ -356,14 +358,15 @@ class HybridAuth extends AbstractAdapter implements ServiceManagerAwareInterface
         }
         $localUser = $this->instantiateLocalUser();
 
-        $userName = ucfirst($userProfile->firstName) . " " . substr(ucfirst($userProfile->lastName),0,1);
+        $userName = ucfirst($userProfile->firstName) . " " . substr(ucfirst($userProfile->lastName), 0, 1);
 
         $birthDay = null;
         if ($userProfile->birthDay && $userProfile->birthMonth && $userProfile->birthYear) {
             $birthDay = new \DateTime(
                 (string)$userProfile->birthYear.'-'
                 .(string)$userProfile->birthMonth.'-'
-                .(string)$userProfile->birthDay);
+                .(string)$userProfile->birthDay
+            );
         }
 
         $localUser->setEmail($userProfile->emailVerified)

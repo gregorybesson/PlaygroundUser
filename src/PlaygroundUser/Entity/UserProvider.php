@@ -8,9 +8,9 @@ class UserProvider
 {
     /** ORM\Id ORM\Column(type="integer",name="user_id") */
     /**
-	 * @ORM\OneToOne(targetEntity="User")
-	 * @ORM\JoinColumn(name="user_id", referencedColumnName="user_id", onDelete="CASCADE")
-	 **/
+     * @ORM\OneToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="user_id", onDelete="CASCADE")
+     **/
     protected $user;
 
     /** @ORM\Id @ORM\Column(type="string",length=50,name="provider_id") */

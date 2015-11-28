@@ -16,7 +16,7 @@ class ProspectTest extends \PHPUnit_Framework_TestCase
     }
 
     public function testFindUserOrCreateByEmail()
-    {   
+    {
         $userService = $this->sm->get('playgrounduser_user_service');
         $email = 'thomas.roger@adfab.fr';
         $user = new User();
@@ -36,11 +36,11 @@ class ProspectTest extends \PHPUnit_Framework_TestCase
 
         $mapper->expects($this->any())
             ->method('findBy')
-            ->will($this->returnValue(array($user)));    
+            ->will($this->returnValue(array($user)));
 
         $userService->setUserMapper($mapper);
 
         $users = $userService->findUserOrCreateByEmail($email);
         $this->assertEquals(count($users), 1);
-    }    
+    }
 }

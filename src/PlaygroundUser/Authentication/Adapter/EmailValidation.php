@@ -31,7 +31,7 @@ class EmailValidation extends AbstractAdapter implements ServiceManagerAwareInte
         $service = $this->getUserService();
         $token = $e->getRequest()->getQuery()->get('token');
         $validator = new \Zend\Validator\Hex();
-        if ( !$validator->isValid($token) ) {
+        if (!$validator->isValid($token)) {
             return false;
         }
 
@@ -49,7 +49,7 @@ class EmailValidation extends AbstractAdapter implements ServiceManagerAwareInte
 
         // Success!
         $service->remove($validation);
-        $user->setState( 1 );
+        $user->setState(1);
         $service->getUserMapper()->update($user);
 
         $e->setIdentity($user->getId());

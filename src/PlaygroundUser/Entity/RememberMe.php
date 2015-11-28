@@ -1,5 +1,6 @@
 <?php
 namespace PlaygroundUser\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -15,9 +16,9 @@ class RememberMe
      */
     protected $sid;
 
-    /** 
+    /**
      * @ORM\Id
-     * @ORM\Column(type="string") 
+     * @ORM\Column(type="string")
      */
     protected $token;
 

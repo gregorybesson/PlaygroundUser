@@ -68,16 +68,15 @@ class ForgotController extends AbstractActionController
         $request = $this->getRequest();
         $form    = $this->getForgotForm();
 
-        if ( $this->getRequest()->isPost() ) {
+        if ($this->getRequest()->isPost()) {
             $form->setData($this->getRequest()->getPost());
-            if ( $form->isValid() ) {
+            if ($form->isValid()) {
                 $userService = $this->getUserService();
 
                 $email = $form->getData();
                 $email = $email['email'];
 
-                return $this->redirect()->toRoute('frontend/zfcuser/sentpassword', array("email"=> $email,
-                        'channel' => $this->getEvent()->getRouteMatch()->getParam('channel')));
+                return $this->redirect()->toRoute('frontend/zfcuser/sentpassword', array("email"=> $email));
             } else {
                 $this->flashMessenger()->setNamespace('playgrounduser-forgot-form')->addMessage($this->failedMessage);
 
@@ -101,9 +100,8 @@ class ForgotController extends AbstractActionController
         $user = $this->getUserService()->getUserMapper()->findByEmail($email);
         $options = $this->getServiceLocator()->get('playgrounduser_module_options');
 
-        if ( $this->getRequest()->isPost() && $user != null ) {
-
-            $password = strtolower(substr(sha1(uniqid('gb', true).'####'.time()),0,7));
+        if ($this->getRequest()->isPost() && $user != null) {
+            $password = strtolower(substr(sha1(uniqid('gb', true).'####'.time()), 0, 7));
             $this->getPasswordService()->resetPassword(new \PlaygroundUser\Entity\Password, $user, array('newCredential' => $password));
 
             $this->getPasswordService()->sendForgotEmailMessage($email, $password);
@@ -161,21 +159,21 @@ class ForgotController extends AbstractActionController
 
         //no request for a new password found
         if ($password === null) {
-            return $this->redirect()->toRoute('frontend/zfcuser/forgotpassword', array("userId"=> $userId,
-                        'channel' => $this->getEvent()->getRouteMatch()->getParam('channel')));
+            return $this->redirect()->toRoute('frontend/zfcuser/forgotpassword', array("userId"=> $userId));
         }
 
         $userService = $this->getUserService();
         $user = $userService->getUserMapper()->findById($userId);
 
-        if ( $this->getRequest()->isPost() ) {
+        if ($this->getRequest()->isPost()) {
             $form->setData($this->getRequest()->getPost());
-            if ( $form->isValid() && $user !== null ) {
+            if ($form->isValid() && $user !== null) {
                 $service->resetPassword($password, $user, $form->getData());
-                return $this->redirect()->toRoute('frontend',
-                        array('channel' => $this->getEvent()->getRouteMatch()->getParam('channel')),
-                        array('force_canonical'=>true)
-                        );
+                return $this->redirect()->toRoute(
+                    'frontend',
+                    array(),
+                    array('force_canonical'=>true)
+                );
             }
         }
 

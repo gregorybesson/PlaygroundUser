@@ -20,7 +20,7 @@ class LoginControllerTest extends AbstractHttpControllerTestCase
 
     public function testLoginActionNotAllowed()
     {
-    	$this->assertTrue(true);
+        $this->assertTrue(true);
     }
 
     // Add BjyAuthorize before activating this test
