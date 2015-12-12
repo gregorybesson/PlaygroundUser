@@ -673,5 +673,13 @@ return array(
         ),
         'new_email_subject_line' => 'your new password',
         //'create_user_auto_password' => true
+        'admin' => array(
+	        'route_login' => 'admin',
+	        'resource' => 'core',
+	        'privilege'   => 'dashboard',
+	        'controller' => 'PlaygroundDesign\Controller\Dashboard',
+	        'action' => 'index',
+	        'route_login_fail' => 'admin'
+	    )
     )
 );
