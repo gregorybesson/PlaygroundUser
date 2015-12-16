@@ -323,6 +323,7 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
     public function register(array $data, $formClass = false)
     {
         $zfcUserOptions = $this->getServiceManager()->get('zfcuser_module_options');
+        $entityManager = $this->getServiceManager()->get('doctrine.entitymanager.orm_default');
         $class = $zfcUserOptions->getUserEntityClass();
         $user  = new $class;
 
@@ -339,10 +340,17 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
             $data['dob'] = $tmpDate->format('Y-m-d');
         }
 
+        if ($zfcUserOptions->getEnableUsername()) {
+
+            if (!isset($data['username']) || $data['username'] == '') {
+                if (isset($data['firstname']) && isset($data['lastname'])) {
+                    $data['username'] = ucfirst($data['firstname']) . " " . substr(ucfirst($data['lastname']), 0, 1);
+                }
+            }
+        }
+
         $form->bind($user);
         $form->setData($data);
-        // Fetch any valid object manager from the Service manager (here, an entity manager)
-        $entityManager = $this->getServiceManager()->get('doctrine.entitymanager.orm_default');
 
         // Now get the input filter of the form, and add the validator to the email input
         $emailInput = $form->getInputFilter()->get('email');
@@ -355,6 +363,19 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         ));
 
         $emailInput->getValidatorChain()->addValidator($noObjectExistsValidator);
+
+        if ($zfcUserOptions->getEnableUsername() && $this->getOptions()->getUsernameUnique()){
+
+            $usernameInput = $form->getInputFilter()->get('username');
+            // This username is already associated with another user
+            $noObjectExistsValidator = new NoObjectExistsValidator(array(
+                'object_repository' => $entityManager->getRepository($class),
+                'fields'            => 'username',
+                'messages'          => array('objectFound' => 'This username already exists !')
+            ));
+
+            $usernameInput->getValidatorChain()->addValidator($noObjectExistsValidator);
+        }
 
         $filter = $user->getInputFilter();
         $filter->remove('password');
@@ -383,13 +404,7 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         }
 
         if ($zfcUserOptions->getEnableUsername()) {
-            if (!isset($data['username']) || $data['username'] == '') {
-                if (isset($data['firstname']) && isset($data['lastname'])) {
-                    $user->setUsername(ucfirst($data['firstname']) . " " . substr(ucfirst($data['lastname']), 0, 1));
-                }
-            } else {
-                $user->setUsername($data['username']);
-            }
+            $user->setUsername($data['username']);
         }
 
         if ($zfcUserOptions->getEnableDisplayName()) {

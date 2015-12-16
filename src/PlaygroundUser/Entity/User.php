@@ -842,6 +842,12 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
 				),*/
             )));
 
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'username',
+                'required' => false,
+                'allowEmpty' => true,
+            )));
+
             // US post code (also match french one)
             $regexUs = '\d{5}-\d{4}|\d{5}';
             // canadian post code
