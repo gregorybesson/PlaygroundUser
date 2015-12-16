@@ -10,7 +10,8 @@ use Zend\Math\Rand;
 
 class RememberMe extends EventProvider implements ServiceManagerAwareInterface
 {
-    protected $mapper, $options;
+    protected $mapper;
+    protected $options;
 
     protected $serviceManager;
 

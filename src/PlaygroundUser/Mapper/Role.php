@@ -27,13 +27,11 @@ class Role extends AbstractDbMapper
 
     public function findByRoleId($role)
     {
-
         return $this->getRepository()->findOneBy(array('roleId' => $role));
     }
 
     public function findById($id)
     {
-
         return $this->getRepository()->find($id);
     }
 

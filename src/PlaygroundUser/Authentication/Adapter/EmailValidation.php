@@ -18,7 +18,6 @@ class EmailValidation extends AbstractAdapter implements ServiceManagerAwareInte
 
     public function authenticate(AuthEvent $e)
     {
-
         if ($this->isSatisfied()) {
             $storage = $this->getStorage()->read();
             $e->setIdentity($storage['identity'])
@@ -61,7 +60,6 @@ class EmailValidation extends AbstractAdapter implements ServiceManagerAwareInte
         $e->setCode(AuthenticationResult::SUCCESS)
         ->setMessages(array('Authentication successful.'))
         ->stopPropagation();
-
     }
 
     /**

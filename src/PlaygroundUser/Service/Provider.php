@@ -2,7 +2,6 @@
 namespace PlaygroundUser\Service;
 
 use PlaygroundUser\Mapper\UserProvider as userProviderMapper;
-
 use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\EventManagerAwareInterface;
 use Zend\EventManager\EventManager;

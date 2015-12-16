@@ -20,7 +20,7 @@ class User extends Register
 
     protected $serviceManager;
 
-    public function __construct($name = null, UserCreateOptionsInterface $createOptions, RegistrationOptionsInterface $registerOptions, Translator $translator, $serviceManager)
+    public function __construct($name, UserCreateOptionsInterface $createOptions, RegistrationOptionsInterface $registerOptions, Translator $translator, $serviceManager)
     {
         $this->setCreateOptions($createOptions);
         $this->setServiceManager($serviceManager);
@@ -273,7 +273,7 @@ class User extends Register
 
     public function getCountries()
     {
-        return array (
+        return array(
                 'FR' => 'France',
           'AF' => 'Afghanistan',
           'ZA' => 'South Africa',

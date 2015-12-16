@@ -9,7 +9,6 @@ class AuthenticationAdapterChainFactory implements FactoryInterface
 {
     public function createService(ServiceLocatorInterface $services)
     {
-
         $factory = new AdapterChainServiceFactory();
         $chain = $factory->createService($services);
         $adapter = $services->get('playgrounduser_authentication_hybridauth');

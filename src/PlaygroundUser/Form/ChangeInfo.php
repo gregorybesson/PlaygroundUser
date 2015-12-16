@@ -15,7 +15,7 @@ class ChangeInfo extends Register
 
     protected $serviceManager;
 
-    public function __construct($name = null, UserCreateOptionsInterface $createOptions, Translator $translator)
+    public function __construct($name, UserCreateOptionsInterface $createOptions, Translator $translator)
     {
         $this->setCreateOptions($createOptions);
         parent::__construct($name, $createOptions);
@@ -220,7 +220,7 @@ class ChangeInfo extends Register
     //TODO : factoriser + solution i18n
     public function getCountries()
     {
-        return array (
+        return array(
                 'FR' => 'France',
           'AF' => 'Afghanistan',
           'ZA' => 'South Africa',

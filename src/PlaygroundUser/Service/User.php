@@ -3,7 +3,6 @@
 namespace PlaygroundUser\Service;
 
 use PlaygroundUser\Entity\UserProvider;
-
 use Zend\Form\Form;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
 use Zend\ServiceManager\ServiceManager;
@@ -341,7 +340,6 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         }
 
         if ($zfcUserOptions->getEnableUsername()) {
-
             if (!isset($data['username']) || $data['username'] == '') {
                 if (isset($data['firstname']) && isset($data['lastname'])) {
                     $data['username'] = ucfirst($data['firstname']) . " " . substr(ucfirst($data['lastname']), 0, 1);
@@ -364,8 +362,7 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
 
         $emailInput->getValidatorChain()->addValidator($noObjectExistsValidator);
 
-        if ($zfcUserOptions->getEnableUsername() && $this->getOptions()->getUsernameUnique()){
-
+        if ($zfcUserOptions->getEnableUsername() && $this->getOptions()->getUsernameUnique()) {
             $usernameInput = $form->getInputFilter()->get('username');
             // This username is already associated with another user
             $noObjectExistsValidator = new NoObjectExistsValidator(array(
@@ -434,7 +431,7 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
                 }
             }
         }
-		*/
+        */
 
         $roleMapper  = $this->getRoleMapper();
         $defaultRegisterRole = $zfcUserOptions->getDefaultRegisterRole();
@@ -452,7 +449,6 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
                 ->setUser($user);
 
             $this->getProviderService()->getUserProviderMapper()->insert($userProvider);
-
         }
         //elseif ($this->getOptions()->getEmailVerification()) {
         if ($this->getOptions()->getEmailVerification()) {
@@ -518,7 +514,6 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         $this->getUserMapper()->update($currentUser);
 
         return true;
-
     }
 
     public function sendNewEmailMessage($to, $password)
@@ -624,7 +619,6 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         }
 
         return false;
-
     }
 
     /**
@@ -775,9 +769,9 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
             LEFT JOIN u.roles r
             WHERE ' . $roleSearch .
                 $filterSearch .
-                (in_array($order, array('ASC','DESC'))?' ORDER BY u.created_at '.$order:'').'
+                (in_array($order, array('ASC', 'DESC'))?' ORDER BY u.created_at '.$order:'').'
         ');
-        return $query;
+                return $query;
     }
 
     public function getUsersByRole($role = 1, $order = 'DESC', $search = '')

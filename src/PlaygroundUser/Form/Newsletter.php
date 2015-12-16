@@ -18,7 +18,7 @@ class Newsletter extends ProvidesEventsForm
 
     protected $serviceManager;
 
-    public function __construct($name = null, RegistrationOptionsInterface $registerOptions, Translator $translator)
+    public function __construct($name, RegistrationOptionsInterface $registerOptions, Translator $translator)
     {
         parent::__construct($name);
 

@@ -75,7 +75,6 @@ class UserController extends ZfcUserController
      */
     public function registerAction()
     {
-
         if ($this->zfcUserAuthentication()->hasIdentity()) {
             return $this->redirect()->toUrl($this->url()->fromRoute($this->getOptions()->getLoginRedirectRoute()));
         }
@@ -186,7 +185,6 @@ class UserController extends ZfcUserController
             $vm->setTemplate('playground-user/register/registermail');
 
             return $vm;
-
         } elseif ($service->getOptions()->getLoginAfterRegistration()) {
             $identityFields = $service->getOptions()->getAuthIdentityFields();
             if (in_array('email', $identityFields)) {
@@ -318,7 +316,6 @@ class UserController extends ZfcUserController
 
     public function providerLoginAction()
     {
-
         $provider = $this->getEvent()->getRouteMatch()->getParam('provider');
         if (!in_array($provider, $this->getUserService()->getOptions()->getEnabledProviders())) {
             return $this->notFoundAction();
@@ -373,7 +370,6 @@ class UserController extends ZfcUserController
      */
     public function authenticateAction()
     {
-
         if ($this->zfcUserAuthentication()->getAuthService()->hasIdentity()) {
             return $this->redirect()->toRoute($this->getOptions()->getLoginRedirectRoute());
         }
@@ -600,7 +596,7 @@ class UserController extends ZfcUserController
                 'statusInfo' => $statusInfo,
             )
         );
-            $prg = $this->prg($redirectUrl, true);
+        $prg = $this->prg($redirectUrl, true);
 //         $prg = $this->prg('frontend/zfcuser/profile');
 
         if ($prg instanceof Response) {
@@ -632,9 +628,9 @@ class UserController extends ZfcUserController
                 if (isset($messages['newCredentialVerify']) && isset($messages['newCredentialVerify']['isEmpty'])) {
                     $messages['newCredentialVerify']['isEmpty'] = 'Confirmation du mot de passe ';
                 }
-                    $formPassword->setMessages($messages);
+                $formPassword->setMessages($messages);
 
-                    return array(
+                return array(
                     'statusPassword' => false,
                     'changePasswordForm' => $formPassword,
                     'statusEmail' => null,
@@ -661,17 +657,17 @@ class UserController extends ZfcUserController
                 );
             }
 
-                $this->flashMessenger()
+            $this->flashMessenger()
                 ->setNamespace('change-password')
                 ->addMessage(true);
 
-                return $this->redirect()->toUrl(
-                    $this->url()->fromRoute(
-                        'frontend/zfcuser/profile',
-                        array(),
-                        array('force_canonical' => true)
-                    )
-                );
+            return $this->redirect()->toUrl(
+                $this->url()->fromRoute(
+                    'frontend/zfcuser/profile',
+                    array(),
+                    array('force_canonical' => true)
+                )
+            );
         } elseif (isset($prg['newIdentity'])) {
             $formEmail->setData($prg);
 
@@ -737,7 +733,7 @@ class UserController extends ZfcUserController
             );
         }
 
-            return array(
+        return array(
             'statusPassword' => null,
             'changePasswordForm' => $formPassword,
             'statusEmail' => null,
@@ -755,7 +751,6 @@ class UserController extends ZfcUserController
      */
     public function addressAction()
     {
-
         if (! $this->zfcUserAuthentication()->hasIdentity()) {
             return null;
         }
@@ -848,7 +843,6 @@ class UserController extends ZfcUserController
 
     public function prizeCategoryUserAction()
     {
-
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost()->toArray();
             $service = $this->getServiceLocator()->get('playgroundgame_prizecategoryuser_service');

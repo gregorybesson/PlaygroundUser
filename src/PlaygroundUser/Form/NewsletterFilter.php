@@ -9,7 +9,6 @@ class NewsletterFilter extends InputFilter
 {
     public function __construct(AuthenticationOptionsInterface $options)
     {
-
         $this->add(array(
             'name'       => 'optin',
             'required'   => false,

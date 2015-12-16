@@ -15,7 +15,7 @@ class BlockAccount extends ProvidesEventsForm
      */
     protected $authOptions;
 
-    public function __construct($name = null, AuthenticationOptionsInterface $options, Translator $translator)
+    public function __construct($name, AuthenticationOptionsInterface $options, Translator $translator)
     {
         $this->setAuthenticationOptions($options);
         parent::__construct($name);

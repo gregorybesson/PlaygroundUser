@@ -27,7 +27,6 @@ class RememberMe extends AbstractDbMapper
 
     public function findById($id)
     {
-
         return $this->getRepository()->find($id);
     }
 
@@ -38,7 +37,6 @@ class RememberMe extends AbstractDbMapper
 
     public function findByIdSerie($userId, $serieId)
     {
-        
         return $this->getRepository()->findOneBy(array('userId' => $userId, 'sid' => $serieId));
     }
 
@@ -53,7 +51,6 @@ class RememberMe extends AbstractDbMapper
 
     public function removeSerie($userId, $serieId)
     {
-
         $elements = $this->findBy(array('userId' => $userId, 'sid' => $serieId));
         foreach ($elements as $element) {
             $this->em->remove($element);

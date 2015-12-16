@@ -110,7 +110,6 @@ class ForgotController extends AbstractActionController
                 'statusMail' => true,
                 'email' => $password
             )));
-
         } else {
             $response->setContent(\Zend\Json\Json::encode(array(
                 'statusMail' => false,
