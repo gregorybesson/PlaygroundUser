@@ -24,7 +24,7 @@ class Role extends ProvidesEventsForm
      */
     protected $userRolesMapper;
 
-    public function __construct($name = null, RegistrationOptionsInterface $registerOptions, Translator $translator, $serviceManager)
+    public function __construct($name, RegistrationOptionsInterface $registerOptions, Translator $translator, $serviceManager)
     {
         $this->setServiceManager($serviceManager);
         parent::__construct($name);
@@ -83,7 +83,6 @@ class Role extends ProvidesEventsForm
         $this->add($submitElement, array(
                 'priority' => - 100
         ));
-
     }
 
     public function getUserRolesMapper()

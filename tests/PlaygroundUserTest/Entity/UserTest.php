@@ -5,7 +5,7 @@ namespace PlaygroundUserTest\Entity;
 use PlaygroundUserTest\Bootstrap;
 use PlaygroundUser\Entity\User;
 
-class userTest extends \PHPUnit_Framework_TestCase
+class UserTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Service Manager

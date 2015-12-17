@@ -91,6 +91,12 @@ class ModuleOptions extends BaseModuleOptions implements
      */
     protected $createUserAutoPassword = true;
 
+    /**
+     * If the username is set, has it to be unique ?
+     * @var bool
+     */
+    protected $usernameUnique = false;
+
     protected $userMapper = 'PlaygroundUser\Mapper\User';
 
     /**
@@ -261,6 +267,16 @@ class ModuleOptions extends BaseModuleOptions implements
     public function getUserMapper()
     {
         return $this->userMapper;
+    }
+
+    public function setUsernameUnique($usernameUnique)
+    {
+        $this->usernameUnique = $usernameUnique;
+    }
+
+    public function getUsernameUnique()
+    {
+        return $this->usernameUnique;
     }
 
     public function setUserListElements(array $listElements)

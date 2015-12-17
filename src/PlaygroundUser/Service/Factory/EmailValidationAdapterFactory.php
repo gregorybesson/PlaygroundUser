@@ -10,7 +10,6 @@ class EmailValidationAdapterFactory implements FactoryInterface
 {
     public function createService(ServiceLocatorInterface $services)
     {
-
         $adapter = new EmailValidationAdapter();
 
         return $adapter;

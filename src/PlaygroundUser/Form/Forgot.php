@@ -14,7 +14,7 @@ class Forgot extends ProvidesEventsForm
      */
     protected $forgotOptions;
 
-    public function __construct($name = null, ForgotOptionsInterface $options, Translator $translator)
+    public function __construct($name, ForgotOptionsInterface $options, Translator $translator)
     {
         $this->setForgotOptions($options);
         parent::__construct($name);

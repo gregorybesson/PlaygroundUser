@@ -3,18 +3,12 @@
 namespace PlaygroundUser\Service;
 
 use ZfcUser\Options\PasswordOptionsInterface;
-
 use PlaygroundUser\Options\ForgotOptionsInterface;
-
 use Zend\ServiceManager\ServiceManager;
-
 use Zend\ServiceManager\ServiceManagerAwareInterface;
-
 use PlaygroundUser\Mapper\UserInterface as UserMapperInterface;
 use PlaygroundUser\Mapper\Password as PasswordMapper;
-
 use Zend\Crypt\Password\Bcrypt;
-
 use ZfcBase\EventManager\EventProvider;
 
 class Password extends EventProvider implements ServiceManagerAwareInterface

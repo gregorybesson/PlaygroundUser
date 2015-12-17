@@ -63,7 +63,6 @@ class LoginController extends ZfcUserController
         }
 
         return $this->redirect()->toUrl($this->url()->fromRoute('admin'));
-
     }
 
     public function getOptions()

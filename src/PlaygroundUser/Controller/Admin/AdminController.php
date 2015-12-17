@@ -11,7 +11,9 @@ use PlaygroundCore\ORM\Pagination\LargeTablePaginator as ORMPaginator;
 
 class AdminController extends AbstractActionController
 {
-    protected $options, $userMapper, $adminUserService;
+    protected $options;
+    protected $userMapper;
+    protected $adminUserService;
 
     public function listAction()
     {
@@ -67,8 +69,7 @@ class AdminController extends AbstractActionController
             }
         }
 
-        return $viewModel->setVariables(array('form' => $form,'userId' => 0));
-
+        return $viewModel->setVariables(array('form' => $form, 'userId' => 0));
     }
 
     public function editAction()
@@ -205,8 +206,7 @@ class AdminController extends AbstractActionController
             }
         }
 
-        return $viewModel->setVariables(array('form' => $form,'roleId' => 0));
-
+        return $viewModel->setVariables(array('form' => $form, 'roleId' => 0));
     }
 
     public function setOptions(ModuleOptions $options)

@@ -38,12 +38,10 @@ class Cron extends EventProvider implements ServiceManagerAwareInterface
         $options = $sm->get('playgrounduser_module_options');
 
         $userService->disablePendingAccounts($interval);
-
     }
 
     public function disablePendingAccounts($interval = 0)
     {
-
         $period = new \DateTime('now');
         $interval = 'P'.$interval.'D';
         $period->sub(new \DateInterval($interval));

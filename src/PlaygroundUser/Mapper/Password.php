@@ -3,7 +3,6 @@ namespace PlaygroundUser\Mapper;
 
 use ZfcBase\Mapper\AbstractDbMapper;
 use PlaygroundUser\Entity\Password as Model;
-
 use Zend\Stdlib\Hydrator\HydratorInterface;
 use Zend\Db\Sql\Sql;
 

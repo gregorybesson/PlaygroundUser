@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping\PrePersist;
 use Doctrine\ORM\Mapping\PreUpdate;
-
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilterAwareInterface;
@@ -835,11 +834,17 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
                 'required' => false,
                 'allowEmpty' => true,
                 /*'validators' => array(
-					array(
-						'name' => 'Date',
-						'format' => 'd/m/Y',
-					),
-				),*/
+                    array(
+                        'name' => 'Date',
+                        'format' => 'd/m/Y',
+                    ),
+                ),*/
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'username',
+                'required' => false,
+                'allowEmpty' => true,
             )));
 
             // US post code (also match french one)

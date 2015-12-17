@@ -33,7 +33,6 @@ class UserControllerTest extends AbstractHttpControllerTestCase
     {
         $this->dispatch('/mon-compte/login');
         $this->assertResponseStatusCode(302);
-
         $this->assertModuleName('playgrounduser');
         $this->assertControllerName('playgrounduser_user');
         $this->assertControllerClass('UserController');

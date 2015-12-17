@@ -13,9 +13,8 @@ class Contact extends ProvidesEventsForm
 
     protected $serviceManager;
 
-    public function __construct($name = null, ServiceManager $sm, Translator $translator)
+    public function __construct($name, ServiceManager $sm, Translator $translator)
     {
-
         parent::__construct($name);
         $this->setServiceManager($sm);
 
@@ -96,7 +95,6 @@ class Contact extends ProvidesEventsForm
         $this->add($submitElement, array(
             //'priority' => - 100
         ));
-
     }
 
      /**

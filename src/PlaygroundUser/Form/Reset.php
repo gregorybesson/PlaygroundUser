@@ -15,7 +15,7 @@ class Reset extends ProvidesEventsForm
      */
     protected $forgotOptions;
 
-    public function __construct($name = null, ForgotOptionsInterface $forgotOptions, Translator $translator)
+    public function __construct($name, ForgotOptionsInterface $forgotOptions, Translator $translator)
     {
         $this->setForgotOptions($forgotOptions);
         parent::__construct($name);

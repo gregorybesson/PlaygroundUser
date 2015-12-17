@@ -19,7 +19,10 @@ class ResetFilter extends InputFilter
                     'options' => array(
                         'min' => 6,
                         'messages' => array(
-                            \Zend\Validator\StringLength::TOO_SHORT => $translator->translate('Your password contains less than 6 characters', 'playgrounduser'),
+                            \Zend\Validator\StringLength::TOO_SHORT => $translator->translate(
+                                'Your password contains less than 6 characters',
+                                'playgrounduser'
+                            ),
                         ),
                     ),
                 ),
@@ -27,7 +30,10 @@ class ResetFilter extends InputFilter
                     'name' => 'NotEmpty',
                     'options' => array(
                         'messages' => array(
-                            \Zend\Validator\NotEmpty::IS_EMPTY => $translator->translate('Enter your new password', 'playgrounduser'),
+                            \Zend\Validator\NotEmpty::IS_EMPTY => $translator->translate(
+                                'Enter your new password',
+                                'playgrounduser'
+                            ),
                         ),
                     ),
                 ),
@@ -46,7 +52,10 @@ class ResetFilter extends InputFilter
                     'options' => array(
                         'min' => 6,
                         'messages' => array(
-                            \Zend\Validator\StringLength::TOO_SHORT => $translator->translate('Your password contains less than 6 characters', 'playgrounduser'),
+                            \Zend\Validator\StringLength::TOO_SHORT => $translator->translate(
+                                'Your password contains less than 6 characters',
+                                'playgrounduser'
+                            ),
                         ),
                     ),
                 ),
@@ -54,7 +63,10 @@ class ResetFilter extends InputFilter
                     'name' => 'NotEmpty',
                     'options' => array(
                         'messages' => array(
-                            \Zend\Validator\NotEmpty::IS_EMPTY => $translator->translate('Confirm your password', 'playgrounduser'),
+                            \Zend\Validator\NotEmpty::IS_EMPTY => $translator->translate(
+                                'Confirm your password',
+                                'playgrounduser'
+                            ),
                         ),
                     ),
                 ),
@@ -63,7 +75,10 @@ class ResetFilter extends InputFilter
                     'options' => array(
                         'token' => 'newCredential',
                         'messages' => array(
-                            \Zend\Validator\Identical::NOT_SAME => $translator->translate('Your passwords are different', 'playgrounduser'),
+                            \Zend\Validator\Identical::NOT_SAME => $translator->translate(
+                                'Your passwords are different',
+                                'playgrounduser'
+                            ),
                         ),
                     )
                 ),
