@@ -172,6 +172,15 @@ class Module
         );
     }
 
+    public function getControllerConfig()
+    {
+        return array(
+            'factories' => array(
+                'playgrounduser_user' => 'PlaygroundUser\Service\Factory\UserControllerFactory',
+            ),
+        );
+    }
+
     public function getServiceConfig()
     {
         return array(

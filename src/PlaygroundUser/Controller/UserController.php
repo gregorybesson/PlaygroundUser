@@ -37,6 +37,14 @@ class UserController extends ZfcUserController
     protected $hybridAuth;
 
     /**
+     * @param callable $redirectCallback
+     */
+    public function __construct($redirectCallback)
+    {
+        parent::__construct($redirectCallback);
+    }
+
+    /**
      * Login form
      */
     public function loginAction()
