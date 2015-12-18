@@ -37,7 +37,7 @@ return array(
     
     'bjyauthorize' => array(
         'default_role' => 'guest',
-        'identity_provider' => 'BjyAuthorize\Provider\Identity\AuthenticationDoctrineEntity',
+        'identity_provider' => 'BjyAuthorize\Provider\Identity\AuthenticationIdentityProvider',
         'role_providers' => array(
             'BjyAuthorize\Provider\Role\Config' => array(
                 'guest' => array(),
@@ -46,7 +46,8 @@ return array(
                 ))
             ), 
     
-            'BjyAuthorize\Provider\Role\DoctrineEntity' => array(
+            'BjyAuthorize\Provider\Role\ObjectRepositoryProvider' => array(
+                'object_manager'    => 'doctrine.entitymanager.orm_default',
                 'role_entity_class' => 'PlaygroundUser\Entity\Role',
             ),
         ),
@@ -135,7 +136,7 @@ return array(
 
     'controllers' => array(
         'invokables' => array(
-        	'playgrounduseradmin_login'                  => 'PlaygroundUser\Controller\Admin\LoginController',
+//        	'playgrounduseradmin_login'                  => 'PlaygroundUser\Controller\Admin\LoginController',
             'playgrounduseradmin'                        => 'PlaygroundUser\Controller\Admin\AdminController',
 //            'playgrounduser_user'						 => 'PlaygroundUser\Controller\UserController',
             'playgrounduser_forgot'                      => 'PlaygroundUser\Controller\ForgotController',
