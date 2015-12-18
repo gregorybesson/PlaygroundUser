@@ -176,6 +176,7 @@ class Module
     {
         return array(
             'factories' => array(
+                'playgrounduseradmin_login' => 'PlaygroundUser\Service\Factory\AdminUserControllerFactory',
                 'playgrounduser_user' => 'PlaygroundUser\Service\Factory\UserControllerFactory',
             ),
         );

@@ -11,6 +11,15 @@ use Zend\View\Model\ViewModel;
 class LoginController extends ZfcUserController
 {
     protected $options = null;
+
+    /**
+     * @param callable $redirectCallback
+     */
+    public function __construct($redirectCallback)
+    {
+        parent::__construct($redirectCallback);
+    }
+    
     /**
      * Login form
      */
