@@ -7,4 +7,4 @@ CREATE TABLE user_remember_me (
 
 ALTER TABLE user_remember_me
   ADD CONSTRAINT user_remember_me FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE CASCADE ON UPDATE CASCADE;
-  
+

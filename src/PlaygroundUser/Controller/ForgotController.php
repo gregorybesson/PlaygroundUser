@@ -64,15 +64,11 @@ class ForgotController extends AbstractActionController
     {
         $service = $this->getPasswordService();
         $service->cleanExpiredForgotRequests();
-
-        $request = $this->getRequest();
-        $form    = $this->getForgotForm();
+        $form = $this->getForgotForm();
 
         if ($this->getRequest()->isPost()) {
             $form->setData($this->getRequest()->getPost());
             if ($form->isValid()) {
-                $userService = $this->getUserService();
-
                 $email = $form->getData();
                 $email = $email['email'];
 
@@ -98,7 +94,6 @@ class ForgotController extends AbstractActionController
 
         $email = ($this->params()->fromPost('email'))?$this->params()->fromPost('email'):null;
         $user = $this->getUserService()->getUserMapper()->findByEmail($email);
-        $options = $this->getServiceLocator()->get('playgrounduser_module_options');
 
         if ($this->getRequest()->isPost() && $user != null) {
             $password = strtolower(substr(sha1(uniqid('gb', true).'####'.time()), 0, 7));
@@ -147,8 +142,6 @@ class ForgotController extends AbstractActionController
     {
         $service = $this->getPasswordService();
         $service->cleanExpiredForgotRequests();
-
-        $request = $this->getRequest();
         $form    = $this->getResetForm();
 
         $userId    = $this->params()->fromRoute('userId', null);
