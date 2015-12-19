@@ -101,7 +101,7 @@ class Cron extends EventProvider implements ServiceManagerAwareInterface
      * @param  UserMapperInterface $userMapper
      * @return User
      */
-    public function setUserMapper(UserMapperInterface $userMapper)
+    public function setUserMapper(\PlaygroundUser\Mapper\User $userMapper)
     {
         $this->userMapper = $userMapper;
 

@@ -64,7 +64,7 @@ class UserProvider extends AbstractDbMapper
                 // already linked
                 return;
             }
-            throw new Exception\RuntimeException('This ' . ucfirst($provider) . ' profile is already linked to another user.');
+            throw new \RuntimeException('This ' . ucfirst($provider) . ' profile is already linked to another user.');
         }
 
         $userProvider = new UserProviderEntity;

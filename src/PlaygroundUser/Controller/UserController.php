@@ -1197,7 +1197,7 @@ class UserController extends ZfcUserController
         return $this->rewardService;
     }
 
-    public function setRewardService(GameService $rewardService)
+    public function setRewardService($rewardService)
     {
         $this->rewardService = $rewardService;
 

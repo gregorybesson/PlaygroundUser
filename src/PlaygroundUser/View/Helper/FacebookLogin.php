@@ -71,7 +71,7 @@ class FacebookLogin extends AbstractHelper
         // We need to be sure $container->appendScript() can be called
         $container = $this->view->plugin($this->getContainer());
         if (!$container instanceof HeadScript) {
-            throw new RuntimeException(sprintf(
+            throw new \RuntimeException(sprintf(
                 'Container %s does not extend HeadScript view helper',
                 $this->getContainer()
             ));
