@@ -65,7 +65,6 @@ class ModuleOptions extends BaseModuleOptions implements
     protected $cookieExpire = 2592000;
 
     /**
-     * @TODO: change "things" below
      * Array of "things" to show in the user list
      */
     protected $userListElements = array('Id' => 'id', 'Email address' => 'email');

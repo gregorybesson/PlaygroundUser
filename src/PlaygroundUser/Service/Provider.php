@@ -167,7 +167,7 @@ class Provider implements ServiceManagerAwareInterface, EventManagerAwareInterfa
                         $infoMe = $adapter->getUserProfile();
                     }
                 } else {
-                    $authEvent->setCode(Zend\Authentication\Result::FAILURE)
+                    $authEvent->setCode(\Zend\Authentication\Result::FAILURE)
                     ->setMessages(array('Invalid provider'));
                     $this->setSatisfied(false);
 

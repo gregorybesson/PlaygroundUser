@@ -35,7 +35,7 @@ class Login extends ProvidesEventsForm
 
         $emailElement = $this->get('identity');
         $label = $emailElement->getLabel('label');
-        // @TODO: make translation-friendly
+
         foreach ($this->getAuthenticationOptions()->getAuthIdentityFields() as $mode) {
             $label = (!empty($label) ? $label . ' or ' : '') . ucfirst($mode);
         }
@@ -54,7 +54,6 @@ class Login extends ProvidesEventsForm
         ));
 
         //remember_me
-        // TODO : le rendre optionnel
         $this->add(array(
              'type' => 'Zend\Form\Element\Checkbox',
              'name' => 'remember_me',
@@ -66,7 +65,6 @@ class Login extends ProvidesEventsForm
              )
         ));
 
-        // @todo: Fix this
         // 1) getValidator() is a protected method
         // 2) i don't believe the login form is actually being validated by the login action
         // (but keep in mind we don't want to show invalid username vs invalid password or

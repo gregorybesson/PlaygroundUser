@@ -217,7 +217,6 @@ class ChangeInfo extends Register
         return $this->createOptions;
     }
 
-    //TODO : factoriser + solution i18n
     public function getCountries()
     {
         return array(

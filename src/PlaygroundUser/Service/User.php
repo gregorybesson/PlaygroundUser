@@ -51,7 +51,6 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
     protected $options;
 
     /**
-     * TODO : Refactor so that mandatory fields stay in the entity, and
      * functional mandatory fields go in the form validator part
      * @param  array           $data
      * @return boolean|unknown
@@ -685,7 +684,6 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         $form->bind($user);
         $form->setData($data);
 
-        //TODO : Check the form
         /*if (!$form->isValid()) {
             return false;
         }*/

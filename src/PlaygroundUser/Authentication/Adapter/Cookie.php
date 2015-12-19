@@ -66,7 +66,7 @@ class Cookie extends AbstractAdapter implements ServiceManagerAwareInterface
 
         if ($rememberMe->getToken() !== $cookie[2]) {
             // H4x0r
-            // @TODO: Inform user of theft, change password?
+            // Inform user of theft, change password?
             $this->getRememberMeMapper()->removeAll($cookie[0]);
             $this->getRememberMeService()->removeCookie();
             $this->setSatisfied(false);

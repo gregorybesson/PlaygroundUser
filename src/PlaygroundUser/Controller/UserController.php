@@ -186,8 +186,6 @@ class UserController extends ZfcUserController
             );
         }
 
-        //if (!$socialnetwork) {
-
         if ($service->getOptions()->getEmailVerification()) {
             $vm = new ViewModel(array('userEmail' => $user->getEmail()));
             $vm->setTemplate('playground-user/register/registermail');
@@ -207,9 +205,7 @@ class UserController extends ZfcUserController
                 'action' => 'authenticate'
             ));
         }
-        //}
 
-        // TODO: Add the redirect parameter here...
         $redirect = $this->url()->fromRoute('frontend/zfcuser/login') . ($socialnetwork ? '/' . $socialnetwork : ''). ($redirect ? '?redirect=' . $redirect : '');
 
         return $this->redirect()->toUrl($redirect);
@@ -423,7 +419,6 @@ class UserController extends ZfcUserController
     /**
      * user profile
      * Management of 4 differents forms...
-     * TODO : Refactor it ! this is uuuuuugly !
      */
     public function profileAction()
     {
@@ -1168,7 +1163,6 @@ class UserController extends ZfcUserController
         return $this->getServiceLocator()->get('viewhelpermanager')->get($helperName);
     }
 
-    // TODO : remove asap this adherence
     public function getCoreOptions()
     {
         if (!$this->coreOptions) {
@@ -1185,9 +1179,6 @@ class UserController extends ZfcUserController
         return $this;
     }
 
-    /**
-     * TODO remove this F&@king adherence with PlaygroundReward...
-     */
     public function getRewardService()
     {
         if (!$this->rewardService) {

@@ -31,13 +31,13 @@ class ForgotController extends AbstractActionController
     protected $resetForm;
 
     /**
-     * @todo Make this dynamic / translation-friendly
+     * 
      * @var string
      */
     protected $message = 'An e-mail with further instructions has been sent to you.';
 
     /**
-     * @todo Make this dynamic / translation-friendly
+     * 
      * @var string
      */
     protected $failedMessage = 'The e-mail address is not valid.';
