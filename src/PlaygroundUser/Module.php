@@ -50,7 +50,7 @@ class Module
                 $adapter->prepareForAuthentication($e->getRequest());
                 $authService = $e->getApplication()->getServiceManager()->get('zfcuser_auth_service');
 
-                $auth = $authService->authenticate($adapter);
+                $authService->authenticate($adapter);
             }
         }
         $sm = $e->getApplication()->getServiceManager();
@@ -334,7 +334,6 @@ class Module
 
                 'playgrounduseradmin_role_form' => function ($sm) {
                     $translator = $sm->get('translator');
-                    $zfcUserOptions = $sm->get('zfcuser_module_options');
                     $playgroundUserOptions = $sm->get('playgrounduser_module_options');
                     $form = new Form\Admin\Role(null, $playgroundUserOptions, $translator, $sm);
 

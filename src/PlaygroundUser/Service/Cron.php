@@ -35,7 +35,6 @@ class Cron extends EventProvider implements ServiceManagerAwareInterface
         $sm->get('Application')->bootstrap();
 
         $userService = $sm->get('playgrounduser_cron_service');
-        $options = $sm->get('playgrounduser_module_options');
 
         $userService->disablePendingAccounts($interval);
     }

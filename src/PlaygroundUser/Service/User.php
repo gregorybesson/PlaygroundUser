@@ -537,8 +537,6 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
     {
         $this->getEventManager()->trigger(__FUNCTION__.'.pre', $this, array('user' => $user, 'data' => $data));
 
-        $zfcUserOptions = $this->getServiceManager()->get('zfcuser_module_options');
-
         $form  = $this->getServiceManager()->get('playgrounduser_change_info_form');
         $form->get('dob')->setOptions(array('format' => 'Y-m-d'));
         $form->bind($user);
@@ -629,8 +627,6 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
     public function updateAddress(array $data, $user)
     {
         $this->getEventManager()->trigger('updateInfo.pre', $this, array('user' => $user, 'data' => $data));
-
-        $zfcUserOptions = $this->getServiceManager()->get('zfcuser_module_options');
 
         $form  = $this->getServiceManager()->get('playgrounduser_address_form');
         $form->bind($user);
@@ -802,7 +798,6 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
             $user = new UserEntity();
             $user->setEmail($email);
             $rand = \Zend\Math\Rand::getString(8);
-            $clearPassword = $rand;
             $bcrypt = new Bcrypt;
             $zfcUserOptions = $this->getServiceManager()->get('zfcuser_module_options');
             $bcrypt->setCost($zfcUserOptions->getPasswordCost());
