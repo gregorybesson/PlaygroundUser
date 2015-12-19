@@ -206,7 +206,7 @@ class ForgotController extends AbstractActionController
         return $this->userService;
     }
 
-    public function setUserService(UserService $userService)
+    public function setUserService(\PlaygroundUser\Service\User $userService)
     {
         $this->userService = $userService;
 
@@ -222,7 +222,7 @@ class ForgotController extends AbstractActionController
         return $this->passwordService;
     }
 
-    public function setPasswordService(PasswordService $passwordService)
+    public function setPasswordService(\PlaygroundUser\Service\Password $passwordService)
     {
         $this->passwordService = $passwordService;
 

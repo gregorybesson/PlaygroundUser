@@ -2,7 +2,6 @@
 namespace PlaygroundUser\Authentication\Adapter;
 
 use Hybrid_Auth;
-use PlaygroundUser\Authentication\Adapter\Exception;
 use PlaygroundUser\Mapper\UserProvider;
 use PlaygroundUser\Options\ModuleOptions;
 use Zend\Authentication\Result;
@@ -125,7 +124,7 @@ class HybridAuth extends AbstractAdapter implements ServiceManagerAwareInterface
             if (method_exists($this, $method)) {
                 try {
                     $localUser = $this->$method($userProfile);
-                } catch (Exception\RuntimeException $ex) {
+                } catch (\RuntimeException $ex) {
                     $authEvent->setCode($ex->getCode())
                         ->setMessages(array($ex->getMessage()))
                         ->stopPropagation();
@@ -347,7 +346,7 @@ class HybridAuth extends AbstractAdapter implements ServiceManagerAwareInterface
     protected function facebookToLocalUser($userProfile)
     {
         if (!isset($userProfile->emailVerified)) {
-            throw new Exception\RuntimeException(
+            throw new \RuntimeException(
                 'Please verify your email with Facebook before attempting login',
                 Result::FAILURE_CREDENTIAL_INVALID
             );
@@ -394,7 +393,7 @@ class HybridAuth extends AbstractAdapter implements ServiceManagerAwareInterface
     protected function foursquareToLocalUser($userProfile)
     {
         if (!isset($userProfile->emailVerified)) {
-            throw new Exception\RuntimeException(
+            throw new \RuntimeException(
                 'Please verify your email with Foursquare before attempting login',
                 Result::FAILURE_CREDENTIAL_INVALID
             );
@@ -415,7 +414,7 @@ class HybridAuth extends AbstractAdapter implements ServiceManagerAwareInterface
     protected function googleToLocalUser($userProfile)
     {
         if (!isset($userProfile->emailVerified)) {
-            throw new Exception\RuntimeException(
+            throw new \RuntimeException(
                 'Please verify your email with Google before attempting login',
                 Result::FAILURE_CREDENTIAL_INVALID
             );

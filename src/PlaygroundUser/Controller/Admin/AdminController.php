@@ -234,7 +234,7 @@ class AdminController extends AbstractActionController
         return $this->userMapper;
     }
 
-    public function setUserMapper(UserMapperInterface $userMapper)
+    public function setUserMapper(\PlaygroundUser\Mapper\User $userMapper)
     {
         $this->userMapper = $userMapper;
 
