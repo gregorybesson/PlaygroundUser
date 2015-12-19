@@ -750,28 +750,33 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
     {
         $em = $this->getServiceManager()->get('doctrine.entitymanager.orm_default');
         $order = (in_array($order, array('ASC', 'DESC')))?$order:'DESC';
-        $filterSearch = '';
-        $roleSearch = '1=1 ';
-
-        if ($search != '') {
-            $filterSearch = " AND (u.username like '%" . $search . "%' OR u.lastname like '%" . $search . "%' OR u.firstname like '%" . $search . "%' OR u.email like '%" . $search . "%')";
-        }
-
-        if ($role) {
-            $roleSearch = "r.id = " . $role->getId();
-        }
 
         // I Have to know what is the User Class used
         $zfcUserOptions = $this->getServiceManager()->get('zfcuser_module_options');
         $userClass = $zfcUserOptions->getUserEntityClass();
 
-        $query = $em->createQuery('
+        $queryString = '
             SELECT u FROM :userClass u
             LEFT JOIN u.roles r
-            WHERE ' . $roleSearch .
-                $filterSearch .
-            ' ORDER BY u.created_at :order
-        ');
+            WHERE 1=1 ';
+
+        if ($role) {
+            $queryString .= 'r.id = :roleId ';
+        }
+
+        if ($search != '') {
+            $queryString .= "AND (u.username like '%:search%' OR u.lastname like '%:search%' OR u.firstname like '%:search%' OR u.email like '%:search%')";
+        }
+
+        $queryString .= ' ORDER BY u.created_at :order';
+
+        $query = $em->createQuery($queryString);
+        if ($search != '') {
+            $query->setParameter('search', $search);
+        }
+        if ($role) {
+            $query->setParameter('roleId', $role->getId());
+        }
         $query->setParameter('order', $order);
         $query->setParameter('userClass', $userClass);
 
