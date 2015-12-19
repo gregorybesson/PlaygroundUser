@@ -51,7 +51,7 @@ class EmailVerification extends EventProvider
         $now = new \DateTime((int) $expiryTime . ' seconds ago');
         $dateNow = $now->format('Y-m-d H:i:s');
         
-        $query = $this->$em->createQuery('DELETE PlaygroundUser\Entity\EmailVerification ev WHERE ev.request_time <= :dateNow');
+        $query = $this->em->createQuery('DELETE PlaygroundUser\Entity\EmailVerification ev WHERE ev.request_time <= :dateNow');
         $query->setParameter('dateNow', $dateNow);
 
         return $query->getResult();

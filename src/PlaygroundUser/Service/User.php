@@ -749,7 +749,7 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
     public function getQueryUsersByRole($role = null, $order = null, $search = '')
     {
         $em = $this->getServiceManager()->get('doctrine.entitymanager.orm_default');
-        $order = (in_array($order, array('ASC', 'DESC'))?$order:'DESC';
+        $order = (in_array($order, array('ASC', 'DESC')))?$order:'DESC';
         $filterSearch = '';
         $roleSearch = '1=1 ';
 
