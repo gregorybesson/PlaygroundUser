@@ -92,7 +92,7 @@ class EmailValidation extends AbstractAdapter implements ServiceManagerAwareInte
         return $this->userService;
     }
 
-    public function setUserService(UserService $userService)
+    public function setUserService(\PlaygroundUser\Service\User $userService)
     {
         $this->userService = $userService;
 

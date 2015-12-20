@@ -31,13 +31,13 @@ class ForgotController extends AbstractActionController
     protected $resetForm;
 
     /**
-     * @todo Make this dynamic / translation-friendly
+     * 
      * @var string
      */
     protected $message = 'An e-mail with further instructions has been sent to you.';
 
     /**
-     * @todo Make this dynamic / translation-friendly
+     * 
      * @var string
      */
     protected $failedMessage = 'The e-mail address is not valid.';
@@ -64,15 +64,11 @@ class ForgotController extends AbstractActionController
     {
         $service = $this->getPasswordService();
         $service->cleanExpiredForgotRequests();
-
-        $request = $this->getRequest();
-        $form    = $this->getForgotForm();
+        $form = $this->getForgotForm();
 
         if ($this->getRequest()->isPost()) {
             $form->setData($this->getRequest()->getPost());
             if ($form->isValid()) {
-                $userService = $this->getUserService();
-
                 $email = $form->getData();
                 $email = $email['email'];
 
@@ -98,7 +94,6 @@ class ForgotController extends AbstractActionController
 
         $email = ($this->params()->fromPost('email'))?$this->params()->fromPost('email'):null;
         $user = $this->getUserService()->getUserMapper()->findByEmail($email);
-        $options = $this->getServiceLocator()->get('playgrounduser_module_options');
 
         if ($this->getRequest()->isPost() && $user != null) {
             $password = strtolower(substr(sha1(uniqid('gb', true).'####'.time()), 0, 7));
@@ -147,8 +142,6 @@ class ForgotController extends AbstractActionController
     {
         $service = $this->getPasswordService();
         $service->cleanExpiredForgotRequests();
-
-        $request = $this->getRequest();
         $form    = $this->getResetForm();
 
         $userId    = $this->params()->fromRoute('userId', null);
@@ -206,7 +199,7 @@ class ForgotController extends AbstractActionController
         return $this->userService;
     }
 
-    public function setUserService(UserService $userService)
+    public function setUserService(\PlaygroundUser\Service\User $userService)
     {
         $this->userService = $userService;
 
@@ -222,7 +215,7 @@ class ForgotController extends AbstractActionController
         return $this->passwordService;
     }
 
-    public function setPasswordService(PasswordService $passwordService)
+    public function setPasswordService(\PlaygroundUser\Service\Password $passwordService)
     {
         $this->passwordService = $passwordService;
 

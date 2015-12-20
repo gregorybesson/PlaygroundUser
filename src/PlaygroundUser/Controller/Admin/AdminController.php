@@ -43,7 +43,6 @@ class AdminController extends AbstractActionController
 
     public function createAction()
     {
-        $service = $this->getAdminUserService();
         $request = $this->getRequest();
         $form = $this->getServiceLocator()->get('playgrounduseradmin_register_form');
         $form->setAttribute('action', $this->url()->fromRoute('admin/playgrounduser/create', array('userId' => 0)));
@@ -187,7 +186,6 @@ class AdminController extends AbstractActionController
 
     public function createRoleAction()
     {
-        $service = $this->getAdminUserService();
         $request = $this->getRequest();
         $form = $this->getServiceLocator()->get('playgrounduseradmin_role_form');
         $form->setAttribute('action', $this->url()->fromRoute('admin/playgrounduser/createrole', array('roleId' => 0)));
@@ -234,7 +232,7 @@ class AdminController extends AbstractActionController
         return $this->userMapper;
     }
 
-    public function setUserMapper(UserMapperInterface $userMapper)
+    public function setUserMapper(\PlaygroundUser\Mapper\User $userMapper)
     {
         $this->userMapper = $userMapper;
 

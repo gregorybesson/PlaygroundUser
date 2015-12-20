@@ -49,9 +49,12 @@ class EmailVerification extends EventProvider
     public function cleanExpiredVerificationRequests($expiryTime = 86400)
     {
         $now = new \DateTime((int) $expiryTime . ' seconds ago');
-        $dql = "DELETE PlaygroundUser\Entity\EmailVerification ev WHERE ev.request_time <= '" . $now->format('Y-m-d H:i:s') . "'";
+        $dateNow = $now->format('Y-m-d H:i:s');
+        
+        $query = $this->em->createQuery('DELETE PlaygroundUser\Entity\EmailVerification ev WHERE ev.request_time <= :dateNow');
+        $query->setParameter('dateNow', $dateNow);
 
-        return $this->em->createQuery($dql)->getResult();
+        return $query->getResult();
     }
 
     public function insert($entity, $tableName = null, HydratorInterface $hydrator = null)

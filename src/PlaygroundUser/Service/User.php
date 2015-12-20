@@ -51,7 +51,6 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
     protected $options;
 
     /**
-     * TODO : Refactor so that mandatory fields stay in the entity, and
      * functional mandatory fields go in the form validator part
      * @param  array           $data
      * @return boolean|unknown
@@ -538,8 +537,6 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
     {
         $this->getEventManager()->trigger(__FUNCTION__.'.pre', $this, array('user' => $user, 'data' => $data));
 
-        $zfcUserOptions = $this->getServiceManager()->get('zfcuser_module_options');
-
         $form  = $this->getServiceManager()->get('playgrounduser_change_info_form');
         $form->get('dob')->setOptions(array('format' => 'Y-m-d'));
         $form->bind($user);
@@ -631,8 +628,6 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
     {
         $this->getEventManager()->trigger('updateInfo.pre', $this, array('user' => $user, 'data' => $data));
 
-        $zfcUserOptions = $this->getServiceManager()->get('zfcuser_module_options');
-
         $form  = $this->getServiceManager()->get('playgrounduser_address_form');
         $form->bind($user);
         $form->setData($data);
@@ -685,7 +680,6 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         $form->bind($user);
         $form->setData($data);
 
-        //TODO : Check the form
         /*if (!$form->isValid()) {
             return false;
         }*/
@@ -749,29 +743,38 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
     public function getQueryUsersByRole($role = null, $order = null, $search = '')
     {
         $em = $this->getServiceManager()->get('doctrine.entitymanager.orm_default');
-        $filterSearch = '';
-        $roleSearch = '1=1 ';
-
-        if ($search != '') {
-            $filterSearch = " AND (u.username like '%" . $search . "%' OR u.lastname like '%" . $search . "%' OR u.firstname like '%" . $search . "%' OR u.email like '%" . $search . "%')";
-        }
-
-        if ($role) {
-            $roleSearch = "r.id = " . $role->getId();
-        }
+        $order = (in_array($order, array('ASC', 'DESC')))?$order:'DESC';
 
         // I Have to know what is the User Class used
         $zfcUserOptions = $this->getServiceManager()->get('zfcuser_module_options');
         $userClass = $zfcUserOptions->getUserEntityClass();
 
-        $query = $em->createQuery('
-            SELECT u FROM ' . $userClass . ' u
+        $queryString = '
+            SELECT u FROM :userClass u
             LEFT JOIN u.roles r
-            WHERE ' . $roleSearch .
-                $filterSearch .
-                (in_array($order, array('ASC', 'DESC'))?' ORDER BY u.created_at '.$order:'').'
-        ');
-                return $query;
+            WHERE 1=1 ';
+
+        if ($role) {
+            $queryString .= 'r.id = :roleId ';
+        }
+
+        if ($search != '') {
+            $queryString .= "AND (u.username like '%:search%' OR u.lastname like '%:search%' OR u.firstname like '%:search%' OR u.email like '%:search%')";
+        }
+
+        $queryString .= ' ORDER BY u.created_at :order';
+
+        $query = $em->createQuery($queryString);
+        if ($search != '') {
+            $query->setParameter('search', $search);
+        }
+        if ($role) {
+            $query->setParameter('roleId', $role->getId());
+        }
+        $query->setParameter('order', $order);
+        $query->setParameter('userClass', $userClass);
+
+        return $query;
     }
 
     public function getUsersByRole($role = 1, $order = 'DESC', $search = '')
@@ -795,7 +798,6 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
             $user = new UserEntity();
             $user->setEmail($email);
             $rand = \Zend\Math\Rand::getString(8);
-            $clearPassword = $rand;
             $bcrypt = new Bcrypt;
             $zfcUserOptions = $this->getServiceManager()->get('zfcuser_module_options');
             $bcrypt->setCost($zfcUserOptions->getPasswordCost());

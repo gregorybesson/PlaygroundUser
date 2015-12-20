@@ -35,7 +35,6 @@ class Cron extends EventProvider implements ServiceManagerAwareInterface
         $sm->get('Application')->bootstrap();
 
         $userService = $sm->get('playgrounduser_cron_service');
-        $options = $sm->get('playgrounduser_module_options');
 
         $userService->disablePendingAccounts($interval);
     }
@@ -54,8 +53,9 @@ class Cron extends EventProvider implements ServiceManagerAwareInterface
         $userClass = $zfcUserOptions->getUserEntityClass();
 
         // Users with disable pending since n days
-        $query = $em->createQuery('SELECT u FROM ' . $userClass . ' u WHERE (u.updated_at <= :date AND u.state = 2)');
+        $query = $em->createQuery('SELECT u FROM :userClass u WHERE (u.updated_at <= :date AND u.state = 2)');
         $query->setParameter('date', $period);
+        $query->setParameter('userClass', $userClass);
         $usersToDisable = $query->getResult();
 
         foreach ($usersToDisable as $user) {
@@ -100,7 +100,7 @@ class Cron extends EventProvider implements ServiceManagerAwareInterface
      * @param  UserMapperInterface $userMapper
      * @return User
      */
-    public function setUserMapper(UserMapperInterface $userMapper)
+    public function setUserMapper(\PlaygroundUser\Mapper\User $userMapper)
     {
         $this->userMapper = $userMapper;
 

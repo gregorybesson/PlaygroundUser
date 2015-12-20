@@ -186,8 +186,6 @@ class UserController extends ZfcUserController
             );
         }
 
-        //if (!$socialnetwork) {
-
         if ($service->getOptions()->getEmailVerification()) {
             $vm = new ViewModel(array('userEmail' => $user->getEmail()));
             $vm->setTemplate('playground-user/register/registermail');
@@ -207,9 +205,7 @@ class UserController extends ZfcUserController
                 'action' => 'authenticate'
             ));
         }
-        //}
 
-        // TODO: Add the redirect parameter here...
         $redirect = $this->url()->fromRoute('frontend/zfcuser/login') . ($socialnetwork ? '/' . $socialnetwork : ''). ($redirect ? '?redirect=' . $redirect : '');
 
         return $this->redirect()->toUrl($redirect);
@@ -235,22 +231,19 @@ class UserController extends ZfcUserController
         $request = $this->getRequest();
         $response = $this->getResponse();
 
-        if ($this->getOptions()->getUseRedirectParameterIfPresent() && $request->getPost()->get('redirect')) {
-            $redirect = $request->getPost()->get('redirect');
-        } else {
-            $redirect = false;
-        }
-
         $messages = array();
         if ($request->isPost()) {
             $form->setData($request->getPost());
             if (! $form->isValid()) {
                 $errors = $form->getMessages();
-                /*
-                 * foreach ($errors as $key=>$row) { if (!empty($row) && $key !=
-                 * 'submit') { foreach ($row as $keyer => $rower) {
-                 * $messages[$keyer] = $rower; } } }
-                 */
+                foreach ($errors as $key=>$row) { 
+                    if (!empty($row) && $key !== 'submit') { 
+                        foreach ($row as $keyer => $rower) {
+                            $messages[$keyer] = $rower; 
+                        } 
+                    } 
+                }
+                 
             }
 
             if (! empty($messages)) {
@@ -258,12 +251,8 @@ class UserController extends ZfcUserController
                     'success' => 0
                 )));
             } else {
-                $this->zfcUserAuthentication()
-                    ->getAuthAdapter()
-                    ->resetAdapters();
-                $this->zfcUserAuthentication()
-                    ->getAuthService()
-                    ->clearIdentity();
+                $this->zfcUserAuthentication()->getAuthAdapter()->resetAdapters();
+                $this->zfcUserAuthentication()->getAuthService()->clearIdentity();
                 $result = $this->forward()->dispatch('playgrounduser_user', array(
                     'action' => 'ajaxauthenticate'
                 ));
@@ -295,16 +284,7 @@ class UserController extends ZfcUserController
             return true;
         }
         $adapter = $this->zfcUserAuthentication()->getAuthAdapter();
-        $redirect = $this->params()->fromPost('redirect', $this->params()
-            ->fromQuery('redirect', false));
-
-        $result = $adapter->prepareForAuthentication($this->getRequest());
-
-        // Return early if an adapter returned a response
-        /*
-         * if ($result instanceof Response) { return $result; }
-         */
-
+        $adapter->prepareForAuthentication($this->getRequest());
         $auth = $this->zfcUserAuthentication()->getAuthService()->authenticate($adapter);
 
         if (! $auth->isValid()) {
@@ -332,13 +312,15 @@ class UserController extends ZfcUserController
         $hybridAuth = $this->getHybridAuth();
 
         $query = 'provider=' . $provider;
-        if ($this->getServiceLocator()->get('zfcuser_module_options')->getUseRedirectParameterIfPresent() && $this->getRequest()->getQuery()->get('redirect')) {
+        if ($this->getServiceLocator()->get('zfcuser_module_options')->getUseRedirectParameterIfPresent() && 
+            $this->getRequest()->getQuery()->get('redirect')
+        ) {
             $query .= '&redirect=' . $this->getRequest()->getQuery()->get('redirect');
         }
 
         $redirectUrl = $this->url()->fromRoute('frontend/zfcuser/authenticate') . '?' . $query;
 
-        $adapter = $hybridAuth->authenticate(
+        $hybridAuth->authenticate(
             $provider,
             array('hauth_return_to' => $redirectUrl)
         );
@@ -350,9 +332,6 @@ class UserController extends ZfcUserController
     public function logoutAction()
     {
         $user = $this->zfcUserAuthentication()->getIdentity();
-
-        $hybridAuth = $this->getHybridAuth();
-
         Hybrid_Auth::logoutAllProviders();
 
         $this->zfcUserAuthentication()->getAuthAdapter()->resetAdapters();
@@ -423,7 +402,6 @@ class UserController extends ZfcUserController
     /**
      * user profile
      * Management of 4 differents forms...
-     * TODO : Refactor it ! this is uuuuuugly !
      */
     public function profileAction()
     {
@@ -818,7 +796,7 @@ class UserController extends ZfcUserController
         $adapter = $this->zfcUserAuthentication()->getAuthAdapter();
         $adapter->prepareForAuthentication($this->getRequest());
 
-        $auth = $this->zfcUserAuthentication()->getAuthService()->authenticate($adapter);
+        $this->zfcUserAuthentication()->getAuthService()->authenticate($adapter);
 
         $user = $this->zfcUserAuthentication()->getIdentity();
 
@@ -1168,7 +1146,6 @@ class UserController extends ZfcUserController
         return $this->getServiceLocator()->get('viewhelpermanager')->get($helperName);
     }
 
-    // TODO : remove asap this adherence
     public function getCoreOptions()
     {
         if (!$this->coreOptions) {
@@ -1185,9 +1162,6 @@ class UserController extends ZfcUserController
         return $this;
     }
 
-    /**
-     * TODO remove this F&@king adherence with PlaygroundReward...
-     */
     public function getRewardService()
     {
         if (!$this->rewardService) {
@@ -1197,7 +1171,7 @@ class UserController extends ZfcUserController
         return $this->rewardService;
     }
 
-    public function setRewardService(GameService $rewardService)
+    public function setRewardService($rewardService)
     {
         $this->rewardService = $rewardService;
 

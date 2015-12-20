@@ -2,7 +2,6 @@
 namespace PlaygroundUser\Authentication\Adapter;
 
 use Hybrid_Auth;
-use PlaygroundUser\Authentication\Adapter\Exception;
 use PlaygroundUser\Mapper\UserProvider;
 use PlaygroundUser\Options\ModuleOptions;
 use Zend\Authentication\Result;
@@ -125,7 +124,7 @@ class HybridAuth extends AbstractAdapter implements ServiceManagerAwareInterface
             if (method_exists($this, $method)) {
                 try {
                     $localUser = $this->$method($userProfile);
-                } catch (Exception\RuntimeException $ex) {
+                } catch (\RuntimeException $ex) {
                     $authEvent->setCode($ex->getCode())
                         ->setMessages(array($ex->getMessage()))
                         ->stopPropagation();
@@ -140,7 +139,7 @@ class HybridAuth extends AbstractAdapter implements ServiceManagerAwareInterface
                 if ($userProfile->emailVerified) {
                     $localUser->setEmail($userProfile->emailVerified);
                 }
-                $result = $this->insert($localUser, 'other', $userProfile);
+                $this->insert($localUser, 'other', $userProfile);
             }
 
             $localUserProvider = new \PlaygroundUser\Entity\UserProvider();
@@ -347,7 +346,7 @@ class HybridAuth extends AbstractAdapter implements ServiceManagerAwareInterface
     protected function facebookToLocalUser($userProfile)
     {
         if (!isset($userProfile->emailVerified)) {
-            throw new Exception\RuntimeException(
+            throw new \RuntimeException(
                 'Please verify your email with Facebook before attempting login',
                 Result::FAILURE_CREDENTIAL_INVALID
             );
@@ -386,7 +385,7 @@ class HybridAuth extends AbstractAdapter implements ServiceManagerAwareInterface
             $localUser->setDob($birthDay);
         }
 
-        $result = $this->insert($localUser, 'facebook', $userProfile);
+        $this->insert($localUser, 'facebook', $userProfile);
 
         return $localUser;
     }
@@ -394,7 +393,7 @@ class HybridAuth extends AbstractAdapter implements ServiceManagerAwareInterface
     protected function foursquareToLocalUser($userProfile)
     {
         if (!isset($userProfile->emailVerified)) {
-            throw new Exception\RuntimeException(
+            throw new \RuntimeException(
                 'Please verify your email with Foursquare before attempting login',
                 Result::FAILURE_CREDENTIAL_INVALID
             );
@@ -407,7 +406,7 @@ class HybridAuth extends AbstractAdapter implements ServiceManagerAwareInterface
         $localUser->setEmail($userProfile->emailVerified)
             ->setDisplayName($userProfile->displayName)
             ->setPassword(__FUNCTION__);
-        $result = $this->insert($localUser, 'foursquare', $userProfile);
+        $this->insert($localUser, 'foursquare', $userProfile);
 
         return $localUser;
     }
@@ -415,7 +414,7 @@ class HybridAuth extends AbstractAdapter implements ServiceManagerAwareInterface
     protected function googleToLocalUser($userProfile)
     {
         if (!isset($userProfile->emailVerified)) {
-            throw new Exception\RuntimeException(
+            throw new \RuntimeException(
                 'Please verify your email with Google before attempting login',
                 Result::FAILURE_CREDENTIAL_INVALID
             );
@@ -428,7 +427,7 @@ class HybridAuth extends AbstractAdapter implements ServiceManagerAwareInterface
         $localUser->setEmail($userProfile->emailVerified)
             ->setDisplayName($userProfile->displayName)
             ->setPassword(__FUNCTION__);
-        $result = $this->insert($localUser, 'google', $userProfile);
+        $this->insert($localUser, 'google', $userProfile);
 
         return $localUser;
     }
@@ -438,7 +437,7 @@ class HybridAuth extends AbstractAdapter implements ServiceManagerAwareInterface
         $localUser = $this->instantiateLocalUser();
         $localUser->setDisplayName($userProfile->displayName)
             ->setPassword(__FUNCTION__);
-        $result = $this->insert($localUser, 'linkedIn', $userProfile);
+        $this->insert($localUser, 'linkedIn', $userProfile);
 
         return $localUser;
     }
@@ -449,7 +448,7 @@ class HybridAuth extends AbstractAdapter implements ServiceManagerAwareInterface
         $localUser->setUsername($userProfile->displayName)
             ->setDisplayName($userProfile->firstName)
             ->setPassword(__FUNCTION__);
-        $result = $this->insert($localUser, 'twitter', $userProfile);
+        $this->insert($localUser, 'twitter', $userProfile);
 
         return $localUser;
     }
@@ -459,7 +458,7 @@ class HybridAuth extends AbstractAdapter implements ServiceManagerAwareInterface
         $localUser = $this->instantiateLocalUser();
         $localUser->setDisplayName($userProfile->displayName)
             ->setPassword(__FUNCTION__);
-        $result = $this->insert($localUser, 'yahoo', $userProfile);
+        $this->insert($localUser, 'yahoo', $userProfile);
 
         return $localUser;
     }
@@ -473,7 +472,7 @@ class HybridAuth extends AbstractAdapter implements ServiceManagerAwareInterface
 
         $this->getEventManager()->trigger(__FUNCTION__, $localUser, array('userProfile' => $userProfile));
 
-        $result = $this->insert($localUser, 'github', $userProfile);
+        $this->insert($localUser, 'github', $userProfile);
 
         return $localUser;
     }
