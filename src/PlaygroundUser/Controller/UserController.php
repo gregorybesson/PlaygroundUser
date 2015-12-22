@@ -236,14 +236,13 @@ class UserController extends ZfcUserController
             $form->setData($request->getPost());
             if (! $form->isValid()) {
                 $errors = $form->getMessages();
-                foreach ($errors as $key=>$row) { 
-                    if (!empty($row) && $key !== 'submit') { 
+                foreach ($errors as $key => $row) {
+                    if (!empty($row) && $key !== 'submit') {
                         foreach ($row as $keyer => $rower) {
-                            $messages[$keyer] = $rower; 
-                        } 
-                    } 
+                            $messages[$keyer] = $rower;
+                        }
+                    }
                 }
-                 
             }
 
             if (! empty($messages)) {
@@ -312,7 +311,7 @@ class UserController extends ZfcUserController
         $hybridAuth = $this->getHybridAuth();
 
         $query = 'provider=' . $provider;
-        if ($this->getServiceLocator()->get('zfcuser_module_options')->getUseRedirectParameterIfPresent() && 
+        if ($this->getServiceLocator()->get('zfcuser_module_options')->getUseRedirectParameterIfPresent() &&
             $this->getRequest()->getQuery()->get('redirect')
         ) {
             $query .= '&redirect=' . $this->getRequest()->getQuery()->get('redirect');

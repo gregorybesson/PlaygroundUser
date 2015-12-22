@@ -193,6 +193,7 @@ class Module
                     'PlaygroundUser\Form\Login'                    => 'PlaygroundUser\Form\Login',
                     'playgrounduser_user_service'                  => 'PlaygroundUser\Service\User',
                     'playgrounduser_rememberme_service'            => 'PlaygroundUser\Service\RememberMe',
+                    'playgrounduser_team_service'                  => 'PlaygroundUser\Service\Team',
                     'playgrounduser_password_service'              => 'PlaygroundUser\Service\Password',
                     'zfcuser_user_service'                         => 'PlaygroundUser\Service\User', // Extending ZfcUser service
                     'playgrounduser_cron_service'                  => 'PlaygroundUser\Service\Cron',
@@ -338,6 +339,14 @@ class Module
                     $form = new Form\Admin\Role(null, $playgroundUserOptions, $translator, $sm);
 
                     return $form;
+                },
+
+                'playgrounduser_team_mapper' => function ($sm) {
+                    
+                    return new \PlaygroundUser\Mapper\Team(
+                        $sm->get('doctrine.entitymanager.orm_default'),
+                        $sm->get('playgrounduser_module_options')
+                    );
                 },
 
                 'playgrounduser_rememberme_mapper' => function ($sm) {
