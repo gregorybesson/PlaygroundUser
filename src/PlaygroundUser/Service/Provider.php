@@ -8,11 +8,6 @@ use Zend\EventManager\EventManager;
 use Zend\ServiceManager\ServiceManager;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
 
-/**
- * Service Des defis
- * @author dsuhard
- *
- */
 class Provider implements ServiceManagerAwareInterface, EventManagerAwareInterface
 {
     /**

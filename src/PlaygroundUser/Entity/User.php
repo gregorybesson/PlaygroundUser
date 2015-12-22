@@ -30,6 +30,12 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
     protected $id;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Team", mappedBy="users")
+     *
+     **/
+    protected $teams;
+
+    /**
      * @ORM\Column(type="string", length=255, unique=false, nullable=true)
      */
     protected $username;
@@ -157,6 +163,7 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
     public function __construct()
     {
         $this->roles = new ArrayCollection();
+        $this->teams = new ArrayCollection();
     }
 
     /** @PrePersist */
@@ -194,6 +201,80 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
         $this->id = $id;
 
         return $this;
+    }
+
+
+    /**
+     * @return Doctrine\ORM\PersistentCollection
+     */
+    public function getTeams()
+    {
+        return $this->teams;
+    }
+
+    /**
+     * collection solution
+     * @param unknown_type $teams
+     */
+    public function setTeams(ArrayCollection $teams)
+    {
+        $this->teams = $teams;
+
+        return $this;
+    }
+
+    /**
+     * Add teams to the user
+     *
+     * @param ArrayCollection $teams
+     *
+     * @return void
+     */
+    public function addTeams(ArrayCollection $teams)
+    {
+        foreach ($teams as $team) {
+            $team->addUser($this);
+            $this->teams->add($team);
+        }
+    }
+
+    /**
+     * Remove teams from the app.
+     *
+     * @param ArrayCollection $teams
+     *
+     * @return void
+     */
+    public function removeTeams(ArrayCollection $teams)
+    {
+        foreach ($teams as $team) {
+            $team->removeUser($this);
+            $this->teams->removeElement($team);
+        }
+    }
+
+    /**
+     * Add a single team to the app.
+     *
+     * @param Page $team
+     *
+     * @return void
+     */
+    public function addTeam($team)
+    {
+        $this->teams[] = $team;
+    }
+
+    /**
+     * Remove a single team from the app.
+     *
+     * @param Team $team
+     *
+     * @return void
+     */
+    public function removeTeam($team)
+    {
+        $this->teams->removeElement($team);
     }
 
     /**

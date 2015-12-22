@@ -202,6 +202,7 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
 
     public function edit(array $data, $user)
     {
+        $this->getEventManager()->trigger(__FUNCTION__.'.pre', $this, array('user' => $user, 'data' => $data));
         $entityManager          = $this->getServiceManager()->get('doctrine.entitymanager.orm_default');
         $zfcUserOptions = $this->getServiceManager()->get('zfcuser_module_options');
         $class                  = $zfcUserOptions->getUserEntityClass();
@@ -330,6 +331,9 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         } else {
             $form  = $this->getRegisterForm();
         }
+
+        $this->getEventManager()->trigger(__FUNCTION__.'.pre', $this, array('user' => $user, 'data' => $data, 'form' => $form));
+
         $form->get('dob')->setOptions(array('format' => 'Y-m-d'));
 
         // Convert birth date format
@@ -749,30 +753,36 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         $zfcUserOptions = $this->getServiceManager()->get('zfcuser_module_options');
         $userClass = $zfcUserOptions->getUserEntityClass();
 
-        $queryString = '
-            SELECT u FROM :userClass u
-            LEFT JOIN u.roles r
-            WHERE 1=1 ';
+        $qb = $em->createQueryBuilder();
+        $qb->select('u')
+            ->from($userClass, 'u')
+            ->leftJoin('u.roles', 'r');
+        //$qb->setParameter('userClass', $userClass);
+
+        $and = $qb->expr()->andx();
+        $and->add($qb->expr()->eq(1, 1));
 
         if ($role) {
-            $queryString .= 'r.id = :roleId ';
+            $and->add($qb->expr()->eq('r.id', ':roleId'));
+            $qb->setParameter('roleId', $role->getId());
         }
-
+        
         if ($search != '') {
-            $queryString .= "AND (u.username like '%:search%' OR u.lastname like '%:search%' OR u.firstname like '%:search%' OR u.email like '%:search%')";
+            $and->add(
+                $qb->expr()->orX(
+                    $qb->expr()->like('u.username', $qb->expr()->literal('%:search%')),
+                    $qb->expr()->like('u.firstname', $qb->expr()->literal('%:search%')),
+                    $qb->expr()->like('u.lastname', $qb->expr()->literal('%:search%')),
+                    $qb->expr()->like('u.email', $qb->expr()->literal('%:search%'))
+                )
+            );
+            $qb->setParameter('search', $search);
         }
 
-        $queryString .= ' ORDER BY u.created_at :order';
+        $qb->where($and);
+        $qb->orderBy('u.created_at', $order);
 
-        $query = $em->createQuery($queryString);
-        if ($search != '') {
-            $query->setParameter('search', $search);
-        }
-        if ($role) {
-            $query->setParameter('roleId', $role->getId());
-        }
-        $query->setParameter('order', $order);
-        $query->setParameter('userClass', $userClass);
+        $query = $qb->getQuery();
 
         return $query;
     }

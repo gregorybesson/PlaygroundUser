@@ -70,6 +70,7 @@ return array(
             'BjyAuthorize\Guard\Controller' => array(
             	array('controller' => 'zfcuser',   'roles' => array('guest', 'user')),
                 array('controller' => 'playgrounduser_user',   'roles' => array('guest', 'user')),
+                array('controller' => 'playgrounduser_team',   'roles' => array('guest', 'user')),
                 array('controller' => 'playgrounduser_forgot', 'roles' => array('guest', 'user')),
                 array('controller' => 'PlaygroundUser\Controller\Frontend\Contact', 'roles' => array('guest', 'user')),
                 
@@ -136,9 +137,8 @@ return array(
 
     'controllers' => array(
         'invokables' => array(
-//        	'playgrounduseradmin_login'                  => 'PlaygroundUser\Controller\Admin\LoginController',
             'playgrounduseradmin'                        => 'PlaygroundUser\Controller\Admin\AdminController',
-//            'playgrounduser_user'						 => 'PlaygroundUser\Controller\UserController',
+            'playgrounduser_team'						 => 'PlaygroundUser\Controller\Frontend\TeamController',
             'playgrounduser_forgot'                      => 'PlaygroundUser\Controller\ForgotController',
             'PlaygroundUser\Controller\Frontend\Contact' => 'PlaygroundUser\Controller\Frontend\ContactController'
         ),
@@ -183,6 +183,16 @@ return array(
 		                ),
 		                'may_terminate' => true,
 		                'child_routes' => array(
+		                	'team' => array(
+		                        'type' => 'Literal',
+		                        'options' => array(
+		                            'route' => '/team',
+		                            'defaults' => array(
+		                                'controller' => 'playgrounduser_team',
+		                                'action'     => 'index',
+		                            ),
+		                        ),
+		                    ),
 		                    'forgotpassword' => array(
 		                        'type' => 'Literal',
 		                        'options' => array(

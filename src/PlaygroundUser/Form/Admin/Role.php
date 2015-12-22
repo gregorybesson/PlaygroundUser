@@ -88,7 +88,7 @@ class Role extends ProvidesEventsForm
     public function getUserRolesMapper()
     {
         if (null === $this->userRolesMapper) {
-            $this->userRolesMapper = $this->getServiceManager()->get('BjyAuthorize\Provider\Role\DoctrineEntity');
+            $this->userRolesMapper = $this->getServiceManager()->get('BjyAuthorize\Provider\Role\ObjectRepositoryProvider');
         }
 
         return $this->userRolesMapper;
