@@ -48,7 +48,7 @@ class Team implements InputFilterAwareInterface
      * @ORM\ManyToMany(targetEntity="PlaygroundUser\Entity\User", inversedBy="teams", cascade={"persist"})
      * @ORM\JoinTable(name="user_team_user",
      *      joinColumns={@ORM\JoinColumn(name="team_id", referencedColumnName="id", onDelete="CASCADE")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="user_id")}
+     *      inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="user_id", onDelete="CASCADE")}
      * )
      */
     protected $users;
