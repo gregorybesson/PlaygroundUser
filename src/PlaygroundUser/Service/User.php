@@ -464,6 +464,8 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
             $this->getEmailVerificationMapper()->insert($verification);
 
             $this->sendVerificationEmailMessage($verification);
+        } elseif ($this->getOptions()->getEmailConfirmation()){
+            $this->sendConfirmationEmailMessage($user);
         }
         $this->getEventManager()->trigger(__FUNCTION__.'.post', $this, array('user' => $user, 'data' => $data));
 
@@ -875,6 +877,25 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
             $subject,
             'playground-user/email/verification',
             array('record' => $record, 'user' => $user)
+        );
+
+        $mailService->send($message);
+    }
+
+    public function sendConfirmationEmailMessage($user)
+    {
+        $mailService = $this->getServiceManager()->get('playgrounduser_message');
+
+        $from = $this->getOptions()->getEmailFromAddress();
+        
+        $subject = 'Merci pour votre inscription';
+
+        $message = $mailService->createHtmlMessage(
+            $from,
+            $user->getEmail(),
+            $subject,
+            'playground-user/email/confirmation',
+            array('user' => $user)
         );
 
         $mailService->send($message);
