@@ -47,6 +47,14 @@ $playgrounduser = array(
          * Default: 'Vérification de votre compte'
          */
         'emailVerification' => true,
+
+        /**
+         * Activate the email confirmation on registration
+         *
+         * Default: false
+         * Default subject : 'Merci de votre inscription'
+         */
+        'emailConfirmation' => true,
         
         /**
          * Subject line of the email message which is

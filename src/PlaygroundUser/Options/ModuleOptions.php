@@ -139,6 +139,11 @@ class ModuleOptions extends BaseModuleOptions implements
     protected $emailVerification = false;
 
     /**
+     * @var boolean
+     */
+    protected $emailConfirmation = false;
+
+    /**
      * @var string
      */
     protected $defaultRegisterRole = 'user';
@@ -169,6 +174,22 @@ class ModuleOptions extends BaseModuleOptions implements
     public function setEmailVerification($emailVerification)
     {
         $this->emailVerification = $emailVerification;
+    }
+
+    /**
+     * @return the $emailConfirmation
+     */
+    public function getEmailConfirmation()
+    {
+        return $this->emailConfirmation;
+    }
+
+    /**
+     * @param string $emailConfirmation
+     */
+    public function setEmailConfirmation($emailConfirmation)
+    {
+        $this->emailConfirmation = $emailConfirmation;
     }
 
     /**
