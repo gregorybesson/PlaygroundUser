@@ -464,7 +464,7 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
             $this->getEmailVerificationMapper()->insert($verification);
 
             $this->sendVerificationEmailMessage($verification);
-        } elseif ($this->getOptions()->getEmailConfirmation()){
+        } elseif ($this->getOptions()->getEmailConfirmation()) {
             $this->sendConfirmationEmailMessage($user);
         }
         $this->getEventManager()->trigger(__FUNCTION__.'.post', $this, array('user' => $user, 'data' => $data));
