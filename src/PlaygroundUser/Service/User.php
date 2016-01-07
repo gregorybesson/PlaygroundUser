@@ -91,7 +91,7 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         $filter->remove('firstname');
         $filter->remove('lastname');
         $filter->remove('postalCode');
-        $filter->remove('dob');
+        //$filter->remove('dob');
         $form->setInputFilter($filter);
 
         $emailInput = $form->getInputFilter()->get('email');

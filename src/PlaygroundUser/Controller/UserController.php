@@ -564,10 +564,10 @@ class UserController extends ZfcUserController
                 ->setNamespace('change-info')
                 ->addMessage(true);
 
-            return $this->redirect()->toUrl($this->getRequest()->getHeader('Referer')->uri());
+            return $this->redirect()->toUrl($this->getRequest()->getUri());
         }
 
-        $redirectUrl = $this->getRequest()->getHeader('Referer')->uri();
+        $redirectUrl = $this->getRequest()->getUri();
 
         $prg = $this->prg($redirectUrl, true);
 
@@ -633,7 +633,7 @@ class UserController extends ZfcUserController
                 ->setNamespace('change-password')
                 ->addMessage(true);
 
-            return $this->redirect()->toUrl($this->getRequest()->getHeader('Referer')->uri());
+            return $this->redirect()->toUrl($this->getRequest()->getUri());
         } elseif (isset($prg['newIdentity'])) {
             $formEmail->setData($prg);
 
@@ -690,7 +690,7 @@ class UserController extends ZfcUserController
             ->setNamespace('change-email')
             ->addMessage(true);
 
-            return $this->redirect()->toUrl($this->getRequest()->getHeader('Referer')->uri());
+            return $this->redirect()->toUrl($this->getRequest()->getUri());
         }
 
         return array(
