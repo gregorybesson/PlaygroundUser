@@ -564,25 +564,12 @@ class UserController extends ZfcUserController
                 ->setNamespace('change-info')
                 ->addMessage(true);
 
-            return $this->redirect()->toUrl(
-                $this->url()->fromRoute(
-                    'frontend/zfcuser/profile',
-                    array(),
-                    array('force_canonical' => true)
-                )
-            );
+            return $this->redirect()->toUrl($this->getRequest()->getUri());
         }
 
-        $redirectUrl = $this->url()->fromRoute(
-            'frontend/zfcuser/profile',
-            array(
-                'statusPassword' => $statusPassword,
-                'statusEmail' => $statusEmail,
-                'statusInfo' => $statusInfo,
-            )
-        );
+        $redirectUrl = $this->getRequest()->getUri();
+
         $prg = $this->prg($redirectUrl, true);
-//         $prg = $this->prg('frontend/zfcuser/profile');
 
         if ($prg instanceof Response) {
             return $prg;
@@ -646,13 +633,7 @@ class UserController extends ZfcUserController
                 ->setNamespace('change-password')
                 ->addMessage(true);
 
-            return $this->redirect()->toUrl(
-                $this->url()->fromRoute(
-                    'frontend/zfcuser/profile',
-                    array(),
-                    array('force_canonical' => true)
-                )
-            );
+            return $this->redirect()->toUrl($this->getRequest()->getUri());
         } elseif (isset($prg['newIdentity'])) {
             $formEmail->setData($prg);
 
@@ -673,15 +654,15 @@ class UserController extends ZfcUserController
                 $formEmail->setMessages($messages);
 
                 return array(
-                'statusPassword' => null,
-                'changePasswordForm' => $formPassword,
-                'statusEmail' => false,
-                'changeEmailForm' => $formEmail,
-                'statusInfo' => null,
-                'changeInfoForm' => $formInfo,
-                'prizeCategoryForm' => $formPrize,
-                'blockAccountForm' => $formBlock,
-                'usernamePoint' => $usernamePoint,
+                    'statusPassword' => null,
+                    'changePasswordForm' => $formPassword,
+                    'statusEmail' => false,
+                    'changeEmailForm' => $formEmail,
+                    'statusInfo' => null,
+                    'changeInfoForm' => $formInfo,
+                    'prizeCategoryForm' => $formPrize,
+                    'blockAccountForm' => $formBlock,
+                    'usernamePoint' => $usernamePoint,
                 );
             }
 
@@ -693,15 +674,15 @@ class UserController extends ZfcUserController
                 ->addMessage(false);
 
                 return array(
-                'statusPassword' => null,
-                'changePasswordForm' => $formPassword,
-                'statusEmail' => false,
-                'changeEmailForm' => $formEmail,
-                'statusInfo' => null,
-                'changeInfoForm' => $formInfo,
-                'prizeCategoryForm' => $formPrize,
-                'blockAccountForm' => $formBlock,
-                'usernamePoint' => $usernamePoint,
+                    'statusPassword' => null,
+                    'changePasswordForm' => $formPassword,
+                    'statusEmail' => false,
+                    'changeEmailForm' => $formEmail,
+                    'statusInfo' => null,
+                    'changeInfoForm' => $formInfo,
+                    'prizeCategoryForm' => $formPrize,
+                    'blockAccountForm' => $formBlock,
+                    'usernamePoint' => $usernamePoint,
                 );
             }
 
@@ -709,13 +690,7 @@ class UserController extends ZfcUserController
             ->setNamespace('change-email')
             ->addMessage(true);
 
-            return $this->redirect()->toUrl(
-                $this->url()->fromRoute(
-                    'frontend/zfcuser/profile',
-                    array(),
-                    array('force_canonical' => true)
-                )
-            );
+            return $this->redirect()->toUrl($this->getRequest()->getUri());
         }
 
         return array(
