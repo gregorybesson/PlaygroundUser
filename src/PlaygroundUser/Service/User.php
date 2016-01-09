@@ -453,7 +453,8 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
 
             $this->getProviderService()->getUserProviderMapper()->insert($userProvider);
         }
-        //elseif ($this->getOptions()->getEmailVerification()) {
+        $this->getEventManager()->trigger(__FUNCTION__.'.post', $this, array('user' => $user, 'data' => $data));
+        
         if ($this->getOptions()->getEmailVerification()) {
             // If user verification by mail is enabled
             $this->cleanExpiredVerificationRequests();
@@ -467,7 +468,6 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         } elseif ($this->getOptions()->getEmailConfirmation()) {
             $this->sendConfirmationEmailMessage($user);
         }
-        $this->getEventManager()->trigger(__FUNCTION__.'.post', $this, array('user' => $user, 'data' => $data));
 
         // Is there a sponsor on this registration ?
         $session = new Container('sponsorship');

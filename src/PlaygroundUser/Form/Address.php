@@ -114,8 +114,6 @@ class Address extends Register
                )
         ));
 
-
-
         $this->get('submit')->setLabel('Create');
     }
 
