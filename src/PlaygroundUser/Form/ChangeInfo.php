@@ -81,58 +81,58 @@ class ChangeInfo extends Register
         $this->add(array(
             'name' => 'avatar',
             'attributes' => array(
-                    'type'  => 'file',
+              'type'  => 'file',
             ),
             'options' => array(
-                    'label' => $translator->translate('Avatar', 'playgrounduser'),
+              'label' => $translator->translate('Avatar', 'playgrounduser'),
             ),
         ));
 
         $this->add(array(
-                'name' => 'address',
-                'options' => array(
-                        'label' => $translator->translate('Address', 'playgrounduser'),
-                ),
-                'attributes' => array(
-                        'type' => 'text',
-                        'placeholder' => $translator->translate('Address', 'playgrounduser'),
-                ),
+          'name' => 'address',
+          'options' => array(
+            'label' => $translator->translate('Address', 'playgrounduser'),
+          ),
+          'attributes' => array(
+            'type' => 'text',
+            'placeholder' => $translator->translate('Address', 'playgrounduser'),
+          ),
         ));
 
         $this->add(array(
                 'name' => 'address2',
                 'options' => array(
-                        'label' => $translator->translate('Address 2', 'playgrounduser'),
+                  'label' => $translator->translate('Address 2', 'playgrounduser'),
                 ),
                 'attributes' => array(
-                    'type' => 'text',
-                    'placeholder' => $translator->translate('Address 2', 'playgrounduser'),
+                  'type' => 'text',
+                  'placeholder' => $translator->translate('Address 2', 'playgrounduser'),
                 ),
         ));
 
         $this->add(array(
             'name' => 'postalCode',
             'options' => array(
-                    'label' => $translator->translate('Postal Code', 'playgrounduser'),
+              'label' => $translator->translate('Postal Code', 'playgrounduser'),
             ),
             'attributes' => array(
-                    'type' => 'text',
-                    'placeholder' => $translator->translate('Postal Code', 'playgrounduser'),
-                    'class' => 'number zipcodefr',
-                    'minlength' => 5,
-                    'maxlength' => 10,
+              'type' => 'text',
+              'placeholder' => $translator->translate('Postal Code', 'playgrounduser'),
+              'class' => 'number zipcodefr',
+              'minlength' => 5,
+              'maxlength' => 10,
             ),
         ));
 
         $this->add(array(
-                'name' => 'city',
-                'options' => array(
-                        'label' => $translator->translate('City', 'playgrounduser'),
-                ),
-                'attributes' => array(
-                        'type' => 'text',
-                        'placeholder' => $translator->translate('City', 'playgrounduser'),
-                ),
+          'name' => 'city',
+          'options' => array(
+          'label' => $translator->translate('City', 'playgrounduser'),
+          ),
+          'attributes' => array(
+            'type' => 'text',
+            'placeholder' => $translator->translate('City', 'playgrounduser'),
+          ),
         ));
 
         $countries = $this->getCountries();
@@ -142,64 +142,64 @@ class ChangeInfo extends Register
         }
         asort($countries_label);
         $this->add(array(
-                'type' => 'Zend\Form\Element\Select',
-                'name' => 'country',
-                'options' => array(
-                        'empty_option' => $translator->translate('Select your country', 'playgrounduser'),
-                        'value_options' => $countries_label,
-                        'label' => $translator->translate('Country', 'playgrounduser')
-                )
+          'type' => 'Zend\Form\Element\Select',
+          'name' => 'country',
+          'options' => array(
+            'empty_option' => $translator->translate('Select your country', 'playgrounduser'),
+            'value_options' => $countries_label,
+            'label' => $translator->translate('Country', 'playgrounduser')
+          )
         ));
 
         $this->add(array(
-                'name' => 'telephone',
-                'options' => array(
-                        'label' => $translator->translate('Telephone', 'playgrounduser'),
-                ),
-                'attributes' => array(
-                        'type' => 'text',
-                        'placeholder' => $translator->translate('Telephone', 'playgrounduser'),
-                        'class' => 'number phonefr',
-                        'maxlength' => '10',
-                ),
+          'name' => 'telephone',
+          'options' => array(
+            'label' => $translator->translate('Telephone', 'playgrounduser'),
+          ),
+          'attributes' => array(
+            'type' => 'text',
+            'placeholder' => $translator->translate('Telephone', 'playgrounduser'),
+            'class' => 'number phonefr',
+            'maxlength' => '10',
+          ),
         ));
 
         $this->add(array(
-            'type' => 'Zend\Form\Element\DateTime',
-            'name' => 'dob',
-            'options' => array(
-                'label' => $translator->translate('Date of birth', 'playgrounduser'),
-                'format' => 'd/m/Y'
+          'type' => 'Zend\Form\Element\DateTime',
+          'name' => 'dob',
+          'options' => array(
+            'label' => $translator->translate('Date of birth', 'playgrounduser'),
+            'format' => 'd/m/Y'
+          ),
+          'attributes' => array(
+            'type' => 'text',
+            'placeholder' => $translator->translate('Date of birth', 'playgrounduser'),
+            'class'=> 'date'
+          )
+        ));
+
+        $this->add(array(
+          'name' => 'optin',
+          'type' => 'Zend\Form\Element\Radio',
+          'options' => array(
+            'label' => $translator->translate('Newsletter', 'playgrounduser'),
+            'value_options' => array(
+              '1'  => $translator->translate('Yes', 'playgrounduser'),
+              '0' => $translator->translate('No', 'playgrounduser'),
             ),
-            'attributes' => array(
-                'type' => 'text',
-                'placeholder' => $translator->translate('Date of birth', 'playgrounduser'),
-                'class'=> 'date'
-            )
+          ),
         ));
 
         $this->add(array(
-                'name' => 'optin',
-                'type' => 'Zend\Form\Element\Radio',
-                'options' => array(
-                        'label' => $translator->translate('Newsletter', 'playgrounduser'),
-                        'value_options' => array(
-                                '1'  => $translator->translate('Yes', 'playgrounduser'),
-                                '0' => $translator->translate('No', 'playgrounduser'),
-                        ),
-                ),
-        ));
-
-        $this->add(array(
-                'name' => 'optinPartner',
-                'type' => 'Zend\Form\Element\Radio',
-                'options' => array(
-                        'label' => $translator->translate('Partners Newsletter', 'playgrounduser'),
-                        'value_options' => array(
-                                '1'  => $translator->translate('Yes', 'playgrounduser'),
-                                '0' => $translator->translate('No', 'playgrounduser'),
-                        ),
-                ),
+          'name' => 'optinPartner',
+          'type' => 'Zend\Form\Element\Radio',
+          'options' => array(
+            'label' => $translator->translate('Partners Newsletter', 'playgrounduser'),
+            'value_options' => array(
+              '1'  => $translator->translate('Yes', 'playgrounduser'),
+              '0' => $translator->translate('No', 'playgrounduser'),
+            ),
+          ),
         ));
 
         $this->get('submit')->setLabel('Create');
