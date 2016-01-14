@@ -11,7 +11,7 @@ use Zend\Http\Request as HttpRequest;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use Doctrine\Common\Annotations\AnnotationReader;
 use ZfcUser\Module as ZfcUser;
-use BjyAuthorize\View\RedirectionStrategy;
+use PlaygroundUser\View\Strategy\RedirectionStrategy;
 use Zend\Validator\AbstractValidator;
 
 class Module
@@ -110,8 +110,8 @@ class Module
                 $e->getResponse()->getHeaders()->addHeader($cookie);
             }
 
+            // Redirect strategy associated to BjyAuthorize module
             $strategy = new RedirectionStrategy();
-            $strategy->setRedirectRoute('admin');
             $e->getApplication()->getEventManager()->attach($strategy);
         }
     }
@@ -198,12 +198,13 @@ class Module
                     'zfcuser_user_service'                         => 'PlaygroundUser\Service\User', // Extending ZfcUser service
                     'playgrounduser_cron_service'                  => 'PlaygroundUser\Service\Cron',
                     'playgrounduser_provider_service'              => 'PlaygroundUser\Service\Provider',
+                    'playgrounduser_redirectionstrategy_service'   => 'PlaygroundUser\View\Strategy\RedirectionStrategy',
                ),
 
             'factories' => array(
                 'playgrounduser_authentication_emailvalidation'    => 'PlaygroundUser\Service\Factory\EmailValidationAdapterFactory',
                 'playgrounduser_authentication_hybridauth'         => 'PlaygroundUser\Service\Factory\HybridAuthAdapterFactory',
-                'ZfcUser\Authentication\Adapter\AdapterChain' => 'PlaygroundUser\Service\Factory\AuthenticationAdapterChainFactory',
+                'ZfcUser\Authentication\Adapter\AdapterChain'      => 'PlaygroundUser\Service\Factory\AuthenticationAdapterChainFactory',
                 'zfcuser_module_options' => function ($sm) {
                     $config = $sm->get('Configuration');
 
