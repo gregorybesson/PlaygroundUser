@@ -26,6 +26,11 @@ class RedirectionStrategy implements ListenerAggregateInterface
     protected $redirectRoute = 'frontend/zfcuser/login';
 
     /**
+     * @var array route to be used to handle redirects
+     */
+    protected $redirectRouteArray = [];
+
+    /**
      * @var string route to be used to handle redirects
      */
     protected $redirectAdminRoute = 'admin';
@@ -98,7 +103,7 @@ class RedirectionStrategy implements ListenerAggregateInterface
             if($areaName === 'admin'){
                 $url = $router->assemble(array(), array('name' => $this->redirectAdminRoute));
             }else{
-                $url = $router->assemble(array(), array('name' => $this->redirectRoute));
+                $url = $router->assemble($this->redirectRouteArray, array('name' => $this->redirectRoute));
             }
         }
 
@@ -116,6 +121,14 @@ class RedirectionStrategy implements ListenerAggregateInterface
     public function setRedirectRoute($redirectRoute)
     {
         $this->redirectRoute = (string) $redirectRoute;
+    }
+
+    /**
+     * @param array $redirectRouteArray
+     */
+    public function setRedirectRouteArray($redirectRouteArray)
+    {
+        $this->redirectRouteArray = $redirectRouteArray;
     }
 
     /**
