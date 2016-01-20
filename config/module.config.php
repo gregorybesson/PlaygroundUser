@@ -209,6 +209,16 @@ return array(
 		                            ),
 		                        ),
 		                    ),
+		                    'ajaxforgotpassword' => array(
+		                        'type' => 'Literal',
+		                        'options' => array(
+		                            'route' => '/ajax-mot-passe-oublie',
+		                            'defaults' => array(
+		                                'controller' => 'playgrounduser_forgot',
+		                                'action'     => 'ajaxforgot',
+		                            ),
+		                        ),
+		                    ),
 		                    'sentpassword' => array(
 		                        'type' => 'Segment',
 		                        'options' => array(

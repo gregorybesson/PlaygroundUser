@@ -88,6 +88,50 @@ class ForgotController extends AbstractActionController
         );
     }
 
+    public function ajaxforgotAction()
+    {
+        $response = $this->getResponse();
+        $service = $this->getPasswordService();
+        $service->cleanExpiredForgotRequests();
+        $form = $this->getForgotForm();
+
+        if ($this->getRequest()->isPost()) {
+            $form->setData($this->getRequest()->getPost());
+            if ($form->isValid()) {
+                $email = $form->getData();
+                $email = $email['email'];
+
+                $user = $this->getUserService()->getUserMapper()->findByEmail($email);
+
+                //only send request when email is found
+                if ($user != null) {
+                    $this->getPasswordService()->sendProcessForgotRequest($user->getId(), $email);
+                    $response->setContent(\Zend\Json\Json::encode(array(
+                        'statusMail' => true,
+                        'email' => $email
+                    )));
+                } else {
+                    $response->setContent(\Zend\Json\Json::encode(array(
+                        'statusMail' => false,
+                        'email' => $email
+                    )));
+                }
+            } else {
+                $response->setContent(\Zend\Json\Json::encode(array(
+                    'statusMail' => false,
+                    'email' => $email
+                )));
+            }
+        } else {
+            $response->setContent(\Zend\Json\Json::encode(array(
+                'statusMail' => false,
+                'email' => ''
+            )));
+        }
+
+        return $response;
+    }
+
     public function ajaxrenewPasswordAction()
     {
         $response = $this->getResponse();
