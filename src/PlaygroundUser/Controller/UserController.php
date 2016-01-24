@@ -564,7 +564,11 @@ class UserController extends ZfcUserController
                 ->setNamespace('change-info')
                 ->addMessage(true);
 
-            return $this->redirect()->toUrl($this->getRequest()->getUri());
+            $redirect = (!empty($this->params()->fromQuery('redirect')))? 
+                $this->params()->fromQuery('redirect'):
+                $this->getRequest()->getUri();
+
+            return $this->redirect()->toUrl($redirect);
         }
 
         $redirectUrl = $this->getRequest()->getUri();
