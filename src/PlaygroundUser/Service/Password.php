@@ -54,8 +54,7 @@ class Password extends EventProvider implements ServiceManagerAwareInterface
 
         $class = $this->getOptions()->getPasswordEntityClass();
         $model = new $class;
-        $model->setUserId($userId)
-            ->setRequestTime(new \DateTime('now'));
+        $model->setUserId($userId)->setRequestTime(new \DateTime('now'));
         $model->generateRequestKey();
         $this->getEventManager()->trigger(__FUNCTION__, $this, array('record' => $model, 'userId' => $userId));
         $this->getPasswordMapper()->persist($model);
@@ -68,7 +67,7 @@ class Password extends EventProvider implements ServiceManagerAwareInterface
         $mailService = $this->getServiceManager()->get('playgrounduser_message');
 
         $from = $this->getOptions()->getEmailFromAddress();
-        $subject = $this->getOptions()->getResetEmailSubjectLine();
+        $subject = $this->getServiceManager()->get('translator')->translate($this->getOptions()->getResetEmailSubjectLine(), 'playgrounduser');
 
         $renderer = $this->getServiceManager()->get('Zend\View\Renderer\RendererInterface');
         $skinUrl = $renderer->url('frontend', array(), array('force_canonical' => true));
