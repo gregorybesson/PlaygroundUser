@@ -393,7 +393,7 @@ class Module
                 'playgrounduser_change_info_form' => function ($sm) {
                     $translator = $sm->get('translator');
                     $options = $sm->get('playgrounduser_module_options');
-                    $form = new Form\ChangeInfo(null, $options, $translator);
+                    $form = new Form\ChangeInfo(null, $options, $translator, $sm);
 
                     return $form;
                 },
@@ -419,7 +419,7 @@ class Module
                 'playgrounduser_address_form' => function ($sm) {
                     $translator = $sm->get('translator');
                     $options = $sm->get('playgrounduser_module_options');
-                    $form = new Form\Address(null, $options, $translator);
+                    $form = new Form\Address(null, $options, $translator, $sm);
 
                     return $form;
                 },
