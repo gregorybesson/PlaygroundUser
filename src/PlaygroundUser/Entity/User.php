@@ -880,7 +880,7 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
                     array(
                         'name'    => 'Regex',
                         'options' => array(
-                            'pattern' => '/^[a-zA-Z\'àâéèêôùûçÀÂÉÈÔÙÛÇ[:blank:]-]+$/', // Validate firstname
+                            'pattern' => '/^[a-zA-Z\'àâäéèêôëïüùûçÀÂÄÉÈËÏÔÙÛÜÇ[:blank:]-]+$/', // Validate firstname
                         ),
                     ),
                 ),
@@ -904,7 +904,7 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
                     array(
                         'name'    => 'Regex',
                         'options' => array(
-                            'pattern' => '/^[a-zA-Z\'àâéèêôùûçÀÂÉÈÔÙÛÇ[:blank:]-]+$/', // Validate firstname
+                            'pattern' => '/^[a-zA-Z\'àâäéèêôëïüùûçÀÂÄÉÈËÏÔÙÛÜÇ[:blank:]-]+$/', // Validate firstname
                         ),
                     ),
                 ),
