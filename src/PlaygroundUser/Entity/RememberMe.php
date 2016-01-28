@@ -12,7 +12,7 @@ class RememberMe
 {
     /**
      * @ORM\Id
-     * @ORM\Column(type="integer", name="sid");
+     * @ORM\Column(type="string", name="sid");
      */
     protected $sid;
 
