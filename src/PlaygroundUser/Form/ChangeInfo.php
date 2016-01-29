@@ -182,7 +182,7 @@ class ChangeInfo extends Register
 
         $this->add(array(
           'name' => 'optin',
-          'type' => 'Zend\Form\Element\Radio',
+          'type' => 'Zend\Form\Element\Checkbox',
           'options' => array(
             'label' => $translator->translate('Newsletter', 'playgrounduser'),
             'value_options' => array(
@@ -194,7 +194,7 @@ class ChangeInfo extends Register
 
         $this->add(array(
           'name' => 'optinPartner',
-          'type' => 'Zend\Form\Element\Radio',
+          'type' => 'Zend\Form\Element\Checkbox',
           'options' => array(
             'label' => $translator->translate('Partners Newsletter', 'playgrounduser'),
             'value_options' => array(
