@@ -778,6 +778,7 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
      */
     public function populate($data = array())
     {
+        print_r($data);
         if (isset($data['id']) && $data['id'] != null) {
             $this->id    = $data['id'];
         }
@@ -788,7 +789,7 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
         if (isset($data['avatar']) && $data['avatar'] != null) {
             $this->avatar    = $data['avatar'];
         }
-        if (isset($data['state']) && $data['state'] != null) {
+        if (isset($data['state'])) {
             $this->state    = $data['state'];
         }
         if (isset($data['postalCode'])) {
@@ -799,10 +800,11 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
             $this->dob = DateTime::createFromFormat('Y-m-d', $data['dob']);
         }
 
-        if (isset($data['optin']) && $data['optin'] != null) {
+        if (isset($data['optin'])) {
             $this->optin    = $data['optin'];
         }
-        if (isset($data['optinPartner']) && $data['optinPartner'] != null) {
+
+        if (isset($data['optinPartner'])) {
             $this->optinPartner    = $data['optinPartner'];
         }
         if (isset($data['username']) && $data['username'] != null) {
@@ -840,6 +842,9 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
         }
         if (isset($data['mobile']) && $data['mobile'] != null) {
             $this->mobile    = $data['mobile'];
+        }
+        if (isset($data['registrationSource']) && $data['registrationSource'] != null) {
+            $this->registrationSource    = $data['registrationSource'];   
         }
     }
 
