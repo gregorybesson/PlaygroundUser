@@ -46,6 +46,7 @@ class LoginController extends ZfcUserController
 
             // clear adapters
             $this->zfcUserAuthentication()->getAuthAdapter()->resetAdapters();
+            $this->zfcUserAuthentication()->getAuthAdapter()->logoutAdapters();
             $this->zfcUserAuthentication()->getAuthService()->clearIdentity();
 
             $request->getQuery()->redirect = $this->url()->fromRoute($authAdminConfig['route_login']);
