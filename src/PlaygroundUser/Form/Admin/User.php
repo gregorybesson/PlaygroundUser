@@ -110,47 +110,47 @@ class User extends Register
         ));
 
         $this->add(array(
-                'name' => 'address',
-                'options' => array(
-                        'label' => $translator->translate('Address', 'playgrounduser'),
-                ),
-                'attributes' => array(
-                        'type' => 'text',
-                        'placeholder' => $translator->translate('Address', 'playgrounduser'),
-                ),
+            'name' => 'address',
+            'options' => array(
+                'label' => $translator->translate('Address', 'playgrounduser'),
+            ),
+            'attributes' => array(
+                'type' => 'text',
+                'placeholder' => $translator->translate('Address', 'playgrounduser'),
+            ),
         ));
 
         $this->add(array(
-                'name' => 'address2',
-                'options' => array(
-                        'label' => $translator->translate('Address 2', 'playgrounduser'),
-                ),
-                'attributes' => array(
-                    'type' => 'text',
-                    'placeholder' => $translator->translate('Address 2', 'playgrounduser'),
-                ),
+            'name' => 'address2',
+            'options' => array(
+                'label' => $translator->translate('Address 2', 'playgrounduser'),
+            ),
+            'attributes' => array(
+                'type' => 'text',
+                'placeholder' => $translator->translate('Address 2', 'playgrounduser'),
+            ),
         ));
 
         $this->add(array(
             'name' => 'postalCode',
             'options' => array(
-                    'label' => $translator->translate('Postal Code', 'playgrounduser'),
+                'label' => $translator->translate('Postal Code', 'playgrounduser'),
             ),
             'attributes' => array(
-                    'type' => 'text',
-                    'placeholder' => $translator->translate('Postal Code', 'playgrounduser'),
+                'type' => 'text',
+                'placeholder' => $translator->translate('Postal Code', 'playgrounduser'),
             ),
         ));
 
         $this->add(array(
-                'name' => 'city',
-                'options' => array(
-                        'label' => $translator->translate('City', 'playgrounduser'),
-                ),
-                'attributes' => array(
-                        'type' => 'text',
-                        'placeholder' => $translator->translate('City', 'playgrounduser'),
-                ),
+            'name' => 'city',
+            'options' => array(
+                'label' => $translator->translate('City', 'playgrounduser'),
+            ),
+            'attributes' => array(
+                'type' => 'text',
+                'placeholder' => $translator->translate('City', 'playgrounduser'),
+            ),
         ));
 
         $cs = $this->getServiceManager()->get('playgroundcore_country_service');
@@ -162,24 +162,24 @@ class User extends Register
         asort($countries_label);
         
         $this->add(array(
-                'type' => 'Zend\Form\Element\Select',
-                'name' => 'country',
-                'options' => array(
-                        'empty_option' => $translator->translate('Select your country', 'playgrounduser'),
-                        'value_options' => $countries_label,
-                        'label' => $translator->translate('Country', 'playgrounduser')
-                )
+            'type' => 'Zend\Form\Element\Select',
+            'name' => 'country',
+            'options' => array(
+                'empty_option' => $translator->translate('Select your country', 'playgrounduser'),
+                'value_options' => $countries_label,
+                'label' => $translator->translate('Country', 'playgrounduser')
+            )
         ));
 
         $this->add(array(
-                'name' => 'telephone',
-                'options' => array(
-                        'label' => $translator->translate('Telephone', 'playgrounduser'),
-                ),
-                'attributes' => array(
-                        'type' => 'text',
-                        'placeholder' => $translator->translate('Telephone', 'playgrounduser'),
-                ),
+            'name' => 'telephone',
+            'options' => array(
+                'label' => $translator->translate('Telephone', 'playgrounduser'),
+            ),
+            'attributes' => array(
+                'type' => 'text',
+                'placeholder' => $translator->translate('Telephone', 'playgrounduser'),
+            ),
         ));
 
         $this->add(array(
@@ -197,27 +197,38 @@ class User extends Register
         ));
 
         $this->add(array(
-                'name' => 'optin',
-                'type' => 'Zend\Form\Element\Radio',
-                'options' => array(
-                        'label' => $translator->translate('Newsletter', 'playgrounduser'),
-                        'value_options' => array(
-                                '1'  => $translator->translate('Yes', 'playgrounduser'),
-                                '0'  => $translator->translate('No', 'playgrounduser'),
-                        ),
+            'name' => 'optin',
+            'type' => 'Zend\Form\Element\Checkbox',
+            'options' => array(
+                'label' => $translator->translate('Newsletter', 'playgrounduser'),
+                'value_options' => array(
+                    '1'  => $translator->translate('Yes', 'playgrounduser'),
+                    '0'  => $translator->translate('No', 'playgrounduser'),
                 ),
+            ),
         ));
 
         $this->add(array(
-                'name' => 'optinPartner',
-                'type' => 'Zend\Form\Element\Radio',
-                'options' => array(
-                        'label' => $translator->translate('Partners Newsletter', 'playgrounduser'),
-                        'value_options' => array(
-                                '1'  => $translator->translate('Yes', 'playgrounduser'),
-                                '0'  => $translator->translate('No', 'playgrounduser'),
-                        ),
+            'name' => 'optinPartner',
+            'type' => 'Zend\Form\Element\Checkbox',
+            'options' => array(
+                'label' => $translator->translate('Partners Newsletter', 'playgrounduser'),
+                'value_options' => array(
+                    '1'  => $translator->translate('Yes', 'playgrounduser'),
+                    '0'  => $translator->translate('No', 'playgrounduser'),
                 ),
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'registrationSource',
+            'options' => array(
+                'label' => $translator->translate('Registration source', 'playgrounduser'),
+            ),
+            'attributes' => array(
+                'type' => 'text',
+                'placeholder' => $translator->translate('Registration source', 'playgrounduser'),
+            ),
         ));
 
         /*foreach ($this->getCreateOptions()->getCreateFormElements() as $name => $element) {
