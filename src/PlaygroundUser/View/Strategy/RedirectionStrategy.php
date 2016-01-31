@@ -100,9 +100,9 @@ class RedirectionStrategy implements ListenerAggregateInterface
         $areaName        = ($areaName === 'frontend' || $areaName === 'admin')? $areaName : 'frontend';
 
         if (null === $url) {
-            if($areaName === 'admin'){
+            if ($areaName === 'admin') {
                 $url = $router->assemble(array(), array('name' => $this->redirectAdminRoute));
-            }else{
+            } else {
                 $url = $router->assemble($this->redirectRouteArray, array('name' => $this->redirectRoute));
             }
         }
