@@ -844,7 +844,7 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
             $this->mobile    = $data['mobile'];
         }
         if (isset($data['registrationSource']) && $data['registrationSource'] != null) {
-            $this->registrationSource    = $data['registrationSource'];   
+            $this->registrationSource    = $data['registrationSource'];
         }
     }
 
