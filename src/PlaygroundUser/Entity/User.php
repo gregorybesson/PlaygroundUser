@@ -778,7 +778,6 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
      */
     public function populate($data = array())
     {
-        print_r($data);
         if (isset($data['id']) && $data['id'] != null) {
             $this->id    = $data['id'];
         }
