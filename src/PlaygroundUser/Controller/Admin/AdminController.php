@@ -29,6 +29,7 @@ class AdminController extends AbstractActionController
         $paginator->setItemCountPerPage(50);
         $paginator->setCurrentPageNumber($this->getEvent()->getRouteMatch()->getParam('p'));
 
+        $roles = $this->getAdminUserService()->getRoleMapper()->findAll();
 
         return new ViewModel(
             array(
@@ -36,9 +37,36 @@ class AdminController extends AbstractActionController
                 'userlistElements' => $this->getOptions()->getUserListElements(),
                 'filter'    => $filter,
                 'roleId'    => $roleId,
+                'roles'     => $roles,
                 'search'    => $search,
             )
         );
+    }
+
+    public function downloadAction()
+    {
+        $filter        = $this->getEvent()->getRouteMatch()->getParam('filter');
+        $roleId        = $this->getEvent()->getRouteMatch()->getParam('roleId');
+        $search        = $this->params()->fromQuery('name');
+
+        $role        = $this->getAdminUserService()->getRoleMapper()->findByRoleId($roleId);
+
+        $users = $this->getAdminUserService()->getArrayUsersByRole($role, null, $search);
+        
+        $content = "\xEF\xBB\xBF"; // UTF-8 BOM
+        $content .= $this->getAdminUserService()->getCSV($users);
+
+        $response = $this->getResponse();
+        $headers = $response->getHeaders();
+        $headers->addHeaderLine('Content-Encoding: UTF-8');
+        $headers->addHeaderLine('Content-Type', 'text/csv; charset=UTF-8');
+        $headers->addHeaderLine('Content-Disposition', "attachment; filename=\"users.csv\"");
+        $headers->addHeaderLine('Accept-Ranges', 'bytes');
+        $headers->addHeaderLine('Content-Length', strlen($content));
+
+        $response->setContent($content);
+
+        return $response;
     }
 
     public function createAction()

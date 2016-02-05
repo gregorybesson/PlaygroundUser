@@ -758,7 +758,8 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         $qb = $em->createQueryBuilder();
         $qb->select('u')
             ->from($userClass, 'u')
-            ->leftJoin('u.roles', 'r');
+            ->leftJoin('u.roles', 'r')
+            ->leftJoin('u.teams', 't');
         //$qb->setParameter('userClass', $userClass);
 
         $and = $qb->expr()->andx();
@@ -772,13 +773,20 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         if ($search != '') {
             $and->add(
                 $qb->expr()->orX(
-                    $qb->expr()->like('u.username', $qb->expr()->literal('%:search%')),
-                    $qb->expr()->like('u.firstname', $qb->expr()->literal('%:search%')),
-                    $qb->expr()->like('u.lastname', $qb->expr()->literal('%:search%')),
-                    $qb->expr()->like('u.email', $qb->expr()->literal('%:search%'))
+                    $qb->expr()->like('u.username', ':search1'),
+                    $qb->expr()->like('u.firstname', ':search2'),
+                    $qb->expr()->like('u.lastname', ':search3'),
+                    $qb->expr()->like('u.email', ':search4'),
+                    $qb->expr()->like('r.roleId', ':search5'),
+                    $qb->expr()->like('t.name', ':search6')
                 )
             );
-            $qb->setParameter('search', $search);
+            $qb->setParameter('search1', '%'.$search.'%');
+            $qb->setParameter('search2', '%'.$search.'%');
+            $qb->setParameter('search3', '%'.$search.'%');
+            $qb->setParameter('search4', '%'.$search.'%');
+            $qb->setParameter('search5', '%'.$search.'%');
+            $qb->setParameter('search6', '%'.$search.'%');
         }
 
         $qb->where($and);
@@ -787,6 +795,74 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         $query = $qb->getQuery();
 
         return $query;
+    }
+
+    public function getArrayUsersByRole($role = null, $order = null, $search = '')
+    {
+        $query = $this->getQueryUsersByRole($role, $order, $search);
+        $users = array(
+            array(
+                'id' => 1,
+                'username' => 1,
+                'title' => 1,
+                'firstname' => 1,
+                'lastname' => 1,
+                'email' => 1,
+                'optin' => 1,
+                'optinPartner' => 1,
+                'address' => 1,
+                'address2' => 1,
+                'postalCode' => 1,
+                'city' => 1,
+                'telephone' => 1,
+                'mobile' => 1,
+                'created_at' => 1,
+                'dob' => 1,
+                'role' => 1 ,
+                'team' => 1
+            )         
+        );
+        foreach($query->getResult() as $user){
+            $a = array();
+            $a[] = $user->getId();
+            $a[] = $user->getUsername();
+            $a[] = $user->getTitle();
+            $a[] = $user->getFirstname();
+            $a[] = $user->getLastname();
+            $a[] = $user->getEmail();
+            $a[] = $user->getOptin();
+            $a[] = $user->getOptinPartner();
+            $a[] = $user->getAddress();
+            $a[] = $user->getAddress2();
+            $a[] = $user->getPostalCode();
+            $a[] = $user->getCity();
+            $a[] = $user->getTelephone();
+            $a[] = $user->getMobile();
+            $a[] = $user->getCreatedAt()->format('d/m/Y');
+            $a[] = (!empty($user->getDob()))?$user->getDob()->format('d/m/Y'):'';
+            $roles='';
+            $cr=count($user->getRoles());
+            $i=0;
+            foreach($user->getRoles() as $r){
+                $roles .= $r->getRoleId();
+                if($i<$cr-1) $roles .= '|';
+                $i++;
+            }
+            $a[] = $roles;
+            $teams='';
+            $ct=count($user->getTeams());
+            $i=0;
+            foreach($user->getTeams() as $t){
+                $teams .= $t->getName();
+                if($i<$ct-1) $teams .= '|';
+                $i++;
+            }
+            $a[] = $teams;
+
+            $users[] = $a;
+        }
+
+        return $users;
     }
 
     public function getUsersByRole($role = 1, $order = 'DESC', $search = '')
@@ -819,6 +895,22 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         }
 
         return $user;
+    }
+
+    /**
+     *  getCSV creates lines of CSV and returns it.
+     */
+    public function getCSV($array)
+    {
+        ob_start(); // buffer the output ...
+        $out = fopen('php://output', 'w');
+        fputcsv($out, array_keys($array[0]), ";");
+        array_shift($array);
+        foreach ($array as $line) {
+            fputcsv($out, $line, ";");
+        }
+        fclose($out);
+        return ob_get_clean(); // ... then return it as a string!
     }
 
     public function findAll()
