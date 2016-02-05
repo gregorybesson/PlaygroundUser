@@ -494,19 +494,21 @@ return array(
                                         'filter' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                     ),
                                 ),
-                                /*'may_terminate' => true,
-                                'child_routes' => array(
-                                    'pagination' => array(
-                                        'type'    => 'Segment',
-                                        'options' => array(
-                                            'route'    => '[/:p]',
-                                            'defaults' => array(
-                                                'controller' => 'playgrounduseradmin',
-                                                'action'     => 'list',
-                                            ),
-                                        ),
+                            ),
+                            'download' => array(
+                                'type' => 'Segment',
+                                'options' => array(
+                                    'route' => '/download/:roleId[/:filter][/:p]',
+                                    'defaults' => array(
+                                        'controller' => 'playgrounduseradmin',
+                                        'action'     => 'download',
+                                        'roleId' 	 => 'all',
+                                        'filter' 	 => 'DESC'
                                     ),
-                                ),*/
+                                    'constraints' => array(
+                                        'filter' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                    ),
+                                ),
                             ),
                             'create' => array(
                                 'type' => 'Segment',
