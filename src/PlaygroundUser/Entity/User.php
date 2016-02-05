@@ -772,17 +772,6 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
             $obj_vars['dob'] = $obj_vars['dob']->format('d/m/Y');
         }
 
-        if (isset($obj_vars['roles'])) {
-            foreach($obj_vars['roles'] as $role)
-            $obj_vars['roles'][] = $role;
-        }
-
-        if (isset($obj_vars['teams'])) {
-            foreach($obj_vars['teams'] as $team)
-            $obj_vars['teams'][] = $team;
-        }
-
-print_r($obj_vars);
         return $obj_vars;
     }
 
