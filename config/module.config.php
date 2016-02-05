@@ -455,6 +455,7 @@ return array(
             		'defaults' => array(
            				'controller' => 'playgrounduseradmin_login',
            				'action'     => 'login',
+           				'title' => 'Back-office'
             		),
             	),
                 'child_routes' => array(
