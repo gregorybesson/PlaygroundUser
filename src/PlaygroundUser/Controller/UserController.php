@@ -890,6 +890,23 @@ class UserController extends ZfcUserController
         return $response;
     }
 
+    /**
+     * You can search for a user based on any user field
+     *
+     */
+    public function autoCompleteUserAction()
+    {
+        $field = $this->getEvent()->getRouteMatch()->getParam('field');
+        $value = $this->getEvent()->getRouteMatch()->getParam('value');
+        $request = $this->getRequest();
+        $response = $this->getResponse();
+
+        $result = $this->getUserService()->autoCompleteUser($field, $value);
+        $response->setContent(\Zend\Json\Json::encode($result));
+
+        return $response;
+    }
+
     public function checkTokenAction()
     {
         $service = $this->getUserService();

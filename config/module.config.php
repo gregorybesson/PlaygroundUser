@@ -177,6 +177,24 @@ return array(
        			            ),
        			        ),
        			    ),
+       			    'autocomplete' => array(
+       			    	'type' => 'Segment',
+		                'options' => array(
+		                    'route' => 'autocomplete',
+		                ),
+		                'child_routes' => array(
+		                	'user' => array(
+		                        'type' => 'Segment',
+		                        'options' => array(
+		                            'route' => '/user/:field/:value',
+		                            'defaults' => array(
+		                                'controller' => 'playgrounduser_user',
+		                                'action'     => 'autoCompleteUser',
+		                            )
+		                        )
+		                    )
+		                )
+       			    ),
 		            'zfcuser' => array(
 		                'type' => 'Literal',
 		                'priority' => 1000,
