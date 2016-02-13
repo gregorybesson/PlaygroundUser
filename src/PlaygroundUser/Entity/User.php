@@ -764,7 +764,7 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
     {
         $obj_vars = get_object_vars($this);
 
-        if(isset($obj_vars['inputFilter'])) {
+        if (isset($obj_vars['inputFilter'])) {
             unset($obj_vars['inputFilter']);
         }
 

@@ -533,6 +533,27 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
         $mailService->send($message);
     }
 
+    public function autoCompleteUser($field, $value)
+    {
+        $em = $this->getServiceManager()->get('doctrine.entitymanager.orm_default');
+
+        // I Have to know what is the User Class used
+        $zfcUserOptions = $this->getServiceManager()->get('zfcuser_module_options');
+        $userClass = $zfcUserOptions->getUserEntityClass();
+
+        $qb = $em->createQueryBuilder();
+        $qb->select('u.id, u.'.$field)
+            ->from($userClass, 'u')
+            ->where($qb->expr()->like('u.'.$field, ':value'))
+            ->orderBy('u.'.$field, 'ASC')
+            ->setParameter('value', '%'.$value.'%');
+
+        $query = $qb->getQuery();
+        $array = $query->getArrayResult();
+
+        return $array;
+    }
+
     /**
      * Update user informations
      *
@@ -820,9 +841,9 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
                 'dob' => 1,
                 'role' => 1 ,
                 'team' => 1
-            )         
+            )
         );
-        foreach($query->getResult() as $user){
+        foreach ($query->getResult() as $user) {
             $a = array();
             $a[] = $user->getId();
             $a[] = $user->getUsername();
@@ -843,18 +864,22 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
             $roles='';
             $cr=count($user->getRoles());
             $i=0;
-            foreach($user->getRoles() as $r){
+            foreach ($user->getRoles() as $r) {
                 $roles .= $r->getRoleId();
-                if($i<$cr-1) $roles .= '|';
+                if ($i<$cr-1) {
+                    $roles .= '|';
+                }
                 $i++;
             }
             $a[] = $roles;
             $teams='';
             $ct=count($user->getTeams());
             $i=0;
-            foreach($user->getTeams() as $t){
+            foreach ($user->getTeams() as $t) {
                 $teams .= $t->getName();
-                if($i<$ct-1) $teams .= '|';
+                if ($i<$ct-1) {
+                    $teams .= '|';
+                }
                 $i++;
             }
             $a[] = $teams;
