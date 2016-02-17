@@ -85,10 +85,7 @@ class Team
 
     public function getEntityRepository()
     {
-        if (null === $this->er) {
-            $this->er = $this->em->getRepository('PlaygroundUser\Entity\Team');
-        }
-
-        return $this->er;
+        
+        return $this->em->getRepository('\PlaygroundUser\Entity\Team');
     }
 }
