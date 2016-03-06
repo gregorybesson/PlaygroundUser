@@ -171,16 +171,6 @@ class Module
         );
     }
 
-    public function getControllerConfig()
-    {
-        return array(
-            'factories' => array(
-                'playgrounduseradmin_login' => 'PlaygroundUser\Service\Factory\AdminUserControllerFactory',
-                'playgrounduser_user' => 'PlaygroundUser\Service\Factory\UserControllerFactory',
-            ),
-        );
-    }
-
     public function getServiceConfig()
     {
         return array(
@@ -189,19 +179,19 @@ class Module
             ),
 
             'invokables' => array(
-                    'PlaygroundUser\Authentication\Adapter\Cookie' => 'PlaygroundUser\Authentication\Adapter\Cookie',
                     'PlaygroundUser\Form\Login'                    => 'PlaygroundUser\Form\Login',
-                    'playgrounduser_user_service'                  => 'PlaygroundUser\Service\User',
-                    'playgrounduser_rememberme_service'            => 'PlaygroundUser\Service\RememberMe',
-                    'playgrounduser_team_service'                  => 'PlaygroundUser\Service\Team',
-                    'playgrounduser_password_service'              => 'PlaygroundUser\Service\Password',
-                    'zfcuser_user_service'                         => 'PlaygroundUser\Service\User', // Extending ZfcUser service
-                    'playgrounduser_cron_service'                  => 'PlaygroundUser\Service\Cron',
-                    'playgrounduser_provider_service'              => 'PlaygroundUser\Service\Provider',
                     'playgrounduser_redirectionstrategy_service'   => 'PlaygroundUser\View\Strategy\RedirectionStrategy',
                ),
 
             'factories' => array(
+                'playgrounduser_user_service'                  => 'PlaygroundUser\Service\Factory\UserFactory',
+                'playgrounduser_rememberme_service'            => 'PlaygroundUser\Service\Factory\RememberMeFactory',
+                'playgrounduser_team_service'                  => 'PlaygroundUser\Service\Factory\TeamFactory',
+                'playgrounduser_password_service'              => 'PlaygroundUser\Service\Factory\PasswordFactory',
+                'zfcuser_user_service'                         => 'PlaygroundUser\Service\Factory\UserFactory', // Extending ZfcUser service
+                'playgrounduser_cron_service'                  => 'PlaygroundUser\Service\Factory\CronFactory',
+                'playgrounduser_provider_service'              => 'PlaygroundUser\Service\Factory\ProviderFactory',
+                'PlaygroundUser\Authentication\Adapter\Cookie' => 'PlaygroundUser\Service\Factory\CookieAdapterFactory',
                 'playgrounduser_authentication_emailvalidation'    => 'PlaygroundUser\Service\Factory\EmailValidationAdapterFactory',
                 'playgrounduser_authentication_hybridauth'         => 'PlaygroundUser\Service\Factory\HybridAuthAdapterFactory',
                 'ZfcUser\Authentication\Adapter\AdapterChain'      => 'PlaygroundUser\Service\Factory\AuthenticationAdapterChainFactory',

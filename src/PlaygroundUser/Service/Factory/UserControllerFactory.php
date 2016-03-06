@@ -6,7 +6,7 @@ use Zend\Mvc\Controller\ControllerManager;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use ZfcUser\Controller\RedirectCallback;
-use PlaygroundUser\Controller\UserController;
+use PlaygroundUser\Controller\Frontend\UserController;
 
 class UserControllerFactory implements FactoryInterface
 {

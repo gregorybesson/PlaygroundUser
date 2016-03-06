@@ -2,18 +2,23 @@
 
 namespace PlaygroundUser\Service;
 
-use Zend\ServiceManager\ServiceManagerAwareInterface;
 use Zend\ServiceManager\ServiceManager;
 use ZfcBase\EventManager\EventProvider;
 use PlaygroundUser\Options\RememberMeOptionsInterface;
 use Zend\Math\Rand;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
-class RememberMe extends EventProvider implements ServiceManagerAwareInterface
+class RememberMe extends EventProvider
 {
     protected $mapper;
     protected $options;
 
     protected $serviceManager;
+
+    public function __construct(ServiceLocatorInterface $locator)
+    {
+        $this->serviceManager = $locator;
+    }
 
     public function createToken($length = 16)
     {
@@ -121,19 +126,6 @@ class RememberMe extends EventProvider implements ServiceManagerAwareInterface
     public function getServiceManager()
     {
         return $this->serviceManager;
-    }
-
-    /**
-     * Set service manager instance
-     *
-     * @param  ServiceManager $locator
-     * @return User
-     */
-    public function setServiceManager(ServiceManager $serviceManager)
-    {
-        $this->serviceManager = $serviceManager;
-
-        return $this;
     }
 
     public function setOptions(RememberMeOptionsInterface $options)

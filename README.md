@@ -129,7 +129,7 @@ If you want to add an action or modify an existing one.
 
 1. Create the controller in your Module (extend the AdfabUser one if you want to use its methods)
 
-        class UserController extends \AdfabUser\Controller\UserController
+        class UserController extends \AdfabUser\Controller\Frontend\UserController
         {
             public function profileAction ()
             {

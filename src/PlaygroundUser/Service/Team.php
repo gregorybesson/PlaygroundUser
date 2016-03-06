@@ -6,13 +6,13 @@ use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\EventManagerAwareInterface;
 use Zend\EventManager\EventManager;
 use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  *
  *
  */
-class Team implements ServiceManagerAwareInterface, EventManagerAwareInterface
+class Team implements EventManagerAwareInterface
 {
     /**
      * Service Manager
@@ -32,16 +32,9 @@ class Team implements ServiceManagerAwareInterface, EventManagerAwareInterface
      */
     protected $teamMapper;
 
-
-    /**
-     * @param  ServiceManager $serviceManager
-     * @return \PlaygroundUser\Service\Team
-     */
-    public function setServiceManager(ServiceManager $serviceManager)
+    public function __construct(ServiceLocatorInterface $locator)
     {
-        $this->serviceManager = $serviceManager;
-
-        return $this;
+        $this->serviceManager = $locator;
     }
 
     /**

@@ -5,22 +5,27 @@ namespace PlaygroundUser\Service;
 use ZfcUser\Options\PasswordOptionsInterface;
 use PlaygroundUser\Options\ForgotOptionsInterface;
 use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
 use PlaygroundUser\Mapper\UserInterface as UserMapperInterface;
 use PlaygroundUser\Mapper\Password as PasswordMapper;
 use Zend\Crypt\Password\Bcrypt;
 use ZfcBase\EventManager\EventProvider;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
-class Password extends EventProvider implements ServiceManagerAwareInterface
+class Password extends EventProvider
 {
     /**
      * @var ModelMapper
      */
     protected $passwordMapper;
     protected $userMapper;
-    protected $serviceLocator;
+    protected $serviceManager;
     protected $options;
     protected $zfcUserOptions;
+
+    public function __construct(ServiceLocatorInterface $locator)
+    {
+        $this->serviceManager = $locator;
+    }
 
     public function findByRequestKey($token)
     {
@@ -98,13 +103,6 @@ class Password extends EventProvider implements ServiceManagerAwareInterface
     public function getServiceManager()
     {
         return $this->serviceManager;
-    }
-
-    public function setServiceManager(ServiceManager $serviceManager)
-    {
-        $this->serviceManager = $serviceManager;
-
-        return $this;
     }
 
     /**

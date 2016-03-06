@@ -1,5 +1,5 @@
 <?php
-namespace PlaygroundUser\Controller;
+namespace PlaygroundUser\Controller\Frontend;
 
 use Hybrid_Auth;
 use Zend\Form\Form;

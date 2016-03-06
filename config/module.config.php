@@ -142,11 +142,13 @@ return array(
     ),
 
     'controllers' => array(
-        'invokables' => array(
-            'playgrounduseradmin'                        => 'PlaygroundUser\Controller\Admin\AdminController',
-            'playgrounduser_team'						 => 'PlaygroundUser\Controller\Frontend\TeamController',
-            'playgrounduser_forgot'                      => 'PlaygroundUser\Controller\ForgotController',
-            'PlaygroundUser\Controller\Frontend\Contact' => 'PlaygroundUser\Controller\Frontend\ContactController'
+        'factories' => array(
+        	'playgrounduseradmin_login' 				 => 'PlaygroundUser\Service\Factory\AdminUserControllerFactory',
+            'playgrounduser_user' 						 => 'PlaygroundUser\Service\Factory\UserControllerFactory',
+            'playgrounduseradmin'                        => 'PlaygroundUser\Service\Factory\AdminControllerFactory',
+            'playgrounduser_team'						 => 'PlaygroundUser\Service\Factory\FrontendeamControllerFactory',
+            'playgrounduser_forgot'                      => 'PlaygroundUser\Service\Factory\FrontendForgotControllerFactory',
+            'PlaygroundUser\Controller\Frontend\Contact' => 'PlaygroundUser\Service\Factory\FrontendContactControllerFactory',
         ),
     ),
 

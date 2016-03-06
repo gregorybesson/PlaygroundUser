@@ -2,12 +2,12 @@
 
 namespace PlaygroundUser\Service;
 
-use Zend\ServiceManager\ServiceManagerAwareInterface;
 use Zend\ServiceManager\ServiceManager;
 use ZfcBase\EventManager\EventProvider;
 use PlaygroundUser\Options\ModuleOptions;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
-class Cron extends EventProvider implements ServiceManagerAwareInterface
+class Cron extends EventProvider
 {
 
     /**
@@ -24,6 +24,11 @@ class Cron extends EventProvider implements ServiceManagerAwareInterface
      * @var UserMapperInterface
      */
     protected $userMapper;
+
+    public function __construct(ServiceLocatorInterface $locator)
+    {
+        $this->serviceManager = $locator;
+    }
 
     public static function disableUser($interval = 0)
     {
@@ -115,18 +120,5 @@ class Cron extends EventProvider implements ServiceManagerAwareInterface
     public function getServiceManager()
     {
         return $this->serviceManager;
-    }
-
-    /**
-     * Set service manager instance
-     *
-     * @param  ServiceManager $serviceManager
-     * @return User
-     */
-    public function setServiceManager(ServiceManager $serviceManager)
-    {
-        $this->serviceManager = $serviceManager;
-
-        return $this;
     }
 }

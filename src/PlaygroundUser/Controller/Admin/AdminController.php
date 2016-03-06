@@ -8,12 +8,28 @@ use Zend\View\Model\ViewModel;
 use Zend\Paginator\Paginator;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
 use PlaygroundCore\ORM\Pagination\LargeTablePaginator as ORMPaginator;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 class AdminController extends AbstractActionController
 {
     protected $options;
     protected $userMapper;
     protected $adminUserService;
+    /**
+     *
+     * @var ServiceManager
+     */
+    protected $serviceLocator;
+
+    public function __construct(ServiceLocatorInterface $locator)
+    {
+        $this->serviceLocator = $locator;
+    }
+
+    public function getServiceLocator()
+    {
+        return $this->serviceLocator;
+    }
 
     public function listAction()
     {
