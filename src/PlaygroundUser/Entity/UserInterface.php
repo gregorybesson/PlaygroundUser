@@ -5,18 +5,6 @@ interface UserInterface
 {
     public function createChrono();
     public function updateChrono();
-    public function getId();
-    public function setId($id);
-    public function getUsername();
-    public function setUsername($username);
-    public function getEmail();
-    public function setEmail($email);
-    public function getDisplayName();
-    public function setDisplayName($displayName);
-    public function getPassword();
-    public function setPassword($password);
-    public function getState();
-    public function setState($state);
     public function addRole($role);
     public function getFirstname();
     public function setFirstname($firstname);
