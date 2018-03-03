@@ -4,12 +4,12 @@ namespace PlaygroundUser\Authentication\Adapter;
 
 use ZfcUser\Authentication\Adapter\AbstractAdapter;
 use Zend\Authentication\Result as AuthenticationResult;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
 use Zend\ServiceManager\ServiceManager;
 use Zend\Stdlib\ResponseInterface as Response;
 use ZfcUser\Authentication\Adapter\AdapterChainEvent as AuthEvent;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
-class Cookie extends AbstractAdapter implements ServiceManagerAwareInterface
+class Cookie extends AbstractAdapter
 {
     protected $userMapper;
 
@@ -18,6 +18,11 @@ class Cookie extends AbstractAdapter implements ServiceManagerAwareInterface
     protected $serviceManager;
 
     protected $rememberMeService;
+
+    public function __construct(ServiceLocatorInterface $locator)
+    {
+        $this->serviceManager = $locator;
+    }
 
     public function authenticate(AuthEvent $e)
     {

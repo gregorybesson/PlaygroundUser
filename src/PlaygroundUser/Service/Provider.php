@@ -6,9 +6,9 @@ use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\EventManagerAwareInterface;
 use Zend\EventManager\EventManager;
 use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
-class Provider implements ServiceManagerAwareInterface, EventManagerAwareInterface
+class Provider implements EventManagerAwareInterface
 {
     /**
      * Service Manager
@@ -40,17 +40,9 @@ class Provider implements ServiceManagerAwareInterface, EventManagerAwareInterfa
      */
     protected $SocialConfig;
 
-
-    /**
-     * affecte le service manager
-     * @param  ServiceManager          $serviceManager
-     * @return \Skill\Service\Concerto
-     */
-    public function setServiceManager(ServiceManager $serviceManager)
+    public function __construct(ServiceLocatorInterface $locator)
     {
-        $this->serviceManager = $serviceManager;
-
-        return $this;
+        $this->serviceManager = $locator;
     }
 
     /**

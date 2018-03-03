@@ -5,10 +5,9 @@ namespace PlaygroundUser\Authentication\Adapter;
 use ZfcUser\Authentication\Adapter\AbstractAdapter;
 use Zend\Authentication\Result as AuthenticationResult;
 use ZfcUser\Authentication\Adapter\AdapterChainEvent as AuthEvent;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
 use Zend\ServiceManager\ServiceManager;
 
-class EmailValidation extends AbstractAdapter implements ServiceManagerAwareInterface
+class EmailValidation extends AbstractAdapter
 {
     protected $userMapper;
 

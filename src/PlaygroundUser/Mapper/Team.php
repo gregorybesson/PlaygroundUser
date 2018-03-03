@@ -85,7 +85,6 @@ class Team
 
     public function getEntityRepository()
     {
-        
         return $this->em->getRepository('\PlaygroundUser\Entity\Team');
     }
 }

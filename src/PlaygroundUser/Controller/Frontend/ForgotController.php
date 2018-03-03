@@ -1,12 +1,13 @@
 <?php
 
-namespace PlaygroundUser\Controller;
+namespace PlaygroundUser\Controller\Frontend;
 
 use Zend\Form\Form;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use PlaygroundUser\Service\Password as PasswordService;
 use PlaygroundUser\Options\ForgotControllerOptionsInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 class ForgotController extends AbstractActionController
 {
@@ -46,6 +47,22 @@ class ForgotController extends AbstractActionController
      * @var ForgotControllerOptionsInterface
      */
     protected $options;
+
+    /**
+     *
+     * @var ServiceManager
+     */
+    protected $serviceLocator;
+
+    public function __construct(ServiceLocatorInterface $locator)
+    {
+        $this->serviceLocator = $locator;
+    }
+
+    public function getServiceLocator()
+    {
+        return $this->serviceLocator;
+    }
 
     /**
      * User page

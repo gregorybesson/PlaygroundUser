@@ -5,7 +5,6 @@ use Hybrid_Auth;
 use PlaygroundUser\Mapper\UserProvider;
 use PlaygroundUser\Options\ModuleOptions;
 use Zend\Authentication\Result;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
 use Zend\ServiceManager\ServiceManager;
 use ZfcUser\Authentication\Adapter\AbstractAdapter;
 use ZfcUser\Authentication\Adapter\AdapterChainEvent as AuthEvent;
@@ -15,7 +14,7 @@ use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\EventManager;
 use Zend\EventManager\EventManagerAwareInterface;
 
-class HybridAuth extends AbstractAdapter implements ServiceManagerAwareInterface, EventManagerAwareInterface
+class HybridAuth extends AbstractAdapter implements EventManagerAwareInterface
 {
     /**
      * @var Hybrid_Auth

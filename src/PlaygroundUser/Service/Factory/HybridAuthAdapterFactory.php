@@ -33,6 +33,7 @@ class HybridAuthAdapterFactory implements FactoryInterface
         $adapter->setZfcUserOptions($zfcUserOptions);
         $adapter->setMapper($mapper);
         $adapter->setZfcUserMapper($zfcUserMapper);
+        $adapter->setServiceManager($services);
 
         return $adapter;
     }
