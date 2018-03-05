@@ -6,6 +6,7 @@ use ZfcUser\Authentication\Adapter\AbstractAdapter;
 use Zend\Authentication\Result as AuthenticationResult;
 use ZfcUser\Authentication\Adapter\AdapterChainEvent as AuthEvent;
 use Zend\ServiceManager\ServiceManager;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 class EmailValidation extends AbstractAdapter
 {
@@ -14,6 +15,11 @@ class EmailValidation extends AbstractAdapter
     protected $userService;
 
     protected $serviceManager;
+
+    public function __construct(ServiceLocatorInterface $locator)
+    {
+        $this->serviceManager = $locator;
+    }
 
     public function authenticate(AuthEvent $e)
     {
