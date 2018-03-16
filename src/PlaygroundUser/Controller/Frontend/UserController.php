@@ -404,7 +404,12 @@ class UserController extends ZfcUserController
      */
     public function profileAction()
     {
-        $translator = $this->getServiceLocator()->get('translator');
+      // fix new implementation of servicelocator
+        try {
+            $translator = $this->getServiceLocator()->get('translator');
+        } catch (\Exception $e) {
+          //echo ($e->getMessage());
+        }
         if (! $this->zfcUserAuthentication()->hasIdentity()) {
             return $this->redirect()->toUrl(
                 $this->url()->fromRoute(

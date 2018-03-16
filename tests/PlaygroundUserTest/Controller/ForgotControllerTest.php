@@ -56,7 +56,7 @@ class ForgotControllerTest extends AbstractHttpControllerTestCase
         ->disableOriginalConstructor()
         ->getMock();
         
-        $serviceManager->setService('zfcuser_user_service', $f);
+        $serviceManager->setService('playgrounduser_user_service', $f);
         
         $userMock = $this->getMockBuilder('PlaygroundUser\Mapper\User')
         ->disableOriginalConstructor()
