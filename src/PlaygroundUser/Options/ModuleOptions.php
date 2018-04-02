@@ -144,6 +144,12 @@ class ModuleOptions extends BaseModuleOptions implements
     protected $emailConfirmation = false;
 
     /**
+     * Do we use Google ReCaptcha for registration ?
+     * @var boolean
+     */
+    protected $use_recaptcha = false;
+
+    /**
      * @var string
      */
     protected $defaultRegisterRole = 'user';
@@ -159,6 +165,22 @@ class ModuleOptions extends BaseModuleOptions implements
         'action' => 'index',
         'route_login_fail' => 'admin'
     );
+
+    /**
+     * @return the $use_recaptcha
+     */
+    public function getUseRecaptcha()
+    {
+        return $this->use_recaptcha;
+    }
+
+    /**
+     * @param string $use_recaptcha
+     */
+    public function setUseRecaptcha($use_recaptcha)
+    {
+        $this->use_recaptcha = $use_recaptcha;
+    }
 
     /**
      * @return the $emailVerification

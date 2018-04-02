@@ -15,4 +15,8 @@ interface UserCreateOptionsInterface
     public function getCreateFormElements();
 
     public function setCreateFormElements(array $elements);
+
+    public function getUseRecaptcha();
+
+    public function setUseRecaptcha($use_recaptcha);
 }
