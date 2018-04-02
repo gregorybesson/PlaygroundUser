@@ -176,6 +176,8 @@ class UserController extends ZfcUserController
             $socialCredentials
         );
 
+        if(isset($post['optin'])) $post['optin'] = 1;
+        if(isset($post['optinPartner'])) $post['optinPartner'] = 1;
         $user = $service->register($post);
 
         if (! $user) {

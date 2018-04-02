@@ -1,120 +1,123 @@
 <?php
 $playgrounduser = array(
         
-        /**
-         * add default registration role to BjyAuthorize
-         *
-         */
-        'default_register_role' => 'user',
-        
-        /**
-	     * @var bool
-	     * true = create user automatically after social authentication
-	     * false = data are extracted from the social id and sent to a registration form
-	     */
-	    'createUserAutoSocial' => false,
-        
-        /**
-         * Email Address that will appear in the 'From' of outbound emails
-         *
-         * Default: empty
-         */     
-        'email_from_address' => array(
-            'email' => 'contact@playground.gg',
-            'name' => 'Administrateur',
-        ),
-        
-        /**
-         * Subject line of the email message which is
-         * sent out when a user enters their email address
-         *
-         * Default: 'You requested to reset your password'
-         */
-        'reset_email_subject_line' => 'Réinitialisation de votre mot de passe',
-        
-        /**
-         * Subject line of the email message which is
-         * sent out when an admin has changed the password
-         * in the admin interface
-         *
-         * Default: 'Your new password'
-         */
-        'new_email_subject_line' => 'Votre nouveau mot de passe',
-        
-        /**
-         * Activate the email verification on registration
-         *
-         * Default: 'Vérification de votre compte'
-         */
-        'emailVerification' => true,
+    /**
+        * add default registration role to BjyAuthorize
+        *
+        */
+    'default_register_role' => 'user',
+    
+    /**
+        * @var bool
+        * true = create user automatically after social authentication
+        * false = data are extracted from the social id and sent to a registration form
+        */
+    'createUserAutoSocial' => false,
+    
+    /**
+        * Email Address that will appear in the 'From' of outbound emails
+        *
+        * Default: empty
+        */     
+    'email_from_address' => array(
+        'email' => 'contact@playground.gg',
+        'name' => 'Administrateur',
+    ),
+    
+    /**
+        * Subject line of the email message which is
+        * sent out when a user enters their email address
+        *
+        * Default: 'You requested to reset your password'
+        */
+    'reset_email_subject_line' => 'Réinitialisation de votre mot de passe',
+    
+    /**
+        * Subject line of the email message which is
+        * sent out when an admin has changed the password
+        * in the admin interface
+        *
+        * Default: 'Your new password'
+        */
+    'new_email_subject_line' => 'Votre nouveau mot de passe',
+    
+    /**
+        * Activate the email verification on registration
+        *
+        * Default: 'Vérification de votre compte'
+        */
+    'emailVerification' => true,
 
-        /**
-         * Activate the email confirmation on registration
-         *
-         * Default: false
-         * Default subject : 'Merci de votre inscription'
-         */
-        'emailConfirmation' => true,
-        
-        /**
-         * Subject line of the email message which is
-         * sent out when verification on email registration
-         * is activated
-         * 
-         * Default: 'Vérification de votre compte'
-         */
-        'verificationEmailSubjectLine' => 'Vérification de votre compte',
-        
-        /**
-         * RememberMe Model Entity Class
-         *
-         * Name of Entity class to use. Useful for using your own entity class
-         * instead of the default one provided. Default is ZfcUser\Entity\User.
-         */
-        'remember_me_entity_class' => 'PlaygroundUser\Entity\RememberMe',
-        
-        /**
-         * Remember me cookie expire time
-         *
-         * How long will the user be remembered for, in seconds?
-         *
-         * Default value: 2592000 seconds = 30 days
-         * Accepted values: the number of seconds the user should be remembered
-         */
-        'cookie_expire' => 2592000,
-        
-        /**
-         * Drive path to the directory where user avatar will be stored
-         */
-        'avatar_path' => 'public' . DIRECTORY_SEPARATOR . 'media' . DIRECTORY_SEPARATOR . 'user',
-        
-        /**
-         * Url relative path to the directory where user avatar will be stored
-         */
-        'avatar_url' => 'media/user',
-        
-        'social' => array(
-            'providers' => include __DIR__.'/social.config.php',
-            // if you want to enable logging, set 'debug_mode' to true  then provide a writable file by the web server on 'debug_file'
-            'debug_mode' => false,
-            'debug_file' => '',
-            'config_file' => __DIR__.'/social.config.php',
-        ),
-        'admin' => array(
-            // login route
-            'route_login' => 'admin',
-            // resource associated to admin access
-            'resource' => 'core',
-            // privilege associated to admin access
-            'privilege'   => 'dashboard',
-            // controller & action if auth success
-            'controller' => 'PlaygroundDesign\Controller\Dashboard',
-            'action' => 'index',
-            // route if auth fail
-            'route_login_fail' => 'admin'
-        ),
+    /**
+        * Activate the email confirmation on registration
+        *
+        * Default: false
+        * Default subject : 'Merci de votre inscription'
+        */
+    'emailConfirmation' => true,
+    
+    /**
+        * Subject line of the email message which is
+        * sent out when verification on email registration
+        * is activated
+        * 
+        * Default: 'Vérification de votre compte'
+        */
+    'verificationEmailSubjectLine' => 'Vérification de votre compte',
+    
+    /**
+        * RememberMe Model Entity Class
+        *
+        * Name of Entity class to use. Useful for using your own entity class
+        * instead of the default one provided. Default is ZfcUser\Entity\User.
+        */
+    'remember_me_entity_class' => 'PlaygroundUser\Entity\RememberMe',
+    
+    /**
+        * Remember me cookie expire time
+        *
+        * How long will the user be remembered for, in seconds?
+        *
+        * Default value: 2592000 seconds = 30 days
+        * Accepted values: the number of seconds the user should be remembered
+        */
+    'cookie_expire' => 2592000,
+    
+    /**
+        * Drive path to the directory where user avatar will be stored
+        */
+    'avatar_path' => 'public' . DIRECTORY_SEPARATOR . 'media' . DIRECTORY_SEPARATOR . 'user',
+    
+    /**
+        * Url relative path to the directory where user avatar will be stored
+        */
+    'avatar_url' => 'media/user',
+    
+    'social' => array(
+        'providers' => include __DIR__.'/social.config.php',
+        // if you want to enable logging, set 'debug_mode' to true  then provide a writable file by the web server on 'debug_file'
+        'debug_mode' => false,
+        'debug_file' => '',
+        'config_file' => __DIR__.'/social.config.php',
+    ),
+    'admin' => array(
+        // login route
+        'route_login' => 'admin',
+        // resource associated to admin access
+        'resource' => 'core',
+        // privilege associated to admin access
+        'privilege'   => 'dashboard',
+        // controller & action if auth success
+        'controller' => 'PlaygroundDesign\Controller\Dashboard',
+        'action' => 'index',
+        // route if auth fail
+        'route_login_fail' => 'admin'
+    ),
 
-        'anonymous_tracking' => false,
+    'anonymous_tracking' => false,
+
+    // Do we use Google ReCaptcha for registration vamidation ?
+    'use_recaptcha' => false
 );
 
 /**

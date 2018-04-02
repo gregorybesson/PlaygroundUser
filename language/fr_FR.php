@@ -454,5 +454,6 @@ return array(
 	'Finalize your registration now and try to win a lot of gifts!' => 'Finaliser d&egrave;s &agrave; pr&eacute;sent votre inscription et tenter de gagner plein de cadeaux!',
 	'Validate registration' => 'Valider l\'inscription',
 	'If this link does not display correctly, <br/> copy and paste this URL into your browser' => 'Si ce lien ne s\'affiche pas correctement, <br/>copiez-collez cette URL dans votre navigateur',
+	'This email already exists !' => 'Cet email existe déjà dans notre base',
 	
 );
