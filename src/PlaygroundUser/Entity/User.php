@@ -872,7 +872,7 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
 
             $inputFilter->add($factory->createInput(array(
                 'name'     => 'firstname',
-                'required' => true,
+                'required' => false,
                 'filters'  => array(
                     array('name' => 'StringTrim'),
                 ),
@@ -896,7 +896,7 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
 
             $inputFilter->add($factory->createInput(array(
                 'name'     => 'lastname',
-                'required' => true,
+                'required' => false,
                 'filters'  => array(
                     array('name' => 'StringTrim'),
                 ),
