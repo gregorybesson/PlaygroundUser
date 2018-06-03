@@ -14,7 +14,7 @@ class AuthenticationAdapterChainFactory implements FactoryInterface
         $adapter = $services->get('playgrounduser_authentication_hybridauth');
         $chain->getEventManager()->attach('authenticate', array($adapter, 'authenticate'), 90);
         $adapter = $services->get('playgrounduser_authentication_emailvalidation');
-        $chain->getEventManager()->attach('authenticate', array($adapter, 'authenticate'), 1100);
+        $chain->getEventManager()->attach('authenticate', array($adapter, 'authenticate'), 100);
 
         return $chain;
     }
