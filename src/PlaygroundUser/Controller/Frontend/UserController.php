@@ -937,7 +937,8 @@ class UserController extends ZfcUserController
         }
 
         return $this->forward()->dispatch('playgrounduser_user', array(
-            'action' => 'authenticate'
+            'action' => 'authenticate',
+            'token' => $token
         ));
     }
 

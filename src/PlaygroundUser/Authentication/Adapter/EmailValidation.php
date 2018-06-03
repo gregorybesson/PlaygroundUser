@@ -63,8 +63,8 @@ class EmailValidation extends AbstractAdapter
         $storage['identity'] = $e->getIdentity();
         $this->getStorage()->write($storage);
         $e->setCode(AuthenticationResult::SUCCESS)
-        ->setMessages(array('Authentication successful.'))
-        ->stopPropagation();
+        ->setMessages(array('Authentication successful.'));
+        //->stopPropagation();
     }
 
     /**
