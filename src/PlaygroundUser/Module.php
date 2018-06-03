@@ -170,7 +170,8 @@ class Module
     public function getServiceConfig()
     {
         return array(
-            'aliases'                 => array(
+            'allow_override' => true,
+            'aliases' => array(
                 'playgrounduser_message' => 'playgroundcore_message',
                 'zfcuser_user_service'   => 'playgrounduser_user_service',
             ),
