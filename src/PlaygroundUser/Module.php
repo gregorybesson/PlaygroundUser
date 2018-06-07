@@ -178,10 +178,10 @@ class Module
             'invokables'                                  => array(
                 'PlaygroundUser\Form\Login'                  => 'PlaygroundUser\Form\Login',
                 'playgrounduser_redirectionstrategy_service' => 'PlaygroundUser\View\Strategy\RedirectionStrategy',
+                'playgrounduser_user_service'                  => 'PlaygroundUser\Service\User',
             ),
 
             'factories'                                      => array(
-                'playgrounduser_user_service'                   => 'PlaygroundUser\Service\Factory\UserFactory',
                 'playgrounduser_rememberme_service'             => 'PlaygroundUser\Service\Factory\RememberMeFactory',
                 'playgrounduser_team_service'                   => 'PlaygroundUser\Service\Factory\TeamFactory',
                 'playgrounduser_password_service'               => 'PlaygroundUser\Service\Factory\PasswordFactory',
