@@ -44,6 +44,12 @@ class Team implements InputFilterAwareInterface
     protected $logo;
 
     /**
+     * @ORM\ManyToOne(targetEntity="PlaygroundUser\Entity\User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="user_id", onDelete="CASCADE")
+     **/
+    protected $host;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection
      * @ORM\ManyToMany(targetEntity="PlaygroundUser\Entity\User", inversedBy="teams", cascade={"persist"})
      * @ORM\JoinTable(name="user_team_user",
@@ -123,6 +129,29 @@ class Team implements InputFilterAwareInterface
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getHost()
+    {
+        return $this->host;
+    }
+
+    /**
+     * Set host.
+     *
+     * @param string $host
+     *
+     * @return void
+     */
+    public function setHost($host)
+    {
+        $this->host = $host;
 
         return $this;
     }
