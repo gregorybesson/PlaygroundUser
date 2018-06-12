@@ -23,7 +23,7 @@
 	],
 	"require" : {
 		"php" : ">=5.5.0",
-		"playground/design" : "2.*",
+		"playground/design" : ">=3.0.0",
 		"zendframework/zend-developer-tools" : "1.*@RC",
 		"playground/hybridauth" : "2.*",
 		"zf-commons/zfc-user" : "1.*"
