@@ -7,6 +7,7 @@ use Zend\Stdlib\ResponseInterface as Response;
 use Zend\Stdlib\Parameters;
 use ZfcUser\Controller\UserController as ZfcUserController;
 use Zend\View\Model\ViewModel;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 class UserController extends ZfcUserController
 {
@@ -37,11 +38,21 @@ class UserController extends ZfcUserController
     protected $hybridAuth;
 
     /**
-     * @param callable $redirectCallback
+     *
+     * @var ServiceManager
      */
-    public function __construct($redirectCallback)
+    protected $serviceLocator;
+
+    public function __construct(ServiceLocatorInterface $locator)
     {
+        $this->serviceLocator = $locator;
+        $redirectCallback = $locator->get('zfcuser_redirect_callback');
         parent::__construct($redirectCallback);
+    }
+
+    public function getServiceLocator()
+    {
+        return $this->serviceLocator;
     }
 
     /**
@@ -959,9 +970,9 @@ class UserController extends ZfcUserController
      */
     public function getChangeInfoForm()
     {
+
         if (! $this->changeInfoForm) {
-            $this->setChangeInfoForm($this->getServiceLocator()
-                ->get('playgrounduser_change_info_form'));
+            $this->setChangeInfoForm($this->getServiceLocator()->get('playgrounduser_change_info_form'));
         }
 
         return $this->changeInfoForm;
