@@ -5,7 +5,6 @@ namespace PlaygroundUser\Service;
 use PlaygroundUser\Entity\UserProvider;
 use Zend\Form\Form;
 use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\ServiceManagerAwareInterface;
 use Zend\Crypt\Password\Bcrypt;
 use PlaygroundUser\Options\ModuleOptions;
 use Zend\Validator\File\Size;
@@ -15,7 +14,7 @@ use PlaygroundUser\Entity\User as UserEntity;
 use PlaygroundUser\Entity\Role;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
+class User extends \ZfcUser\Service\User
 {
 
     /**
@@ -51,10 +50,10 @@ class User extends \ZfcUser\Service\User implements ServiceManagerAwareInterface
      */
     protected $options;
 
-    // public function __construct(ServiceLocatorInterface $locator)
-    // {
-    //     $this->serviceManager = $locator;
-    // }
+    public function __construct(ServiceLocatorInterface $locator)
+    {
+        $this->serviceManager = $locator;
+    }
 
     /**
      * functional mandatory fields go in the form validator part
