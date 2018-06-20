@@ -5,9 +5,9 @@ namespace PlaygroundUser\Mapper;
 use Doctrine\ORM\EntityManager;
 use PlaygroundUser\Options\ModuleOptions;
 use Zend\Stdlib\Hydrator\HydratorInterface;
-use ZfcBase\Mapper\AbstractDbMapper;
 
-class Role extends AbstractDbMapper
+
+class Role
 {
     /**
      * @var \Doctrine\ORM\EntityManager

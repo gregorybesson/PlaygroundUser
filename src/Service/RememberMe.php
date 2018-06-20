@@ -3,13 +3,15 @@
 namespace PlaygroundUser\Service;
 
 use Zend\ServiceManager\ServiceManager;
-use ZfcBase\EventManager\EventProvider;
+use Zend\EventManager\EventManagerAwareTrait;
 use PlaygroundUser\Options\RememberMeOptionsInterface;
 use Zend\Math\Rand;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class RememberMe extends EventProvider
+class RememberMe
 {
+    use EventManagerAwareTrait;
+
     protected $mapper;
     protected $options;
 

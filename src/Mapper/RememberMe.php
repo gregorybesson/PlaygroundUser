@@ -5,9 +5,9 @@ namespace PlaygroundUser\Mapper;
 use Doctrine\ORM\EntityManager;
 use PlaygroundUser\Options\ModuleOptions;
 use Zend\Stdlib\Hydrator\HydratorInterface;
-use ZfcBase\Mapper\AbstractDbMapper;
 
-class RememberMe extends AbstractDbMapper
+
+class RememberMe
 {
     /**
      * @var \Doctrine\ORM\EntityManager

@@ -5,10 +5,12 @@ use Doctrine\ORM\EntityManager;
 use PlaygroundUser\Options\ModuleOptions;
 use PlaygroundUser\Entity\EmailVerification as Model;
 use Zend\Stdlib\Hydrator\HydratorInterface;
-use ZfcBase\EventManager\EventProvider;
+use Zend\EventManager\EventManagerAwareTrait;
 
-class EmailVerification extends EventProvider
+class EmailVerification
 {
+    use EventManagerAwareTrait;
+
     /**
      * @var \Doctrine\ORM\EntityManager
      */

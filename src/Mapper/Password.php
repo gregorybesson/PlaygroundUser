@@ -1,12 +1,12 @@
 <?php
 namespace PlaygroundUser\Mapper;
 
-use ZfcBase\Mapper\AbstractDbMapper;
+
 use PlaygroundUser\Entity\Password as Model;
 use Zend\Stdlib\Hydrator\HydratorInterface;
 use Zend\Db\Sql\Sql;
 
-class Password extends AbstractDbMapper
+class Password
 {
     protected $tableName         = 'user_password_reset';
     protected $keyField          = 'request_key';

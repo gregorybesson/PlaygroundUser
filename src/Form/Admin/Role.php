@@ -4,7 +4,7 @@ namespace PlaygroundUser\Form\Admin;
 use Zend\Form\Element;
 use Zend\Form\Form;
 use PlaygroundUser\Options\UserCreateOptionsInterface;
-use ZfcBase\Form\ProvidesEventsForm;
+use ZfcUser\Form\ProvidesEventsForm;
 use ZfcUser\Options\RegistrationOptionsInterface;
 use Zend\Mvc\I18n\Translator;
 
