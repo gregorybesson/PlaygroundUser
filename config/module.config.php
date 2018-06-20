@@ -143,7 +143,7 @@ return array(
 
     'controllers' => array(
         'factories' => array(
-        	\PlaygroundUser\Controller\Admin\LoginController::class => \PlaygroundUser\Service\Factory\AdminUserControllerFactory::class,
+        	\PlaygroundUser\Controller\Admin\LoginController::class => \PlaygroundUser\Service\Factory\AdminLoginControllerFactory::class,
             \PlaygroundUser\Controller\Admin\AdminController::class => \PlaygroundUser\Service\Factory\AdminControllerFactory::class,
             \PlaygroundUser\Controller\Frontend\UserController::class => \PlaygroundUser\Service\Factory\UserControllerFactory::class,
             \PlaygroundUser\Controller\Frontend\TeamController::class => \PlaygroundUser\Service\Factory\FrontendTeamControllerFactory::class,
@@ -730,7 +730,7 @@ return array(
 	        'route_login' => 'admin',
 	        'resource' => 'core',
 	        'privilege'   => 'dashboard',
-	        'controller' => 'PlaygroundDesign\Controller\Dashboard',
+	        'controller' => \PlaygroundDesign\Controller\Admin\Dashboard::class,
 	        'action' => 'index',
 	        'route_login_fail' => 'admin'
 	    )
