@@ -39,7 +39,7 @@ class ForgotControllerTest extends AbstractHttpControllerTestCase
         $this->assertResponseStatusCode(200);
 
         $this->assertModuleName('playgrounduser');
-        $this->assertControllerName('playgrounduser_forgot');
+        $this->assertControllerName(\PlaygroundUser\Controller\Frontend\ForgotController::class);
         $this->assertControllerClass('ForgotController');
         $this->assertActionName('forgot');
         $this->assertMatchedRouteName('frontend/zfcuser/forgotpassword');
@@ -75,7 +75,7 @@ class ForgotControllerTest extends AbstractHttpControllerTestCase
         $this->assertResponseStatusCode(200);
 
         $this->assertModuleName('playgrounduser');
-        $this->assertControllerName('playgrounduser_forgot');
+        $this->assertControllerName(\PlaygroundUser\Controller\Frontend\ForgotController::class);
         $this->assertControllerClass('ForgotController');
         $this->assertActionName('sent');
         $this->assertMatchedRouteName('frontend/zfcuser/sentpassword');

@@ -30,7 +30,7 @@ class LoginControllerTest extends AbstractHttpControllerTestCase
     	$this->assertResponseStatusCode(302);
 
     	$this->assertModuleName('playgrounduser');
-    	$this->assertControllerName('playgrounduseradmin_login');
+    	$this->assertControllerName(\PlaygroundUser\Controller\Admin\LoginController::class);
     	$this->assertControllerClass('LoginController');
     	$this->assertActionName('login');
     	$this->assertMatchedRouteName('frontend/zfcuser/login');

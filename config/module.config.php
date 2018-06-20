@@ -69,14 +69,14 @@ return array(
         'guards' => array(
             'BjyAuthorize\Guard\Controller' => array(
             	array('controller' => 'zfcuser',   'roles' => array('guest', 'user')),
-                array('controller' => 'playgrounduser_user',   'roles' => array('guest', 'user')),
-                array('controller' => 'playgrounduser_team',   'roles' => array('guest', 'user')),
-                array('controller' => 'playgrounduser_forgot', 'roles' => array('guest', 'user')),
-                array('controller' => 'PlaygroundUser\Controller\Frontend\Contact', 'roles' => array('guest', 'user')),
+                array('controller' => \PlaygroundUser\Controller\Frontend\UserController::class,   'roles' => array('guest', 'user')),
+                array('controller' => \PlaygroundUser\Controller\Frontend\TeamController::class,   'roles' => array('guest', 'user')),
+                array('controller' => \PlaygroundUser\Controller\Frontend\ForgotController::class, 'roles' => array('guest', 'user')),
+                array('controller' => \PlaygroundUser\Controller\Frontend\ContactController::class, 'roles' => array('guest', 'user')),
                 
                 // Admin area
-                array('controller' => 'playgrounduseradmin_login', 'roles' => array('guest', 'user')),
-                array('controller' => 'playgrounduseradmin',       'roles' => array('admin')),
+                array('controller' => \PlaygroundUser\Controller\Admin\LoginController::class, 'roles' => array('guest', 'user')),
+                array('controller' => \PlaygroundUser\Controller\Admin\AdminController::class, 'roles' => array('admin')),
             ),
         ),
     ),
@@ -91,7 +91,7 @@ return array(
                 'playgrounduser' => array(
                     'layout' => 'layout/2columns-left.phtml',
                     'controllers' => array(
-                        'playgrounduser_user' => array(
+                        \PlaygroundUser\Controller\Frontend\UserController::class => array(
                             'children_views' => array(
                                 'col_left' => 'playground-user/user/col-user.phtml'
                             ),
@@ -107,7 +107,7 @@ return array(
                                 )
                             )
                         ),
-                        'playgrounduser_forgot' => array(
+                        \PlaygroundUser\Controller\Frontend\ForgotController::class => array(
                             'layout' => 'layout/1column.phtml'
                         )
                     )
@@ -143,13 +143,16 @@ return array(
 
     'controllers' => array(
         'factories' => array(
-        	'playgrounduseradmin_login' 				 => 'PlaygroundUser\Service\Factory\AdminUserControllerFactory',
-            'playgrounduser_user' 						 => 'PlaygroundUser\Service\Factory\UserControllerFactory',
-            'playgrounduseradmin'                        => 'PlaygroundUser\Service\Factory\AdminControllerFactory',
-            'playgrounduser_team'						 => 'PlaygroundUser\Service\Factory\FrontendeamControllerFactory',
-            'playgrounduser_forgot'                      => 'PlaygroundUser\Service\Factory\FrontendForgotControllerFactory',
-            'PlaygroundUser\Controller\Frontend\Contact' => 'PlaygroundUser\Service\Factory\FrontendContactControllerFactory',
+        	\PlaygroundUser\Controller\Admin\LoginController::class => \PlaygroundUser\Service\Factory\AdminUserControllerFactory::class,
+            \PlaygroundUser\Controller\Admin\AdminController::class => \PlaygroundUser\Service\Factory\AdminControllerFactory::class,
+            \PlaygroundUser\Controller\Frontend\UserController::class => \PlaygroundUser\Service\Factory\UserControllerFactory::class,
+            \PlaygroundUser\Controller\Frontend\TeamController::class => \PlaygroundUser\Service\Factory\FrontendTeamControllerFactory::class,
+            \PlaygroundUser\Controller\Frontend\ForgotController::class => \PlaygroundUser\Service\Factory\FrontendForgotControllerFactory::class,
+            \PlaygroundUser\Controller\Frontend\ContactController::class => \PlaygroundUser\Service\Factory\FrontendContactControllerFactory::class,
         ),
+        'alias' => [
+            'playgrounduser_user'  => \PlaygroundUser\Controller\Frontend\UserController::class,
+        ]
     ),
 
     'router' => array(
@@ -161,7 +164,7 @@ return array(
        			        'options' => array(
        			            'route' => 'contactez-nous',
        			            'defaults' => array(
-       			                'controller' => 'PlaygroundUser\Controller\Frontend\Contact',
+       			                'controller' => \PlaygroundUser\Controller\Frontend\ContactController::class,
        			                'action'     => 'index',
        			            ),
        			        ),
@@ -172,7 +175,7 @@ return array(
        			                'options' => array(
        			                    'route'    => '/confirmation',
        			                    'defaults' => array(
-       			                        'controller' => 'PlaygroundUser\Controller\Frontend\Contact',
+       			                        'controller' => \PlaygroundUser\Controller\Frontend\ContactController::class,
        			                        'action'     => 'confirmation',
        			                    ),
        			                ),
@@ -190,7 +193,7 @@ return array(
 		                        'options' => array(
 		                            'route' => '/user/:field/:value',
 		                            'defaults' => array(
-		                                'controller' => 'playgrounduser_user',
+		                                'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
 		                                'action'     => 'autoCompleteUser',
 		                            )
 		                        )
@@ -214,7 +217,7 @@ return array(
 		                        'options' => array(
 		                            'route' => '/team',
 		                            'defaults' => array(
-		                                'controller' => 'playgrounduser_team',
+		                                'controller' => \PlaygroundUser\Controller\Frontend\TeamController::class,
 		                                'action'     => 'index',
 		                            ),
 		                        ),
@@ -224,7 +227,7 @@ return array(
 		                        'options' => array(
 		                            'route' => '/mot-passe-oublie',
 		                            'defaults' => array(
-		                                'controller' => 'playgrounduser_forgot',
+		                                'controller' => \PlaygroundUser\Controller\Frontend\ForgotController::class,
 		                                'action'     => 'forgot',
 		                            ),
 		                        ),
@@ -234,7 +237,7 @@ return array(
 		                        'options' => array(
 		                            'route' => '/ajax-mot-passe-oublie',
 		                            'defaults' => array(
-		                                'controller' => 'playgrounduser_forgot',
+		                                'controller' => \PlaygroundUser\Controller\Frontend\ForgotController::class,
 		                                'action'     => 'ajaxforgot',
 		                            ),
 		                        ),
@@ -247,7 +250,7 @@ return array(
                                         ':email' => '[a-zA-Z0-9_-@.]+',
                                     ),
 		                            'defaults' => array(
-		                                'controller' => 'playgrounduser_forgot',
+		                                'controller' => \PlaygroundUser\Controller\Frontend\ForgotController::class,
 		                                'action'     => 'sent',
 		                            ),
 		                        ),
@@ -257,7 +260,7 @@ return array(
 		                        'options' => array(
 		                            'route' => '/ajax-renew-password',
 		                            'defaults' => array(
-		                                'controller' => 'playgrounduser_forgot',
+		                                'controller' => \PlaygroundUser\Controller\Frontend\ForgotController::class,
 		                                'action'     => 'ajaxrenewPassword',
 		                            ),
 		                        ),
@@ -267,7 +270,7 @@ return array(
 		                        'options' => array(
 		                            'route' => '/ajaxlogin',
 		                            'defaults' => array(
-		                                    'controller' => 'playgrounduser_user',
+		                                    'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
 		                                    'action'     => 'ajaxlogin',
 		                            ),
 		                        ),
@@ -277,7 +280,7 @@ return array(
 		                        'options' => array(
 		                            'route' => '/login',
 		                            'defaults' => array(
-		                                'controller' => 'playgrounduser_user',
+		                                'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
 		                                'action'     => 'login',
 		                            ),
 		                        ),
@@ -291,7 +294,7 @@ return array(
 		                                        'provider' => '[a-zA-Z][a-zA-Z0-9_-]+',
 		                                    ),
 		                                    'defaults' => array(
-		                                        'controller' => 'playgrounduser_user',
+		                                        'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
 		                                        'action' => 'providerLogin',
 		                                    ),
 		                                ),
@@ -303,7 +306,7 @@ return array(
 		                        'options' => array(
 		                            'route' => '/logout',
 		                            'defaults' => array(
-		                                'controller' => 'playgrounduser_user',
+		                                'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
 		                                'action'     => 'logout',
 		                            ),
 		                        ),
@@ -313,7 +316,7 @@ return array(
 		                        'options' => array(
 		                            'route' => '/ajaxauthenticate',
 		                            'defaults' => array(
-		                                'controller' => 'playgrounduser_user',
+		                                'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
 		                                'action'     => 'ajaxauthenticate',
 		                            ),
 		                        ),
@@ -333,7 +336,7 @@ return array(
 		                        'options' => array(
 		                            'route' => '/reset-password/:userId/:token',
 		                            'defaults' => array(
-		                                'controller' => 'playgrounduser_forgot',
+		                                'controller' => \PlaygroundUser\Controller\Frontend\ForgotController::class,
 		                                'action'     => 'reset',
 		                            ),
 		                            'constraints' => array(
@@ -347,7 +350,7 @@ return array(
 		                        'options' => array(
 		                            'route' => '/changed-password/:userId',
 		                            'defaults' => array(
-		                                'controller' => 'playgrounduser_forgot',
+		                                'controller' => \PlaygroundUser\Controller\Frontend\ForgotController::class,
 		                                'action'     => 'changedPassword',
 		                            ),
 		                            'constraints' => array(
@@ -360,7 +363,7 @@ return array(
 		                        'options' => array(
 		                            'route' => '/inscription[/:socialnetwork]',
 		                            'defaults' => array(
-		                                'controller' => 'playgrounduser_user',
+		                                'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
 		                                'action'     => 'register',
 		                            ),
 		                        ),
@@ -370,7 +373,7 @@ return array(
 		                        'options' => array(
 		                            'route' => '/registermail',
 		                            'defaults' => array(
-		                                'controller' => 'playgrounduser_user',
+		                                'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
 		                                'action'     => 'registermail',
 		                            ),
 		                        ),
@@ -380,7 +383,7 @@ return array(
 		                        'options' => array(
 		                            'route' => '/verification',
 		                            'defaults' => array(
-		                                'controller' => 'playgrounduser_user',
+		                                'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
 		                                'action'     => 'check-token',
 		                            ),
 		                        ),
@@ -390,7 +393,7 @@ return array(
 		                        'options' => array(
 		                            'route' => '/backend',
 		                            'defaults' => array(
-		                                'controller' => 'playgrounduser_user',
+		                                'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
 		                                'action' => 'HybridAuthBackend'
 		                            )
 		                        ),
@@ -401,7 +404,7 @@ return array(
 		                        'options' => array(
 		                            'route' => '/mes-coordonnees',
 		                            'defaults' => array(
-		                                'controller' => 'playgrounduser_user',
+		                                'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
 		                                'action'     => 'profile',
 		                            ),
 		                        ),
@@ -411,7 +414,7 @@ return array(
 		                        'options' => array(
 		                            'route' => '/prizes',
 		                            'defaults' => array(
-		                                'controller' => 'playgrounduser_user',
+		                                'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
 		                                'action'     => 'prizeCategoryUser',
 		                            ),
 		                        ),
@@ -421,7 +424,7 @@ return array(
 		                        'options' => array(
 		                            'route' => '/newsletter',
 		                            'defaults' => array(
-		                                'controller' => 'playgrounduser_user',
+		                                'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
 		                                'action'     => 'newsletter',
 		                            ),
 		                        ),
@@ -431,7 +434,7 @@ return array(
 		                        'options' => array(
 		                            'route' => '/ajax-newsletter',
 		                            'defaults' => array(
-		                                'controller' => 'playgrounduser_user',
+		                                'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
 		                                'action'     => 'ajaxNewsletter',
 		                            ),
 		                        ),
@@ -441,7 +444,7 @@ return array(
 		                        'options' => array(
 		                            'route' => '/change-password',
 		                            'defaults' => array(
-		                                'controller' => 'playgrounduser_user',
+		                                'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
 		                                'action'     => 'changepassword',
 		                            ),
 		                        ),
@@ -451,7 +454,7 @@ return array(
 		                        'options' => array(
 		                            'route' => '/block-account',
 		                            'defaults' => array(
-		                                'controller' => 'playgrounduser_user',
+		                                'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
 		                                'action'     => 'blockAccount',
 		                            ),
 		                        ),
@@ -461,7 +464,7 @@ return array(
 		                        'options' => array(
 		                            'route' => '/change-email',
 		                            'defaults' => array(
-		                                'controller' => 'playgrounduser_user',
+		                                'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
 		                                'action' => 'changeemail',
 		                            ),
 		                        ),
@@ -473,7 +476,7 @@ return array(
             'admin' => array(
             	'options' => array(
             		'defaults' => array(
-           				'controller' => 'playgrounduseradmin_login',
+           				'controller' => \PlaygroundUser\Controller\Admin\LoginController::class,
            				'action'     => 'login',
            				'title' => 'Back-office'
             		),
@@ -484,7 +487,7 @@ return array(
                         'options' => array(
                             'route' => '/logout',
                             'defaults' => array(
-                                'controller' => 'playgrounduseradmin_login',
+                                'controller' => \PlaygroundUser\Controller\Admin\LoginController::class,
                                 'action'     => 'logout',
                             ),
                         ),
@@ -495,7 +498,7 @@ return array(
                         'options' => array(
                             'route' => '/user',
                             'defaults' => array(
-                                'controller' => 'playgrounduseradmin',
+                                'controller' => \PlaygroundUser\Controller\Admin\AdminController::class,
                                 'action'     => 'index',
                             ),
                         ),
@@ -505,7 +508,7 @@ return array(
                                 'options' => array(
                                     'route' => '/list/:roleId[/:filter][/:p]',
                                     'defaults' => array(
-                                        'controller' => 'playgrounduseradmin',
+                                        'controller' => \PlaygroundUser\Controller\Admin\AdminController::class,
                                         'action'     => 'list',
                                         'roleId' 	 => 'all',
                                         'filter' 	 => 'DESC'
@@ -520,7 +523,7 @@ return array(
                                 'options' => array(
                                     'route' => '/download/:roleId[/:filter][/:p]',
                                     'defaults' => array(
-                                        'controller' => 'playgrounduseradmin',
+                                        'controller' => \PlaygroundUser\Controller\Admin\AdminController::class,
                                         'action'     => 'download',
                                         'roleId' 	 => 'all',
                                         'filter' 	 => 'DESC'
@@ -535,7 +538,7 @@ return array(
                                 'options' => array(
                                     'route' => '/create/:userId',
                                     'defaults' => array(
-                                        'controller' => 'playgrounduseradmin',
+                                        'controller' => \PlaygroundUser\Controller\Admin\AdminController::class,
                                         'action'     => 'create',
                                         'userId'     => 0
                                     ),
@@ -546,7 +549,7 @@ return array(
                                 'options' => array(
                                     'route' => '/edit/:userId',
                                     'defaults' => array(
-                                        'controller' => 'playgrounduseradmin',
+                                        'controller' => \PlaygroundUser\Controller\Admin\AdminController::class,
                                         'action'     => 'edit',
                                         'userId'     => 0
                                     ),
@@ -557,7 +560,7 @@ return array(
                                 'options' => array(
                                     'route' => '/remove/:userId',
                                     'defaults' => array(
-                                        'controller' => 'playgrounduseradmin',
+                                        'controller' => \PlaygroundUser\Controller\Admin\AdminController::class,
                                         'action'     => 'remove',
                                         'userId'     => 0
                                     ),
@@ -568,7 +571,7 @@ return array(
                                 'options' => array(
                                     'route' => '/activate/:userId',
                                     'defaults' => array(
-                                        'controller' => 'playgrounduseradmin',
+                                        'controller' => \PlaygroundUser\Controller\Admin\AdminController::class,
                                         'action'     => 'activate',
                                         'userId'     => 0
                                     ),
@@ -579,7 +582,7 @@ return array(
                                 'options' => array(
                                     'route' => '/reset/:userId',
                                     'defaults' => array(
-                                        'controller' => 'playgrounduseradmin',
+                                        'controller' => \PlaygroundUser\Controller\Admin\AdminController::class,
                                         'action'     => 'reset',
                                         'userId'     => 0
                                     ),
@@ -590,7 +593,7 @@ return array(
                                 'options' => array(
                                     'route' => '/listrole[/:filter][/:p]',
                                     'defaults' => array(
-                                        'controller' => 'playgrounduseradmin',
+                                        'controller' => \PlaygroundUser\Controller\Admin\AdminController::class,
                                         'action'     => 'listRole',
                                         'filter' 	 => 'DESC'
                                     ),
@@ -604,7 +607,7 @@ return array(
                                 'options' => array(
                                     'route' => '/createrole/:roleId',
                                     'defaults' => array(
-                                        'controller' => 'playgrounduseradmin',
+                                        'controller' => \PlaygroundUser\Controller\Admin\AdminController::class,
                                         'action'     => 'createRole',
                                         'roleId'     => 0
                                     ),
@@ -622,38 +625,38 @@ return array(
             'register' => array(
                 'label' => 'Inscrivez-vous ou accédez à votre compte',
                 'route' => 'inscription[/:socialnetwork]',
-                'controller' => 'playgrounduser_user',
+                'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
                 'action'     => 'register',
             ),
             'profile' => array(
                 'label' => 'Modifier mes informations',
                 'route' => 'profile',
-                'controller' => 'playgrounduser_user',
+                'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
                 'action'     => 'profile',
             ),
             'registermail' => array(
                 'label' => 'Inscrivez-vous ou accédez à votre compte',
                 'route' => 'registermail',
-                'controller' => 'playgrounduser_user',
+                'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
                 'action'     => 'registermail',
             ),
 
             'newsletter' => array(
                 'label' => 'Newsletter',
                 'route' => 'frontend/zfcuser/newsletter',
-                'controller' => 'playgrounduser_user',
+                'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
                 'action'     => 'newsletter',
             ),
             'resetpassword' => array(
                 'label' => 'Mot de passe oublié ?',
                 'route' => 'reset-password/:userId/:token',
-                'controller' => 'playgrounduser_forgot',
+                'controller' => \PlaygroundUser\Controller\Frontend\ForgotController::class,
                 'action'     => 'reset',
             ),
             'forgotpassword' => array(
                 'label' => 'Mot de passe oublié ?',
                 'route' => 'mot-passe-oublie',
-                'controller' => 'playgrounduser_forgot',
+                'controller' => \PlaygroundUser\Controller\Frontend\ForgotController::class,
                 'action'     => 'forgot',
             ),
         ),
