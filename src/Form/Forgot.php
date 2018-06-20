@@ -3,7 +3,7 @@
 namespace PlaygroundUser\Form;
 
 use Zend\Form\Element;
-use ZfcBase\Form\ProvidesEventsForm;
+use ZfcUser\Form\ProvidesEventsForm;
 use PlaygroundUser\Options\ForgotOptionsInterface;
 use Zend\Mvc\I18n\Translator;
 

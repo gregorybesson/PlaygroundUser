@@ -4,7 +4,7 @@ namespace PlaygroundUser\Form;
 
 use Zend\Form\Form;
 use Zend\Form\Element;
-use ZfcBase\Form\ProvidesEventsForm;
+use ZfcUser\Form\ProvidesEventsForm;
 use Zend\Mvc\I18n\Translator;
 use Zend\ServiceManager\ServiceManager;
 

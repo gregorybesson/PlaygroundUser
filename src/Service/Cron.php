@@ -3,12 +3,13 @@
 namespace PlaygroundUser\Service;
 
 use Zend\ServiceManager\ServiceManager;
-use ZfcBase\EventManager\EventProvider;
+use Zend\EventManager\EventManagerAwareTrait;
 use PlaygroundUser\Options\ModuleOptions;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class Cron extends EventProvider
+class Cron
 {
+    use EventManagerAwareTrait;
 
     /**
      * @var ServiceManager

@@ -8,11 +8,13 @@ use Zend\ServiceManager\ServiceManager;
 use PlaygroundUser\Mapper\UserInterface as UserMapperInterface;
 use PlaygroundUser\Mapper\Password as PasswordMapper;
 use Zend\Crypt\Password\Bcrypt;
-use ZfcBase\EventManager\EventProvider;
+use Zend\EventManager\EventManagerAwareTrait;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class Password extends EventProvider
+class Password
 {
+    use EventManagerAwareTrait;
+
     /**
      * @var ModelMapper
      */

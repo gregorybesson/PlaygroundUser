@@ -5,11 +5,11 @@ use Doctrine\ORM\EntityManager;
 use Hybrid_User_Profile;
 use PlaygroundUser\Options\ModuleOptions;
 use Zend\Stdlib\Hydrator\HydratorInterface;
-use ZfcBase\Mapper\AbstractDbMapper;
+
 use ZfcUser\Entity\UserInterface;
 use PlaygroundUser\Entity\UserProvider as UserProviderEntity;
 
-class UserProvider extends AbstractDbMapper
+class UserProvider
 {
     /**
      * @var EntityManager
