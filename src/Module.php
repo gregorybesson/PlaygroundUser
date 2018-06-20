@@ -160,23 +160,31 @@ class Module
             'aliases' => array(
                 'playgrounduser_message' => 'playgroundcore_message',
                 'zfcuser_user_service'   => 'playgrounduser_user_service',
+                'playgrounduser_rememberme_service'             => \PlaygroundUser\Service\RememberMe::class,
+                'playgrounduser_team_service'                   => \PlaygroundUser\Service\Team::class,
+                'playgrounduser_password_service'               => \PlaygroundUser\Service\Password::class,
+                'playgrounduser_cron_service'                   => \PlaygroundUser\Service\Cron::class,
+                'playgrounduser_provider_service'               => \PlaygroundUser\Service\Provider::class,
+                'PlaygroundUser\Authentication\Adapter\Cookie'  => \PlaygroundUser\Authentication\Adapter\Cookie::class,
+                'playgrounduser_authentication_emailvalidation' => \PlaygroundUser\Authentication\Adapter\EmailValidation::class,
+                'playgrounduser_authentication_hybridauth'      => \PlaygroundUser\Authentication\Adapter\HybridAuth::class,
             ),
-            'invokables'                                  => array(
+            'invokables'  => array(
                 'PlaygroundUser\Form\Login'                  => 'PlaygroundUser\Form\Login',
                 'playgrounduser_redirectionstrategy_service' => 'PlaygroundUser\View\Strategy\RedirectionStrategy',
                 'playgrounduser_user_service'                  => 'PlaygroundUser\Service\User',
             ),
 
-            'factories'                                      => array(
-                'playgrounduser_rememberme_service'             => 'PlaygroundUser\Service\Factory\RememberMeFactory',
-                'playgrounduser_team_service'                   => 'PlaygroundUser\Service\Factory\TeamFactory',
-                'playgrounduser_password_service'               => 'PlaygroundUser\Service\Factory\PasswordFactory',
-                'playgrounduser_cron_service'                   => 'PlaygroundUser\Service\Factory\CronFactory',
-                'playgrounduser_provider_service'               => 'PlaygroundUser\Service\Factory\ProviderFactory',
-                'PlaygroundUser\Authentication\Adapter\Cookie'  => 'PlaygroundUser\Service\Factory\CookieAdapterFactory',
-                'playgrounduser_authentication_emailvalidation' => 'PlaygroundUser\Service\Factory\EmailValidationAdapterFactory',
-                'playgrounduser_authentication_hybridauth'      => 'PlaygroundUser\Service\Factory\HybridAuthAdapterFactory',
-                'ZfcUser\Authentication\Adapter\AdapterChain'   => 'PlaygroundUser\Service\Factory\AuthenticationAdapterChainFactory',
+            'factories' => array(
+                \PlaygroundUser\Service\RememberMe::class => \PlaygroundUser\Service\Factory\RememberMeFactory::class,
+                \PlaygroundUser\Service\Factory\Team::class => \PlaygroundUser\Service\Factory\TeamFactory::class,
+                \PlaygroundUser\Service\Password::class => \PlaygroundUser\Service\Factory\PasswordFactory::class,
+                \PlaygroundUser\Service\Cron::class => \PlaygroundUser\Service\Factory\CronFactory::class,
+                \PlaygroundUser\Service\Provider::class => \PlaygroundUser\Service\Factory\ProviderFactory::class,
+                \PlaygroundUser\Authentication\Adapter\Cookie::class  => \PlaygroundUser\Service\Factory\CookieAdapterFactory::class,
+                \PlaygroundUser\Authentication\Adapter\EmailValidation::class => \PlaygroundUser\Service\Factory\EmailValidationAdapterFactory::class,
+                \PlaygroundUser\Authentication\Adapter\HybridAuth::class => \PlaygroundUser\Service\Factory\HybridAuthAdapterFactory::class,
+                'ZfcUser\Authentication\Adapter\AdapterChain'   => \PlaygroundUser\Service\Factory\AuthenticationAdapterChainFactory::class,
                 'zfcuser_module_options'                        => function ($sm) {
                     $config = $sm->get('Configuration');
 
