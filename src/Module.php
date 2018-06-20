@@ -282,10 +282,18 @@ class Module
                     return new Options\ModuleOptions(isset($config['playgrounduser'])?$config['playgrounduser']:array());
                 },
 
+                'playgrounduser_change_info_form' => function ($sm) {
+                    $translator = $sm->get('translator');
+                    $options = $sm->get('playgrounduser_module_options');
+                    $form = new Form\ChangeInfo(null, $options, $translator, $sm);
+
+                    return $form;
+                },
+
                 'playgrounduser_user_form' => function ($sm) {
                     $translator = $sm->get('translator');
                     $zfcUserOptions = $sm->get('zfcuser_module_options');
-                    $form = new Form\Register(null, $zfcUserOptions, $translator);
+                    $form = new Form\Register(null, $zfcUserOptions, $translator, $sm);
 
                     return $form;
                 },
@@ -366,14 +374,6 @@ class Module
                     $translator = $sm->get('translator');
                     $form = new Form\Reset(null, $options, $translator);
                     $form->setInputFilter(new Form\ResetFilter($options, $translator));
-
-                    return $form;
-                },
-
-                'playgrounduser_change_info_form' => function ($sm) {
-                    $translator = $sm->get('translator');
-                    $options = $sm->get('playgrounduser_module_options');
-                    $form = new Form\ChangeInfo(null, $options, $translator, $sm);
 
                     return $form;
                 },

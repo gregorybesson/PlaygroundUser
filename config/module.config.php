@@ -150,7 +150,7 @@ return array(
             \PlaygroundUser\Controller\Frontend\ForgotController::class => \PlaygroundUser\Service\Factory\FrontendForgotControllerFactory::class,
             \PlaygroundUser\Controller\Frontend\ContactController::class => \PlaygroundUser\Service\Factory\FrontendContactControllerFactory::class,
         ),
-        'alias' => [
+        'aliases' => [
             'playgrounduser_user'  => \PlaygroundUser\Controller\Frontend\UserController::class,
         ]
     ),
