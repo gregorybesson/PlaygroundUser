@@ -8,7 +8,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 use ZfcUser\Controller\RedirectCallback;
 use PlaygroundUser\Controller\Admin\LoginController;
 
-class AdminUserControllerFactory implements FactoryInterface
+class AdminLoginControllerFactory implements FactoryInterface
 {
 
     /**
@@ -17,16 +17,12 @@ class AdminUserControllerFactory implements FactoryInterface
      * @param ServiceLocatorInterface $controllerManager
      * @return mixed
      */
-    public function createService(ServiceLocatorInterface $controllerManager)
+    public function createService(ServiceLocatorInterface $locator)
     {
-        /* @var ControllerManager $controllerManager*/
-        $serviceManager = $controllerManager->getServiceLocator();
-
-        /* @var RedirectCallback $redirectCallback */
-        $redirectCallback = $serviceManager->get('zfcuser_redirect_callback');
+        $parentLocator = $locator->getServiceLocator();
 
         /* @var UserController $controller */
-        $controller = new LoginController($redirectCallback);
+        $controller = new LoginController($parentLocator);
 
         return $controller;
     }

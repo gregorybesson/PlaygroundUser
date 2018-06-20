@@ -108,7 +108,7 @@ $playgrounduser = array(
         // privilege associated to admin access
         'privilege'   => 'dashboard',
         // controller & action if auth success
-        'controller' => 'PlaygroundDesign\Controller\Dashboard',
+        'controller' => \PlaygroundDesign\Controller\Admin\Dashboard::class,
         'action' => 'index',
         // route if auth fail
         'route_login_fail' => 'admin'

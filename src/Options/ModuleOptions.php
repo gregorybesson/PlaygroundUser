@@ -161,7 +161,7 @@ class ModuleOptions extends BaseModuleOptions implements
         'route_login' => 'admin',
         'resource' => 'core',
         'privilege'   => 'dashboard',
-        'controller' => 'PlaygroundDesign\Controller\Dashboard',
+        'controller' => \PlaygroundDesign\Controller\Admin\Dashboard::class,
         'action' => 'index',
         'route_login_fail' => 'admin'
     );
