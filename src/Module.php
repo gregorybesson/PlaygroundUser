@@ -160,6 +160,7 @@ class Module
             'aliases' => array(
                 'playgrounduser_message' => 'playgroundcore_message',
                 'zfcuser_user_service'   => 'playgrounduser_user_service',
+                'playgrounduser_user_service' => \PlaygroundUser\Service\User::class,
                 'playgrounduser_rememberme_service'             => \PlaygroundUser\Service\RememberMe::class,
                 'playgrounduser_team_service'                   => \PlaygroundUser\Service\Team::class,
                 'playgrounduser_password_service'               => \PlaygroundUser\Service\Password::class,
@@ -171,10 +172,10 @@ class Module
             'invokables'  => array(
                 'PlaygroundUser\Form\Login'                  => 'PlaygroundUser\Form\Login',
                 'playgrounduser_redirectionstrategy_service' => 'PlaygroundUser\View\Strategy\RedirectionStrategy',
-                'playgrounduser_user_service'                  => 'PlaygroundUser\Service\User',
             ),
 
             'factories' => array(
+                \PlaygroundUser\Service\User::class => \PlaygroundUser\Service\Factory\UserFactory::class,
                 \PlaygroundUser\Service\RememberMe::class => \PlaygroundUser\Service\Factory\RememberMeFactory::class,
                 \PlaygroundUser\Service\Factory\Team::class => \PlaygroundUser\Service\Factory\TeamFactory::class,
                 \PlaygroundUser\Service\Password::class => \PlaygroundUser\Service\Factory\PasswordFactory::class,
