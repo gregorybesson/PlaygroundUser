@@ -1,6 +1,6 @@
 <?php
 
-namespace PlaygroundCore\DataFixtures\ORM;
+namespace PlaygroundUser\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -11,7 +11,7 @@ use Zend\Crypt\Password\Bcrypt;
 /**
  *
  * @author greg
- * Use the command : php doctrine-module.php data-fixture:import --append
+ * Use the command : ./vendor/bin/doctrine-module orm:fixtures:load
  * to install these data into database
  */
 class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
