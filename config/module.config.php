@@ -6,7 +6,7 @@ return array(
             'zfcuser_entity' => array(
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => __DIR__ . '/../src/PlaygroundUser/Entity'
+                'paths' => __DIR__ . '/../src/Entity'
             ),
 
             'orm_default' => array(
@@ -82,7 +82,7 @@ return array(
     ),
 
 	'data-fixture' => array(
-		'PlaygroundUser_fixture' => __DIR__ . '/../src/PlaygroundUser/DataFixtures/ORM',
+		'PlaygroundUser_fixture' => __DIR__ . '/../src/DataFixtures/ORM',
 	),
 
     'core_layout' => array(
