@@ -2,18 +2,14 @@
 namespace PlaygroundUser\Service\Factory;
 
 use PlaygroundUser\Authentication\Adapter\Cookie;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\ServiceManager\Factory\FactoryInterface;
+use Interop\Container\ContainerInterface;
 
 class CookieAdapterFactory implements FactoryInterface
 {
-    /**
-    * @param ServiceLocatorInterface $locator
-    * @return \PlaygroundUser\Authentication\Adapter\Cookie
-    */
-    public function createService(ServiceLocatorInterface $locator)
+    public function __invoke(ContainerInterface $container, $requestedName, $options = null)
     {
-        $service = new Cookie($locator);
+        $service = new Cookie($container);
 
         return $service;
     }

@@ -115,7 +115,7 @@ If you want to change the ChangeInfo Form for example (ie. you want to add a 'ch
     	return array(
     		'factories' => array(
     			'adfabuser_change_info_form' => function($sm) {
-    				$translator = $sm->get('translator');
+    				$translator = $sm->get('MvcTranslator');
     				$options = $sm->get('adfabuser_module_options');
     				$form = new Form\ChangeInfo(null, $options, $translator);
    					return $form;
@@ -157,7 +157,7 @@ If you want to add an action or modify an existing one.
 			'zfcuser' => array(
 				'child_routes' => array(
 					'profile' => array(
-						'type' => 'Literal',
+						'type' => 'Zend\Router\Http\Literal',
 						'options' => array(
 							'route' => '/mes-coordonnees',
 							'defaults' => array(

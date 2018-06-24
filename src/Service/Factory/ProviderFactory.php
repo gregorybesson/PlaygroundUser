@@ -2,18 +2,14 @@
 namespace PlaygroundUser\Service\Factory;
 
 use PlaygroundUser\Service\Provider;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\ServiceManager\Factory\FactoryInterface;
+use Interop\Container\ContainerInterface;
 
 class ProviderFactory implements FactoryInterface
 {
-    /**
-    * @param ServiceLocatorInterface $locator
-    * @return \PlaygroundUser\Service\Provider
-    */
-    public function createService(ServiceLocatorInterface $locator)
+    public function __invoke(ContainerInterface $container, $requestedName, $options = null)
     {
-        $service = new Provider($locator);
+        $service = new Provider($container);
 
         return $service;
     }

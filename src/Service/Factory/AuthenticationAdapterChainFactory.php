@@ -1,19 +1,19 @@
 <?php
 namespace PlaygroundUser\Service\Factory;
 
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\ServiceManager\Factory\FactoryInterface;
+use Interop\Container\ContainerInterface;
 use ZfcUser\Authentication\Adapter\AdapterChainServiceFactory;
 
 class AuthenticationAdapterChainFactory implements FactoryInterface
 {
-    public function createService(ServiceLocatorInterface $services)
+    public function __invoke(ContainerInterface $container, $requestedName, $options = null)
     {
         $factory = new AdapterChainServiceFactory();
-        $chain = $factory->createService($services);
-        $adapter = $services->get('playgrounduser_authentication_hybridauth');
+        $chain = $factory->createService($container);
+        $adapter = $container->get('playgrounduser_authentication_hybridauth');
         $chain->getEventManager()->attach('authenticate', array($adapter, 'authenticate'), 90);
-        $adapter = $services->get('playgrounduser_authentication_emailvalidation');
+        $adapter = $container->get('playgrounduser_authentication_emailvalidation');
         $chain->getEventManager()->attach('authenticate', array($adapter, 'authenticate'), 100);
 
         return $chain;

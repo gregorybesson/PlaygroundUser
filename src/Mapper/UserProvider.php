@@ -4,10 +4,10 @@ namespace PlaygroundUser\Mapper;
 use Doctrine\ORM\EntityManager;
 use Hybrid_User_Profile;
 use PlaygroundUser\Options\ModuleOptions;
-use Zend\Stdlib\Hydrator\HydratorInterface;
-
+use Zend\Hydrator\HydratorInterface;
 use ZfcUser\Entity\UserInterface;
 use PlaygroundUser\Entity\UserProvider as UserProviderEntity;
+use Zend\EventManager\EventManager;
 
 class UserProvider
 {
@@ -25,6 +25,8 @@ class UserProvider
      * @var ModuleOptions
      */
     protected $options;
+
+    protected $event;
 
     /**
      * @param EntityManager $em
@@ -158,5 +160,17 @@ class UserProvider
     {
         $this->em->remove($entity);
         $this->em->flush();
+    }
+
+    public function setEventManager(\Zend\EventManager\SharedEventManager $events)
+    {
+        $this->event = new EventManager($events, [get_class($this)]);
+
+        return $this;
+    }
+
+    public function getEventManager()
+    {
+        return $this->event;
     }
 }

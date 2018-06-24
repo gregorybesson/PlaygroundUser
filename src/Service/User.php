@@ -13,6 +13,7 @@ use Zend\Session\Container;
 use PlaygroundUser\Entity\User as UserEntity;
 use PlaygroundUser\Entity\Role;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\EventManager\EventManager;
 
 class User extends \ZfcUser\Service\User
 {
@@ -49,6 +50,8 @@ class User extends \ZfcUser\Service\User
      * @var UserServiceOptionsInterface
      */
     protected $options;
+
+    protected $event;
 
     public function __construct(ServiceLocatorInterface $locator)
     {
@@ -1134,10 +1137,20 @@ class User extends \ZfcUser\Service\User
         return $this->serviceManager;
     }
 
-    public function setServiceManager(ServiceManager $serviceManager)	
+    public function setServiceManager(\Interop\Container\ContainerInterface $container)	
     {	
-        $this->serviceManager = $serviceManager;	
+        $this->serviceManager = $container;	
 
         return $this;	
+    }
+
+    public function getEventManager()
+    {
+        if ($this->event === NULL) {
+            $this->event = new EventManager(
+                $this->getServiceManager()->get('SharedEventManager'), [get_class($this)]
+            );
+        }
+        return $this->event;
     }
 }

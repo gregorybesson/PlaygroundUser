@@ -3,20 +3,16 @@
 namespace PlaygroundUser\Service\Factory;
 
 use Zend\Mvc\Controller\ControllerManager;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\ServiceManager\Factory\FactoryInterface;
+use Interop\Container\ContainerInterface;
 use PlaygroundUser\Controller\Frontend\ContactController;
 
 class FrontendContactControllerFactory implements FactoryInterface
 {
 
-    /**
-    * @param ServiceLocatorInterface $locator
-    * @return \PlaygroundUser\Controller\Frontend\ContactController
-    */
-    public function createService(ServiceLocatorInterface $locator)
+    public function __invoke(ContainerInterface $container, $requestedName, $options = null)
     {
-        $controller = new ContactController($locator);
+        $controller = new ContactController($container);
 
         return $controller;
     }

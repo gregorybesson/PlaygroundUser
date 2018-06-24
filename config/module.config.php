@@ -160,7 +160,7 @@ return array(
         	'frontend' => array(
        			'child_routes' => array(
        			    'contact' => array(
-       			        'type' => 'Literal',
+       			        'type' => 'Zend\Router\Http\Literal',
        			        'options' => array(
        			            'route' => 'contactez-nous',
        			            'defaults' => array(
@@ -171,7 +171,7 @@ return array(
        			        'may_terminate' => true,
        			        'child_routes' => array(
        			            'confirmation' => array(
-       			                'type'    => 'Literal',
+       			                'type'    => 'Zend\Router\Http\Literal',
        			                'options' => array(
        			                    'route'    => '/confirmation',
        			                    'defaults' => array(
@@ -201,7 +201,7 @@ return array(
 		                )
        			    ),
 		            'zfcuser' => array(
-		                'type' => 'Literal',
+		                'type' => 'Zend\Router\Http\Literal',
 		                'priority' => 1000,
 		                'options' => array(
 		                    'route' => 'mon-compte',
@@ -213,7 +213,7 @@ return array(
 		                'may_terminate' => true,
 		                'child_routes' => array(
 		                	'team' => array(
-		                        'type' => 'Literal',
+		                        'type' => 'Zend\Router\Http\Literal',
 		                        'options' => array(
 		                            'route' => '/team',
 		                            'defaults' => array(
@@ -223,7 +223,7 @@ return array(
 		                        ),
 		                    ),
 		                    'forgotpassword' => array(
-		                        'type' => 'Literal',
+		                        'type' => 'Zend\Router\Http\Literal',
 		                        'options' => array(
 		                            'route' => '/mot-passe-oublie',
 		                            'defaults' => array(
@@ -233,7 +233,7 @@ return array(
 		                        ),
 		                    ),
 		                    'ajaxforgotpassword' => array(
-		                        'type' => 'Literal',
+		                        'type' => 'Zend\Router\Http\Literal',
 		                        'options' => array(
 		                            'route' => '/ajax-mot-passe-oublie',
 		                            'defaults' => array(
@@ -266,7 +266,7 @@ return array(
 		                        ),
 		                    ),
 		                    'ajaxlogin' => array(
-		                        'type' => 'Literal',
+		                        'type' => 'Zend\Router\Http\Literal',
 		                        'options' => array(
 		                            'route' => '/ajaxlogin',
 		                            'defaults' => array(
@@ -276,7 +276,7 @@ return array(
 		                        ),
 		                    ),
 		                    'login' => array(
-		                        'type' => 'Literal',
+		                        'type' => 'Zend\Router\Http\Literal',
 		                        'options' => array(
 		                            'route' => '/login',
 		                            'defaults' => array(
@@ -302,7 +302,7 @@ return array(
 		                        ),
 		                    ),
 		                    'logout' => array(
-		                        'type' => 'Literal',
+		                        'type' => 'Zend\Router\Http\Literal',
 		                        'options' => array(
 		                            'route' => '/logout',
 		                            'defaults' => array(
@@ -312,7 +312,7 @@ return array(
 		                        ),
 		                    ),
 		                    'ajaxauthenticate' => array(
-		                        'type' => 'Literal',
+		                        'type' => 'Zend\Router\Http\Literal',
 		                        'options' => array(
 		                            'route' => '/ajaxauthenticate',
 		                            'defaults' => array(
@@ -322,7 +322,7 @@ return array(
 		                        ),
 		                    ),
 		                    'authenticate' => array(
-		                        'type' => 'Literal',
+		                        'type' => 'Zend\Router\Http\Literal',
 		                        'options' => array(
 		                                'route' => '/authenticate',
 		                                'defaults' => array(
@@ -369,7 +369,7 @@ return array(
 		                        ),
 		                    ),
 		                    'registermail' => array(
-		                        'type' => 'Literal',
+		                        'type' => 'Zend\Router\Http\Literal',
 		                        'options' => array(
 		                            'route' => '/registermail',
 		                            'defaults' => array(
@@ -379,7 +379,7 @@ return array(
 		                        ),
 		                    ),
 		                    'verification' => array(
-		                        'type' => 'Literal',
+		                        'type' => 'Zend\Router\Http\Literal',
 		                        'options' => array(
 		                            'route' => '/verification',
 		                            'defaults' => array(
@@ -400,7 +400,7 @@ return array(
 		                    ),
 
 		                    'profile' => array(
-		                        'type' => 'Literal',
+		                        'type' => 'Zend\Router\Http\Literal',
 		                        'options' => array(
 		                            'route' => '/mes-coordonnees',
 		                            'defaults' => array(
@@ -410,7 +410,7 @@ return array(
 		                        ),
 		                    ),
 		                    'profile_prizes' => array(
-		                        'type' => 'Literal',
+		                        'type' => 'Zend\Router\Http\Literal',
 		                        'options' => array(
 		                            'route' => '/prizes',
 		                            'defaults' => array(
@@ -420,7 +420,7 @@ return array(
 		                        ),
 		                    ),
 		                    'newsletter' => array(
-		                        'type' => 'Literal',
+		                        'type' => 'Zend\Router\Http\Literal',
 		                        'options' => array(
 		                            'route' => '/newsletter',
 		                            'defaults' => array(
@@ -430,7 +430,7 @@ return array(
 		                        ),
 		                    ),
 		                    'ajax_newsletter' => array(
-		                        'type' => 'Literal',
+		                        'type' => 'Zend\Router\Http\Literal',
 		                        'options' => array(
 		                            'route' => '/ajax-newsletter',
 		                            'defaults' => array(
@@ -440,7 +440,7 @@ return array(
 		                        ),
 		                    ),
 		                    'changepassword' => array(
-		                        'type' => 'Literal',
+		                        'type' => 'Zend\Router\Http\Literal',
 		                        'options' => array(
 		                            'route' => '/change-password',
 		                            'defaults' => array(
@@ -450,7 +450,7 @@ return array(
 		                        ),
 		                    ),
 		                    'blockaccount' => array(
-		                        'type' => 'Literal',
+		                        'type' => 'Zend\Router\Http\Literal',
 		                        'options' => array(
 		                            'route' => '/block-account',
 		                            'defaults' => array(
@@ -460,7 +460,7 @@ return array(
 		                        ),
 		                    ),
 		                    'changeemail' => array(
-		                        'type' => 'Literal',
+		                        'type' => 'Zend\Router\Http\Literal',
 		                        'options' => array(
 		                            'route' => '/change-email',
 		                            'defaults' => array(
@@ -483,7 +483,7 @@ return array(
             	),
                 'child_routes' => array(
                 	'logout' => array(
-                        'type' => 'Literal',
+                        'type' => 'Zend\Router\Http\Literal',
                         'options' => array(
                             'route' => '/logout',
                             'defaults' => array(
@@ -493,7 +493,7 @@ return array(
                         ),
                     ),
                     'playgrounduser' => array(
-                        'type' => 'Literal',
+                        'type' => 'Zend\Router\Http\Literal',
                         'priority' => 1000,
                         'options' => array(
                             'route' => '/user',

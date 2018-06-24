@@ -11,6 +11,7 @@ use PlaygroundUser\View\Strategy\RedirectionStrategy;
 use Zend\Session\Container;
 use Zend\Validator\AbstractValidator;
 use ZfcUser\Module as ZfcUser;
+use Zend\Mvc\MvcEvent;
 
 class Module
 {
@@ -55,13 +56,13 @@ class Module
 
         $options    = $sm->get('playgroundcore_module_options');
         $locale     = $options->getLocale();
-        $translator = $sm->get('translator');
+        $translator = $sm->get('MvcTranslator');
         if (!empty($locale)) {
             //translator
             $translator->setLocale($locale);
 
             // plugins
-            $translate = $sm->get('viewhelpermanager')->get('translate');
+            $translate = $sm->get('ViewHelperManager')->get('translate');
             $translate->getTranslator()->setLocale($locale);
         }
         AbstractValidator::setDefaultTranslator($translator, 'playgrounduser');
@@ -105,7 +106,8 @@ class Module
 
             // Redirect strategy associated to BjyAuthorize module
             $strategy = new RedirectionStrategy();
-            $e->getApplication()->getEventManager()->attach($strategy);
+            // ZF3 TODO: fix
+            //$e->getApplication()->getEventManager()->attach($strategy);
         }
     }
 
@@ -134,18 +136,17 @@ class Module
         return array(
             'factories'        => array(
                 'userLoginWidget' => function ($sm) {
-                    $locator = $sm->getServiceLocator();
                     $viewHelper = new View\Helper\UserLoginWidget;
-                    $viewHelper->setViewTemplate($locator->get('zfcuser_module_options')->getUserLoginWidgetViewTemplate());
-                    $viewHelper->setLoginForm($locator->get('zfcuser_login_form'));
+                    $viewHelper->setViewTemplate($sm->get('zfcuser_module_options')->getUserLoginWidgetViewTemplate());
+                    $viewHelper->setLoginForm($sm->get('zfcuser_login_form'));
 
                     return $viewHelper;
                 },
                 'facebookLogin' => function ($sm) {
-                    $config = $sm->getServiceLocator()->get('SocialConfig');
-                    $renderer = $sm->getServiceLocator()->get('Zend\View\Renderer\RendererInterface');
+                    $config = $sm->get('SocialConfig');
+                    $renderer = $sm->get('Zend\View\Renderer\RendererInterface');
 
-                    $helper = new View\Helper\FacebookLogin($config, $sm->getServiceLocator()->get('Request'), $renderer);
+                    $helper = new View\Helper\FacebookLogin($config, $sm->get('Request'), $renderer);
 
                     return $helper;
                 },
@@ -184,7 +185,7 @@ class Module
                 \PlaygroundUser\Authentication\Adapter\Cookie::class  => \PlaygroundUser\Service\Factory\CookieAdapterFactory::class,
                 \PlaygroundUser\Authentication\Adapter\EmailValidation::class => \PlaygroundUser\Service\Factory\EmailValidationAdapterFactory::class,
                 \PlaygroundUser\Authentication\Adapter\HybridAuth::class => \PlaygroundUser\Service\Factory\HybridAuthAdapterFactory::class,
-                'ZfcUser\Authentication\Adapter\AdapterChain'   => \PlaygroundUser\Service\Factory\AuthenticationAdapterChainFactory::class,
+                //'ZfcUser\Authentication\Adapter\AdapterChain'   => \PlaygroundUser\Service\Factory\AuthenticationAdapterChainFactory::class,
                 'zfcuser_module_options'                        => function ($sm) {
                     $config = $sm->get('Configuration');
 
@@ -197,7 +198,7 @@ class Module
                     );
                 },
                 'zfcuser_login_form' => function ($sm) {
-                    $translator = $sm->get('translator');
+                    $translator = $sm->get('MvcTranslator');
                     $options = $sm->get('zfcuser_module_options');
                     $form = new Form\Login(null, $options, $translator);
                     $form->setInputFilter(new \PlaygroundUser\Form\LoginFilter($options));
@@ -206,7 +207,7 @@ class Module
                 },
 
                 'zfcuser_register_form' => function ($sm) {
-                    $translator = $sm->get('translator');
+                    $translator = $sm->get('MvcTranslator');
                     $zfcUserOptions = $sm->get('zfcuser_module_options');
                     $form = new Form\Register(null, $zfcUserOptions, $translator, $sm);
                     //$form->setCaptchaElement($sm->get('zfcuser_captcha_element'));
@@ -233,9 +234,9 @@ class Module
                     $config = $sm->get('Config');
                     $config = isset($config['playgrounduser']['social'])?$config['playgrounduser']['social']:array('providers' => array());
 
-                    $router = $sm->get('Router');
+                    $router = $sm->get('HttpRouter');
                     // Bug when using doctrine from console https://github.com/SocalNick/ScnSocialAuth/issues/67
-                    if ($router instanceof \Zend\Mvc\Router\Http\TreeRouteStack) {
+                    if ($router instanceof \Zend\Router\Http\TreeRouteStack) {
                         $request = $sm->get('Request');
                         if (!$router->getRequestUri() && method_exists($request, 'getUri')) {
                             $router->setRequestUri($request->getUri());
@@ -260,7 +261,7 @@ class Module
 
                     // this following config doesn't work with bjyprofiler
                     //https://github.com/SocalNick/ScnSocialAuth/issues/57
-                    //$urlHelper = $sm->get('viewhelpermanager')->get('url');
+                    //$urlHelper = $sm->get('ViewHelperManager')->get('url');
                     //$config['base_url'] = $urlHelper('frontend/zfcuser/backend',array(), array('force_canonical' => true));
                     return $config;
                 },
@@ -283,7 +284,7 @@ class Module
                 },
 
                 'playgrounduser_change_info_form' => function ($sm) {
-                    $translator = $sm->get('translator');
+                    $translator = $sm->get('MvcTranslator');
                     $options = $sm->get('playgrounduser_module_options');
                     $form = new Form\ChangeInfo(null, $options, $translator, $sm);
 
@@ -291,7 +292,7 @@ class Module
                 },
 
                 'playgrounduser_user_form' => function ($sm) {
-                    $translator = $sm->get('translator');
+                    $translator = $sm->get('MvcTranslator');
                     $zfcUserOptions = $sm->get('zfcuser_module_options');
                     $form = new Form\Register(null, $zfcUserOptions, $translator, $sm);
 
@@ -299,7 +300,7 @@ class Module
                 },
 
                 'playgrounduseradmin_register_form' => function ($sm) {
-                    $translator = $sm->get('translator');
+                    $translator = $sm->get('MvcTranslator');
                     $zfcUserOptions = $sm->get('zfcuser_module_options');
                     $playgroundUserOptions = $sm->get('playgrounduser_module_options');
                     $form = new Form\Admin\User(null, $playgroundUserOptions, $zfcUserOptions, $translator, $sm);
@@ -323,7 +324,7 @@ class Module
                 },
 
                 'playgrounduseradmin_role_form' => function ($sm) {
-                    $translator = $sm->get('translator');
+                    $translator = $sm->get('MvcTranslator');
                     $playgroundUserOptions = $sm->get('playgrounduser_module_options');
                     $form = new Form\Admin\Role(null, $playgroundUserOptions, $translator, $sm);
 
@@ -347,10 +348,13 @@ class Module
                 },
 
                 'playgrounduser_emailverification_mapper' => function ($sm) {
-                    return new \PlaygroundUser\Mapper\EmailVerification(
+                    $mapper = new \PlaygroundUser\Mapper\EmailVerification(
                         $sm->get('doctrine.entitymanager.orm_default'),
                         $sm->get('zfcuser_module_options')
                     );
+                    $mapper->setEventManager($sm->get('SharedEventManager'));
+
+                    return $mapper;
                 },
 
                 'playgrounduser_role_mapper' => function ($sm) {
@@ -362,7 +366,7 @@ class Module
 
                 'playgrounduser_forgot_form' => function ($sm) {
                     $options = $sm->get('playgrounduser_module_options');
-                    $translator = $sm->get('translator');
+                    $translator = $sm->get('MvcTranslator');
                     $form = new Form\Forgot(null, $options, $translator);
                     $form->setInputFilter(new Form\ForgotFilter($options));
 
@@ -371,7 +375,7 @@ class Module
 
                 'playgrounduser_reset_form' => function ($sm) {
                     $options = $sm->get('playgrounduser_module_options');
-                    $translator = $sm->get('translator');
+                    $translator = $sm->get('MvcTranslator');
                     $form = new Form\Reset(null, $options, $translator);
                     $form->setInputFilter(new Form\ResetFilter($options, $translator));
 
@@ -379,7 +383,7 @@ class Module
                 },
 
                 'playgrounduser_blockaccount_form' => function ($sm) {
-                    $translator = $sm->get('translator');
+                    $translator = $sm->get('MvcTranslator');
                     $options = $sm->get('zfcuser_module_options');
                     $form = new Form\BlockAccount(null, $sm->get('zfcuser_module_options'), $translator);
                     $form->setInputFilter(new Form\BlockAccountFilter($options));
@@ -388,7 +392,7 @@ class Module
                 },
 
                 'playgrounduser_newsletter_form' => function ($sm) {
-                    $translator = $sm->get('translator');
+                    $translator = $sm->get('MvcTranslator');
                     $options = $sm->get('zfcuser_module_options');
                     $form = new Form\Newsletter(null, $sm->get('zfcuser_module_options'), $translator);
                     $form->setInputFilter(new Form\NewsletterFilter($options));
@@ -397,7 +401,7 @@ class Module
                 },
 
                 'playgrounduser_address_form' => function ($sm) {
-                    $translator = $sm->get('translator');
+                    $translator = $sm->get('MvcTranslator');
                     $options = $sm->get('playgrounduser_module_options');
                     $form = new Form\Address(null, $options, $translator, $sm);
 
@@ -419,14 +423,17 @@ class Module
                 },
 
                 'playgrounduser_userprovider_mapper' => function ($sm) {
-                    return new Mapper\UserProvider(
+                    $mapper = new Mapper\UserProvider(
                         $sm->get('doctrine.entitymanager.orm_default'),
                         $sm->get('playgrounduser_module_options')
                     );
+                    $mapper->setEventManager($sm->get('SharedEventManager'));
+
+                    return $mapper;
                 },
 
                 'playgrounduser_contact_form' => function ($sm) {
-                    $translator = $sm->get('translator');
+                    $translator = $sm->get('MvcTranslator');
                     $form = new Form\Contact(null, $sm, $translator);
 
                     return $form;

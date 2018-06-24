@@ -3,14 +3,15 @@
 namespace PlaygroundUser\Service\Factory;
 
 use PlaygroundUser\Authentication\Adapter\EmailValidation as EmailValidationAdapter;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\ServiceManager\Factory\FactoryInterface;
+use Interop\Container\ContainerInterface;
 
 class EmailValidationAdapterFactory implements FactoryInterface
 {
-    public function createService(ServiceLocatorInterface $locator)
+    public function __invoke(ContainerInterface $container, $requestedName, $options = null)
     {
-        $adapter = new EmailValidationAdapter($locator);
+        $adapter = new EmailValidationAdapter($container);
+        $adapter->setServiceManager($container);
 
         return $adapter;
     }

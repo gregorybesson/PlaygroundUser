@@ -5,7 +5,7 @@ namespace PlaygroundUser\Mapper;
 use Doctrine\ORM\EntityManager;
 use ZfcUser\Mapper\User as ZfcUserMapper;
 use PlaygroundUser\Options\ModuleOptions;
-use Zend\Stdlib\Hydrator\HydratorInterface;
+use Zend\Hydrator\HydratorInterface;
 
 class User extends ZfcUserMapper
 {

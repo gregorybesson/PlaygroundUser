@@ -10,6 +10,7 @@ use PlaygroundUser\Mapper\Password as PasswordMapper;
 use Zend\Crypt\Password\Bcrypt;
 use Zend\EventManager\EventManagerAwareTrait;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\EventManager\EventManager;
 
 class Password
 {
@@ -23,6 +24,7 @@ class Password
     protected $serviceManager;
     protected $options;
     protected $zfcUserOptions;
+    protected $event;
 
     public function __construct(ServiceLocatorInterface $locator)
     {
@@ -74,7 +76,7 @@ class Password
         $mailService = $this->getServiceManager()->get('playgrounduser_message');
 
         $from = $this->getOptions()->getEmailFromAddress();
-        $subject = $this->getServiceManager()->get('translator')->translate($this->getOptions()->getResetEmailSubjectLine(), 'playgrounduser');
+        $subject = $this->getServiceManager()->get('MvcTranslator')->translate($this->getOptions()->getResetEmailSubjectLine(), 'playgrounduser');
 
         $renderer = $this->getServiceManager()->get('Zend\View\Renderer\RendererInterface');
         $skinUrl = $renderer->url('frontend', array(), array('force_canonical' => true));
@@ -180,5 +182,15 @@ class Password
         $this->zfcUserOptions = $zfcUserOptions;
 
         return $this;
+    }
+
+    public function getEventManager()
+    {
+        if ($this->event === NULL) {
+            $this->event = new EventManager(
+                $this->getServiceManager()->get('SharedEventManager'), [get_class($this)]
+            );
+        }
+        return $this->event;
     }
 }

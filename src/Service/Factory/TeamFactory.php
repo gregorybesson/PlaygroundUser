@@ -2,18 +2,14 @@
 namespace PlaygroundUser\Service\Factory;
 
 use PlaygroundUser\Service\Team;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\ServiceManager\Factory\FactoryInterface;
+use Interop\Container\ContainerInterface;
 
 class TeamFactory implements FactoryInterface
 {
-    /**
-    * @param ServiceLocatorInterface $locator
-    * @return \PlaygroundUser\Service\Team
-    */
-    public function createService(ServiceLocatorInterface $locator)
+    public function __invoke(ContainerInterface $container, $requestedName, $options = null)
     {
-        $service = new Team($locator);
+        $service = new Team($container);
 
         return $service;
     }
