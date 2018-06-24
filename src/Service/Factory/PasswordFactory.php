@@ -2,18 +2,14 @@
 namespace PlaygroundUser\Service\Factory;
 
 use PlaygroundUser\Service\Password;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\ServiceManager\Factory\FactoryInterface;
+use Interop\Container\ContainerInterface;
 
 class PasswordFactory implements FactoryInterface
 {
-    /**
-    * @param ServiceLocatorInterface $locator
-    * @return \PlaygroundUser\Service\Password
-    */
-    public function createService(ServiceLocatorInterface $locator)
+    public function __invoke(ContainerInterface $container, $requestedName, $options = null)
     {
-        $service = new Password($locator);
+        $service = new Password($container);
 
         return $service;
     }

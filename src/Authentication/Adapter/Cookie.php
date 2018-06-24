@@ -6,7 +6,6 @@ use ZfcUser\Authentication\Adapter\AbstractAdapter;
 use Zend\Authentication\Result as AuthenticationResult;
 use Zend\ServiceManager\ServiceManager;
 use Zend\Stdlib\ResponseInterface as Response;
-use ZfcUser\Authentication\Adapter\AdapterChainEvent as AuthEvent;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 class Cookie extends AbstractAdapter
@@ -24,8 +23,9 @@ class Cookie extends AbstractAdapter
         $this->serviceManager = $locator;
     }
 
-    public function authenticate(AuthEvent $e)
+    public function authenticate(\Zend\EventManager\EventInterface $e)
     {
+        $e = $e->getTarget();
         //throw new \Exception('Cookie Auth event was stopped without a response.');
         // check if cookie needs to be set, only when prior auth has been successful
         if ($e->getIdentity() !== null && $e->getRequest()->isPost() && $e->getRequest()->getPost()->get('remember_me') == 1) {

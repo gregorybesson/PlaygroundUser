@@ -4,8 +4,9 @@ namespace PlaygroundUser\Mapper;
 use Doctrine\ORM\EntityManager;
 use PlaygroundUser\Options\ModuleOptions;
 use PlaygroundUser\Entity\EmailVerification as Model;
-use Zend\Stdlib\Hydrator\HydratorInterface;
+use Zend\Hydrator\HydratorInterface;
 use Zend\EventManager\EventManagerAwareTrait;
+use Zend\EventManager\EventManager;
 
 class EmailVerification
 {
@@ -20,6 +21,8 @@ class EmailVerification
      * @var \PlaygroundUser\Options\ModuleOptions
      */
     protected $options;
+
+    protected $event;
 
     public function __construct(EntityManager $em, ModuleOptions $options)
     {
@@ -73,5 +76,17 @@ class EmailVerification
         $this->em->flush();
 
         return true;
+    }
+
+    public function setEventManager(\Zend\EventManager\SharedEventManager $events)
+    {
+        $this->event = new EventManager($events, [get_class($this)]);
+
+        return $this;
+    }
+
+    public function getEventManager()
+    {
+        return $this->event;
     }
 }

@@ -4,7 +4,7 @@ namespace PlaygroundUser\Authentication\Adapter;
 
 use ZfcUser\Authentication\Adapter\AbstractAdapter;
 use Zend\Authentication\Result as AuthenticationResult;
-use ZfcUser\Authentication\Adapter\AdapterChainEvent as AuthEvent;
+use Zend\EventManager\EventInterface as AuthEvent;
 use Zend\ServiceManager\ServiceManager;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -23,6 +23,7 @@ class EmailValidation extends AbstractAdapter
 
     public function authenticate(AuthEvent $e)
     {
+        $e = $e->getTarget();
         if ($this->isSatisfied()) {
             $storage = $this->getStorage()->read();
             $e->setIdentity($storage['identity'])

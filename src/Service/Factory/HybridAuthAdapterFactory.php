@@ -3,8 +3,8 @@
 namespace PlaygroundUser\Service\Factory;
 
 use PlaygroundUser\Authentication\Adapter\HybridAuth as HybridAuthAdapter;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\ServiceManager\Factory\FactoryInterface;
+use Interop\Container\ContainerInterface;
 
 /**
  * @category   ScnSocialAuth
@@ -12,20 +12,20 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  */
 class HybridAuthAdapterFactory implements FactoryInterface
 {
-    public function createService(ServiceLocatorInterface $services)
+    public function __invoke(ContainerInterface $container, $requestedName, $options = null)
     {
         try {
-            $hybridAuth = $services->get('HybridAuth');
+            $hybridAuth = $container->get('HybridAuth');
         } catch (\Exception $e) {
             // In some cases (ie. FB registration, the user refuses the options)
             $hybridAuth = null;
         }
 
-        $moduleOptions = $services->get('playgrounduser_module_options');
-        $zfcUserOptions = $services->get('zfcuser_module_options');
+        $moduleOptions = $container->get('playgrounduser_module_options');
+        $zfcUserOptions = $container->get('zfcuser_module_options');
 
-        $mapper = $services->get('playgrounduser_userprovider_mapper');
-        $zfcUserMapper = $services->get('zfcuser_user_mapper');
+        $mapper = $container->get('playgrounduser_userprovider_mapper');
+        $zfcUserMapper = $container->get('zfcuser_user_mapper');
 
         $adapter = new HybridAuthAdapter();
         $adapter->setHybridAuth($hybridAuth);
@@ -33,7 +33,7 @@ class HybridAuthAdapterFactory implements FactoryInterface
         $adapter->setZfcUserOptions($zfcUserOptions);
         $adapter->setMapper($mapper);
         $adapter->setZfcUserMapper($zfcUserMapper);
-        $adapter->setServiceManager($services);
+        $adapter->setServiceManager($container);
 
         return $adapter;
     }

@@ -419,7 +419,7 @@ class UserController extends ZfcUserController
     {
       // fix new implementation of servicelocator
         try {
-            $translator = $this->getServiceLocator()->get('translator');
+            $translator = $this->getServiceLocator()->get('MvcTranslator');
         } catch (\Exception $e) {
           //echo ($e->getMessage());
         }
@@ -1157,7 +1157,7 @@ class UserController extends ZfcUserController
 
     protected function getViewHelper($helperName)
     {
-        return $this->getServiceLocator()->get('viewhelpermanager')->get($helperName);
+        return $this->getServiceLocator()->get('ViewHelperManager')->get($helperName);
     }
 
     public function getCoreOptions()

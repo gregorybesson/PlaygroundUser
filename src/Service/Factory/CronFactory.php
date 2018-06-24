@@ -2,18 +2,14 @@
 namespace PlaygroundUser\Service\Factory;
 
 use PlaygroundUser\Service\Cron;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\ServiceManager\Factory\FactoryInterface;
+use Interop\Container\ContainerInterface;
 
 class CronFactory implements FactoryInterface
 {
-    /**
-    * @param ServiceLocatorInterface $locator
-    * @return \PlaygroundUser\Service\Cron
-    */
-    public function createService(ServiceLocatorInterface $locator)
+    public function __invoke(ContainerInterface $container, $requestedName, $options = null)
     {
-        $service = new Cron($locator);
+        $service = new Cron($container);
 
         return $service;
     }

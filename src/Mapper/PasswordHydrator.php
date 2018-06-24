@@ -2,7 +2,7 @@
 
 namespace PlaygroundUser\Mapper;
 
-use Zend\Stdlib\Hydrator\ClassMethods;
+use Zend\Hydrator\ClassMethods;
 use PlaygroundUser\Entity\Password as Entity;
 
 class PasswordHydrator extends ClassMethods

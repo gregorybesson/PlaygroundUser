@@ -4,7 +4,7 @@ namespace PlaygroundUser\Mapper;
 
 use Doctrine\ORM\EntityManager;
 use PlaygroundUser\Options\ModuleOptions;
-use Zend\Stdlib\Hydrator\HydratorInterface;
+use Zend\Hydrator\HydratorInterface;
 
 
 class RememberMe

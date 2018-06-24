@@ -7,7 +7,6 @@ use PlaygroundUser\Options\ModuleOptions;
 use Zend\Authentication\Result;
 use Zend\ServiceManager\ServiceManager;
 use ZfcUser\Authentication\Adapter\AbstractAdapter;
-use ZfcUser\Authentication\Adapter\AdapterChainEvent as AuthEvent;
 use ZfcUser\Mapper\UserInterface as UserMapperInterface;
 use ZfcUser\Options\UserServiceOptionsInterface;
 use Zend\EventManager\EventManagerInterface;
@@ -56,8 +55,9 @@ class HybridAuth extends AbstractAdapter implements EventManagerAwareInterface
      */
     protected $roleMapper;
 
-    public function authenticate(AuthEvent $authEvent)
+    public function authenticate(\Zend\EventManager\EventInterface $authEvent)
     {
+        $authEvent = $authEvent->getTarget();
         if ($this->isSatisfied()) {
             $storage = $this->getStorage()->read();
             $authEvent->setIdentity($storage['identity'])
@@ -539,7 +539,11 @@ class HybridAuth extends AbstractAdapter implements EventManagerAwareInterface
     public function getEventManager()
     {
         if (null === $this->events) {
-            $this->setEventManager(new EventManager());
+            $this->setEventManager(
+                new EventManager(
+                    $this->getServiceManager()->get('SharedEventManager'), [get_class($this)]
+                )
+            );
         }
 
         return $this->events;

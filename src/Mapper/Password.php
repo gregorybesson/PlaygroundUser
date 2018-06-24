@@ -3,7 +3,7 @@ namespace PlaygroundUser\Mapper;
 
 
 use PlaygroundUser\Entity\Password as Model;
-use Zend\Stdlib\Hydrator\HydratorInterface;
+use Zend\Hydrator\HydratorInterface;
 use Zend\Db\Sql\Sql;
 
 class Password

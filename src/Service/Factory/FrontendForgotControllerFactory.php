@@ -3,20 +3,16 @@
 namespace PlaygroundUser\Service\Factory;
 
 use Zend\Mvc\Controller\ControllerManager;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\ServiceManager\Factory\FactoryInterface;
+use Interop\Container\ContainerInterface;
 use PlaygroundUser\Controller\Frontend\ForgotController;
 
 class FrontendForgotControllerFactory implements FactoryInterface
 {
 
-    /**
-    * @param ServiceLocatorInterface $locator
-    * @return \PlaygroundUser\Controller\Frontend\ForgotController
-    */
-    public function createService(ServiceLocatorInterface $locator)
+    public function __invoke(ContainerInterface $container, $requestedName, $options = null)
     {
-        $controller = new ForgotController($locator);
+        $controller = new ForgotController($container);
 
         return $controller;
     }
