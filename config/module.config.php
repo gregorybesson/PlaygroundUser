@@ -14,7 +14,10 @@ return array(
                     'PlaygroundUser\Entity'  => 'zfcuser_entity'
                 )
             )
-        )
+        ),
+        'fixture' => array(
+            'PlaygroundUser' => __DIR__ . '/../src/DataFixtures/ORM',
+        ),
     ),
 
     'assetic_configuration' => array(
