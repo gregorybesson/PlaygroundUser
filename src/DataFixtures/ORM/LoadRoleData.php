@@ -10,7 +10,7 @@ use PlaygroundUser\Entity\Role;
 /**
  *
  * @author greg
- * Use the command : php doctrine-module.php data-fixture:import --append
+ * Use the command : ./vendor/bin/doctrine-module orm:fixtures:load
  * to install these data into database
  */
 class LoadRoleData extends AbstractFixture implements OrderedFixtureInterface
