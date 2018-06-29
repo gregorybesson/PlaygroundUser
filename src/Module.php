@@ -106,8 +106,7 @@ class Module
 
             // Redirect strategy associated to BjyAuthorize module
             $strategy = new RedirectionStrategy();
-            // ZF3 TODO: fix
-            //$e->getApplication()->getEventManager()->attach($strategy);
+            $e->getApplication()->getEventManager()->attach(MvcEvent::EVENT_DISPATCH_ERROR, array($strategy, 'onDispatchError'), 200);
         }
     }
 
