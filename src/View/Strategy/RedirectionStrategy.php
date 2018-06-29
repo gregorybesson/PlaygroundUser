@@ -111,7 +111,8 @@ class RedirectionStrategy implements ListenerAggregateInterface
 
         $response->getHeaders()->addHeaderLine('Location', $url);
         $response->setStatusCode(302);
-
+        $response->sendHeaders();
+        $event->stopPropagation();
         $event->setResponse($response);
     }
 
