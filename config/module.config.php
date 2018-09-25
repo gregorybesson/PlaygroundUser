@@ -19,24 +19,6 @@ return array(
             'PlaygroundUser' => __DIR__ . '/../src/DataFixtures/ORM',
         ),
     ),
-
-    'assetic_configuration' => array(
-        'modules' => array(
-            'lib' => array(
-                'collections' => array(
-                    'fbregister_js' => array(
-                        'assets' => array(
-                            __DIR__ . '/../view/lib/js/fbregister.js',
-                        ),
-                        'options' => array(
-                            'move_raw' => true,
-                            'output' => 'lib/js',
-                        )
-                    ),
-                ),
-            ),
-        ),
-    ),
     
     'bjyauthorize' => array(
         'default_role' => 'guest',
@@ -669,6 +651,7 @@ return array(
                 'route' => 'admin/playgrounduser/list',
                 'resource' => 'user',
                 'privilege' => 'list',
+                'target' => 'nav-icon icon-people',
                 'pages' => array(
                     'list' => array(
                         'label' => 'Users list',
