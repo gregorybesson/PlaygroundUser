@@ -83,7 +83,7 @@ class HybridAuth extends AbstractAdapter implements EventManagerAwareInterface
         $userProfile = null;
         try {
             $adapter = $this->getHybridAuth()->authenticate($provider);
-            if ($adapter->isUserConnected()) {
+            if ($adapter->isConnected()) {
                 $userProfile = $adapter->getUserProfile();
             }
         } catch (\Exception $ex) {
@@ -96,7 +96,7 @@ class HybridAuth extends AbstractAdapter implements EventManagerAwareInterface
                 $this->getHybridAuth()->getAdapter($provider)->logout();
                 // Essayer de se connecter à nouveau
                 $adapter = $this->getHybridAuth()->authenticate($provider);
-                if ($adapter->isUserConnected()) {
+                if ($adapter->isConnected()) {
                     $userProfile = $adapter->getUserProfile();
                 }
             } else {
