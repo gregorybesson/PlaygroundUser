@@ -137,7 +137,7 @@ class Provider implements EventManagerAwareInterface
         if (is_string($socialnetworktype)) {
             try {
                 $adapter = $this->getHybridAuth()->authenticate($provider);
-                if ($adapter->isUserConnected()) {
+                if ($adapter->isConnected()) {
                     $infoMe = $adapter->getUserProfile();
                 }
             } catch (\Exception $ex) {
@@ -150,13 +150,13 @@ class Provider implements EventManagerAwareInterface
                     $this->getHybridAuth()->getAdapter($provider)->logout();
                     // Essayer de se connecter à nouveau
                     $adapter = $this->getHybridAuth()->authenticate($provider);
-                    if ($adapter->isUserConnected()) {
+                    if ($adapter->isConnected()) {
                         $infoMe = $adapter->getUserProfile();
                     }
                 } else {
-                    $authEvent->setCode(\Zend\Authentication\Result::FAILURE)
-                    ->setMessages(array('Invalid provider'));
-                    $this->setSatisfied(false);
+                    // $authEvent->setCode(\Zend\Authentication\Result::FAILURE)
+                    // ->setMessages(array('Invalid provider'));
+                    // $this->setSatisfied(false);
 
                     return null;
                 }
@@ -206,7 +206,7 @@ class Provider implements EventManagerAwareInterface
     {
         try {
             $adapter = $this->getHybridAuth()->authenticate('Facebook');
-            if ($adapter->isUserConnected()) {
+            if ($adapter->isConnected()) {
                 $adapter->setUserStatus($message);
             }
         } catch (\Exception $e) {

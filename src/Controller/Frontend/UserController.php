@@ -94,7 +94,9 @@ class UserController extends ZfcUserController
      */
     public function registerAction()
     {
+        
         if ($this->zfcUserAuthentication()->hasIdentity()) {
+
             return $this->redirect()->toUrl($this->url()->fromRoute($this->getOptions()->getLoginRedirectRoute()));
         }
         $request = $this->getRequest();
@@ -123,9 +125,8 @@ class UserController extends ZfcUserController
                     if (! $redirect && $this->getOptions()->getLoginRedirectRoute() != '') {
                         $redirect = $this->url()->fromRoute($this->getOptions()->getLoginRedirectRoute());
                     }
-                    $redir = $this->url()
-                        ->fromRoute('frontend/zfcuser/login') .'/' . $socialnetwork . ($redirect ? '?redirect=' . $redirect : '');
-
+                    //$redir = $this->url()->fromRoute('frontend/zfcuser/login') .'/' . $socialnetwork . ($redirect ? '?redirect=' . $redirect : '');
+                    $redir = $this->url()->fromRoute('frontend/zfcuser/authenticate') .'?provider=' . $socialnetwork . ($redirect ? '&redirect=' . $redirect : '');
                     return $this->redirect()->toUrl($redir);
                 }
 

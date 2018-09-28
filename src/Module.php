@@ -269,7 +269,7 @@ class Module
                     $config = $sm->get('SocialConfig');
 
                     try {
-                        $auth = new \Hybrid_Auth($config);
+                        $auth = new \Hybridauth\Hybridauth($config);
                     } catch (\Exception $e) {
                         throw new \Exception($e->getMessage(), $e->getCode());
                     }
