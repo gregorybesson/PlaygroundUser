@@ -25,7 +25,7 @@
 		"php" : ">=5.5.0",
 		"playground/design" : ">=4.0.0",
 		"zendframework/zend-developer-tools" : ">=1.0.0",
-		"playground/hybridauth" : ">=2.0.0",
+		"hybridauth/hybridauth": "@RC",
 		"zf-commons/zfc-user" : ">=3.0.0"
 	},
 	"require-dev" : {
