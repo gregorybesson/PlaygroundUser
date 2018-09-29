@@ -311,7 +311,7 @@ return array(
 		                        'options' => array(
 		                                'route' => '/authenticate',
 		                                'defaults' => array(
-		                                        'controller' => 'zfcuser',
+		                                        'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
 		                                        'action'     => 'authenticate',
 		                                ),
 		                        ),
