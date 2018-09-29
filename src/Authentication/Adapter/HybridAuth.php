@@ -72,8 +72,6 @@ class HybridAuth extends AbstractAdapter implements EventManagerAwareInterface
             return;
         }
 
-        $redirect = $authEvent->getRequest()->getQuery()->get('redirect');
-
         $enabledProviders = $this->getOptions()->getEnabledProviders();
         if (!in_array($provider, $enabledProviders)) {
             $authEvent->setCode(Result::FAILURE)
@@ -82,10 +80,9 @@ class HybridAuth extends AbstractAdapter implements EventManagerAwareInterface
             return false;
         }
 
-        $hybridAuth = $this->getHybridAuth($provider, $redirect);
         $userProfile = null;
         try {
-            $adapter = $hybridAuth->authenticate($provider);
+            $adapter = $this->getHybridAuth()->authenticate($provider);
             if ($adapter->isConnected()) {
                 $userProfile = $adapter->getUserProfile();
             }
@@ -96,9 +93,9 @@ class HybridAuth extends AbstractAdapter implements EventManagerAwareInterface
 
             if (($ex->getCode() == 6) || ($ex->getCode() == 7)) {
                 // Réinitialiser la session HybridAuth
-                $hybridAuth->getAdapter($provider)->logout();
+                $this->getHybridAuth()->getAdapter($provider)->logout();
                 // Essayer de se connecter à nouveau
-                $adapter = $hybridAuth->authenticate($provider);
+                $adapter = $this->getHybridAuth()->authenticate($provider);
                 if ($adapter->isConnected()) {
                     $userProfile = $adapter->getUserProfile();
                 }
@@ -180,16 +177,10 @@ class HybridAuth extends AbstractAdapter implements EventManagerAwareInterface
      *
      * @return Hybrid_Auth
      */
-    public function getHybridAuth($provider = null, $redirect = null)
+    public function getHybridAuth()
     {
         if (!$this->hybridAuth) {
-            //$this->hybridAuth = $this->getServiceManager()->get('HybridAuth');
-            $config = $this->getServiceManager()->get('Config');
-            $config = isset($config['playgrounduser']['social'])?$config['playgrounduser']['social']:array('providers' => array());
-            if ($provider && $redirect) {
-                $config[$provider]['callback'] = $redirect;
-            }
-            $this->hybridAuth = new \Hybridauth\Hybridauth($config);
+            $this->hybridAuth = $this->getServiceManager()->get('HybridAuth');
         }
 
         return $this->hybridAuth;
