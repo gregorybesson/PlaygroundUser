@@ -175,7 +175,7 @@ class Cookie extends AbstractAdapter
 
         $cookie = explode("\n", $this->getRememberMeService()->getCookie());
 
-        if ($cookie[0] !== '') {
+        if ($cookie[0] !== '' && $user !== null) {
             $this->getRememberMeService()->removeSerie($user->getId(), $cookie[1]);
             $this->getRememberMeService()->removeCookie();
         }

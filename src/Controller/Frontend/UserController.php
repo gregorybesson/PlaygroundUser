@@ -787,6 +787,11 @@ class UserController extends ZfcUserController
         $provider = $this->params()->fromRoute('provider');
         $this->getRequest()->getQuery()->provider = $provider;
 
+        // The redirect which will be sent to FB (remember to register this callback in the FB app configuration)
+        //  has to be set in the querystring of the request for the redirection to be done after registration or login.
+        $redirect = $this->params()->fromRoute('redirect');
+        $this->getRequest()->getQuery()->redirect = $redirect;
+
         $this->zfcUserAuthentication()->getAuthAdapter()->resetAdapters();
         $this->zfcUserAuthentication()->getAuthService()->clearIdentity();
 
