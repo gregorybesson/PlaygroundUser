@@ -8,6 +8,7 @@ use Zend\Stdlib\Parameters;
 use ZfcUser\Controller\UserController as ZfcUserController;
 use Zend\View\Model\ViewModel;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\Session\Container;
 
 class UserController extends ZfcUserController
 {
@@ -122,8 +123,13 @@ class UserController extends ZfcUserController
 
                 if ($user || $service->getOptions()->getCreateUserAutoSocial() == true) {
                     //on le dirige vers l'action d'authentification
-                    if (! $redirect && $this->getOptions()->getLoginRedirectRoute() != '') {
+                    if (!$redirect && $this->getOptions()->getLoginRedirectRoute() != '') {
                         $redirect = $this->url()->fromRoute($this->getOptions()->getLoginRedirectRoute());
+                    }
+                    // If the user has been authenticated on FB and the user was in a game, we send him back to the game
+                    $session = new Container('facebook');
+                    if ($session->offsetGet('fb-redirect')) {
+                        $redirect = $session->offsetGet('fb-redirect');
                     }
                     //$redir = $this->url()->fromRoute('frontend/zfcuser/login') .'/' . $socialnetwork . ($redirect ? '?redirect=' . $redirect : '');
                     $redir = $this->url()->fromRoute('frontend/zfcuser/authenticate') .'?provider=' . $socialnetwork . ($redirect ? '&redirect=' . $redirect : '');
@@ -375,6 +381,7 @@ class UserController extends ZfcUserController
         }
         $adapter = $this->zfcUserAuthentication()->getAuthAdapter();
         $redirect = $this->params()->fromPost('redirect', $this->params()->fromQuery('redirect', false));
+        
         $routeLoginAdmin = $this->params()->fromPost('routeLoginAdmin', $this->params()->fromQuery('routeLoginAdmin', false));
 
         $result = $adapter->prepareForAuthentication($this->getRequest());
@@ -786,11 +793,6 @@ class UserController extends ZfcUserController
         // The provider has to be set in the querystring of the request for hybridauth to work properly.
         $provider = $this->params()->fromRoute('provider');
         $this->getRequest()->getQuery()->provider = $provider;
-
-        // The redirect which will be sent to FB (remember to register this callback in the FB app configuration)
-        //  has to be set in the querystring of the request for the redirection to be done after registration or login.
-        $redirect = $this->params()->fromRoute('redirect');
-        $this->getRequest()->getQuery()->redirect = $redirect;
 
         $this->zfcUserAuthentication()->getAuthAdapter()->resetAdapters();
         $this->zfcUserAuthentication()->getAuthService()->clearIdentity();
