@@ -16,13 +16,9 @@
 			"homepage" : "http://www.playground.gg"
 		}
 	],
-	"repositories" : [{
-			"type" : "git",
-			"url" : "https://github.com/gregorybesson/hybridauth"
-		}
-	],
 	"require" : {
 		"php" : ">=5.5.0",
+		"facebook/graph-sdk": "^5.6",
 		"playground/design" : ">=4.0.0",
 		"zendframework/zend-developer-tools" : ">=1.0.0",
 		"hybridauth/hybridauth": "@RC",
