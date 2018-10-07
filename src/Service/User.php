@@ -588,7 +588,9 @@ class User extends \ZfcUser\Service\User
         }
 
         if (!isset($data['username']) || $data['username'] == '') {
-            $data['username'] = ucfirst($data['firstname']) . " " . substr(ucfirst($data['lastname']), 0, 1);
+            if(isset($data['firstname']) && isset($data['lastname'])) {
+                $data['username'] = ucfirst($data['firstname']) . " " . substr(ucfirst($data['lastname']), 0, 1);
+            }
         }
 
         // Convert birth date format
