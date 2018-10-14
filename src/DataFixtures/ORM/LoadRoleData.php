@@ -35,8 +35,16 @@ class LoadRoleData extends AbstractFixture implements OrderedFixtureInterface
         $manager->persist($adminRole);
         $manager->flush();
 
+        $supervisorRole = new Role();
+        $supervisorRole->setRoleId('supervisor');
+        $supervisorRole->setParent($userRole);
+
+        $manager->persist($supervisorRole);
+        $manager->flush();
+
         // store reference to admin role for User relation to Role
         $this->addReference('admin-role', $adminRole);
+        $this->addReference('supervisor-role', $supervisorRole);
     }
 
     public function getOrder()
