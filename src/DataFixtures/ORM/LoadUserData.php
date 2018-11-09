@@ -68,6 +68,29 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $manager->persist($user);
 
         $manager->flush();
+
+        $user = new User();
+        $user->setFirstname('game-manager');
+        $user->setFirstname('game-manager');
+        $user->setUsername('gamemanager');
+        $user->setEmail('game-manager@test.com');
+        $user->setState(1);
+
+        $newPass = 'playground';
+
+        $bcrypt = new Bcrypt;
+        $bcrypt->setCost(14);
+
+        $pass = $bcrypt->create($newPass);
+        $user->setPassword($pass);
+
+        $user->addRole(
+            $this->getReference('game-role') // load the stored reference
+        );
+
+        $manager->persist($user);
+
+        $manager->flush();
     }
 
     public function getOrder()
