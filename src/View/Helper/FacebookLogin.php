@@ -1,14 +1,4 @@
 <?php
-/**
- * Copyright (c) 2013 AdFab Connect.
- * All rights reserved.
- *
- * @package     PlaygroundUser
- * @author      Greg Besson <bessong@gmail.com>
- * @copyright   2013 AdFab Connect.
- * @license     http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @link        http://connect.adfab.fr
- */
 namespace PlaygroundUser\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
