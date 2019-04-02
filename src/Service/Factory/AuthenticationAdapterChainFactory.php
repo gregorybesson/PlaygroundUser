@@ -7,7 +7,7 @@ use ZfcUser\Authentication\Adapter\AdapterChainServiceFactory;
 
 class AuthenticationAdapterChainFactory implements FactoryInterface
 {
-    public function __invoke(ContainerInterface $container, $requestedName, $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $factory = new AdapterChainServiceFactory();
         $chain = $factory->createService($container);

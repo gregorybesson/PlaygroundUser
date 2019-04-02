@@ -11,7 +11,7 @@ use PlaygroundUser\Controller\Admin\LoginController;
 class AdminLoginControllerFactory implements FactoryInterface
 {
 
-    public function __invoke(ContainerInterface $container, $requestedName, $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         /* @var UserController $controller */
         $controller = new LoginController($container);

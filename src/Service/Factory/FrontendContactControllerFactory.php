@@ -10,7 +10,7 @@ use PlaygroundUser\Controller\Frontend\ContactController;
 class FrontendContactControllerFactory implements FactoryInterface
 {
 
-    public function __invoke(ContainerInterface $container, $requestedName, $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $controller = new ContactController($container);
 
