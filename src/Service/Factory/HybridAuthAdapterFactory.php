@@ -12,7 +12,7 @@ use Interop\Container\ContainerInterface;
  */
 class HybridAuthAdapterFactory implements FactoryInterface
 {
-    public function __invoke(ContainerInterface $container, $requestedName, $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         try {
             $hybridAuth = $container->get('HybridAuth');
