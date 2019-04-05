@@ -53,7 +53,7 @@ return array(
         
         'guards' => array(
             'BjyAuthorize\Guard\Controller' => array(
-            	array('controller' => 'zfcuser',   'roles' => array('guest', 'user')),
+                array('controller' => 'zfcuser',   'roles' => array('guest', 'user')),
                 array('controller' => \PlaygroundUser\Controller\Frontend\UserController::class,   'roles' => array('guest', 'user')),
                 array('controller' => \PlaygroundUser\Controller\Frontend\TeamController::class,   'roles' => array('guest', 'user')),
                 array('controller' => \PlaygroundUser\Controller\Frontend\ForgotController::class, 'roles' => array('guest', 'user')),
@@ -66,9 +66,9 @@ return array(
         ),
     ),
 
-	'data-fixture' => array(
-		'PlaygroundUser_fixture' => __DIR__ . '/../src/DataFixtures/ORM',
-	),
+    'data-fixture' => array(
+        'PlaygroundUser_fixture' => __DIR__ . '/../src/DataFixtures/ORM',
+    ),
 
     'core_layout' => array(
         'frontend' => array(
@@ -111,7 +111,7 @@ return array(
     'translator' => array(
         'locale' => 'fr_FR',
         'translation_file_patterns' => array(
-        	array(
+            array(
                 'type' => 'phpArray',
                 'base_dir' => __DIR__ . '/../../../../language',
                 'pattern' => '%s.php',
@@ -128,7 +128,7 @@ return array(
 
     'controllers' => array(
         'factories' => array(
-        	\PlaygroundUser\Controller\Admin\LoginController::class => \PlaygroundUser\Service\Factory\AdminLoginControllerFactory::class,
+            \PlaygroundUser\Controller\Admin\LoginController::class => \PlaygroundUser\Service\Factory\AdminLoginControllerFactory::class,
             \PlaygroundUser\Controller\Admin\AdminController::class => \PlaygroundUser\Service\Factory\AdminControllerFactory::class,
             \PlaygroundUser\Controller\Frontend\UserController::class => \PlaygroundUser\Service\Factory\UserControllerFactory::class,
             \PlaygroundUser\Controller\Frontend\TeamController::class => \PlaygroundUser\Service\Factory\FrontendTeamControllerFactory::class,
@@ -142,332 +142,332 @@ return array(
 
     'router' => array(
         'routes' => array(
-        	'frontend' => array(
-       			'child_routes' => array(
-       			    'contact' => array(
-       			        'type' => 'Zend\Router\Http\Literal',
-       			        'options' => array(
-       			            'route' => 'contactez-nous',
-       			            'defaults' => array(
-       			                'controller' => \PlaygroundUser\Controller\Frontend\ContactController::class,
-       			                'action'     => 'index',
-       			            ),
-       			        ),
-       			        'may_terminate' => true,
-       			        'child_routes' => array(
-       			            'confirmation' => array(
-       			                'type'    => 'Zend\Router\Http\Literal',
-       			                'options' => array(
-       			                    'route'    => '/confirmation',
-       			                    'defaults' => array(
-       			                        'controller' => \PlaygroundUser\Controller\Frontend\ContactController::class,
-       			                        'action'     => 'confirmation',
-       			                    ),
-       			                ),
-       			            ),
-       			        ),
-       			    ),
-       			    'autocomplete' => array(
-       			    	'type' => 'Segment',
-		                'options' => array(
-		                    'route' => 'autocomplete',
-		                ),
-		                'child_routes' => array(
-		                	'user' => array(
-		                        'type' => 'Segment',
-		                        'options' => array(
-		                            'route' => '/user/:field/:value',
-		                            'defaults' => array(
-		                                'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
-		                                'action'     => 'autoCompleteUser',
-		                            )
-		                        )
-		                    )
-		                )
-       			    ),
-		            'zfcuser' => array(
-		                'type' => 'Zend\Router\Http\Literal',
-		                'priority' => 1000,
-		                'options' => array(
-		                    'route' => 'mon-compte',
-		                    'defaults' => array(
-		                        'controller' => 'zfcuser',
-		                        'action'     => 'index',
-		                    ),
-		                ),
-		                'may_terminate' => true,
-		                'child_routes' => array(
-		                	'team' => array(
-		                        'type' => 'Zend\Router\Http\Literal',
-		                        'options' => array(
-		                            'route' => '/team',
-		                            'defaults' => array(
-		                                'controller' => \PlaygroundUser\Controller\Frontend\TeamController::class,
-		                                'action'     => 'index',
-		                            ),
-		                        ),
-		                    ),
-		                    'forgotpassword' => array(
-		                        'type' => 'Zend\Router\Http\Literal',
-		                        'options' => array(
-		                            'route' => '/mot-passe-oublie',
-		                            'defaults' => array(
-		                                'controller' => \PlaygroundUser\Controller\Frontend\ForgotController::class,
-		                                'action'     => 'forgot',
-		                            ),
-		                        ),
-		                    ),
-		                    'ajaxforgotpassword' => array(
-		                        'type' => 'Zend\Router\Http\Literal',
-		                        'options' => array(
-		                            'route' => '/ajax-mot-passe-oublie',
-		                            'defaults' => array(
-		                                'controller' => \PlaygroundUser\Controller\Frontend\ForgotController::class,
-		                                'action'     => 'ajaxforgot',
-		                            ),
-		                        ),
-		                    ),
-		                    'sentpassword' => array(
-		                        'type' => 'Segment',
-		                        'options' => array(
-		                            'route' => '/envoi-mot-passe[/:email]',
-		                            'constraints' => array(
+            'frontend' => array(
+                'child_routes' => array(
+                    'contact' => array(
+                        'type' => 'Zend\Router\Http\Literal',
+                        'options' => array(
+                            'route' => 'contactez-nous',
+                            'defaults' => array(
+                                'controller' => \PlaygroundUser\Controller\Frontend\ContactController::class,
+                                'action'     => 'index',
+                            ),
+                        ),
+                        'may_terminate' => true,
+                        'child_routes' => array(
+                            'confirmation' => array(
+                                'type'    => 'Zend\Router\Http\Literal',
+                                'options' => array(
+                                    'route'    => '/confirmation',
+                                    'defaults' => array(
+                                        'controller' => \PlaygroundUser\Controller\Frontend\ContactController::class,
+                                        'action'     => 'confirmation',
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                    'autocomplete' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => 'autocomplete',
+                        ),
+                        'child_routes' => array(
+                            'user' => array(
+                                'type' => 'Segment',
+                                'options' => array(
+                                    'route' => '/user/:field/:value',
+                                    'defaults' => array(
+                                        'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
+                                        'action'     => 'autoCompleteUser',
+                                    )
+                                )
+                            )
+                        )
+                    ),
+                    'zfcuser' => array(
+                        'type' => 'Zend\Router\Http\Literal',
+                        'priority' => 1000,
+                        'options' => array(
+                            'route' => 'mon-compte',
+                            'defaults' => array(
+                                'controller' => 'zfcuser',
+                                'action'     => 'index',
+                            ),
+                        ),
+                        'may_terminate' => true,
+                        'child_routes' => array(
+                            'team' => array(
+                                'type' => 'Zend\Router\Http\Literal',
+                                'options' => array(
+                                    'route' => '/team',
+                                    'defaults' => array(
+                                        'controller' => \PlaygroundUser\Controller\Frontend\TeamController::class,
+                                        'action'     => 'index',
+                                    ),
+                                ),
+                            ),
+                            'forgotpassword' => array(
+                                'type' => 'Zend\Router\Http\Literal',
+                                'options' => array(
+                                    'route' => '/mot-passe-oublie',
+                                    'defaults' => array(
+                                        'controller' => \PlaygroundUser\Controller\Frontend\ForgotController::class,
+                                        'action'     => 'forgot',
+                                    ),
+                                ),
+                            ),
+                            'ajaxforgotpassword' => array(
+                                'type' => 'Zend\Router\Http\Literal',
+                                'options' => array(
+                                    'route' => '/ajax-mot-passe-oublie',
+                                    'defaults' => array(
+                                        'controller' => \PlaygroundUser\Controller\Frontend\ForgotController::class,
+                                        'action'     => 'ajaxforgot',
+                                    ),
+                                ),
+                            ),
+                            'sentpassword' => array(
+                                'type' => 'Segment',
+                                'options' => array(
+                                    'route' => '/envoi-mot-passe[/:email]',
+                                    'constraints' => array(
                                         ':email' => '[a-zA-Z0-9_-@.]+',
                                     ),
-		                            'defaults' => array(
-		                                'controller' => \PlaygroundUser\Controller\Frontend\ForgotController::class,
-		                                'action'     => 'sent',
-		                            ),
-		                        ),
-		                    ),
-		                    'ajaxrenewpassword' => array(
-		                        'type' => 'Segment',
-		                        'options' => array(
-		                            'route' => '/ajax-renew-password',
-		                            'defaults' => array(
-		                                'controller' => \PlaygroundUser\Controller\Frontend\ForgotController::class,
-		                                'action'     => 'ajaxrenewPassword',
-		                            ),
-		                        ),
-		                    ),
-		                    'ajaxlogin' => array(
-		                        'type' => 'Zend\Router\Http\Literal',
-		                        'options' => array(
-		                            'route' => '/ajaxlogin',
-		                            'defaults' => array(
-		                                    'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
-		                                    'action'     => 'ajaxlogin',
-		                            ),
-		                        ),
-		                    ),
-		                    'login' => array(
-		                        'type' => 'Zend\Router\Http\Literal',
-		                        'options' => array(
-		                            'route' => '/login',
-		                            'defaults' => array(
-		                                'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
-		                                'action'     => 'login',
-		                            ),
-		                        ),
-		                        'may_terminate' => true,
-		                        'child_routes' => array(
-		                            'provider' => array(
-		                                'type' => 'Segment',
-		                                'options' => array(
-		                                    'route' => '/:provider',
-		                                    'constraints' => array(
-		                                        'provider' => '[a-zA-Z][a-zA-Z0-9_-]+',
-		                                    ),
-		                                    'defaults' => array(
-		                                        'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
-		                                        'action' => 'providerLogin',
-		                                    ),
-		                                ),
-		                            ),
-		                        ),
-		                    ),
-		                    'logout' => array(
-		                        'type' => 'Zend\Router\Http\Literal',
-		                        'options' => array(
-		                            'route' => '/logout',
-		                            'defaults' => array(
-		                                'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
-		                                'action'     => 'logout',
-		                            ),
-		                        ),
-		                    ),
-		                    'ajaxauthenticate' => array(
-		                        'type' => 'Zend\Router\Http\Literal',
-		                        'options' => array(
-		                            'route' => '/ajaxauthenticate',
-		                            'defaults' => array(
-		                                'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
-		                                'action'     => 'ajaxauthenticate',
-		                            ),
-		                        ),
-		                    ),
-		                    'authenticate' => array(
-		                        'type' => 'Zend\Router\Http\Literal',
-		                        'options' => array(
-		                                'route' => '/authenticate',
-		                                'defaults' => array(
-		                                        'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
-		                                        'action'     => 'authenticate',
-		                                ),
-		                        ),
-		                    ),
-		                    'resetpassword' => array(
-		                        'type' => 'Segment',
-		                        'options' => array(
-		                            'route' => '/reset-password/:userId/:token',
-		                            'defaults' => array(
-		                                'controller' => \PlaygroundUser\Controller\Frontend\ForgotController::class,
-		                                'action'     => 'reset',
-		                            ),
-		                            'constraints' => array(
-		                                'userId'  => '[0-9]+',
-		                                'token' => '[A-F0-9]+',
-		                            ),
-		                        ),
-		                    ),
-		                    'changedpassword' => array(
-		                        'type' => 'Segment',
-		                        'options' => array(
-		                            'route' => '/changed-password/:userId',
-		                            'defaults' => array(
-		                                'controller' => \PlaygroundUser\Controller\Frontend\ForgotController::class,
-		                                'action'     => 'changedPassword',
-		                            ),
-		                            'constraints' => array(
-		                                'userId'  => '[0-9]+',
-		                            ),
-		                        ),
-		                    ),
-		                    'register' => array(
-		                        'type' => 'Segment',
-		                        'options' => array(
-		                            'route' => '/inscription[/:socialnetwork]',
-		                            'defaults' => array(
-		                                'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
-		                                'action'     => 'register',
-		                            ),
-		                        ),
-		                    ),
-		                    'registermail' => array(
-		                        'type' => 'Zend\Router\Http\Literal',
-		                        'options' => array(
-		                            'route' => '/registermail',
-		                            'defaults' => array(
-		                                'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
-		                                'action'     => 'registermail',
-		                            ),
-		                        ),
-		                    ),
-		                    'verification' => array(
-		                        'type' => 'Zend\Router\Http\Literal',
-		                        'options' => array(
-		                            'route' => '/verification',
-		                            'defaults' => array(
-		                                'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
-		                                'action'     => 'check-token',
-		                            ),
-		                        ),
-		                    ),
-		                    'backend' => array(
-		                        'type' => 'Segment',
-		                        'options' => array(
-		                            'route' => '/backend',
-		                            'defaults' => array(
-		                                'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
-		                                'action' => 'HybridAuthBackend'
-		                            )
-		                        ),
-		                    ),
+                                    'defaults' => array(
+                                        'controller' => \PlaygroundUser\Controller\Frontend\ForgotController::class,
+                                        'action'     => 'sent',
+                                    ),
+                                ),
+                            ),
+                            'ajaxrenewpassword' => array(
+                                'type' => 'Segment',
+                                'options' => array(
+                                    'route' => '/ajax-renew-password',
+                                    'defaults' => array(
+                                        'controller' => \PlaygroundUser\Controller\Frontend\ForgotController::class,
+                                        'action'     => 'ajaxrenewPassword',
+                                    ),
+                                ),
+                            ),
+                            'ajaxlogin' => array(
+                                'type' => 'Zend\Router\Http\Literal',
+                                'options' => array(
+                                    'route' => '/ajaxlogin',
+                                    'defaults' => array(
+                                            'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
+                                            'action'     => 'ajaxlogin',
+                                    ),
+                                ),
+                            ),
+                            'login' => array(
+                                'type' => 'Zend\Router\Http\Literal',
+                                'options' => array(
+                                    'route' => '/login',
+                                    'defaults' => array(
+                                        'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
+                                        'action'     => 'login',
+                                    ),
+                                ),
+                                'may_terminate' => true,
+                                'child_routes' => array(
+                                    'provider' => array(
+                                        'type' => 'Segment',
+                                        'options' => array(
+                                            'route' => '/:provider',
+                                            'constraints' => array(
+                                                'provider' => '[a-zA-Z][a-zA-Z0-9_-]+',
+                                            ),
+                                            'defaults' => array(
+                                                'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
+                                                'action' => 'providerLogin',
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            'logout' => array(
+                                'type' => 'Zend\Router\Http\Literal',
+                                'options' => array(
+                                    'route' => '/logout',
+                                    'defaults' => array(
+                                        'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
+                                        'action'     => 'logout',
+                                    ),
+                                ),
+                            ),
+                            'ajaxauthenticate' => array(
+                                'type' => 'Zend\Router\Http\Literal',
+                                'options' => array(
+                                    'route' => '/ajaxauthenticate',
+                                    'defaults' => array(
+                                        'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
+                                        'action'     => 'ajaxauthenticate',
+                                    ),
+                                ),
+                            ),
+                            'authenticate' => array(
+                                'type' => 'Zend\Router\Http\Literal',
+                                'options' => array(
+                                        'route' => '/authenticate',
+                                        'defaults' => array(
+                                                'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
+                                                'action'     => 'authenticate',
+                                        ),
+                                ),
+                            ),
+                            'resetpassword' => array(
+                                'type' => 'Segment',
+                                'options' => array(
+                                    'route' => '/reset-password/:userId/:token',
+                                    'defaults' => array(
+                                        'controller' => \PlaygroundUser\Controller\Frontend\ForgotController::class,
+                                        'action'     => 'reset',
+                                    ),
+                                    'constraints' => array(
+                                        'userId'  => '[0-9]+',
+                                        'token' => '[A-F0-9]+',
+                                    ),
+                                ),
+                            ),
+                            'passwordchanged' => array(
+                                'type' => 'Segment',
+                                'options' => array(
+                                    'route' => '/password-changed/:userId',
+                                    'defaults' => array(
+                                        'controller' => \PlaygroundUser\Controller\Frontend\ForgotController::class,
+                                        'action'     => 'passwordChanged',
+                                    ),
+                                    'constraints' => array(
+                                        'userId'  => '[0-9]+',
+                                    ),
+                                ),
+                            ),
+                            'register' => array(
+                                'type' => 'Segment',
+                                'options' => array(
+                                    'route' => '/inscription[/:socialnetwork]',
+                                    'defaults' => array(
+                                        'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
+                                        'action'     => 'register',
+                                    ),
+                                ),
+                            ),
+                            'registermail' => array(
+                                'type' => 'Zend\Router\Http\Literal',
+                                'options' => array(
+                                    'route' => '/registermail',
+                                    'defaults' => array(
+                                        'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
+                                        'action'     => 'registermail',
+                                    ),
+                                ),
+                            ),
+                            'verification' => array(
+                                'type' => 'Zend\Router\Http\Literal',
+                                'options' => array(
+                                    'route' => '/verification',
+                                    'defaults' => array(
+                                        'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
+                                        'action'     => 'check-token',
+                                    ),
+                                ),
+                            ),
+                            'backend' => array(
+                                'type' => 'Segment',
+                                'options' => array(
+                                    'route' => '/backend',
+                                    'defaults' => array(
+                                        'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
+                                        'action' => 'HybridAuthBackend'
+                                    )
+                                ),
+                            ),
 
-		                    'profile' => array(
-		                        'type' => 'Zend\Router\Http\Literal',
-		                        'options' => array(
-		                            'route' => '/mes-coordonnees',
-		                            'defaults' => array(
-		                                'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
-		                                'action'     => 'profile',
-		                            ),
-		                        ),
-		                    ),
-		                    'profile_prizes' => array(
-		                        'type' => 'Zend\Router\Http\Literal',
-		                        'options' => array(
-		                            'route' => '/prizes',
-		                            'defaults' => array(
-		                                'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
-		                                'action'     => 'prizeCategoryUser',
-		                            ),
-		                        ),
-		                    ),
-		                    'newsletter' => array(
-		                        'type' => 'Zend\Router\Http\Literal',
-		                        'options' => array(
-		                            'route' => '/newsletter',
-		                            'defaults' => array(
-		                                'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
-		                                'action'     => 'newsletter',
-		                            ),
-		                        ),
-		                    ),
-		                    'ajax_newsletter' => array(
-		                        'type' => 'Zend\Router\Http\Literal',
-		                        'options' => array(
-		                            'route' => '/ajax-newsletter',
-		                            'defaults' => array(
-		                                'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
-		                                'action'     => 'ajaxNewsletter',
-		                            ),
-		                        ),
-		                    ),
-		                    'changepassword' => array(
-		                        'type' => 'Zend\Router\Http\Literal',
-		                        'options' => array(
-		                            'route' => '/change-password',
-		                            'defaults' => array(
-		                                'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
-		                                'action'     => 'changepassword',
-		                            ),
-		                        ),
-		                    ),
-		                    'blockaccount' => array(
-		                        'type' => 'Zend\Router\Http\Literal',
-		                        'options' => array(
-		                            'route' => '/block-account',
-		                            'defaults' => array(
-		                                'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
-		                                'action'     => 'blockAccount',
-		                            ),
-		                        ),
-		                    ),
-		                    'changeemail' => array(
-		                        'type' => 'Zend\Router\Http\Literal',
-		                        'options' => array(
-		                            'route' => '/change-email',
-		                            'defaults' => array(
-		                                'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
-		                                'action' => 'changeemail',
-		                            ),
-		                        ),
-		                    ),
-		                ),
-		            ),
-       			),
-        	),
+                            'profile' => array(
+                                'type' => 'Zend\Router\Http\Literal',
+                                'options' => array(
+                                    'route' => '/mes-coordonnees',
+                                    'defaults' => array(
+                                        'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
+                                        'action'     => 'profile',
+                                    ),
+                                ),
+                            ),
+                            'profile_prizes' => array(
+                                'type' => 'Zend\Router\Http\Literal',
+                                'options' => array(
+                                    'route' => '/prizes',
+                                    'defaults' => array(
+                                        'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
+                                        'action'     => 'prizeCategoryUser',
+                                    ),
+                                ),
+                            ),
+                            'newsletter' => array(
+                                'type' => 'Zend\Router\Http\Literal',
+                                'options' => array(
+                                    'route' => '/newsletter',
+                                    'defaults' => array(
+                                        'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
+                                        'action'     => 'newsletter',
+                                    ),
+                                ),
+                            ),
+                            'ajax_newsletter' => array(
+                                'type' => 'Zend\Router\Http\Literal',
+                                'options' => array(
+                                    'route' => '/ajax-newsletter',
+                                    'defaults' => array(
+                                        'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
+                                        'action'     => 'ajaxNewsletter',
+                                    ),
+                                ),
+                            ),
+                            'changepassword' => array(
+                                'type' => 'Zend\Router\Http\Literal',
+                                'options' => array(
+                                    'route' => '/change-password',
+                                    'defaults' => array(
+                                        'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
+                                        'action'     => 'changepassword',
+                                    ),
+                                ),
+                            ),
+                            'blockaccount' => array(
+                                'type' => 'Zend\Router\Http\Literal',
+                                'options' => array(
+                                    'route' => '/block-account',
+                                    'defaults' => array(
+                                        'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
+                                        'action'     => 'blockAccount',
+                                    ),
+                                ),
+                            ),
+                            'changeemail' => array(
+                                'type' => 'Zend\Router\Http\Literal',
+                                'options' => array(
+                                    'route' => '/change-email',
+                                    'defaults' => array(
+                                        'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
+                                        'action' => 'changeemail',
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            ),
             'admin' => array(
-            	'options' => array(
-            		'defaults' => array(
-           				'controller' => \PlaygroundUser\Controller\Admin\LoginController::class,
-           				'action'     => 'login',
-           				'title' => 'Back-office'
-            		),
-            	),
+                'options' => array(
+                    'defaults' => array(
+                        'controller' => \PlaygroundUser\Controller\Admin\LoginController::class,
+                        'action'     => 'login',
+                        'title' => 'Back-office'
+                    ),
+                ),
                 'child_routes' => array(
-                	'logout' => array(
+                    'logout' => array(
                         'type' => 'Zend\Router\Http\Literal',
                         'options' => array(
                             'route' => '/logout',
@@ -713,12 +713,12 @@ return array(
         'new_email_subject_line' => 'your new password',
         //'create_user_auto_password' => true
         'admin' => array(
-	        'route_login' => 'admin',
-	        'resource' => 'core',
-	        'privilege'   => 'dashboard',
-	        'controller' => \PlaygroundDesign\Controller\Admin\Dashboard::class,
-	        'action' => 'index',
-	        'route_login_fail' => 'admin'
-	    )
+            'route_login' => 'admin',
+            'resource' => 'core',
+            'privilege'   => 'dashboard',
+            'controller' => \PlaygroundDesign\Controller\Admin\Dashboard::class,
+            'action' => 'index',
+            'route_login_fail' => 'admin'
+        )
     )
 );
