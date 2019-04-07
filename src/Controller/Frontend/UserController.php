@@ -351,7 +351,7 @@ class UserController extends ZfcUserController
     public function logoutAction()
     {
         $user = $this->zfcUserAuthentication()->getIdentity();
-        Hybrid_Auth::logoutAllProviders();
+        //Hybrid_Auth::logoutAllProviders();
 
         $this->zfcUserAuthentication()->getAuthAdapter()->resetAdapters();
         $this->zfcUserAuthentication()->getAuthAdapter()->logoutAdapters();
