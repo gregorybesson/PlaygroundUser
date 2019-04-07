@@ -223,8 +223,8 @@ class ForgotController extends AbstractActionController
             if ($form->isValid() && $user !== null) {
                 $service->resetPassword($password, $user, $form->getData());
                 return $this->redirect()->toRoute(
-                    'frontend',
-                    array(),
+                    'frontend/zfcuser/passwordchanged',
+                    array('userId' => $userId),
                     array('force_canonical'=>true)
                 );
             }
@@ -242,7 +242,7 @@ class ForgotController extends AbstractActionController
     public function passwordChangedAction()
     {
         $userId = $this->getEvent()->getRouteMatch()->getParam('userId');
-        $user = $this->getUserService->getUserMapper()->findById($userId);
+        $user = $this->getUserService()->getUserMapper()->findById($userId);
 
         return new ViewModel(array('email' => $user->getEmail()));
     }
