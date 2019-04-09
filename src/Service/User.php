@@ -75,6 +75,9 @@ class User extends \ZfcUser\Service\User
         $form->bind($user);
 
         $avatarPath = $this->getOptions()->getAvatarPath() . DIRECTORY_SEPARATOR;
+        if (!is_dir($avatarPath)) {
+            mkdir($avatarPath, 0777, true);
+        }
         $avatarUrl = $this->getOptions()->getAvatarUrl() . '/';
 
         $clearPassword = (isset($data['password']))?  $data['password'] : '';
@@ -215,6 +218,9 @@ class User extends \ZfcUser\Service\User
         $zfcUserOptions = $this->getServiceManager()->get('zfcuser_module_options');
         $class                  = $zfcUserOptions->getUserEntityClass();
         $path                 = $this->getOptions()->getAvatarPath() . DIRECTORY_SEPARATOR;
+        if (!is_dir($path)) {
+            mkdir($path, 0777, true);
+        }
         $avatar_url           = $this->getOptions()->getAvatarUrl() . '/';
         $roleMapper           = $this->getRoleMapper();
         $defaultRegisterRole  = $this->getOptions()->getDefaultRegisterRole();
@@ -578,10 +584,13 @@ class User extends \ZfcUser\Service\User
 
         $data['id'] = $user->getId();
         $avatarPath = $this->getOptions()->getAvatarPath() . DIRECTORY_SEPARATOR;
+        if (!is_dir($avatarPath)) {
+            mkdir($avatarPath, 0777, true);
+        }
         $avatarUrl = $this->getOptions()->getAvatarUrl() . '/';
 
         // If avatar is set, I prepend the url path to the image
-        $fileName=null;
+        $fileName = null;
         if (isset($data['avatar'])) {
             $fileName = $data['avatar'];
             $data['avatar'] = $avatarUrl . $fileName;
@@ -638,7 +647,8 @@ class User extends \ZfcUser\Service\User
                 $form->setMessages(array('avatar'=>$error ));
             } else {
                 $adapter->setDestination($avatarPath);
-                if ($adapter->receive($fileName)) {
+                if ($adapter->receive()) {
+                    $user->setAvatar($avatarUrl . $adapter->getFileName(null, false));
                     $user = $this->getUserMapper()->update($user);
                     $this->getEventManager()->trigger(__FUNCTION__.'.post', $this, array('user' => $user, 'data' => $data));
 
