@@ -506,22 +506,17 @@ class UserController extends ZfcUserController
 
         $request = $this->getRequest();
         // I don't want to rely on the browser's info for these key datas
-        $request->getPost()->set('identity', $this->getUserService()
-            ->getAuthService()
-            ->getIdentity()
-            ->getEmail());
-        $request->getPost()->set('email', $this->getUserService()
-            ->getAuthService()
-            ->getIdentity()
-            ->getEmail());
-        $userId = $this->getUserService()
-            ->getAuthService()
-            ->getIdentity()
-            ->getId();
+        $request->getPost()->set(
+            'identity',
+            $this->getUserService()->getAuthService()->getIdentity()->getEmail()
+        );
+        $request->getPost()->set(
+            'email',
+            $this->getUserService()->getAuthService()->getIdentity()->getEmail()
+        );
+        $userId = $this->getUserService()->getAuthService()->getIdentity()->getId();
 
-        $user = $this->getUserService()
-            ->getUserMapper()
-            ->findById($userId);
+        $user = $this->getUserService()->getUserMapper()->findById($userId);
         $formInfo->bind($user);
 
         $username = $formInfo->get('username')->getValue();
@@ -532,9 +527,7 @@ class UserController extends ZfcUserController
             $usernamePoint = '';
         }
 
-        $fmPassword = $this->flashMessenger()
-            ->setNamespace('change-password')
-            ->getMessages();
+        $fmPassword = $this->flashMessenger()->setNamespace('change-password')->getMessages();
 
         if (isset($fmPassword[0])) {
             $statusPassword = $fmPassword[0];
@@ -542,18 +535,14 @@ class UserController extends ZfcUserController
             $statusPassword = null;
         }
 
-        $fmEmail = $this->flashMessenger()
-            ->setNamespace('change-email')
-            ->getMessages();
+        $fmEmail = $this->flashMessenger()->setNamespace('change-email')->getMessages();
         if (isset($fmEmail[0])) {
             $statusEmail = $fmEmail[0];
         } else {
             $statusEmail = null;
         }
 
-        $fmInfo = $this->flashMessenger()
-            ->setNamespace('change-info')
-            ->getMessages();
+        $fmInfo = $this->flashMessenger()->setNamespace('change-info')->getMessages();
         if (isset($fmInfo[0])) {
             $statusInfo = $fmInfo[0];
         } else {
@@ -565,9 +554,10 @@ class UserController extends ZfcUserController
             $data = $request->getPost()->toArray();
             $file = $this->params()->fromFiles('avatar');
             if ($file['name']) {
-                $data = array_merge($data, array(
-                    'avatar' => $file['name']
-                ));
+                $data = array_merge(
+                    $data,
+                    ['avatar' => $file['name']]
+                );
             }
 
             $result = $this->getUserService()->updateInfo($data, $user);
@@ -586,9 +576,7 @@ class UserController extends ZfcUserController
                 );
             }
 
-            $this->flashMessenger()
-                ->setNamespace('change-info')
-                ->addMessage(true);
+            $this->flashMessenger()->setNamespace('change-info')->addMessage(true);
 
             $redirect = (!empty($this->params()->fromQuery('redirect')))?
                 $this->params()->fromQuery('redirect'):

@@ -590,7 +590,7 @@ class User extends \ZfcUser\Service\User
         $avatarUrl = $this->getOptions()->getAvatarUrl() . '/';
 
         // If avatar is set, I prepend the url path to the image
-        $fileName=null;
+        $fileName = null;
         if (isset($data['avatar'])) {
             $fileName = $data['avatar'];
             $data['avatar'] = $avatarUrl . $fileName;
@@ -647,7 +647,8 @@ class User extends \ZfcUser\Service\User
                 $form->setMessages(array('avatar'=>$error ));
             } else {
                 $adapter->setDestination($avatarPath);
-                if ($adapter->receive($fileName)) {
+                if ($adapter->receive()) {
+                    $user->setAvatar($avatarUrl . $adapter->getFileName(null, false));
                     $user = $this->getUserMapper()->update($user);
                     $this->getEventManager()->trigger(__FUNCTION__.'.post', $this, array('user' => $user, 'data' => $data));
 
