@@ -134,10 +134,8 @@ class HybridAuth extends AbstractAdapter implements EventManagerAwareInterface
             } else {
                 $localUser = $this->instantiateLocalUser();
                 $localUser->setDisplayName($userProfile->displayName)
-                          ->setPassword($provider);
-                if ($userProfile->emailVerified) {
-                    $localUser->setEmail($userProfile->emailVerified);
-                }
+                    ->setPassword($provider)
+                    ->setEmail($userProfile->email);
                 $this->insert($localUser, 'other', $userProfile);
             }
 
@@ -156,7 +154,7 @@ class HybridAuth extends AbstractAdapter implements EventManagerAwareInterface
             $user = $mapper->findById($localUserProvider->getUser()->getId());
             if (!in_array($user->getState(), $zfcUserOptions->getAllowedLoginStates())) {
                 $authEvent->setCode(Result::FAILURE_UNCATEGORIZED)
-                  ->setMessages(array('A record with the supplied identity is not active.'));
+                    ->setMessages(array('A record with the supplied identity is not active.'));
                 $this->setSatisfied(false);
 
                 return false;
@@ -344,14 +342,8 @@ class HybridAuth extends AbstractAdapter implements EventManagerAwareInterface
 
     protected function facebookToLocalUser($userProfile)
     {
-        if (!isset($userProfile->emailVerified)) {
-            throw new \RuntimeException(
-                'Please verify your email with Facebook before attempting login',
-                Result::FAILURE_CREDENTIAL_INVALID
-            );
-        }
         $mapper = $this->getZfcUserMapper();
-        if (false != ($localUser = $mapper->findByEmail($userProfile->emailVerified))) {
+        if (false != ($localUser = $mapper->findByEmail($userProfile->email))) {
             return $localUser;
         }
         $localUser = $this->instantiateLocalUser();
@@ -367,7 +359,7 @@ class HybridAuth extends AbstractAdapter implements EventManagerAwareInterface
             );
         }
 
-        $localUser->setEmail($userProfile->emailVerified)
+        $localUser->setEmail($userProfile->email)
             ->setDisplayName($userProfile->displayName)
             ->setFirstname($userProfile->firstName)
             ->setLastname($userProfile->lastName)
