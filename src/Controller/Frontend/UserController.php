@@ -95,7 +95,6 @@ class UserController extends ZfcUserController
      */
     public function registerAction()
     {
-        
         if ($this->zfcUserAuthentication()->hasIdentity()) {
 
             return $this->redirect()->toUrl($this->url()->fromRoute($this->getOptions()->getLoginRedirectRoute()));
@@ -737,17 +736,17 @@ class UserController extends ZfcUserController
 
         $request = $this->getRequest();
         // I don't want to rely on the browser's info for these key datas
-        $request->getPost()->set('identity', $this->getUserService()
-                ->getAuthService()
-                ->getIdentity()
-                ->getEmail());
+        $request->getPost()->set(
+            'identity',
+            $this->getUserService()->getAuthService()->getIdentity()->getEmail()
+        );
 
         $email = $request->getPost()->get('email');
         if (empty($email)) {
-            $request->getPost()->set('email', $this->getUserService()
-                    ->getAuthService()
-                    ->getIdentity()
-                    ->getEmail());
+            $request->getPost()->set(
+                'email',
+                $this->getUserService()->getAuthService()->getIdentity()->getEmail()
+            );
         }
 
         $userId = $this->getUserService()
@@ -900,6 +899,27 @@ class UserController extends ZfcUserController
                 }
             }
         }
+
+        return $response;
+    }
+
+    /**
+     * You can search for a user based on the email
+     *
+     */
+    public function emailExistsAction()
+    {
+        $email = $this->getEvent()->getRouteMatch()->getParam('email');
+        $request = $this->getRequest();
+        $response = $this->getResponse();
+
+        $user = $this->getUserService()->getUserMapper()->findByEmail($email);
+        if (empty($user)) {
+            $result = ['result' => false];
+        } else {
+            $result = ['result' => true];
+        }
+        $response->setContent(\Zend\Json\Json::encode($result));
 
         return $response;
     }

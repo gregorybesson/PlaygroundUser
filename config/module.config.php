@@ -185,6 +185,16 @@ return array(
                             )
                         )
                     ),
+                    'emailexists' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => 'user/email-exists/:email',
+                            'defaults' => array(
+                                'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
+                                'action'     => 'emailExists',
+                            )
+                        ),
+                    ),
                     'zfcuser' => array(
                         'type' => 'Zend\Router\Http\Literal',
                         'priority' => 1000,
