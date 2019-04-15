@@ -13,10 +13,11 @@ class ContactController extends AbstractActionController
      */
     protected $options;
 
-     /**
+    /**
      * @var mailService
      */
     protected $mailService;
+
     /**
      *
      * @var ServiceManager
@@ -60,9 +61,9 @@ class ContactController extends AbstractActionController
             }
         }
 
-        return new ViewModel(array(
-                'form' => $form,
-            ));
+        return new ViewModel(
+            ['form' => $form]
+        );
     }
 
     public function confirmationAction()
