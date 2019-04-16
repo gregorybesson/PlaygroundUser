@@ -56,6 +56,19 @@ class ChangeInfo extends Register
             ),
         ));
 
+        $this->add(
+            array(
+                'name' => 'displayName',
+                'options' => array(
+                    'label' => $translator->translate('Display name', 'playgrounduser'),
+                ),
+                'attributes' => array(
+                    'type' => 'text',
+                    'placeholder' => $translator->translate('Display name', 'playgrounduser'),
+                ),
+            )
+        );
+
         $this->add(array(
             'name' => 'firstname',
             'options' => array(
@@ -89,16 +102,18 @@ class ChangeInfo extends Register
             ),
         ));
 
-        $this->add(array(
-          'name' => 'address',
-          'options' => array(
-            'label' => $translator->translate('Address', 'playgrounduser'),
-          ),
-          'attributes' => array(
-            'type' => 'text',
-            'placeholder' => $translator->translate('Address', 'playgrounduser'),
-          ),
-        ));
+        $this->add(
+            array(
+                'name' => 'address',
+                'options' => array(
+                    'label' => $translator->translate('Address', 'playgrounduser'),
+                ),
+                'attributes' => array(
+                    'type' => 'text',
+                    'placeholder' => $translator->translate('Address', 'playgrounduser'),
+                ),
+            )
+        );
 
         $this->add(array(
                 'name' => 'address2',
@@ -125,16 +140,18 @@ class ChangeInfo extends Register
             ),
         ));
 
-        $this->add(array(
-          'name' => 'city',
-          'options' => array(
-          'label' => $translator->translate('City', 'playgrounduser'),
-          ),
-          'attributes' => array(
-            'type' => 'text',
-            'placeholder' => $translator->translate('City', 'playgrounduser'),
-          ),
-        ));
+        $this->add(
+            array(
+                'name' => 'city',
+                'options' => array(
+                'label' => $translator->translate('City', 'playgrounduser'),
+                ),
+                'attributes' => array(
+                  'type' => 'text',
+                  'placeholder' => $translator->translate('City', 'playgrounduser'),
+                ),
+            )
+        );
 
         $cs = $this->getServiceManager()->get('playgroundcore_country_service');
         $countries = $cs->getAllCountries();

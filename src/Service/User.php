@@ -330,10 +330,11 @@ class User extends \ZfcUser\Service\User
      *
      * @param  array $data
      * @param  string $formClass
+     * @param  string $roleId
      * @return \playgroundUser\Entity\UserInterface
      * @throws Exception\InvalidArgumentException
      */
-    public function register(array $data, $formClass = false)
+    public function register(array $data, $formClass = false, $roleId = null)
     {
         $zfcUserOptions = $this->getServiceManager()->get('zfcuser_module_options');
         $entityManager = $this->getServiceManager()->get('doctrine.entitymanager.orm_default');
@@ -371,22 +372,26 @@ class User extends \ZfcUser\Service\User
         $emailInput = $form->getInputFilter()->get('email');
 
         // This email is already associated with another user
-        $noObjectExistsValidator = new NoObjectExistsValidator(array(
-            'object_repository' => $entityManager->getRepository($class),
-            'fields'            => 'email',
-            'messages'          => array('objectFound' => 'This email already exists !')
-        ));
+        $noObjectExistsValidator = new NoObjectExistsValidator(
+            [
+                'object_repository' => $entityManager->getRepository($class),
+                'fields'            => 'email',
+                'messages'          => array('objectFound' => 'This email already exists !')
+            ]
+        );
 
         $emailInput->getValidatorChain()->addValidator($noObjectExistsValidator);
 
         if ($zfcUserOptions->getEnableUsername() && $this->getOptions()->getUsernameUnique()) {
             $usernameInput = $form->getInputFilter()->get('username');
             // This username is already associated with another user
-            $noObjectExistsValidator = new NoObjectExistsValidator(array(
-                'object_repository' => $entityManager->getRepository($class),
-                'fields'            => 'username',
-                'messages'          => array('objectFound' => 'This username already exists !')
-            ));
+            $noObjectExistsValidator = new NoObjectExistsValidator(
+                [
+                    'object_repository' => $entityManager->getRepository($class),
+                    'fields'            => 'username',
+                    'messages'          => array('objectFound' => 'This username already exists !')
+                ]
+            );
 
             $usernameInput->getValidatorChain()->addValidator($noObjectExistsValidator);
         }
@@ -451,10 +456,20 @@ class User extends \ZfcUser\Service\User
         */
 
         $roleMapper  = $this->getRoleMapper();
-        $defaultRegisterRole = $zfcUserOptions->getDefaultRegisterRole();
-        $role        = $roleMapper->findByRoleId($defaultRegisterRole);
-        if ($role) {
-            $user->addRole($role);
+        if ($roleId) {
+            $role = $roleMapper->findByRoleId($roleId);
+            if ($role) {
+                $user->addRole($role);
+            } else {
+                $roleId = null;
+            }
+        }
+        if ($roleId == null) {
+            $defaultRegisterRole = $zfcUserOptions->getDefaultRegisterRole();
+            $role = $roleMapper->findByRoleId($defaultRegisterRole);
+            if ($role) {
+                $user->addRole($role);
+            }
         }
 
         $user = $this->getUserMapper()->insert($user);
