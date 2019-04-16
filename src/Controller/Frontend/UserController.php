@@ -1015,8 +1015,9 @@ class UserController extends ZfcUserController
     public function getPrizeCategoryForm()
     {
         if (! $this->prizeCategoryForm) {
-            $this->setPrizeCategoryForm($this->getServiceLocator()
-                ->get('playgroundgame_prizecategoryuser_form'));
+            $this->setPrizeCategoryForm(
+                $this->getServiceLocator()->get('playgroundgame_prizecategoryuser_form')
+            );
         }
 
         return $this->prizeCategoryForm;
@@ -1043,8 +1044,9 @@ class UserController extends ZfcUserController
     public function getBlockAccountForm()
     {
         if (! $this->blockAccountForm) {
-            $this->setBlockAccountForm($this->getServiceLocator()
-                    ->get('playgrounduser_blockaccount_form'));
+            $this->setBlockAccountForm(
+                $this->getServiceLocator()->get('playgrounduser_blockaccount_form')
+            );
         }
 
         return $this->blockAccountForm;
@@ -1070,8 +1072,9 @@ class UserController extends ZfcUserController
     public function getNewsletterForm()
     {
         if (! $this->newsletterForm) {
-            $this->setNewsletterForm($this->getServiceLocator()
-                    ->get('playgrounduser_newsletter_form'));
+            $this->setNewsletterForm(
+                $this->getServiceLocator()->get('playgrounduser_newsletter_form')
+            );
         }
 
         return $this->newsletterForm;
@@ -1097,8 +1100,9 @@ class UserController extends ZfcUserController
     public function getAddressForm()
     {
         if (! $this->addressForm) {
-            $this->setAddressForm($this->getServiceLocator()
-                    ->get('playgrounduser_address_form'));
+            $this->setAddressForm(
+                $this->getServiceLocator()->get('playgrounduser_address_form')
+            );
         }
 
         return $this->addressForm;
