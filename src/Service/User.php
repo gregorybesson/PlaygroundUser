@@ -722,6 +722,7 @@ class User extends \ZfcUser\Service\User
     {
         $user = $this->getAuthService()->getIdentity();
         $optinChange = false;
+        $optin2Change = false;
         $optinPartnerChange = false;
 
         // I trigger an optin event before updating user if it has changed .
@@ -729,6 +730,13 @@ class User extends \ZfcUser\Service\User
             $optinChange = true;
             $this->getEventManager()->trigger(__FUNCTION__.'.pre', $this, array('user' => $user, 'data' => $data));
             $user->setOptin($data['optin']);
+        }
+
+        // I trigger an optin2 event before updating user if it has changed .
+        if (isset($data['optin2']) && $user->getOptin2() != $data['optin2']) {
+            $optin2Change = true;
+            $this->getEventManager()->trigger(__FUNCTION__.'.pre', $this, array('user' => $user, 'data' => $data));
+            $user->setOptin2($data['optin2']);
         }
 
         // I trigger an optinPartner event before updating user if it has changed
@@ -749,6 +757,10 @@ class User extends \ZfcUser\Service\User
         $user = $this->getUserMapper()->update($user);
         if ($optinChange) {
             $this->getEventManager()->trigger(__FUNCTION__.'.post', $this, array('user' => $user, 'data' => $data));
+        }
+
+        if ($optin2Change) {
+            $this->getEventManager()->trigger(__FUNCTION__.'.optin2.post', $this, array('user' => $user, 'data' => $data));
         }
 
         if ($optinPartnerChange) {
