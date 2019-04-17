@@ -194,7 +194,9 @@ class UserController extends ZfcUserController
         );
 
         if(isset($post['optin'])) $post['optin'] = 1;
+        if(isset($post['optin2'])) $post['optin2'] = 1;
         if(isset($post['optinPartner'])) $post['optinPartner'] = 1;
+
         $user = $service->register($post);
 
         if (! $user) {
@@ -551,6 +553,7 @@ class UserController extends ZfcUserController
         if ($request->isPost() && array_key_exists('firstname', $this->params()->fromPost())) {
             $result = false;
             $data = $request->getPost()->toArray();
+
             $file = $this->params()->fromFiles('avatar');
             if ($file['name']) {
                 $data = array_merge(
