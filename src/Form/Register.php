@@ -199,6 +199,7 @@ class Register extends \ZfcUser\Form\Register
         $this->add(
             array(
                 'name' => 'avatar',
+                'type' => 'Zend\Form\Element\File',
                 'attributes' => array(
                     'type'  => 'file',
                 ),
