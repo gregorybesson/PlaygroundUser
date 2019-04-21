@@ -545,6 +545,8 @@ class User extends \ZfcUser\Service\User
         }
 
         $currentUser->setState($activate);
+        $currentUser->setEmail('INACTIVE---'.$currentUser->getEmail());
+        $currentUser->setPassword('INACTIVE---'.$currentUser->getPassword());
         $this->getUserMapper()->update($currentUser);
 
         return true;
