@@ -869,7 +869,7 @@ class UserController extends ZfcUserController
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost()->toArray();
             if ($this->getUserService()->updateNewsletter($data)) {
-                $this->flashMessenger()->setNamespace('newsletter')->addMessage(true);
+                $viewModel->setVariables(array('message' => true));
             }
         }
         $viewModel->setVariables(array('form' => $form));
