@@ -4,6 +4,7 @@ namespace PlaygroundUser\Service;
 
 use PlaygroundUser\Entity\UserProvider;
 use Zend\Form\Form;
+use Zend\Stdlib\ErrorHandler;
 use Zend\ServiceManager\ServiceManager;
 use Zend\Crypt\Password\Bcrypt;
 use PlaygroundUser\Options\ModuleOptions;
@@ -349,6 +350,12 @@ class User extends \ZfcUser\Service\User
 
         $this->getEventManager()->trigger(__FUNCTION__.'.pre', $this, array('user' => $user, 'data' => $data, 'form' => $form));
 
+        $avatarPath = $this->getOptions()->getAvatarPath() . DIRECTORY_SEPARATOR;
+        if (!is_dir($avatarPath)) {
+            mkdir($avatarPath, 0777, true);
+        }
+        $avatarUrl = $this->getOptions()->getAvatarUrl() . '/';
+
         $form->get('dob')->setOptions(array('format' => 'Y-m-d'));
 
         // Convert birth date format
@@ -396,10 +403,10 @@ class User extends \ZfcUser\Service\User
             $usernameInput->getValidatorChain()->addValidator($noObjectExistsValidator);
         }
 
-        $filter = $user->getInputFilter();
-        $filter->remove('password');
-        $filter->remove('passwordVerify');
-        $form->setInputFilter($filter);
+        // $filter = $user->getInputFilter();
+        // $filter->remove('password');
+        // $filter->remove('passwordVerify');
+        // $form->setInputFilter($filter);
 
         if (!$form->isValid()) {
             if (isset($data['dob']) && $data['dob']) {
@@ -473,6 +480,15 @@ class User extends \ZfcUser\Service\User
         }
 
         $user = $this->getUserMapper()->insert($user);
+
+        if (! empty($data['avatar']['tmp_name'])) {
+            ErrorHandler::start();
+            $data['avatar']['name'] = $user->getId() . "-" . $data['avatar']['name'];
+            rename($data['avatar']['tmp_name'], $avatarPath . $data['avatar']['name']);
+            $user->setAvatar($avatarUrl . $data['avatar']['name']);
+            $user = $this->getUserMapper()->update($user);
+            ErrorHandler::stop(true);
+        }
 
         if (isset($data['socialNetwork']) && $user->getId()) {
             $userProvider = new \PlaygroundUser\Entity\UserProvider();

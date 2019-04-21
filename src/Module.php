@@ -210,17 +210,23 @@ class Module
                     $zfcUserOptions = $sm->get('zfcuser_module_options');
                     $form = new Form\Register(null, $zfcUserOptions, $translator, $sm);
                     //$form->setCaptchaElement($sm->get('zfcuser_captcha_element'));
-                    $form->setInputFilter(new \ZfcUser\Form\RegisterFilter(
-                        new \ZfcUser\Validator\NoRecordExists(array(
+                    $form->setInputFilter(
+                        new Form\RegisterFilter(
+                            new \ZfcUser\Validator\NoRecordExists(
+                                array(
                                     'mapper' => $sm->get('zfcuser_user_mapper'),
                                     'key'    => 'email',
-                                )),
-                        new \ZfcUser\Validator\NoRecordExists(array(
+                                )
+                            ),
+                            new \ZfcUser\Validator\NoRecordExists(
+                                array(
                                     'mapper' => $sm->get('zfcuser_user_mapper'),
                                     'key'    => 'username',
-                                )),
-                        $zfcUserOptions
-                    ));
+                                )
+                            ),
+                            $zfcUserOptions
+                        )
+                    );
 
                     return $form;
                 },
@@ -303,15 +309,19 @@ class Module
                     $zfcUserOptions = $sm->get('zfcuser_module_options');
                     $playgroundUserOptions = $sm->get('playgrounduser_module_options');
                     $form = new Form\Admin\User(null, $playgroundUserOptions, $zfcUserOptions, $translator, $sm);
-                    $filter = new \ZfcUser\Form\RegisterFilter(
-                        new \ZfcUser\Validator\NoRecordExists(array(
+                    $filter = new Form\RegisterFilter(
+                        new \ZfcUser\Validator\NoRecordExists(
+                            array(
                                 'mapper' => $sm->get('zfcuser_user_mapper'),
                                 'key'    => 'email',
-                            )),
-                        new \ZfcUser\Validator\NoRecordExists(array(
+                            )
+                        ),
+                        new \ZfcUser\Validator\NoRecordExists(
+                            array(
                                 'mapper' => $sm->get('zfcuser_user_mapper'),
                                 'key'    => 'username',
-                            )),
+                            )
+                        ),
                         $zfcUserOptions
                     );
                     if ($playgroundUserOptions->getCreateUserAutoPassword()) {
