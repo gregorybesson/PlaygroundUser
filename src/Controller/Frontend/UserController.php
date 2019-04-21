@@ -813,6 +813,9 @@ class UserController extends ZfcUserController
             $data = $this->getRequest()->getPost()->toArray();
             if ($this->getUserService()->blockAccount($data)) {
                 $this->flashMessenger()->setNamespace('block-account')->addMessage(true);
+                return $this->redirect()->toUrl(
+                    $this->url()->fromRoute('frontend/zfcuser/logout')
+                );
             }
         }
 
