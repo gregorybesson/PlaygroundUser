@@ -24,9 +24,9 @@ class UserListWidget extends AbstractHelper
      * @param  array  $options array of options
      * @return string
      */
-    public function __invoke($roleId = 1)
+    public function __invoke($roleId = 1, $order = null, $search = null, $filterField = null, $filterValue = null)
     {
-        $query = $this->getUserService()->getQueryUsersByRole($roleId);
+        $query = $this->getUserService()->getQueryUsersByRole($roleId, $order, $search, $filterField, $filterValue);
         $users = $query->getResult();
 
         return $users;

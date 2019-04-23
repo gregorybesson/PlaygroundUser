@@ -14,7 +14,7 @@ class UserListWidgetFactory
      */
     public function __invoke(ContainerInterface $container)
     {
-        $gameService = $container->get(\PlaygroundUser\Service\User::class);
-        return new UserListWidget($gameService);
+        $userService = $container->get(\PlaygroundUser\Service\User::class);
+        return new UserListWidget($userService);
     }
 }

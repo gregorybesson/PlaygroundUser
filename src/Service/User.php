@@ -832,7 +832,7 @@ class User extends \ZfcUser\Service\User
         return $role;
     }
 
-    public function getQueryUsersByRole($role = null, $order = null, $search = '')
+    public function getQueryUsersByRole($role = null, $order = null, $search = '', $filterField = null, $filterValue = null)
     {
         $em = $this->getServiceManager()->get('doctrine.entitymanager.orm_default');
         $order = (in_array($order, array('ASC', 'DESC')))?$order:'DESC';
@@ -877,6 +877,13 @@ class User extends \ZfcUser\Service\User
             $qb->setParameter('search4', '%'.$search.'%');
             $qb->setParameter('search5', '%'.$search.'%');
             $qb->setParameter('search6', '%'.$search.'%');
+        }
+
+        if ($filterField && $filterValue) {
+            $and->add(
+                $qb->expr()->eq('u.'.$filterField, ':filter')
+            );
+            $qb->setParameter('filter', $filterValue);
         }
 
         $qb->where($and);
@@ -961,7 +968,7 @@ class User extends \ZfcUser\Service\User
 
     public function getUsersByRole($role = 1, $order = 'DESC', $search = '')
     {
-        $query = $this->getQueryUsersByRole();
+        $query = $this->getQueryUsersByRole($role, $order, $search);
         $result = $query->getResult();
         return $result;
     }
