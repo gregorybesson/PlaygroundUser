@@ -853,7 +853,11 @@ class User extends \ZfcUser\Service\User
 
         if ($role) {
             $and->add($qb->expr()->eq('r.id', ':roleId'));
-            $qb->setParameter('roleId', $role->getId());
+            if (is_integer($role)) {
+                $qb->setParameter('roleId', $role);
+            } else {
+                $qb->setParameter('roleId', $role->getId());
+            }
         }
         
         if ($search != '') {
