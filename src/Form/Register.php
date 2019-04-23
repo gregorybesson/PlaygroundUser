@@ -148,7 +148,7 @@ class Register extends \ZfcUser\Form\Register
         $this->add(
             array(
                 'name' => 'optin',
-                'type' => 'Zend\Form\Element\Radio',
+                'type' => 'Zend\Form\Element\Checkbox',
                 'options' => array(
                     'label' => $translator->translate('Newsletter', 'playgrounduser'),
                     'value_options' => array(
@@ -165,7 +165,7 @@ class Register extends \ZfcUser\Form\Register
         $this->add(
             array(
                 'name' => 'optin2',
-                'type' => 'Zend\Form\Element\Radio',
+                'type' => 'Zend\Form\Element\Checkbox',
                 'options' => array(
                     'label' => $translator->translate('Newsletter', 'playgrounduser'),
                     'value_options' => array(
@@ -182,7 +182,7 @@ class Register extends \ZfcUser\Form\Register
         $this->add(
             array(
                 'name' => 'optinPartner',
-                'type' => 'Zend\Form\Element\Radio',
+                'type' => 'Zend\Form\Element\Checkbox',
                 'options' => array(
                     'label' => $translator->translate('Partners Newsletter', 'playgrounduser'),
                     'value_options' => array(
@@ -199,6 +199,7 @@ class Register extends \ZfcUser\Form\Register
         $this->add(
             array(
                 'name' => 'avatar',
+                'type' => 'Zend\Form\Element\File',
                 'attributes' => array(
                     'type'  => 'file',
                 ),

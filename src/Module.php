@@ -19,18 +19,18 @@ class Module
     public function onBootstrap($e)
     {
         /*
-		// In some cases, this listener overrides the entity of User definition
-		$doctrine = $sm->get('doctrine.entitymanager.orm_default');
-		$evm = $doctrine->getEventManager();
+            // In some cases, this listener overrides the entity of User definition
+            $doctrine = $sm->get('doctrine.entitymanager.orm_default');
+            $evm = $doctrine->getEventManager();
 
-		$listener = new  \Doctrine\ORM\Tools\ResolveTargetEntityListener();
-		$listener->addResolveTargetEntity(
-		'PlaygroundUser\Entity\UserInterface',
-		'PlaygroundUser\Entity\User',
-		array()
-		);
-		$evm->addEventListener(\Doctrine\ORM\Events::loadClassMetadata, $listener);
-		 */
+            $listener = new  \Doctrine\ORM\Tools\ResolveTargetEntityListener();
+            $listener->addResolveTargetEntity(
+            'PlaygroundUser\Entity\UserInterface',
+            'PlaygroundUser\Entity\User',
+            array()
+            );
+            $evm->addEventListener(\Doctrine\ORM\Events::loadClassMetadata, $listener);
+        */
 
         if (PHP_SAPI !== 'cli') {
             // Remember me feature
@@ -133,7 +133,7 @@ class Module
     public function getViewHelperConfig()
     {
         return array(
-            'factories'        => array(
+            'factories' => [
                 'userLoginWidget' => function ($sm) {
                     $viewHelper = new View\Helper\UserLoginWidget;
                     $viewHelper->setViewTemplate($sm->get('zfcuser_module_options')->getUserLoginWidgetViewTemplate());
@@ -149,7 +149,11 @@ class Module
 
                     return $helper;
                 },
-            ),
+                \PlaygroundUser\View\Helper\UserListWidget::class =>  \PlaygroundUser\View\Helper\UserListWidgetFactory::class,
+            ],
+            'aliases' => [
+                'userListWidget' => \PlaygroundUser\View\Helper\UserListWidget::class,
+            ]
         );
     }
 
@@ -210,17 +214,23 @@ class Module
                     $zfcUserOptions = $sm->get('zfcuser_module_options');
                     $form = new Form\Register(null, $zfcUserOptions, $translator, $sm);
                     //$form->setCaptchaElement($sm->get('zfcuser_captcha_element'));
-                    $form->setInputFilter(new \ZfcUser\Form\RegisterFilter(
-                        new \ZfcUser\Validator\NoRecordExists(array(
+                    $form->setInputFilter(
+                        new Form\RegisterFilter(
+                            new \ZfcUser\Validator\NoRecordExists(
+                                array(
                                     'mapper' => $sm->get('zfcuser_user_mapper'),
                                     'key'    => 'email',
-                                )),
-                        new \ZfcUser\Validator\NoRecordExists(array(
+                                )
+                            ),
+                            new \ZfcUser\Validator\NoRecordExists(
+                                array(
                                     'mapper' => $sm->get('zfcuser_user_mapper'),
                                     'key'    => 'username',
-                                )),
-                        $zfcUserOptions
-                    ));
+                                )
+                            ),
+                            $zfcUserOptions
+                        )
+                    );
 
                     return $form;
                 },
@@ -303,15 +313,19 @@ class Module
                     $zfcUserOptions = $sm->get('zfcuser_module_options');
                     $playgroundUserOptions = $sm->get('playgrounduser_module_options');
                     $form = new Form\Admin\User(null, $playgroundUserOptions, $zfcUserOptions, $translator, $sm);
-                    $filter = new \ZfcUser\Form\RegisterFilter(
-                        new \ZfcUser\Validator\NoRecordExists(array(
+                    $filter = new Form\RegisterFilter(
+                        new \ZfcUser\Validator\NoRecordExists(
+                            array(
                                 'mapper' => $sm->get('zfcuser_user_mapper'),
                                 'key'    => 'email',
-                            )),
-                        new \ZfcUser\Validator\NoRecordExists(array(
+                            )
+                        ),
+                        new \ZfcUser\Validator\NoRecordExists(
+                            array(
                                 'mapper' => $sm->get('zfcuser_user_mapper'),
                                 'key'    => 'username',
-                            )),
+                            )
+                        ),
                         $zfcUserOptions
                     );
                     if ($playgroundUserOptions->getCreateUserAutoPassword()) {

@@ -176,7 +176,7 @@ return array(
                             'user' => array(
                                 'type' => 'Segment',
                                 'options' => array(
-                                    'route' => '/user/:field/:value',
+                                    'route' => '/user/:field/:value[/:filterField/:filterValue]',
                                     'defaults' => array(
                                         'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
                                         'action'     => 'autoCompleteUser',
