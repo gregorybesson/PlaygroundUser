@@ -173,7 +173,7 @@ class UserController extends ZfcUserController
         }
 
         $redirectUrl = $this->url()->fromRoute('frontend/zfcuser/register') .($socialnetwork ? '/' . $socialnetwork : ''). ($redirect ? '?redirect=' . $redirect : '');
-        $prg = $this->prg($redirectUrl, true);
+        $prg = $this->fileprg($redirectUrl, true);
 
         if ($prg instanceof Response) {
             return $prg;
@@ -240,9 +240,12 @@ class UserController extends ZfcUserController
             $post['credential'] = isset($post['password'])?$post['password']:'';
             $request->setPost(new Parameters($post));
 
-            return $this->forward()->dispatch('playgrounduser_user', array(
-                'action' => 'authenticate'
-            ));
+            return $this->forward()->dispatch(
+                'playgrounduser_user',
+                array(
+                    'action' => 'authenticate'
+                )
+            );
         }
 
         $redirect = $this->url()->fromRoute('frontend/zfcuser/login') . ($socialnetwork ? '/' . $socialnetwork : ''). ($redirect ? '?redirect=' . $redirect : '');
