@@ -197,6 +197,24 @@ class UserController extends ZfcUserController
         if(isset($post['optin2'])) $post['optin2'] = 1;
         if(isset($post['optinPartner'])) $post['optinPartner'] = 1;
 
+        if ($service->getOptions()->getUseRecaptcha()) {
+            if (!isset($post['g-recaptcha-response']) || $post['g-recaptcha-response'] == '' || !$this->recaptcha()->recaptcha($post['g-recaptcha-response'])) {
+                $form->setData($post);
+
+                return array(
+                    'registerForm'       => $form,
+                    'enableRegistration' => $this->getOptions()->getEnableRegistration(),
+                    'redirect'           => $redirect,
+                    'message'            => $this->serviceLocator->get('MvcTranslator')->translate(
+                        'Invalid Captcha. Please try again.',
+                        'playgrounduser'
+                    ),
+                );
+
+                return $viewModel;
+            }
+        }
+
         $user = $service->register($post);
 
         if (! $user) {
@@ -402,8 +420,10 @@ class UserController extends ZfcUserController
                 return $this->redirect()->toUrl($routeLoginAdmin);
             }
 
-            return $this->redirect()->toUrl($this->url()->fromRoute('frontend/zfcuser/login')
-                . ($redirect ? '?redirect='.$redirect : ''));
+            return $this->redirect()->toUrl(
+                $this->url()->fromRoute('frontend/zfcuser/login')
+                . ($redirect ? '?redirect='.$redirect : '')
+            );
         }
 
         $user = $this->zfcUserAuthentication()->getIdentity();
