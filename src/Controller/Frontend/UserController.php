@@ -173,7 +173,7 @@ class UserController extends ZfcUserController
         }
 
         $redirectUrl = $this->url()->fromRoute('frontend/zfcuser/register') .($socialnetwork ? '/' . $socialnetwork : ''). ($redirect ? '?redirect=' . $redirect : '');
-        $prg = $this->fileprg($redirectUrl, true);
+        $prg = $this->fileprg($form, $redirectUrl, true);
 
         if ($prg instanceof Response) {
             return $prg;
@@ -193,9 +193,21 @@ class UserController extends ZfcUserController
             $socialCredentials
         );
 
-        if(isset($post['optin'])) $post['optin'] = 1;
-        if(isset($post['optin2'])) $post['optin2'] = 1;
-        if(isset($post['optinPartner'])) $post['optinPartner'] = 1;
+        if (isset($post['optin'])) {
+            $post['optin'] = 1;
+        } else {
+            $post['optin'] = 0;
+        }
+        if (isset($post['optin2'])) {
+            $post['optin2'] = 1;
+        } else {
+            $post['optin2'] = 0;
+        }
+        if (isset($post['optinPartner'])) {
+            $post['optinPartner'] = 1;
+        } else {
+            $post['optinPartner'] = 0;
+        }
 
         if ($service->getOptions()->getUseRecaptcha()) {
             if (!isset($post['g-recaptcha-response']) || $post['g-recaptcha-response'] == '' || !$this->recaptcha()->recaptcha($post['g-recaptcha-response'])) {
