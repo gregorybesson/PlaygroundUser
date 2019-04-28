@@ -173,7 +173,7 @@ class UserController extends ZfcUserController
         }
 
         $redirectUrl = $this->url()->fromRoute('frontend/zfcuser/register') .($socialnetwork ? '/' . $socialnetwork : ''). ($redirect ? '?redirect=' . $redirect : '');
-        $prg = $this->prg($redirectUrl, true);
+        $prg = $this->fileprg($form, $redirectUrl, true);
 
         if ($prg instanceof Response) {
             return $prg;
@@ -193,9 +193,39 @@ class UserController extends ZfcUserController
             $socialCredentials
         );
 
-        if(isset($post['optin'])) $post['optin'] = 1;
-        if(isset($post['optin2'])) $post['optin2'] = 1;
-        if(isset($post['optinPartner'])) $post['optinPartner'] = 1;
+        if (isset($post['optin'])) {
+            $post['optin'] = 1;
+        } else {
+            $post['optin'] = 0;
+        }
+        if (isset($post['optin2'])) {
+            $post['optin2'] = 1;
+        } else {
+            $post['optin2'] = 0;
+        }
+        if (isset($post['optinPartner'])) {
+            $post['optinPartner'] = 1;
+        } else {
+            $post['optinPartner'] = 0;
+        }
+
+        if ($service->getOptions()->getUseRecaptcha()) {
+            if (!isset($post['g-recaptcha-response']) || $post['g-recaptcha-response'] == '' || !$this->recaptcha()->recaptcha($post['g-recaptcha-response'])) {
+                $form->setData($post);
+
+                return array(
+                    'registerForm'       => $form,
+                    'enableRegistration' => $this->getOptions()->getEnableRegistration(),
+                    'redirect'           => $redirect,
+                    'message'            => $this->serviceLocator->get('MvcTranslator')->translate(
+                        'Invalid Captcha. Please try again.',
+                        'playgrounduser'
+                    ),
+                );
+
+                return $viewModel;
+            }
+        }
 
         $user = $service->register($post);
 
@@ -222,9 +252,12 @@ class UserController extends ZfcUserController
             $post['credential'] = isset($post['password'])?$post['password']:'';
             $request->setPost(new Parameters($post));
 
-            return $this->forward()->dispatch('playgrounduser_user', array(
-                'action' => 'authenticate'
-            ));
+            return $this->forward()->dispatch(
+                'playgrounduser_user',
+                array(
+                    'action' => 'authenticate'
+                )
+            );
         }
 
         $redirect = $this->url()->fromRoute('frontend/zfcuser/login') . ($socialnetwork ? '/' . $socialnetwork : ''). ($redirect ? '?redirect=' . $redirect : '');
@@ -402,8 +435,10 @@ class UserController extends ZfcUserController
                 return $this->redirect()->toUrl($routeLoginAdmin);
             }
 
-            return $this->redirect()->toUrl($this->url()->fromRoute('frontend/zfcuser/login')
-                . ($redirect ? '?redirect='.$redirect : ''));
+            return $this->redirect()->toUrl(
+                $this->url()->fromRoute('frontend/zfcuser/login')
+                . ($redirect ? '?redirect='.$redirect : '')
+            );
         }
 
         $user = $this->zfcUserAuthentication()->getIdentity();
