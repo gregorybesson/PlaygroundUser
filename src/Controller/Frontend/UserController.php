@@ -351,7 +351,7 @@ class UserController extends ZfcUserController
         if ($user->getState() && $user->getState() === 2) {
             $this->getUserService()->getUserMapper()->activate($user);
         }
-        $this->getEventManager()->trigger('login.post', $this, array('user' => $user));
+        $this->getEventManager()->trigger('authenticate.post', $this, array('user' => $user));
         return true;
     }
 
@@ -442,7 +442,7 @@ class UserController extends ZfcUserController
         }
 
         $user = $this->zfcUserAuthentication()->getIdentity();
-        $this->getEventManager()->trigger('login.post', $this, array('user' => $user));
+        $this->getEventManager()->trigger('authenticate.post', $this, array('user' => $user));
 
         if ($this->getOptions()->getUseRedirectParameterIfPresent() && $redirect) {
             return $this->redirect()->toUrl($redirect);

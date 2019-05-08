@@ -107,7 +107,32 @@ class Module
             // Redirect strategy associated to BjyAuthorize module
             $strategy = new RedirectionStrategy();
             $e->getApplication()->getEventManager()->attach(MvcEvent::EVENT_DISPATCH_ERROR, array($strategy, 'onDispatchError'), 200);
+
+            $e->getApplication()->getEventManager()->getSharedManager()->attach(
+                '*',
+                'authenticate.post',
+                [$this, 'lastLogin']
+            );
         }
+    }
+
+    /**
+     * This method updates the last login field of the user
+     *
+     * @param  MvcEvent $e
+     * @return array
+     */
+    public function lastLogin(\Zend\EventManager\Event $e)
+    {
+        $user = $e->getParam('user');
+        $user->setLastLogin(new \DateTime());
+
+        $userMapper = $e->getTarget()->getServiceManager()->get('zfcuser_user_mapper');
+
+        $user = $userMapper->update($user);
+
+        return $user;
+
     }
 
     /**
