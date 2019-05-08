@@ -160,6 +160,11 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
      */
     protected $updated_at;
 
+    /**
+     * @ORM\Column(name="last_login",type="datetime", nullable=true)
+     */
+    protected $lastLogin;
+
      /**
      * @ORM\Column(name="registration_source", type="string", length=255, nullable=true)
      */
@@ -758,6 +763,24 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
     public function setUpdatedAt($updated_at)
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    /**
+     * @return the unknown_type
+     */
+    public function getLastLogin()
+    {
+        return $this->lastLogin;
+    }
+
+    /**
+     * @param unknown_type $lastLogin
+     */
+    public function setLastLogin($lastLogin)
+    {
+        $this->lastLogin = $lastLogin;
 
         return $this;
     }
