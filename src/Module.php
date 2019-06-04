@@ -33,8 +33,13 @@ class Module
         */
 
         if (PHP_SAPI !== 'cli') {
-            // Remember me feature
+            // sponsor
+            $key = $e->getRequest()->getQuery()->get('key');
+            if ($key) {
+                setcookie("key", $key, time() + 2000000, '/', null, null, true);
+            }
 
+            // Remember me feature
             $session     = new \Zend\Session\Container('zfcuser');
             $cookieLogin = $session->offsetGet("cookieLogin");
 
@@ -72,13 +77,14 @@ class Module
         if ((get_class($e->getRequest()) == 'Zend\Console\Request')) {
             return;
         }
-        $em->attach("dispatch", function ($e) {
-                $session = new Container('sponsorship');
-                $key = $e->getRequest()->getQuery()->get('key');
-            if ($key) {
-                $session->offsetSet('key', $key);
-            }
-        });
+        // $em->attach("dispatch", function ($e) {
+        //         $session = new Container('sponsorship');
+        //         $key = $e->getRequest()->getQuery()->get('key');
+        //     if ($key) {
+        //         //$session->offsetSet('key', $key);
+        //         setcookie("key", $key, time() + 200000, '/', null, null, true);
+        //     }
+        // });
 
         // Automatically add Facebook app_id and scope for authentication
         $e->getApplication()->getEventManager()->attach(\Zend\Mvc\MvcEvent::EVENT_RENDER, function (\Zend\Mvc\MvcEvent $e) use ($sm) {
