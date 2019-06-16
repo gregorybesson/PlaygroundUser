@@ -86,6 +86,54 @@ class Module
         //     }
         // });
 
+        /**
+         * This listener gives the possibility to select the layout on module / controller / action level !
+         * Just configure it in any module config or autoloaded config.
+         */
+        $e->getApplication()->getEventManager()->getSharedManager()->attach(
+            \Zend\Mvc\Controller\AbstractActionController::class,
+            'dispatch',
+            function ($e) {
+                $config     = $e->getApplication()->getServiceManager()->get('config');
+                if (isset($config['core_layout'])) {
+                    $controller      = $e->getTarget();
+                    $controllerClass = get_class($controller);
+                    $moduleName      = strtolower(substr($controllerClass, 0, strpos($controllerClass, '\\')));
+                    $match           = $e->getRouteMatch();
+                    $routeName       = $match->getMatchedRouteName();
+                    $areaName        = (strpos($routeName, '/'))?substr($routeName, 0, strpos($routeName, '/')):$routeName;
+                    $areaName        = ($areaName == 'frontend' || $areaName == 'admin')? $areaName : 'frontend';
+                    $actionName      = $match->getParam('action', 'not-found');
+
+                    $user = $controller->zfcUserAuthentication()->getIdentity();
+                    $logFrontendUser = ($config['playgrounduser']['log_frontend_user']) ? $config['playgrounduser']['log_frontend_user'] : false;
+                    $logAdminUser = ($config['playgrounduser']['log_admin_user']) ? $config['playgrounduser']['log_admin_user'] : false;
+                    
+                    // echo '$controllerClass : ' . $controllerClass . '<br/>';
+                    // echo '$moduleName : ' .$moduleName. '<br/>';
+                    // echo '$routeName : '.$routeName. '<br/>';
+                    // echo '$areaName : '.$areaName. '<br/>';
+                    // echo '$controllerName : ' .$controllerName. '<br/>';
+                    // echo '$actionName : ' . $actionName. '<br/>';
+                    if ($user) {
+                        if (($logAdminUser && $areaName === 'admin') || ($logFrontendUser && $areaName === 'frontend')) {
+                            $mapper = $e->getApplication()->getServiceManager()->get('playgrounduser_userlog_mapper');
+                            $userLog = new \PlaygroundUser\Entity\UserLog();
+                            $userLog->setUser($user)
+                                ->setControllerClass($controllerClass)
+                                ->setModuleName($moduleName)
+                                ->setRouteName($routeName)
+                                ->setAreaName($areaName)
+                                ->setUri($e->getRequest()->getRequestUri())
+                                ->setActionName($actionName);
+                            $mapper->insert($userLog);
+                        }
+                    }
+                }
+            },
+            50
+        );
+
         // Automatically add Facebook app_id and scope for authentication
         $e->getApplication()->getEventManager()->attach(\Zend\Mvc\MvcEvent::EVENT_RENDER, function (\Zend\Mvc\MvcEvent $e) use ($sm) {
                 $view = $sm->get('ViewHelperManager');
@@ -472,6 +520,15 @@ class Module
                         $sm->get('playgrounduser_module_options')
                     );
                     $mapper->setEventManager($sm->get('SharedEventManager'));
+
+                    return $mapper;
+                },
+
+                'playgrounduser_userlog_mapper' => function ($sm) {
+                    $mapper = new Mapper\UserLog(
+                        $sm->get('doctrine.entitymanager.orm_default'),
+                        $sm->get('playgrounduser_module_options')
+                    );
 
                     return $mapper;
                 },

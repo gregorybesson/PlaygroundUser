@@ -117,7 +117,13 @@ $playgrounduser = array(
     'anonymous_tracking' => false,
 
     // Do we use Google ReCaptcha for registration validation ?
-    'use_recaptcha' => false
+    'use_recaptcha' => false,
+
+    // log actions from users on frontend
+    'log_frontend_user => false,
+
+    // log actions from users on admin
+    'log_admin_user => false,
 );
 
 /**
