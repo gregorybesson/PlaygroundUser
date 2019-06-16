@@ -29,6 +29,18 @@ class ModuleOptions extends BaseModuleOptions implements
     protected $createUserAutoSocial = false;
 
     /**
+     * @var bool
+     * log user actions on frontend
+     */
+    protected $logFrontendUser = false;
+
+    /**
+     * @var bool
+     * log user actions on admin
+     */
+    protected $logAdminUser = false;
+
+    /**
      * @var string
      */
     protected $rememberMeEntityClass = 'PlaygroundUser\Entity\RememberMe';
@@ -212,6 +224,38 @@ class ModuleOptions extends BaseModuleOptions implements
     public function setEmailConfirmation($emailConfirmation)
     {
         $this->emailConfirmation = $emailConfirmation;
+    }
+
+    /**
+     * @return the $logFrontendUser
+     */
+    public function getLogFrontendUser()
+    {
+        return $this->logFrontendUser;
+    }
+
+    /**
+     * @param string $logFrontendUser
+     */
+    public function setLogFrontendUser($logFrontendUser)
+    {
+        $this->logFrontendUser = $logFrontendUser;
+    }
+
+    /**
+     * @return the $logAdminUser
+     */
+    public function getLogAdminUser()
+    {
+        return $this->logAdminUser;
+    }
+
+    /**
+     * @param string $logAdminUser
+     */
+    public function setLogAdminUser($logAdminUser)
+    {
+        $this->logAdminUser = $logAdminUser;
     }
 
     /**
