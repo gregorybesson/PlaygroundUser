@@ -1014,6 +1014,34 @@ class User extends \ZfcUser\Service\User
         return ob_get_clean(); // ... then return it as a string!
     }
 
+    
+    public function getUserActions()
+    {
+        $config     = $this->serviceManager->get('config');
+        $logFrontendUser = ($config['playgrounduser']['log_frontend_user']) ? $config['playgrounduser']['log_frontend_user'] : false;
+        $routes = [];
+                    
+        // echo '$controllerClass : ' . $controllerClass . '<br/>';
+        // echo '$moduleName : ' .$moduleName. '<br/>';
+        // echo '$routeName : '.$routeName. '<br/>';
+        // echo '$areaName : '.$areaName. '<br/>';
+        // echo '$controllerName : ' .$controllerName. '<br/>';
+        // echo '$actionName : ' . $actionName. '<br/>';
+        if ($logFrontendUser) {
+            $em = $this->getServiceManager()->get('doctrine.entitymanager.orm_default');
+            $emConfig = $em->getConfiguration();
+            $emConfig->addCustomStringFunction('SUBSTRING_INDEX', '\DoctrineExtensions\Query\Mysql\SubstringIndex');
+            $query = $em->createQuery(
+                "select DISTINCT CONCAT(SUBSTRING_INDEX(ul.controllerClass, '\\', -1), '/', ul.actionName) as path from PlaygroundUser\Entity\UserLog ul
+                WHERE SUBSTRING_INDEX(ul.uri, '.', -1) NOT IN ('jpg','svg','gif','png','css','js')
+                AND ul.areaName = 'frontend'"
+            );
+            $routes = $query->getResult();
+        }
+
+        return $routes;
+    }
+
     public function findAll()
     {
         return $this->getUserMapper()->findAll();
