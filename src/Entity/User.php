@@ -151,6 +151,11 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
     protected $optin2 = 0;
 
     /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    protected $optin3 = 0;
+
+    /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $created_at;
@@ -713,6 +718,26 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
 
     /**
      *
+     * @return the $optin3
+     */
+    public function getOptin3()
+    {
+        return $this->optin3;
+    }
+
+    /**
+     *
+     * @param field_type $optin3
+     */
+    public function setOptin3($optin3)
+    {
+        $this->optin3 = $optin3;
+
+        return $this;
+    }
+
+    /**
+     *
      * @return the $optinPartner
      */
     public function getOptinPartner()
@@ -857,6 +882,10 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
 
         if (isset($data['optin2'])) {
             $this->optin2    = $data['optin2'];
+        }
+
+        if (isset($data['optin3'])) {
+            $this->optin3    = $data['optin3'];
         }
 
         if (isset($data['optinPartner'])) {
@@ -1160,6 +1189,14 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
 
             $inputFilter->add($factory->createInput(array(
                 'name'       => 'optin2',
+                'required'   => false,
+                'filters' => array(
+                    array('name'    => 'Int'),
+                ),
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name'       => 'optin3',
                 'required'   => false,
                 'filters' => array(
                     array('name'    => 'Int'),

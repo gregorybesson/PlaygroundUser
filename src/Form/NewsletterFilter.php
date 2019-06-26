@@ -26,6 +26,14 @@ class NewsletterFilter extends InputFilter
         ));
 
         $this->add(array(
+            'name'       => 'optin3',
+            'required'   => false,
+            'filters' => array(
+                array('name'    => 'Int'),
+            ),
+        ));
+
+        $this->add(array(
             'name'       => 'optinPartner',
             'required'   => false,
             'filters' => array(
