@@ -241,6 +241,7 @@ class Module
         return array(
             'allow_override' => true,
             'aliases' => array(
+                'translator' => 'MvcTranslator',
                 'playgrounduser_message' => 'playgroundcore_message',
                 'zfcuser_user_service'   => 'playgrounduser_user_service',
                 'playgrounduser_user_service' => \PlaygroundUser\Service\User::class,

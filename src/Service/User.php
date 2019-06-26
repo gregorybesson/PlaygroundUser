@@ -741,6 +741,7 @@ class User extends \ZfcUser\Service\User
         $user = $this->getAuthService()->getIdentity();
         $optinChange = false;
         $optin2Change = false;
+        $optin3Change = false;
         $optinPartnerChange = false;
 
         // I trigger an optin event before updating user if it has changed .
@@ -755,6 +756,13 @@ class User extends \ZfcUser\Service\User
             $optin2Change = true;
             $this->getEventManager()->trigger(__FUNCTION__.'.pre', $this, array('user' => $user, 'data' => $data));
             $user->setOptin2($data['optin2']);
+        }
+
+        // I trigger an optin3 event before updating user if it has changed .
+        if (isset($data['optin3']) && $user->getOptin3() != $data['optin3']) {
+            $optin3Change = true;
+            $this->getEventManager()->trigger(__FUNCTION__.'.pre', $this, array('user' => $user, 'data' => $data));
+            $user->setOptin3($data['optin3']);
         }
 
         // I trigger an optinPartner event before updating user if it has changed
@@ -779,6 +787,10 @@ class User extends \ZfcUser\Service\User
 
         if ($optin2Change) {
             $this->getEventManager()->trigger(__FUNCTION__.'.optin2.post', $this, array('user' => $user, 'data' => $data));
+        }
+
+        if ($optin3Change) {
+            $this->getEventManager()->trigger(__FUNCTION__.'.optin3.post', $this, array('user' => $user, 'data' => $data));
         }
 
         if ($optinPartnerChange) {
@@ -889,9 +901,7 @@ class User extends \ZfcUser\Service\User
         $qb->where($and);
         $qb->orderBy('u.created_at', $order);
 
-        $query = $qb->getQuery();
-
-        return $query;
+        return $qb;
     }
 
     public function getArrayUsersByRole($role = null, $order = null, $search = '')
@@ -973,6 +983,27 @@ class User extends \ZfcUser\Service\User
         return $result;
     }
 
+    public function getUserActions()
+    {
+        $config     = $this->serviceManager->get('config');
+        $logFrontendUser = ($config['playgrounduser']['log_frontend_user']) ? $config['playgrounduser']['log_frontend_user'] : false;
+        $routes = [];
+
+        if ($logFrontendUser) {
+            $em = $this->getServiceManager()->get('doctrine.entitymanager.orm_default');
+            $emConfig = $em->getConfiguration();
+            $emConfig->addCustomStringFunction('SUBSTRING_INDEX', '\DoctrineExtensions\Query\Mysql\SubstringIndex');
+            $query = $em->createQuery(
+                "select DISTINCT CONCAT(SUBSTRING_INDEX(ul.controllerClass, '\\', -1), '/', ul.actionName) as path from PlaygroundUser\Entity\UserLog ul
+                WHERE SUBSTRING_INDEX(ul.uri, '.', -1) NOT IN ('jpg','svg','gif','png','css','js')
+                AND ul.areaName = 'frontend'"
+            );
+            $routes = $query->getResult();
+        }
+
+        return $routes;
+    }
+
     /**
     * findUserOrCreateByEmail : retrieve user with email or create user if not exist
     * @param string $email
@@ -1012,34 +1043,6 @@ class User extends \ZfcUser\Service\User
         }
         fclose($out);
         return ob_get_clean(); // ... then return it as a string!
-    }
-
-    
-    public function getUserActions()
-    {
-        $config     = $this->serviceManager->get('config');
-        $logFrontendUser = ($config['playgrounduser']['log_frontend_user']) ? $config['playgrounduser']['log_frontend_user'] : false;
-        $routes = [];
-                    
-        // echo '$controllerClass : ' . $controllerClass . '<br/>';
-        // echo '$moduleName : ' .$moduleName. '<br/>';
-        // echo '$routeName : '.$routeName. '<br/>';
-        // echo '$areaName : '.$areaName. '<br/>';
-        // echo '$controllerName : ' .$controllerName. '<br/>';
-        // echo '$actionName : ' . $actionName. '<br/>';
-        if ($logFrontendUser) {
-            $em = $this->getServiceManager()->get('doctrine.entitymanager.orm_default');
-            $emConfig = $em->getConfiguration();
-            $emConfig->addCustomStringFunction('SUBSTRING_INDEX', '\DoctrineExtensions\Query\Mysql\SubstringIndex');
-            $query = $em->createQuery(
-                "select DISTINCT CONCAT(SUBSTRING_INDEX(ul.controllerClass, '\\', -1), '/', ul.actionName) as path from PlaygroundUser\Entity\UserLog ul
-                WHERE SUBSTRING_INDEX(ul.uri, '.', -1) NOT IN ('jpg','svg','gif','png','css','js')
-                AND ul.areaName = 'frontend'"
-            );
-            $routes = $query->getResult();
-        }
-
-        return $routes;
     }
 
     public function findAll()

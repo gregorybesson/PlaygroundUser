@@ -203,6 +203,11 @@ class UserController extends ZfcUserController
         } else {
             $post['optin2'] = 0;
         }
+        if (isset($post['optin3'])) {
+            $post['optin3'] = 1;
+        } else {
+            $post['optin3'] = 0;
+        }
         if (isset($post['optinPartner'])) {
             $post['optinPartner'] = 1;
         } else {

@@ -47,6 +47,18 @@ class Newsletter extends ProvidesEventsForm
         ));
 
         $this->add(array(
+            'name' => 'optin3',
+            'type' => 'Zend\Form\Element\Checkbox',
+            'options' => array(
+                'label' => $translator->translate('Optin 3', 'playgrounduser'),
+                'value_options' => array(
+                    '1'  => $translator->translate('Yes', 'playgrounduser'),
+                    '0' => $translator->translate('No', 'playgrounduser'),
+                ),
+            ),
+        ));
+
+        $this->add(array(
             'name' => 'optinPartner',
             'type' => 'Zend\Form\Element\Checkbox',
             'options' => array(

@@ -9,6 +9,12 @@ use Zend\Paginator\Paginator;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
 use PlaygroundCore\ORM\Pagination\LargeTablePaginator as ORMPaginator;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use ZfcDatagrid\Column;
+use ZfcDatagrid\Action;
+use ZfcDatagrid\Column\Formatter;
+use ZfcDatagrid\Column\Type;
+use ZfcDatagrid\Column\Style;
+use ZfcDatagrid\Filter;
 
 class AdminController extends AbstractActionController
 {
@@ -33,30 +39,116 @@ class AdminController extends AbstractActionController
 
     public function listAction()
     {
-        $filter        = $this->getEvent()->getRouteMatch()->getParam('filter');
-        $roleId        = $this->getEvent()->getRouteMatch()->getParam('roleId');
-        $search        = $this->params()->fromQuery('name');
+        // $filter        = $this->getEvent()->getRouteMatch()->getParam('filter');
+        // $roleId        = $this->getEvent()->getRouteMatch()->getParam('roleId');
+        // $search        = $this->params()->fromQuery('name');
 
-        $role        = $this->getAdminUserService()->getRoleMapper()->findByRoleId($roleId);
+        // $role        = $this->getAdminUserService()->getRoleMapper()->findByRoleId($roleId);
 
-        $adapter = new DoctrineAdapter(new ORMPaginator($this->getAdminUserService()->getQueryUsersByRole($role, null, $search)));
+        // $qb = $this->getAdminUserService()->getQueryUsersByRole($role, null, $search);
+        // $query = $qb->getQuery();
+        // $adapter = new DoctrineAdapter(new ORMPaginator($query));
 
-        $paginator = new Paginator($adapter);
-        $paginator->setItemCountPerPage(50);
-        $paginator->setCurrentPageNumber($this->getEvent()->getRouteMatch()->getParam('p'));
+        // $paginator = new Paginator($adapter);
+        // $paginator->setItemCountPerPage(50);
+        // $paginator->setCurrentPageNumber($this->getEvent()->getRouteMatch()->getParam('p'));
 
-        $roles = $this->getAdminUserService()->getRoleMapper()->findAll();
+        // $roles = $this->getAdminUserService()->getRoleMapper()->findAll();
 
-        return new ViewModel(
-            array(
-                'users' => $paginator,
-                'userlistElements' => $this->getOptions()->getUserListElements(),
-                'filter'    => $filter,
-                'roleId'    => $roleId,
-                'roles'     => $roles,
-                'search'    => $search,
-            )
+        // return new ViewModel(
+        //     array(
+        //         'users' => $paginator,
+        //         'userlistElements' => $this->getOptions()->getUserListElements(),
+        //         'filter'    => $filter,
+        //         'roleId'    => $roleId,
+        //         'roles'     => $roles,
+        //         'search'    => $search,
+        //     )
+        // );
+
+        $qb = $this->getAdminUserService()->getQueryUsersByRole();
+        /* @var $grid \ZfcDatagrid\Datagrid */
+        $grid = $this->getServiceLocator()->get('ZfcDatagrid\Datagrid');
+        $grid->setTitle('Minimal grid');
+        $grid->setDataSource($qb);
+
+        $col = new Column\Select('id', 'u');
+        $col->setLabel('Id');
+        $col->setIdentity(true);
+        $grid->addColumn($col);
+        
+        $colType = new Type\DateTime(
+            'Y-m-d H:i:s',
+            \IntlDateFormatter::MEDIUM,
+            \IntlDateFormatter::MEDIUM
         );
+        $colType->setSourceTimezone('UTC');
+
+        $col = new Column\Select('created_at', 'u');
+        $col->setLabel('Created');
+        $col->setType($colType);
+        $grid->addColumn($col);
+
+        $col = new Column\Select('username', 'u');
+        $col->setLabel('Username');
+        $grid->addColumn($col);
+
+        $col = new Column\Select('email', 'u');
+        $col->setLabel('Email');
+        $grid->addColumn($col);
+
+        $col = new Column\Select('firstname', 'u');
+        $col->setLabel('Firstname');
+        $grid->addColumn($col);
+
+        $col = new Column\Select('lastname', 'u');
+        $col->setLabel('Lastname');
+        $grid->addColumn($col);
+
+        $col = new Column\Select('roleId', 'r');
+        $col->setLabel('Role');
+        $grid->addColumn($col);
+
+        $actions = new Column\Action();
+        $actions->setLabel('');
+        //$actions->setAttribute('style', 'white-space: nowrap');
+
+        $viewAction = new Column\Action\Button();
+        $viewAction->setLabel('Reset Password');
+        $rowId = $viewAction->getRowIdPlaceholder();
+        $viewAction->setLink('/admin/user/reset/'.$rowId);
+        $actions->addAction($viewAction);
+
+        $viewAction = new Column\Action\Button();
+        $viewAction->setLabel('Edit');
+        $rowId = $viewAction->getRowIdPlaceholder();
+        $viewAction->setLink('/admin/user/edit/'.$rowId);
+        $actions->addAction($viewAction);
+
+        $viewAction = new Column\Action\Button();
+        $viewAction->setLabel('Inactivate');
+        $rowId = $viewAction->getRowIdPlaceholder();
+        $viewAction->setLink('/admin/user/remove/'.$rowId);
+        $actions->addAction($viewAction);
+
+        $grid->addColumn($actions);
+
+        // $action = new Action\Mass();
+        // $action->setTitle('This is incredible');
+        // $action->setLink('/test');
+        // $action->setConfirm(true);
+        // $grid->addMassAction($action);
+
+        $grid->setToolbarTemplateVariables(
+            [
+                'globalActions' => [
+                    $this->translate('New User') => $this->adminUrl()->fromRoute('playgrounduser/create', ['userId' => 0])
+                ]
+            ]
+        );
+        $grid->render();
+        
+        return $grid->getResponse();
     }
 
     public function downloadAction()
