@@ -906,7 +906,7 @@ class User extends \ZfcUser\Service\User
 
     public function getArrayUsersByRole($role = null, $order = null, $search = '')
     {
-        $query = $this->getQueryUsersByRole($role, $order, $search);
+        $qb = $this->getQueryUsersByRole($role, $order, $search);
         $users = array(
             array(
                 'id' => 1,
@@ -929,7 +929,7 @@ class User extends \ZfcUser\Service\User
                 'team' => 1
             )
         );
-        foreach ($query->getResult() as $user) {
+        foreach ($qb->getQuery()->getResult() as $user) {
             $a = array();
             $a[] = $user->getId();
             $a[] = $user->getUsername();
@@ -978,8 +978,8 @@ class User extends \ZfcUser\Service\User
 
     public function getUsersByRole($role = 1, $order = 'DESC', $search = '')
     {
-        $query = $this->getQueryUsersByRole($role, $order, $search);
-        $result = $query->getResult();
+        $qb = $this->getQueryUsersByRole($role, $order, $search);
+        $result = $qb->getQuery()->getResult();
         return $result;
     }
 
