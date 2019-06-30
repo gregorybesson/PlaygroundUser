@@ -122,7 +122,7 @@ class ForgotController extends AbstractActionController
 
                 //only send request when email is found
                 if ($user != null) {
-                    $this->getPasswordService()->sendProcessForgotRequest($user->getId(), $email);
+                    $this->getPasswordService()->sendProcessForgotRequest($user, $email);
                     $response->setContent(\Zend\Json\Json::encode(array(
                         'statusMail' => true,
                         'email' => $email
@@ -184,7 +184,7 @@ class ForgotController extends AbstractActionController
         $vm = new ViewModel();
         //only send request when email is found
         if ($user != null) {
-            $this->getPasswordService()->sendProcessForgotRequest($user->getId(), $email);
+            $this->getPasswordService()->sendProcessForgotRequest($user, $email);
             $vm->setVariables(array(
                 'statusMail' => true,
                 'email' => $email
