@@ -56,9 +56,10 @@ class Password
         return $this->getPasswordMapper()->remove($m);
     }
 
-    public function sendProcessForgotRequest($userId, $email)
+    public function sendProcessForgotRequest($user, $email)
     {
         //Invalidate all prior request for a new password
+        $userId = $user->getId();
         $this->cleanPriorForgotRequests($userId);
 
         $class = $this->getOptions()->getPasswordEntityClass();
@@ -68,20 +69,21 @@ class Password
         $this->getEventManager()->trigger(__FUNCTION__, $this, array('record' => $model, 'userId' => $userId));
         $this->getPasswordMapper()->persist($model);
 
-        $this->sendForgotEmailMessage($email, $model);
+        $this->sendForgotEmailMessage($user, $model);
     }
 
-    public function sendForgotEmailMessage($to, $model)
+    public function sendForgotEmailMessage($user, $model)
     {
         $mailService = $this->getServiceManager()->get('playgrounduser_message');
 
         $from = $this->getOptions()->getEmailFromAddress();
+        $to = $user->getEmail();
         $subject = $this->getServiceManager()->get('MvcTranslator')->translate($this->getOptions()->getResetEmailSubjectLine(), 'playgrounduser');
 
         $renderer = $this->getServiceManager()->get('Zend\View\Renderer\RendererInterface');
         $skinUrl = $renderer->url('frontend', array(), array('force_canonical' => true));
 
-        $message = $mailService->createHtmlMessage($from, $to, $subject, 'playground-user/email/forgot', array('record' => $model, 'to' => $to, 'skinUrl' => $skinUrl));
+        $message = $mailService->createHtmlMessage($from, $to, $subject, 'playground-user/email/forgot', array('record' => $model, 'to' => $to, 'skinUrl' => $skinUrl, 'user' => $user));
 
         $mailService->send($message);
     }
