@@ -69,7 +69,7 @@ class AdminController extends AbstractActionController
         $qb = $this->getAdminUserService()->getQueryUsersByRole();
         /* @var $grid \ZfcDatagrid\Datagrid */
         $grid = $this->getServiceLocator()->get('ZfcDatagrid\Datagrid');
-        $grid->setTitle('Minimal grid');
+        $grid->setTitle('Users');
         $grid->setDataSource($qb);
 
         $col = new Column\Select('id', 'u');
@@ -103,6 +103,22 @@ class AdminController extends AbstractActionController
 
         $col = new Column\Select('lastname', 'u');
         $col->setLabel('Lastname');
+        $grid->addColumn($col);
+
+        $col = new Column\Select('optin', 'u');
+        $col->setLabel('Optin');
+        $grid->addColumn($col);
+
+        $col = new Column\Select('optinPartner', 'u');
+        $col->setLabel('Optin Partner');
+        $grid->addColumn($col);
+
+        $col = new Column\Select('optin2', 'u');
+        $col->setLabel('Optin 2');
+        $grid->addColumn($col);
+
+        $col = new Column\Select('optin3', 'u');
+        $col->setLabel('Optin 3');
         $grid->addColumn($col);
 
         $col = new Column\Select('roleId', 'r');
