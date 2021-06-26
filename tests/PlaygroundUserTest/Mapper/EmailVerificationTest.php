@@ -5,13 +5,13 @@ namespace PlaygroundUserTest\Mapper;
 use PlaygroundUserTest\Bootstrap;
 use PlaygroundUser\Entity\EmailVerification;
 
-class EmailVerificationTest extends \PHPUnit_Framework_TestCase
+class EmailVerificationTest extends \PHPUnit\Framework\TestCase
 {
     protected $traceError = true;
 
     protected $emailData;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->sm = Bootstrap::getServiceManager();
         $this->em = $this->sm->get('doctrine.entitymanager.orm_default');
@@ -114,7 +114,7 @@ class EmailVerificationTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(null, $emailVerification);
     }
 
-    public function tearDown()
+    protected function tearDown(): void
     {
         $dbh = $this->em->getConnection();
         unset($this->tm);

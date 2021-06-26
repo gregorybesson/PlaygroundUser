@@ -2,7 +2,7 @@
 
 namespace PlaygroundUser\Form;
 
-use Zend\InputFilter\InputFilter;
+use Laminas\InputFilter\InputFilter;
 use PlaygroundUser\Options\ForgotOptionsInterface;
 
 class ForgotFilter extends InputFilter

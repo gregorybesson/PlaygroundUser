@@ -7,10 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping\PrePersist;
 use Doctrine\ORM\Mapping\PreUpdate;
-use Zend\InputFilter\InputFilter;
-use Zend\InputFilter\Factory as InputFactory;
-use Zend\InputFilter\InputFilterAwareInterface;
-use Zend\InputFilter\InputFilterInterface;
+use Laminas\InputFilter\InputFilter;
+use Laminas\InputFilter\Factory as InputFactory;
+use Laminas\InputFilter\InputFilterAwareInterface;
+use Laminas\InputFilter\InputFilterInterface;
 use BjyAuthorize\Provider\Role\ProviderInterface;
 
 /**
@@ -1127,10 +1127,10 @@ class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFil
                 'name'       => 'email',
                 'required'   => true,
                 'filters' => array(
-                    array('name' => 'Zend\Filter\StringTrim'),
+                    array('name' => 'Laminas\Filter\StringTrim'),
                 ),
                 'validators' => array(
-                    array('name' => 'Zend\Validator\EmailAddress'),
+                    array('name' => 'Laminas\Validator\EmailAddress'),
                     /* To be used in a service or controller (don't like the dependency if set in this object)
                        array(
                         'name' => 'DoctrineModule\Validator\NoObjectExists',

@@ -2,11 +2,11 @@
 namespace PlaygroundUser\Service;
 
 use PlaygroundUser\Mapper\UserProvider as userProviderMapper;
-use Zend\EventManager\EventManagerInterface;
-use Zend\EventManager\EventManagerAwareInterface;
-use Zend\EventManager\EventManager;
-use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\EventManager\EventManagerInterface;
+use Laminas\EventManager\EventManagerAwareInterface;
+use Laminas\EventManager\EventManager;
+use Laminas\ServiceManager\ServiceManager;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class Provider implements EventManagerAwareInterface
 {
@@ -47,7 +47,7 @@ class Provider implements EventManagerAwareInterface
 
     /**
      * Retourne le service Manager
-     * @return \Zend\ServiceManager\ServiceManager
+     * @return \Laminas\ServiceManager\ServiceManager
      */
     public function getServiceManager()
     {
@@ -154,7 +154,7 @@ class Provider implements EventManagerAwareInterface
                         $infoMe = $adapter->getUserProfile();
                     }
                 } else {
-                    // $authEvent->setCode(\Zend\Authentication\Result::FAILURE)
+                    // $authEvent->setCode(\Laminas\Authentication\Result::FAILURE)
                     // ->setMessages(array('Invalid provider'));
                     // $this->setSatisfied(false);
 

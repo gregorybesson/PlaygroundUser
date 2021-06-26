@@ -2,7 +2,7 @@
 namespace PlaygroundUser\Service\Factory;
 
 use PlaygroundUser\Service\User;
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use Interop\Container\ContainerInterface;
 
 class UserFactory implements FactoryInterface

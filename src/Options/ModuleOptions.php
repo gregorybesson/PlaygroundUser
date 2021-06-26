@@ -133,7 +133,7 @@ class ModuleOptions extends BaseModuleOptions implements
     /**
      * @var string
      */
-    protected $emailTransport = 'Zend\Mail\Transport\Sendmail';
+    protected $emailTransport = 'Laminas\Mail\Transport\Sendmail';
 
     /**
      * @var string

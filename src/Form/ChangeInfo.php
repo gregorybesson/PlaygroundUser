@@ -4,7 +4,7 @@ namespace PlaygroundUser\Form;
 
 use ZfcUser\Form\Register as Register;
 use PlaygroundUser\Options\UserCreateOptionsInterface;
-use Zend\Mvc\I18n\Translator;
+use Laminas\Mvc\I18n\Translator;
 
 class ChangeInfo extends Register
 {
@@ -82,7 +82,7 @@ class ChangeInfo extends Register
 
         $this->add(array(
             'name' => 'title',
-            'type' => 'Zend\Form\Element\Radio',
+            'type' => 'Laminas\Form\Element\Radio',
             'options' => array(
                 'label' => $translator->translate('Title', 'playgrounduser'),
                 'value_options' => array(
@@ -162,7 +162,7 @@ class ChangeInfo extends Register
         asort($countries_label);
         $this->add(
             array(
-                'type' => 'Zend\Form\Element\Select',
+                'type' => 'Laminas\Form\Element\Select',
                 'name' => 'country',
                 'options' => array(
                     'empty_option' => $translator->translate('Select your country', 'playgrounduser'),
@@ -189,7 +189,7 @@ class ChangeInfo extends Register
 
         $this->add(
             array(
-                'type' => 'Zend\Form\Element\DateTime',
+                'type' => 'Laminas\Form\Element\DateTime',
                 'name' => 'dob',
                 'options' => array(
                     'label' => $translator->translate('Date of birth', 'playgrounduser'),
@@ -206,7 +206,7 @@ class ChangeInfo extends Register
         $this->add(
             array(
                 'name' => 'optin',
-                'type' => 'Zend\Form\Element\Checkbox',
+                'type' => 'Laminas\Form\Element\Checkbox',
                 'options' => array(
                     'label' => $translator->translate('Newsletter', 'playgrounduser'),
                     'value_options' => array(
@@ -220,7 +220,7 @@ class ChangeInfo extends Register
         $this->add(
             array(
                 'name' => 'optin2',
-                'type' => 'Zend\Form\Element\Checkbox',
+                'type' => 'Laminas\Form\Element\Checkbox',
                 'options' => array(
                     'label' => $translator->translate('optin 2', 'playgrounduser'),
                     'value_options' => array(
@@ -234,7 +234,7 @@ class ChangeInfo extends Register
         $this->add(
             array(
                 'name' => 'optin3',
-                'type' => 'Zend\Form\Element\Checkbox',
+                'type' => 'Laminas\Form\Element\Checkbox',
                 'options' => array(
                     'label' => $translator->translate('optin 3', 'playgrounduser'),
                     'value_options' => array(
@@ -248,7 +248,7 @@ class ChangeInfo extends Register
         $this->add(
             array(
                 'name' => 'optinPartner',
-                'type' => 'Zend\Form\Element\Checkbox',
+                'type' => 'Laminas\Form\Element\Checkbox',
                 'options' => array(
                     'label' => $translator->translate('Partners Newsletter', 'playgrounduser'),
                     'value_options' => array(

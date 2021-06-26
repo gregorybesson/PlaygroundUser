@@ -2,8 +2,8 @@
 
 namespace PlaygroundUser\Service\Factory;
 
-use Zend\Mvc\Controller\ControllerManager;
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Laminas\Mvc\Controller\ControllerManager;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use Interop\Container\ContainerInterface;
 use PlaygroundUser\Controller\Frontend\ForgotController;
 

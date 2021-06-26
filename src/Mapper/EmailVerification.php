@@ -4,9 +4,9 @@ namespace PlaygroundUser\Mapper;
 use Doctrine\ORM\EntityManager;
 use PlaygroundUser\Options\ModuleOptions;
 use PlaygroundUser\Entity\EmailVerification as Model;
-use Zend\Hydrator\HydratorInterface;
-use Zend\EventManager\EventManagerAwareTrait;
-use Zend\EventManager\EventManager;
+use Laminas\Hydrator\HydratorInterface;
+use Laminas\EventManager\EventManagerAwareTrait;
+use Laminas\EventManager\EventManager;
 
 class EmailVerification
 {
@@ -78,7 +78,7 @@ class EmailVerification
         return true;
     }
 
-    public function setEventManager(\Zend\EventManager\SharedEventManager $events)
+    public function setEventManager(\Laminas\EventManager\SharedEventManager $events)
     {
         $this->event = new EventManager($events, [get_class($this)]);
 

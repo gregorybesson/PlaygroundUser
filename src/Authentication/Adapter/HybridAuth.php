@@ -4,14 +4,14 @@ namespace PlaygroundUser\Authentication\Adapter;
 use Hybrid_Auth;
 use PlaygroundUser\Mapper\UserProvider;
 use PlaygroundUser\Options\ModuleOptions;
-use Zend\Authentication\Result;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\Authentication\Result;
+use Laminas\ServiceManager\ServiceManager;
 use ZfcUser\Authentication\Adapter\AbstractAdapter;
 use ZfcUser\Mapper\UserInterface as UserMapperInterface;
 use ZfcUser\Options\UserServiceOptionsInterface;
-use Zend\EventManager\EventManagerInterface;
-use Zend\EventManager\EventManager;
-use Zend\EventManager\EventManagerAwareInterface;
+use Laminas\EventManager\EventManagerInterface;
+use Laminas\EventManager\EventManager;
+use Laminas\EventManager\EventManagerAwareInterface;
 
 class HybridAuth extends AbstractAdapter implements EventManagerAwareInterface
 {
@@ -55,7 +55,7 @@ class HybridAuth extends AbstractAdapter implements EventManagerAwareInterface
      */
     protected $roleMapper;
 
-    public function authenticate(\Zend\EventManager\EventInterface $authEvent)
+    public function authenticate(\Laminas\EventManager\EventInterface $authEvent)
     {
         $authEvent = $authEvent->getTarget();
         if ($this->isSatisfied()) {

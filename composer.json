@@ -1,42 +1,43 @@
 {
-	"name" : "playground/user",
-	"description" : "Module managing user",
-	"type" : "library",
-	"license" : "MIT",
-	"keywords" : [
-		"ZF3",
-		"playground",
-		"user"
-	],
-	"homepage" : "https://github.com/gregorybesson/PlaygroundUser",
-	"authors" : [
-	    {
-			"name" : "Greg Besson",
-			"email" : "gregory.besson@playground.gg",
-			"homepage" : "http://www.playground.gg"
-		}
-	],
-	"require" : {
-		"php" : ">=5.5.0",
-		"facebook/graph-sdk": "^5.6",
-		"playground/design" : ">=4.0.0",
-		"zendframework/zend-developer-tools" : ">=1.0.0",
-		"hybridauth/hybridauth": "@RC",
-		"zf-commons/zfc-user" : ">=3.0.0"
-	},
-	"require-dev" : {
-		"phpunit/phpunit" : ">=4.0.0",
-		"squizlabs/php_codesniffer": ">=2.0.0",
-		"php-coveralls/php-coveralls": ">=0.0.0"
-	},
-	"autoload" : {
-		"psr-4" : {
-			"PlaygroundUser\\" : "src/"
-		}
-	},
-	"extra": {
+    "name": "playground/user",
+    "description": "Module user",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "Laminas",
+        "playground",
+        "user"
+    ],
+    "homepage": "https://github.com/gregorybesson/PlaygroundUser",
+    "authors": [
+        {
+            "name": "Greg Besson",
+            "email": "gregory.besson@playground.gg",
+            "homepage": "http://www.playground.gg"
+        }
+    ],
+    "require": {
+        "php": ">=7.3.0",
+        "facebook/graph-sdk": "^5.6",
+        "playground/design": "^5.0",
+        "laminas/laminas-developer-tools": ">=1.0.0",
+        "hybridauth/hybridauth": "@RC",
+        "zf-commons/zfc-user": ">=3.0.0",
+        "laminas/laminas-dependency-plugin": "^2.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": ">=4.0.0",
+        "squizlabs/php_codesniffer": ">=2.0.0",
+        "php-coveralls/php-coveralls": "^2.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "PlaygroundUser\\": "src/"
+        }
+    },
+    "extra": {
         "branch-alias": {
-            "dev-master": "4.x-dev"
+            "dev-master": "5.x-dev"
         }
     }
 }

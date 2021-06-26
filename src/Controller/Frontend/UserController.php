@@ -2,13 +2,13 @@
 namespace PlaygroundUser\Controller\Frontend;
 
 use Hybrid_Auth;
-use Zend\Form\Form;
-use Zend\Stdlib\ResponseInterface as Response;
-use Zend\Stdlib\Parameters;
+use Laminas\Form\Form;
+use Laminas\Stdlib\ResponseInterface as Response;
+use Laminas\Stdlib\Parameters;
 use ZfcUser\Controller\UserController as ZfcUserController;
-use Zend\View\Model\ViewModel;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\Session\Container;
+use Laminas\View\Model\ViewModel;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\Session\Container;
 
 class UserController extends ZfcUserController
 {
@@ -305,7 +305,7 @@ class UserController extends ZfcUserController
             }
 
             if (! empty($messages)) {
-                $response->setContent(\Zend\Json\Json::encode(array(
+                $response->setContent(\Laminas\Json\Json::encode(array(
                     'success' => 0
                 )));
             } else {
@@ -315,11 +315,11 @@ class UserController extends ZfcUserController
                     'action' => 'ajaxauthenticate'
                 ));
                 if (! $result) {
-                    $response->setContent(\Zend\Json\Json::encode(array(
+                    $response->setContent(\Laminas\Json\Json::encode(array(
                         'success' => 0
                     )));
                 } else {
-                    $response->setContent(\Zend\Json\Json::encode(array(
+                    $response->setContent(\Laminas\Json\Json::encode(array(
                         'success' => 1
                     )));
                 }
@@ -334,7 +334,7 @@ class UserController extends ZfcUserController
      */
     public function ajaxauthenticateAction()
     {
-        // $this->getServiceLocator()->get('Zend\Log')->info('ajaxloginAction -
+        // $this->getServiceLocator()->get('Laminas\Log')->info('ajaxloginAction -
         // AUTHENT : ');
         if ($this->zfcUserAuthentication()
             ->getAuthService()
@@ -926,7 +926,7 @@ class UserController extends ZfcUserController
         $response = $this->getResponse();
 
         if (!$this->zfcUserAuthentication()->hasIdentity()) {
-            $response->setContent(\Zend\Json\Json::encode(array(
+            $response->setContent(\Laminas\Json\Json::encode(array(
                 'success' => 0
             )));
         } else {
@@ -935,11 +935,11 @@ class UserController extends ZfcUserController
                 $data['optinPartner'] = $this->zfcUserAuthentication()->getIdentity()->getOptinPartner();
 
                 if ($this->getUserService()->updateNewsletter($data)) {
-                    $response->setContent(\Zend\Json\Json::encode(array(
+                    $response->setContent(\Laminas\Json\Json::encode(array(
                         'success' => 1
                     )));
                 } else {
-                    $response->setContent(\Zend\Json\Json::encode(array(
+                    $response->setContent(\Laminas\Json\Json::encode(array(
                         'success' => 0
                     )));
                 }
@@ -965,7 +965,7 @@ class UserController extends ZfcUserController
         } else {
             $result = ['result' => true];
         }
-        $response->setContent(\Zend\Json\Json::encode($result));
+        $response->setContent(\Laminas\Json\Json::encode($result));
 
         return $response;
     }
@@ -982,7 +982,7 @@ class UserController extends ZfcUserController
         $response = $this->getResponse();
 
         $result = $this->getUserService()->autoCompleteUser($field, $value);
-        $response->setContent(\Zend\Json\Json::encode($result));
+        $response->setContent(\Laminas\Json\Json::encode($result));
 
         return $response;
     }
@@ -995,7 +995,7 @@ class UserController extends ZfcUserController
         // Pull and validate the Request Key
         $token = $this->getRequest()->getQuery()->get('token');
         //$token = $this->plugin('params')->fromRoute('token');
-        $validator = new \Zend\Validator\Hex();
+        $validator = new \Laminas\Validator\Hex();
         if (!$validator->isValid($token)) {
             throw new \InvalidArgumentException('Invalid Token!');
         }

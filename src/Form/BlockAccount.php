@@ -2,11 +2,11 @@
 
 namespace PlaygroundUser\Form;
 
-use Zend\Form\Form;
+use Laminas\Form\Form;
 use ZfcUser\Form\ProvidesEventsForm;
 use ZfcUser\Options\AuthenticationOptionsInterface;
 use ZfcUser\Module as ZfcUser;
-use Zend\Mvc\I18n\Translator;
+use Laminas\Mvc\I18n\Translator;
 
 class BlockAccount extends ProvidesEventsForm
 {

@@ -145,7 +145,7 @@ return array(
             'frontend' => array(
                 'child_routes' => array(
                     'contact' => array(
-                        'type' => 'Zend\Router\Http\Literal',
+                        'type' => 'Laminas\Router\Http\Literal',
                         'options' => array(
                             'route' => 'contactez-nous',
                             'defaults' => array(
@@ -156,7 +156,7 @@ return array(
                         'may_terminate' => true,
                         'child_routes' => array(
                             'confirmation' => array(
-                                'type'    => 'Zend\Router\Http\Literal',
+                                'type'    => 'Laminas\Router\Http\Literal',
                                 'options' => array(
                                     'route'    => '/confirmation',
                                     'defaults' => array(
@@ -196,7 +196,7 @@ return array(
                         ),
                     ),
                     'zfcuser' => array(
-                        'type' => 'Zend\Router\Http\Literal',
+                        'type' => 'Laminas\Router\Http\Literal',
                         'priority' => 1000,
                         'options' => array(
                             'route' => 'mon-compte',
@@ -208,7 +208,7 @@ return array(
                         'may_terminate' => true,
                         'child_routes' => array(
                             'team' => array(
-                                'type' => 'Zend\Router\Http\Literal',
+                                'type' => 'Laminas\Router\Http\Literal',
                                 'options' => array(
                                     'route' => '/team',
                                     'defaults' => array(
@@ -218,7 +218,7 @@ return array(
                                 ),
                             ),
                             'forgotpassword' => array(
-                                'type' => 'Zend\Router\Http\Literal',
+                                'type' => 'Laminas\Router\Http\Literal',
                                 'options' => array(
                                     'route' => '/mot-passe-oublie',
                                     'defaults' => array(
@@ -228,7 +228,7 @@ return array(
                                 ),
                             ),
                             'ajaxforgotpassword' => array(
-                                'type' => 'Zend\Router\Http\Literal',
+                                'type' => 'Laminas\Router\Http\Literal',
                                 'options' => array(
                                     'route' => '/ajax-mot-passe-oublie',
                                     'defaults' => array(
@@ -261,7 +261,7 @@ return array(
                                 ),
                             ),
                             'ajaxlogin' => array(
-                                'type' => 'Zend\Router\Http\Literal',
+                                'type' => 'Laminas\Router\Http\Literal',
                                 'options' => array(
                                     'route' => '/ajaxlogin',
                                     'defaults' => array(
@@ -271,7 +271,7 @@ return array(
                                 ),
                             ),
                             'login' => array(
-                                'type' => 'Zend\Router\Http\Literal',
+                                'type' => 'Laminas\Router\Http\Literal',
                                 'options' => array(
                                     'route' => '/login',
                                     'defaults' => array(
@@ -297,7 +297,7 @@ return array(
                                 ),
                             ),
                             'logout' => array(
-                                'type' => 'Zend\Router\Http\Literal',
+                                'type' => 'Laminas\Router\Http\Literal',
                                 'options' => array(
                                     'route' => '/logout',
                                     'defaults' => array(
@@ -307,7 +307,7 @@ return array(
                                 ),
                             ),
                             'ajaxauthenticate' => array(
-                                'type' => 'Zend\Router\Http\Literal',
+                                'type' => 'Laminas\Router\Http\Literal',
                                 'options' => array(
                                     'route' => '/ajaxauthenticate',
                                     'defaults' => array(
@@ -317,7 +317,7 @@ return array(
                                 ),
                             ),
                             'authenticate' => array(
-                                'type' => 'Zend\Router\Http\Literal',
+                                'type' => 'Laminas\Router\Http\Literal',
                                 'options' => array(
                                         'route' => '/authenticate',
                                         'defaults' => array(
@@ -364,7 +364,7 @@ return array(
                                 ),
                             ),
                             'registermail' => array(
-                                'type' => 'Zend\Router\Http\Literal',
+                                'type' => 'Laminas\Router\Http\Literal',
                                 'options' => array(
                                     'route' => '/registermail',
                                     'defaults' => array(
@@ -374,7 +374,7 @@ return array(
                                 ),
                             ),
                             'verification' => array(
-                                'type' => 'Zend\Router\Http\Literal',
+                                'type' => 'Laminas\Router\Http\Literal',
                                 'options' => array(
                                     'route' => '/verification',
                                     'defaults' => array(
@@ -395,7 +395,7 @@ return array(
                             ),
 
                             'profile' => array(
-                                'type' => 'Zend\Router\Http\Literal',
+                                'type' => 'Laminas\Router\Http\Literal',
                                 'options' => array(
                                     'route' => '/mes-coordonnees',
                                     'defaults' => array(
@@ -405,7 +405,7 @@ return array(
                                 ),
                             ),
                             'profile_prizes' => array(
-                                'type' => 'Zend\Router\Http\Literal',
+                                'type' => 'Laminas\Router\Http\Literal',
                                 'options' => array(
                                     'route' => '/prizes',
                                     'defaults' => array(
@@ -415,7 +415,7 @@ return array(
                                 ),
                             ),
                             'newsletter' => array(
-                                'type' => 'Zend\Router\Http\Literal',
+                                'type' => 'Laminas\Router\Http\Literal',
                                 'options' => array(
                                     'route' => '/newsletter',
                                     'defaults' => array(
@@ -425,7 +425,7 @@ return array(
                                 ),
                             ),
                             'ajax_newsletter' => array(
-                                'type' => 'Zend\Router\Http\Literal',
+                                'type' => 'Laminas\Router\Http\Literal',
                                 'options' => array(
                                     'route' => '/ajax-newsletter',
                                     'defaults' => array(
@@ -435,7 +435,7 @@ return array(
                                 ),
                             ),
                             'changepassword' => array(
-                                'type' => 'Zend\Router\Http\Literal',
+                                'type' => 'Laminas\Router\Http\Literal',
                                 'options' => array(
                                     'route' => '/change-password',
                                     'defaults' => array(
@@ -445,7 +445,7 @@ return array(
                                 ),
                             ),
                             'blockaccount' => array(
-                                'type' => 'Zend\Router\Http\Literal',
+                                'type' => 'Laminas\Router\Http\Literal',
                                 'options' => array(
                                     'route' => '/block-account',
                                     'defaults' => array(
@@ -455,7 +455,7 @@ return array(
                                 ),
                             ),
                             'changeemail' => array(
-                                'type' => 'Zend\Router\Http\Literal',
+                                'type' => 'Laminas\Router\Http\Literal',
                                 'options' => array(
                                     'route' => '/change-email',
                                     'defaults' => array(
@@ -478,7 +478,7 @@ return array(
                 ),
                 'child_routes' => array(
                     'logout' => array(
-                        'type' => 'Zend\Router\Http\Literal',
+                        'type' => 'Laminas\Router\Http\Literal',
                         'options' => array(
                             'route' => '/logout',
                             'defaults' => array(
@@ -488,7 +488,7 @@ return array(
                         ),
                     ),
                     'playgrounduser' => array(
-                        'type' => 'Zend\Router\Http\Literal',
+                        'type' => 'Laminas\Router\Http\Literal',
                         'priority' => 1000,
                         'options' => array(
                             'route' => '/user',

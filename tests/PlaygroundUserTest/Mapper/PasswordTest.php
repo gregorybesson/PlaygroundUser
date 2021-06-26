@@ -5,13 +5,13 @@ namespace PlaygroundUserTest\Mapper;
 use PlaygroundUserTest\Bootstrap;
 use PlaygroundUser\Entity\Password;
 
-class PasswordTest extends \PHPUnit_Framework_TestCase
+class PasswordTest extends \PHPUnit\Framework\TestCase
 {
     protected $traceError = true;
 
     protected $passwordData;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->sm = Bootstrap::getServiceManager();
         $this->em = $this->sm->get('doctrine.entitymanager.orm_default');
@@ -62,7 +62,7 @@ class PasswordTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($this->tm->findByRequestKey($return));
     }
 
-    public function tearDown()
+    protected function tearDown(): void
     {
         $dbh = $this->em->getConnection();
         unset($this->tm);

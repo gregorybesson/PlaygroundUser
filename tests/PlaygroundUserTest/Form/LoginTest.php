@@ -6,11 +6,11 @@ use PlaygroundUserTest\Bootstrap;
 use PlaygroundUser\Entity\User;
 use PlaygroundUser\Form\Login;
 
-class LoginTest extends \PHPUnit_Framework_TestCase
+class LoginTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Service Manager
-     * @var Zend\ServiceManager\ServiceManager
+     * @var Laminas\ServiceManager\ServiceManager
      */
     protected $sm;
 
@@ -28,11 +28,11 @@ class LoginTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Form instance
-     * @var Zend\Form\Form
+     * @var Laminas\Form\Form
      */
     protected $form;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->sm = Bootstrap::getServiceManager();
         $this->em = $this->sm->get('doctrine.entitymanager.orm_default');
@@ -93,7 +93,7 @@ class LoginTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, count($this->form->get('email')->getMessages()));
     }*/
 
-    public function tearDown()
+    protected function tearDown(): void
     {
         unset($this->sm);
         unset($this->em);

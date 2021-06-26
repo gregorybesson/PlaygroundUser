@@ -3,10 +3,10 @@
 namespace PlaygroundUser\Authentication\Adapter;
 
 use ZfcUser\Authentication\Adapter\AbstractAdapter;
-use Zend\Authentication\Result as AuthenticationResult;
-use Zend\EventManager\EventInterface as AuthEvent;
-use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\Authentication\Result as AuthenticationResult;
+use Laminas\EventManager\EventInterface as AuthEvent;
+use Laminas\ServiceManager\ServiceManager;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class EmailValidation extends AbstractAdapter
 {
@@ -35,7 +35,7 @@ class EmailValidation extends AbstractAdapter
 
         $service = $this->getUserService();
         $token = $e->getRequest()->getQuery()->get('token');
-        $validator = new \Zend\Validator\Hex();
+        $validator = new \Laminas\Validator\Hex();
         if (!$validator->isValid($token)) {
             return false;
         }

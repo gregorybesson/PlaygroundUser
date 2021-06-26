@@ -4,13 +4,13 @@ namespace PlaygroundUser\Service;
 
 use ZfcUser\Options\PasswordOptionsInterface;
 use PlaygroundUser\Options\ForgotOptionsInterface;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\ServiceManager\ServiceManager;
 use PlaygroundUser\Mapper\UserInterface as UserMapperInterface;
 use PlaygroundUser\Mapper\Password as PasswordMapper;
-use Zend\Crypt\Password\Bcrypt;
-use Zend\EventManager\EventManagerAwareTrait;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\EventManager\EventManager;
+use Laminas\Crypt\Password\Bcrypt;
+use Laminas\EventManager\EventManagerAwareTrait;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\EventManager\EventManager;
 
 class Password
 {
@@ -80,7 +80,7 @@ class Password
         $to = $user->getEmail();
         $subject = $this->getServiceManager()->get('MvcTranslator')->translate($this->getOptions()->getResetEmailSubjectLine(), 'playgrounduser');
 
-        $renderer = $this->getServiceManager()->get('Zend\View\Renderer\RendererInterface');
+        $renderer = $this->getServiceManager()->get('Laminas\View\Renderer\RendererInterface');
         $skinUrl = $renderer->url('frontend', array(), array('force_canonical' => true));
 
         $message = $mailService->createHtmlMessage($from, $to, $subject, 'playground-user/email/forgot', array('record' => $model, 'to' => $to, 'skinUrl' => $skinUrl, 'user' => $user));

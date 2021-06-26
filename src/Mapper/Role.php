@@ -4,7 +4,7 @@ namespace PlaygroundUser\Mapper;
 
 use Doctrine\ORM\EntityManager;
 use PlaygroundUser\Options\ModuleOptions;
-use Zend\Hydrator\HydratorInterface;
+use Laminas\Hydrator\HydratorInterface;
 
 
 class Role

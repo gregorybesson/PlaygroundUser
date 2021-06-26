@@ -2,7 +2,7 @@
 
 namespace PlaygroundUser\Form;
 
-use Zend\InputFilter\InputFilter;
+use Laminas\InputFilter\InputFilter;
 use ZfcUser\Options\AuthenticationOptionsInterface;
 
 class BlockAccountFilter extends InputFilter

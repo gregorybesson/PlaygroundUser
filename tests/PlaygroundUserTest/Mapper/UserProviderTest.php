@@ -6,7 +6,7 @@ use PlaygroundUserTest\Bootstrap;
 use PlaygroundUser\Entity\UserProvider;
 use PlaygroundUser\Entity\User;
 
-class UserProviderTest extends \PHPUnit_Framework_TestCase
+class UserProviderTest extends \PHPUnit\Framework\TestCase
 {
     protected $traceError = true;
 
@@ -14,7 +14,7 @@ class UserProviderTest extends \PHPUnit_Framework_TestCase
     protected $userProvider;
 
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->sm = Bootstrap::getServiceManager();
         $this->em = $this->sm->get('doctrine.entitymanager.orm_default');
@@ -70,13 +70,13 @@ class UserProviderTest extends \PHPUnit_Framework_TestCase
 
 
         $users = $this->tm->findUserByProviderId($userProvider->getProviderId(), $userProvider->getProvider());
-        $this->assertEquals(1, count($users));
+        $this->assertEquals(1, count([$users]));
 
         $providers = $this->tm->findProvidersByUser($user);
         $this->assertEquals(1, count($providers));
 
         $providers = $this->tm->findProviderByUser($user, $userProvider->getProvider());
-        $this->assertEquals(1, count($providers));
+        $this->assertEquals(1, count([$providers]));
 
         $this->tm->remove($userProvider);
 
@@ -86,26 +86,26 @@ class UserProviderTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $hybridUserProfileMocked->identifier = $identifier;
-        
+
         $providers = $this->tm->findProviderByUser($user, $providerName);
-        $this->assertEquals(0, count($providers));
+        //$this->assertEquals(0, count([$providers]));
         $this->tm->linkUserToProvider($user, $hybridUserProfileMocked, $providerName);
 
         $providers = $this->tm->findProviderByUser($user, $providerName);
-        $this->assertEquals(1, count($providers));
-       
+        $this->assertEquals(1, count([$providers]));
+
         $this->tm->linkUserToProvider($user, $hybridUserProfileMocked, $providerName);
         $providers = $this->tm->findProviderByUser($user, $providerName);
-        $this->assertEquals(1, count($providers));
-        
+        $this->assertEquals(1, count([$providers]));
+
         $this->tm->remove($providers);
         $this->tm->linkUserToProvider($user, $hybridUserProfileMocked, $providerName);
         $providers = $this->tm->findProviderByUser($user, $providerName);
-        $this->assertEquals(1, count($providers));
+        $this->assertEquals(1, count([$providers]));
 
     }
 
-    public function tearDown()
+    protected function tearDown(): void
     {
         $dbh = $this->em->getConnection();
         unset($this->tm);

@@ -1,12 +1,12 @@
 <?php
 namespace PlaygroundUser\Form\Admin;
 
-use Zend\Form\Element;
-use Zend\Form\Form;
+use Laminas\Form\Element;
+use Laminas\Form\Form;
 use PlaygroundUser\Options\UserCreateOptionsInterface;
 use ZfcUser\Form\ProvidesEventsForm;
 use ZfcUser\Options\RegistrationOptionsInterface;
-use Zend\Mvc\I18n\Translator;
+use Laminas\Mvc\I18n\Translator;
 
 class Role extends ProvidesEventsForm
 {
@@ -61,7 +61,7 @@ class Role extends ProvidesEventsForm
         ));
 
         $this->add(array(
-            'type' => 'Zend\Form\Element\Select',
+            'type' => 'Laminas\Form\Element\Select',
             'name' => 'parentRoleId',
             'attributes' =>  array(
                 'id' => 'parentRoleId',

@@ -2,7 +2,7 @@
 
 namespace PlaygroundUser\Mapper;
 
-use Zend\Hydrator\ClassMethods;
+use Laminas\Hydrator\ClassMethods;
 
 class RememberMeHydrator extends ClassMethods
 {

@@ -3,18 +3,18 @@
 namespace PlaygroundUser\Service;
 
 use PlaygroundUser\Entity\UserProvider;
-use Zend\Form\Form;
-use Zend\Stdlib\ErrorHandler;
-use Zend\ServiceManager\ServiceManager;
-use Zend\Crypt\Password\Bcrypt;
+use Laminas\Form\Form;
+use Laminas\Stdlib\ErrorHandler;
+use Laminas\ServiceManager\ServiceManager;
+use Laminas\Crypt\Password\Bcrypt;
 use PlaygroundUser\Options\ModuleOptions;
-use Zend\Validator\File\Size;
+use Laminas\Validator\File\Size;
 use DoctrineModule\Validator\NoObjectExists as NoObjectExistsValidator;
-use Zend\Session\Container;
+use Laminas\Session\Container;
 use PlaygroundUser\Entity\User as UserEntity;
 use PlaygroundUser\Entity\Role;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\EventManager\EventManager;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\EventManager\EventManager;
 
 class User extends \ZfcUser\Service\User
 {
@@ -84,7 +84,7 @@ class User extends \ZfcUser\Service\User
         $clearPassword = (isset($data['password']))?  $data['password'] : '';
 
         if ($this->getOptions()->getCreateUserAutoPassword()) {
-            $rand = \Zend\Math\Rand::getString(8);
+            $rand = \Laminas\Math\Rand::getString(8);
             $clearPassword = $rand;
             $bcrypt = new Bcrypt;
             $bcrypt->setCost($zfcUserOptions->getPasswordCost());
@@ -174,7 +174,7 @@ class User extends \ZfcUser\Service\User
         }
 
         if ($fileName) {
-            $adapter = new \Zend\File\Transfer\Adapter\Http();
+            $adapter = new \Laminas\File\Transfer\Adapter\Http();
             $size = new Size(array('max'=>'500kb'));
             $adapter->setValidators(array($size), $fileName);
 
@@ -286,7 +286,7 @@ class User extends \ZfcUser\Service\User
         }
 
         if ($fileName) {
-            $adapter = new \Zend\File\Transfer\Adapter\Http();
+            $adapter = new \Laminas\File\Transfer\Adapter\Http();
             $size = new Size(array('max'=>'500kb'));
             $adapter->setValidators(array($size), $fileName);
             if (!$adapter->isValid()) {
@@ -527,7 +527,7 @@ class User extends \ZfcUser\Service\User
     public function resetPassword($user)
     {
         $zfcUserOptions = $this->getServiceManager()->get('zfcuser_module_options');
-        $rand = \Zend\Math\Rand::getString(8);
+        $rand = \Laminas\Math\Rand::getString(8);
         $clearPassword = $rand;
         $bcrypt = new Bcrypt;
         $bcrypt->setCost($zfcUserOptions->getPasswordCost());
@@ -659,7 +659,7 @@ class User extends \ZfcUser\Service\User
         }
 
         if ($fileName) {
-            $adapter = new \Zend\File\Transfer\Adapter\Http();
+            $adapter = new \Laminas\File\Transfer\Adapter\Http();
             $size = new Size(array('max'=>'500kb'));
             $adapter->setValidators(array($size), $fileName);
 
@@ -1017,7 +1017,7 @@ class User extends \ZfcUser\Service\User
             // Pas d'utilisateur playground : alors on en crée un
             $user = new UserEntity();
             $user->setEmail($email);
-            $rand = \Zend\Math\Rand::getString(8);
+            $rand = \Laminas\Math\Rand::getString(8);
             $bcrypt = new Bcrypt;
             $zfcUserOptions = $this->getServiceManager()->get('zfcuser_module_options');
             $bcrypt->setCost($zfcUserOptions->getPasswordCost());

@@ -2,11 +2,11 @@
 namespace PlaygroundUser\Service;
 
 use PlaygroundUser\Mapper\Team as teamMapper;
-use Zend\EventManager\EventManagerInterface;
-use Zend\EventManager\EventManagerAwareInterface;
-use Zend\EventManager\EventManager;
-use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\EventManager\EventManagerInterface;
+use Laminas\EventManager\EventManagerAwareInterface;
+use Laminas\EventManager\EventManager;
+use Laminas\ServiceManager\ServiceManager;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  *
@@ -38,7 +38,7 @@ class Team implements EventManagerAwareInterface
     }
 
     /**
-     * @return \Zend\ServiceManager\ServiceManager
+     * @return \Laminas\ServiceManager\ServiceManager
      */
     public function getServiceManager()
     {

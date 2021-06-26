@@ -2,13 +2,13 @@
 
 namespace PlaygroundUser\Controller\Admin;
 
-use Zend\Mvc\Controller\AbstractActionController;
+use Laminas\Mvc\Controller\AbstractActionController;
 use PlaygroundUser\Options\ModuleOptions;
-use Zend\View\Model\ViewModel;
-use Zend\Paginator\Paginator;
+use Laminas\View\Model\ViewModel;
+use Laminas\Paginator\Paginator;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
 use PlaygroundCore\ORM\Pagination\LargeTablePaginator as ORMPaginator;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 use ZfcDatagrid\Column;
 use ZfcDatagrid\Action;
 use ZfcDatagrid\Column\Formatter;
@@ -321,9 +321,9 @@ class AdminController extends AbstractActionController
     {
         $filter        = $this->getEvent()->getRouteMatch()->getParam('filter');
 
-        $adapter = new \Zend\Paginator\Adapter\ArrayAdapter($this->getAdminUserService()->getRoleMapper()->findAll());
+        $adapter = new \Laminas\Paginator\Adapter\ArrayAdapter($this->getAdminUserService()->getRoleMapper()->findAll());
 
-        $paginator = new \Zend\Paginator\Paginator($adapter);
+        $paginator = new \Laminas\Paginator\Paginator($adapter);
         $paginator->setItemCountPerPage(100);
         $paginator->setCurrentPageNumber($this->getEvent()->getRouteMatch()->getParam('p'));
 

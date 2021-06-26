@@ -8,10 +8,10 @@ namespace PlaygroundUser;
 
 use PlaygroundUser\View\Strategy\RedirectionStrategy;
 
-use Zend\Session\Container;
-use Zend\Validator\AbstractValidator;
+use Laminas\Session\Container;
+use Laminas\Validator\AbstractValidator;
 use ZfcUser\Module as ZfcUser;
-use Zend\Mvc\MvcEvent;
+use Laminas\Mvc\MvcEvent;
 
 class Module
 {
@@ -40,7 +40,7 @@ class Module
             }
 
             // Remember me feature
-            $session     = new \Zend\Session\Container('zfcuser');
+            $session     = new \Laminas\Session\Container('zfcuser');
             $cookieLogin = $session->offsetGet("cookieLogin");
 
             $cookie = $e->getRequest()->getCookie();
@@ -74,7 +74,7 @@ class Module
 
         // If cron is called, the $e->getRequest()->getQuery()->get('key'); produces an error so I protect it with
         // this test
-        if ((get_class($e->getRequest()) == 'Zend\Console\Request')) {
+        if ((get_class($e->getRequest()) == 'Laminas\Console\Request')) {
             return;
         }
         // $em->attach("dispatch", function ($e) {
@@ -91,7 +91,7 @@ class Module
          * Just configure it in any module config or autoloaded config.
          */
         $e->getApplication()->getEventManager()->getSharedManager()->attach(
-            \Zend\Mvc\Controller\AbstractActionController::class,
+            \Laminas\Mvc\Controller\AbstractActionController::class,
             'dispatch',
             function ($e) {
                 $config     = $e->getApplication()->getServiceManager()->get('config');
@@ -106,9 +106,9 @@ class Module
                     $actionName      = $match->getParam('action', 'not-found');
 
                     $user = $controller->zfcUserAuthentication()->getIdentity();
-                    $logFrontendUser = ($config['playgrounduser']['log_frontend_user']) ? $config['playgrounduser']['log_frontend_user'] : false;
-                    $logAdminUser = ($config['playgrounduser']['log_admin_user']) ? $config['playgrounduser']['log_admin_user'] : false;
-                    
+                    $logFrontendUser = (isset($config['playgrounduser']['log_frontend_user'])) ? $config['playgrounduser']['log_frontend_user'] : false;
+                    $logAdminUser = (isset($config['playgrounduser']['log_admin_user'])) ? $config['playgrounduser']['log_admin_user'] : false;
+
                     // echo '$controllerClass : ' . $controllerClass . '<br/>';
                     // echo '$moduleName : ' .$moduleName. '<br/>';
                     // echo '$routeName : '.$routeName. '<br/>';
@@ -135,14 +135,14 @@ class Module
         );
 
         // Automatically add Facebook app_id and scope for authentication
-        $e->getApplication()->getEventManager()->attach(\Zend\Mvc\MvcEvent::EVENT_RENDER, function (\Zend\Mvc\MvcEvent $e) use ($sm) {
+        $e->getApplication()->getEventManager()->attach(\Laminas\Mvc\MvcEvent::EVENT_RENDER, function (\Laminas\Mvc\MvcEvent $e) use ($sm) {
                 $view = $sm->get('ViewHelperManager');
                 $plugin = $view->get('facebookLogin');
                 $plugin();
         });
 
         // I can post cron tasks to be scheduled by the core cron service
-        $em->getSharedManager()->attach('Zend\Mvc\Application', 'getCronjobs', array($this, 'addCronjob'));
+        $em->getSharedManager()->attach('Laminas\Mvc\Application', 'getCronjobs', array($this, 'addCronjob'));
 
         if (PHP_SAPI !== 'cli') {
             if (!empty($config['playgrounduser']['anonymous_tracking']) && $config['playgrounduser']['anonymous_tracking']) {
@@ -154,7 +154,7 @@ class Module
                 }
 
                 // Set the cookie as long as possible (limited by integer max in 32 bits
-                $cookie = new \Zend\Http\Header\SetCookie('pg_anonymous', $anonymousId, 2147483647, '/');
+                $cookie = new \Laminas\Http\Header\SetCookie('pg_anonymous', $anonymousId, 2147483647, '/');
                 $e->getResponse()->getHeaders()->addHeader($cookie);
             }
 
@@ -176,7 +176,7 @@ class Module
      * @param  MvcEvent $e
      * @return array
      */
-    public function lastLogin(\Zend\EventManager\Event $e)
+    public function lastLogin(\Laminas\EventManager\Event $e)
     {
         $user = $e->getParam('user');
         $user->setLastLogin(new \DateTime());
@@ -222,7 +222,7 @@ class Module
                 },
                 'facebookLogin' => function ($sm) {
                     $config = $sm->get('SocialConfig');
-                    $renderer = $sm->get('Zend\View\Renderer\RendererInterface');
+                    $renderer = $sm->get('Laminas\View\Renderer\RendererInterface');
 
                     $helper = new View\Helper\FacebookLogin($config, $sm->get('Request'), $renderer);
 
@@ -325,7 +325,7 @@ class Module
 
                     $router = $sm->get('HttpRouter');
                     // Bug when using doctrine from console https://github.com/SocalNick/ScnSocialAuth/issues/67
-                    if ($router instanceof \Zend\Router\Http\TreeRouteStack) {
+                    if ($router instanceof \Laminas\Router\Http\TreeRouteStack) {
                         $request = $sm->get('Request');
                         if (!$router->getRequestUri() && method_exists($request, 'getUri')) {
                             $router->setRequestUri($request->getUri());
