@@ -2,11 +2,11 @@
 
 namespace PlaygroundUser\Form;
 
-use Zend\Form\Form;
-use Zend\Form\Element;
+use Laminas\Form\Form;
+use Laminas\Form\Element;
 use ZfcUser\Form\ProvidesEventsForm;
-use Zend\Mvc\I18n\Translator;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\Mvc\I18n\Translator;
+use Laminas\ServiceManager\ServiceManager;
 
 class Contact extends ProvidesEventsForm
 {
@@ -55,7 +55,7 @@ class Contact extends ProvidesEventsForm
         ));
 
         $this->add(array(
-                'type' => 'Zend\Form\Element\Select',
+                'type' => 'Laminas\Form\Element\Select',
                 'name' => 'object',
                 'options' => array(
                     'label' => $translator->translate('Objet', 'playgroundcore'),
@@ -74,7 +74,7 @@ class Contact extends ProvidesEventsForm
         ));
 
         $this->add(array(
-                'type' => 'Zend\Form\Element\Textarea',
+                'type' => 'Laminas\Form\Element\Textarea',
                 'name' => 'message',
                 'options' => array(
                     'label' => $translator->translate('Your question', 'playgroundcore'),

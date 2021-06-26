@@ -2,7 +2,7 @@
 namespace PlaygroundUser\Service\Factory;
 
 use PlaygroundUser\Service\Team;
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use Interop\Container\ContainerInterface;
 
 class TeamFactory implements FactoryInterface

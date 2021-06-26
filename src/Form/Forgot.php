@@ -2,10 +2,10 @@
 
 namespace PlaygroundUser\Form;
 
-use Zend\Form\Element;
+use Laminas\Form\Element;
 use ZfcUser\Form\ProvidesEventsForm;
 use PlaygroundUser\Options\ForgotOptionsInterface;
-use Zend\Mvc\I18n\Translator;
+use Laminas\Mvc\I18n\Translator;
 
 class Forgot extends ProvidesEventsForm
 {

@@ -1,10 +1,10 @@
 <?php
 namespace PlaygroundUser\Form;
 
-use Zend\Form\Form;
+use Laminas\Form\Form;
 use PlaygroundUser\Options\UserCreateOptionsInterface;
 use ZfcUser\Options\RegistrationOptionsInterface;
-use Zend\Mvc\I18n\Translator;
+use Laminas\Mvc\I18n\Translator;
 
 class Register extends \ZfcUser\Form\Register
 {
@@ -70,7 +70,7 @@ class Register extends \ZfcUser\Form\Register
         $this->add(
             array(
                 'name' => 'title',
-                'type' => 'Zend\Form\Element\Radio',
+                'type' => 'Laminas\Form\Element\Radio',
                 'options' => array(
                     'label' => $translator->translate('Title', 'playgrounduser'),
                     'value_options' => array(
@@ -131,7 +131,7 @@ class Register extends \ZfcUser\Form\Register
 
         $this->add(
             array(
-                'type' => 'Zend\Form\Element\DateTime',
+                'type' => 'Laminas\Form\Element\DateTime',
                 'name' => 'dob',
                 'options' => array(
                     'label' => $translator->translate('Date of birth', 'playgrounduser'),
@@ -148,7 +148,7 @@ class Register extends \ZfcUser\Form\Register
         $this->add(
             array(
                 'name' => 'optin',
-                'type' => 'Zend\Form\Element\Checkbox',
+                'type' => 'Laminas\Form\Element\Checkbox',
                 'options' => array(
                     'label' => $translator->translate('Newsletter', 'playgrounduser'),
                     'value_options' => array(
@@ -165,7 +165,7 @@ class Register extends \ZfcUser\Form\Register
         $this->add(
             array(
                 'name' => 'optin2',
-                'type' => 'Zend\Form\Element\Checkbox',
+                'type' => 'Laminas\Form\Element\Checkbox',
                 'options' => array(
                     'label' => $translator->translate('Optin 2', 'playgrounduser'),
                     'value_options' => array(
@@ -182,7 +182,7 @@ class Register extends \ZfcUser\Form\Register
         $this->add(
             array(
                 'name' => 'optin3',
-                'type' => 'Zend\Form\Element\Checkbox',
+                'type' => 'Laminas\Form\Element\Checkbox',
                 'options' => array(
                     'label' => $translator->translate('Optin 3', 'playgrounduser'),
                     'value_options' => array(
@@ -199,7 +199,7 @@ class Register extends \ZfcUser\Form\Register
         $this->add(
             array(
                 'name' => 'optinPartner',
-                'type' => 'Zend\Form\Element\Checkbox',
+                'type' => 'Laminas\Form\Element\Checkbox',
                 'options' => array(
                     'label' => $translator->translate('Partners Newsletter', 'playgrounduser'),
                     'value_options' => array(
@@ -216,7 +216,7 @@ class Register extends \ZfcUser\Form\Register
         $this->add(
             array(
                 'name' => 'avatar',
-                'type' => 'Zend\Form\Element\File',
+                'type' => 'Laminas\Form\Element\File',
                 'attributes' => array(
                     'type'  => 'file',
                 ),

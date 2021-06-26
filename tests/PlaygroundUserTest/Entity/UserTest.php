@@ -5,11 +5,11 @@ namespace PlaygroundUserTest\Entity;
 use PlaygroundUserTest\Bootstrap;
 use PlaygroundUser\Entity\User;
 
-class UserTest extends \PHPUnit_Framework_TestCase
+class UserTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Service Manager
-     * @var Zend\ServiceManager\ServiceManager
+     * @var Laminas\ServiceManager\ServiceManager
      */
     protected $sm;
 
@@ -25,7 +25,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     protected $userData;
 
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -58,8 +58,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
     {
         $user = new User();
         $user->populate($this->userData);
-        $rand = \Zend\Math\Rand::getString(8);
-        $bcrypt = new \Zend\Crypt\Password\Bcrypt;
+        $rand = \Laminas\Math\Rand::getString(8);
+        $bcrypt = new \Laminas\Crypt\Password\Bcrypt;
         $bcrypt->setCost(6);
         $pass = $bcrypt->create($rand);
         $user->setPassword($pass);
@@ -77,8 +77,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->userData['postalCode'] = 'AA9A 9AA';
         $user = new User();
         $user->populate($this->userData);
-        $rand = \Zend\Math\Rand::getString(8);
-        $bcrypt = new \Zend\Crypt\Password\Bcrypt;
+        $rand = \Laminas\Math\Rand::getString(8);
+        $bcrypt = new \Laminas\Crypt\Password\Bcrypt;
         $bcrypt->setCost(6);
         $pass = $bcrypt->create($rand);
         $user->setPassword($pass);
@@ -96,8 +96,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->userData['postalCode'] = '12345-6789';
         $user = new User();
         $user->populate($this->userData);
-        $rand = \Zend\Math\Rand::getString(8);
-        $bcrypt = new \Zend\Crypt\Password\Bcrypt;
+        $rand = \Laminas\Math\Rand::getString(8);
+        $bcrypt = new \Laminas\Crypt\Password\Bcrypt;
         $bcrypt->setCost(6);
         $pass = $bcrypt->create($rand);
         $user->setPassword($pass);
@@ -154,7 +154,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(false, $user);
     }
 
-    public function tearDown()
+    protected function tearDown(): void
     {
         $dbh = $this->em->getConnection();
         //$result = $dbh->exec("UPDATE sqlite_sequence SET seq = 10 WHERE name='album';");

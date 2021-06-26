@@ -2,9 +2,9 @@
 
 namespace PlaygroundUser\View\Helper;
 
-use Zend\View\Helper\AbstractHelper;
+use Laminas\View\Helper\AbstractHelper;
 use PlaygroundUser\Form\Login as LoginForm;
-use Zend\View\Model\ViewModel;
+use Laminas\View\Model\ViewModel;
 
 class UserLoginWidget extends AbstractHelper
 {

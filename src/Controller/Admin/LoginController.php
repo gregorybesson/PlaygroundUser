@@ -2,12 +2,12 @@
 namespace PlaygroundUser\Controller\Admin;
 
 use Hybrid_Auth;
-use Zend\Form\Form;
-use Zend\Stdlib\ResponseInterface as Response;
-use Zend\Stdlib\Parameters;
+use Laminas\Form\Form;
+use Laminas\Stdlib\ResponseInterface as Response;
+use Laminas\Stdlib\Parameters;
 use ZfcUser\Controller\UserController as ZfcUserController;
-use Zend\View\Model\ViewModel;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\View\Model\ViewModel;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class LoginController extends ZfcUserController
 {

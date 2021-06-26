@@ -7,6 +7,11 @@ return array(
         'PlaygroundCore',
         'PlaygroundDesign',
         'PlaygroundUser',
+        'Laminas\Router',
+        'Laminas\I18n',
+        'Laminas\Form',
+        'Laminas\Mvc\Plugin\FlashMessenger',
+        'Laminas\Mvc\Plugin\FilePrg',
     ),
     'module_listener_options' => array(
         'config_glob_paths'    => array(

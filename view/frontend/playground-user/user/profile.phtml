@@ -293,7 +293,7 @@
     //$formInfo->prepare();
     ?>
     <?php // I check if there are some categories to select. If no... Forget the form?>
-    <?php if(($formPrize->get('prizeCategory') instanceof Zend\Form\Element\MultiCheckbox )):?>
+    <?php if(($formPrize->get('prizeCategory') instanceof Laminas\Form\Element\MultiCheckbox )):?>
         <?php echo $this->form()->openTag($formPrize) ?>
     	<!-- update hobby-->
     	<div id="update-hobby" class="row-fluid backgrey">

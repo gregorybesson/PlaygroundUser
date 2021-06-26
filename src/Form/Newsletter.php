@@ -1,11 +1,11 @@
 <?php
 namespace PlaygroundUser\Form;
 
-use Zend\Form\Form;
-use Zend\Form\Element;
+use Laminas\Form\Form;
+use Laminas\Form\Element;
 use ZfcUser\Options\RegistrationOptionsInterface;
 use ZfcUser\Form\ProvidesEventsForm;
-use Zend\Mvc\I18n\Translator;
+use Laminas\Mvc\I18n\Translator;
 
 class Newsletter extends ProvidesEventsForm
 {
@@ -24,7 +24,7 @@ class Newsletter extends ProvidesEventsForm
 
         $this->add(array(
             'name' => 'optin',
-            'type' => 'Zend\Form\Element\Checkbox',
+            'type' => 'Laminas\Form\Element\Checkbox',
             'options' => array(
                 'label' => $translator->translate('Newsletter', 'playgrounduser'),
                 'value_options' => array(
@@ -36,7 +36,7 @@ class Newsletter extends ProvidesEventsForm
 
         $this->add(array(
             'name' => 'optin2',
-            'type' => 'Zend\Form\Element\Checkbox',
+            'type' => 'Laminas\Form\Element\Checkbox',
             'options' => array(
                 'label' => $translator->translate('Optin 2', 'playgrounduser'),
                 'value_options' => array(
@@ -48,7 +48,7 @@ class Newsletter extends ProvidesEventsForm
 
         $this->add(array(
             'name' => 'optin3',
-            'type' => 'Zend\Form\Element\Checkbox',
+            'type' => 'Laminas\Form\Element\Checkbox',
             'options' => array(
                 'label' => $translator->translate('Optin 3', 'playgrounduser'),
                 'value_options' => array(
@@ -60,7 +60,7 @@ class Newsletter extends ProvidesEventsForm
 
         $this->add(array(
             'name' => 'optinPartner',
-            'type' => 'Zend\Form\Element\Checkbox',
+            'type' => 'Laminas\Form\Element\Checkbox',
             'options' => array(
                 'label' => $translator->translate('Partners Newsletter', 'playgrounduser'),
                 'value_options' => array(

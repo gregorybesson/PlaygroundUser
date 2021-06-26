@@ -1,9 +1,9 @@
 <?php
 namespace PlaygroundUser\View\Helper;
 
-use Zend\View\Helper\AbstractHelper;
-use Zend\View\Helper\HeadScript;
-use Zend\Stdlib\RequestInterface;
+use Laminas\View\Helper\AbstractHelper;
+use Laminas\View\Helper\HeadScript;
+use Laminas\Stdlib\RequestInterface;
 
 class FacebookLogin extends AbstractHelper
 {
@@ -49,7 +49,7 @@ class FacebookLogin extends AbstractHelper
         }
 
         // We return if we are in a console request
-        if ((get_class($this->request) == 'Zend\Console\Request')) {
+        if ((get_class($this->request) == 'Laminas\Console\Request')) {
             return;
         }
 

@@ -2,12 +2,12 @@
 
 namespace PlaygroundUser\Controller\Frontend;
 
-use Zend\Form\Form;
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\ViewModel;
+use Laminas\Form\Form;
+use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\View\Model\ViewModel;
 use PlaygroundUser\Service\Password as PasswordService;
 use PlaygroundUser\Options\ForgotControllerOptionsInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class ForgotController extends AbstractActionController
 {
@@ -69,7 +69,7 @@ class ForgotController extends AbstractActionController
      */
     public function indexAction()
     {
-        //$this->getServiceLocator()->get('Zend\Log')->info('ForgotAction...');
+        //$this->getServiceLocator()->get('Laminas\Log')->info('ForgotAction...');
         if ($this->zfcUserAuthentication()->hasIdentity()) {
             return $this->redirect()->toRoute('frontend/zfcuser');
         } else {
@@ -123,24 +123,24 @@ class ForgotController extends AbstractActionController
                 //only send request when email is found
                 if ($user != null) {
                     $this->getPasswordService()->sendProcessForgotRequest($user, $email);
-                    $response->setContent(\Zend\Json\Json::encode(array(
+                    $response->setContent(\Laminas\Json\Json::encode(array(
                         'statusMail' => true,
                         'email' => $email
                     )));
                 } else {
-                    $response->setContent(\Zend\Json\Json::encode(array(
+                    $response->setContent(\Laminas\Json\Json::encode(array(
                         'statusMail' => false,
                         'email' => $email
                     )));
                 }
             } else {
-                $response->setContent(\Zend\Json\Json::encode(array(
+                $response->setContent(\Laminas\Json\Json::encode(array(
                     'statusMail' => false,
                     'email' => $email
                 )));
             }
         } else {
-            $response->setContent(\Zend\Json\Json::encode(array(
+            $response->setContent(\Laminas\Json\Json::encode(array(
                 'statusMail' => false,
                 'email' => ''
             )));
@@ -162,12 +162,12 @@ class ForgotController extends AbstractActionController
 
             $this->getPasswordService()->sendForgotEmailMessage($email, $password);
 
-            $response->setContent(\Zend\Json\Json::encode(array(
+            $response->setContent(\Laminas\Json\Json::encode(array(
                 'statusMail' => true,
                 'email' => $password
             )));
         } else {
-            $response->setContent(\Zend\Json\Json::encode(array(
+            $response->setContent(\Laminas\Json\Json::encode(array(
                 'statusMail' => false,
                 'email' => $email
             )));

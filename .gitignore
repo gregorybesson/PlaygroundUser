@@ -6,3 +6,4 @@
 composer.phar
 /.buildpath
 /build
+.phpunit.result.cache

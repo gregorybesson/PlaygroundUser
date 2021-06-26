@@ -5,14 +5,14 @@ namespace PlaygroundUserTest\Mapper;
 use PlaygroundUserTest\Bootstrap;
 use PlaygroundUser\Entity\Role;
 
-class RoleTest extends \PHPUnit_Framework_TestCase
+class RoleTest extends \PHPUnit\Framework\TestCase
 {
     protected $traceError = true;
 
     protected $roleData;
 
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->sm = Bootstrap::getServiceManager();
         $this->em = $this->sm->get('doctrine.entitymanager.orm_default');
@@ -65,7 +65,7 @@ class RoleTest extends \PHPUnit_Framework_TestCase
     }
  
 
-    public function tearDown()
+    protected function tearDown(): void
     {
         $dbh = $this->em->getConnection();
         unset($this->tm);

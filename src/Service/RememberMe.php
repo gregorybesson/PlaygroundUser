@@ -2,11 +2,11 @@
 
 namespace PlaygroundUser\Service;
 
-use Zend\ServiceManager\ServiceManager;
-use Zend\EventManager\EventManagerAwareTrait;
+use Laminas\ServiceManager\ServiceManager;
+use Laminas\EventManager\EventManagerAwareTrait;
 use PlaygroundUser\Options\RememberMeOptionsInterface;
-use Zend\Math\Rand;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\Math\Rand;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class RememberMe
 {
@@ -101,7 +101,7 @@ class RememberMe
      */
     public function isCookieLogin()
     {
-        $session = new \Zend\Session\Container('zfcuser');
+        $session = new \Laminas\Session\Container('zfcuser');
 
         return $session->offsetGet("cookieLogin");
     }

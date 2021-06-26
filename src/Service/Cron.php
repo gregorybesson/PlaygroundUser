@@ -2,10 +2,10 @@
 
 namespace PlaygroundUser\Service;
 
-use Zend\ServiceManager\ServiceManager;
-use Zend\EventManager\EventManagerAwareTrait;
+use Laminas\ServiceManager\ServiceManager;
+use Laminas\EventManager\EventManagerAwareTrait;
 use PlaygroundUser\Options\ModuleOptions;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class Cron
 {
@@ -35,7 +35,7 @@ class Cron
     {
         $configuration = require 'config/application.config.php';
         $smConfig = isset($configuration['service_manager']) ? $configuration['service_manager'] : array();
-        $sm = new \Zend\ServiceManager\ServiceManager(new \Zend\Mvc\Service\ServiceManagerConfig($smConfig));
+        $sm = new \Laminas\ServiceManager\ServiceManager(new \Laminas\Mvc\Service\ServiceManagerConfig($smConfig));
         $sm->setService('ApplicationConfig', $configuration);
         $sm->get('ModuleManager')->loadModules();
         $sm->get('Application')->bootstrap();

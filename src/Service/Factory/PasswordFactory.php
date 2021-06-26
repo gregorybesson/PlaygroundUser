@@ -2,7 +2,7 @@
 namespace PlaygroundUser\Service\Factory;
 
 use PlaygroundUser\Service\Password;
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use Interop\Container\ContainerInterface;
 
 class PasswordFactory implements FactoryInterface

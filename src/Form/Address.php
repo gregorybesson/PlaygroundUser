@@ -4,7 +4,7 @@ namespace PlaygroundUser\Form;
 
 use ZfcUser\Form\Register as Register;
 use PlaygroundUser\Options\UserCreateOptionsInterface;
-use Zend\Mvc\I18n\Translator;
+use Laminas\Mvc\I18n\Translator;
 
 class Address extends Register
 {
@@ -108,7 +108,7 @@ class Address extends Register
         asort($countries_label);
         
         $this->add(array(
-               'type' => 'Zend\Form\Element\Select',
+               'type' => 'Laminas\Form\Element\Select',
                'name' => 'country',
                'options' => array(
                    'empty_option' => $translator->translate('Select your country', 'playgrounduser'),
