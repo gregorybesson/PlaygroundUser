@@ -2,7 +2,7 @@
 
 namespace PlaygroundUser\Authentication\Adapter;
 
-use ZfcUser\Authentication\Adapter\AbstractAdapter;
+use LmcUser\Authentication\Adapter\AbstractAdapter;
 use Laminas\Authentication\Result as AuthenticationResult;
 use Laminas\EventManager\EventInterface as AuthEvent;
 use Laminas\ServiceManager\ServiceManager;
@@ -92,7 +92,7 @@ class EmailValidation extends AbstractAdapter
     public function getUserService()
     {
         if (!$this->userService) {
-            $this->userService = $this->getServiceManager()->get('zfcuser_user_service');
+            $this->userService = $this->getServiceManager()->get('lmcuser_user_service');
         }
 
         return $this->userService;

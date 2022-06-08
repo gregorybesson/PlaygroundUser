@@ -4,7 +4,7 @@
 	<?php
     $form = $this->form;
     $form->prepare();
-    $form->setAttribute('action', $this->url('frontend/zfcuser/newsletter'));
+    $form->setAttribute('action', $this->url('frontend/lmcuser/newsletter'));
     $form->setAttribute('method', 'post');
     ?>
     
@@ -18,7 +18,7 @@
 			<!-- opt-in -->
 			<div class="row-fluid opt-in">
 				<b><?php echo $this->translate('Inscrivez-vous aux newsletters pour ne rater aucun jeu et être informé de tous nos bons plans :')?></b>
-				<?php if(($this->zfcUserIdentity() && ! $this->zfcUserIdentity()->getOptin()) || ($this->zfcUserIdentity() && ! $this->zfcUserIdentity()->getOptinPartner())): ?>
+				<?php if(($this->lmcuserIdentity() && ! $this->lmcuserIdentity()->getOptin()) || ($this->lmcuserIdentity() && ! $this->lmcuserIdentity()->getOptinPartner())): ?>
 				<p class="orange"><b>Gagnez 150 points par inscription !</b></p>
 				<?php endif ?>
 				<div class="span7 raz">
@@ -30,7 +30,7 @@
 					<?php echo $this->formElementErrors($form->get('optin')) ?>
 				</div>
 				<div class="span2">
-					<?php if($this->zfcUserIdentity() && ! $this->zfcUserIdentity()->getOptin()) : ?>
+					<?php if($this->lmcuserIdentity() && ! $this->lmcuserIdentity()->getOptin()) : ?>
 					<p class="orange-points">+ 150 pts</p>
 					<?php endif; ?>
 				</div>
@@ -46,7 +46,7 @@
 					<?php echo $this->formElementErrors($form->get('optinPartner')) ?>
 				</div>
 				<div class="span2">
-					<?php if($this->zfcUserIdentity() && ! $this->zfcUserIdentity()->getOptinPartner()): ?>
+					<?php if($this->lmcuserIdentity() && ! $this->lmcuserIdentity()->getOptinPartner()): ?>
 					<p class="orange-points">+ 150 pts</p>
 					<?php endif; ?>
 				</div>

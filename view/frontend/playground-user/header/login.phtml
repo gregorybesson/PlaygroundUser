@@ -2,7 +2,7 @@
 <?php
 $form = $this->loginForm;
 $form->prepare();
-$form->setAttribute('action', $this->url('frontend/zfcuser/ajaxlogin'));
+$form->setAttribute('action', $this->url('frontend/lmcuser/ajaxlogin'));
 $form->setAttribute('method', 'post');
 $form->setAttribute('id', 'header-login');
 ?>
@@ -29,7 +29,7 @@ $form->setAttribute('id', 'header-login');
     			<div class="row-fluid">
     				<div class="span7">
     					<p id="lost-pass-link">
-    						<a href="<?php echo $this->url('frontend/zfcuser/forgotpassword') ?>">Mot de passe oublié ?</a>
+    						<a href="<?php echo $this->url('frontend/lmcuser/forgotpassword') ?>">Mot de passe oublié ?</a>
     					</p>
     				</div>
     				<div class="span4">
@@ -40,8 +40,8 @@ $form->setAttribute('id', 'header-login');
     			<?php if ($this->enableRegistration) : ?>
     			<div id="new-account" class="row-fluid">
     				<p>
-    					<a href="<?php echo $this->url('frontend/zfcuser/register') . ($this->redirect ? '?redirect='.$this->redirect : '') ?>">Créer un compte</a>
-    					<a href="<?php echo $this->url('frontend/zfcuser/register',array('socialnetwork' => 'facebook')) . ($this->redirect ? '?redirect='.$this->redirect : '');?>" class="fbconnect-header"><img src="<?php echo $this->frontendAssetPath('images/header/fb-connect.png') ?>" alt="Facebook Connect" /></a>
+    					<a href="<?php echo $this->url('frontend/lmcuser/register') . ($this->redirect ? '?redirect='.$this->redirect : '') ?>">Créer un compte</a>
+    					<a href="<?php echo $this->url('frontend/lmcuser/register',array('socialnetwork' => 'facebook')) . ($this->redirect ? '?redirect='.$this->redirect : '');?>" class="fbconnect-header"><img src="<?php echo $this->frontendAssetPath('images/header/fb-connect.png') ?>" alt="Facebook Connect" /></a>
     				</p>
     			</div>
     			<?php endif; ?>

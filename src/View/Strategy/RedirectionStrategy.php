@@ -23,7 +23,7 @@ class RedirectionStrategy implements ListenerAggregateInterface
     /**
      * @var string route to be used to handle redirects
      */
-    protected $redirectRoute = 'frontend/zfcuser/login';
+    protected $redirectRoute = 'frontend/lmcuser/login';
 
     /**
      * @var array route to be used to handle redirects

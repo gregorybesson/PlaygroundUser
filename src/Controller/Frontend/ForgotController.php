@@ -70,10 +70,10 @@ class ForgotController extends AbstractActionController
     public function indexAction()
     {
         //$this->getServiceLocator()->get('Laminas\Log')->info('ForgotAction...');
-        if ($this->zfcUserAuthentication()->hasIdentity()) {
-            return $this->redirect()->toRoute('frontend/zfcuser');
+        if ($this->lmcuserAuthentication()->hasIdentity()) {
+            return $this->redirect()->toRoute('frontend/lmcuser');
         } else {
-            return $this->redirect()->toRoute('frontend/zfcuser/forgotpassword');
+            return $this->redirect()->toRoute('frontend/lmcuser/forgotpassword');
         }
     }
 
@@ -89,7 +89,7 @@ class ForgotController extends AbstractActionController
                 $email = $form->getData();
                 $email = $email['email'];
 
-                return $this->redirect()->toRoute('frontend/zfcuser/sentpassword', array("email"=> $email));
+                return $this->redirect()->toRoute('frontend/lmcuser/sentpassword', array("email"=> $email));
             } else {
                 $this->flashMessenger()->setNamespace('playgrounduser-forgot-form')->addMessage($this->failedMessage);
 
@@ -212,7 +212,7 @@ class ForgotController extends AbstractActionController
 
         //no request for a new password found
         if ($password === null) {
-            return $this->redirect()->toRoute('frontend/zfcuser/forgotpassword', array("userId"=> $userId));
+            return $this->redirect()->toRoute('frontend/lmcuser/forgotpassword', array("userId"=> $userId));
         }
 
         $userService = $this->getUserService();
@@ -223,7 +223,7 @@ class ForgotController extends AbstractActionController
             if ($form->isValid() && $user !== null) {
                 $service->resetPassword($password, $user, $form->getData());
                 return $this->redirect()->toRoute(
-                    'frontend/zfcuser/passwordchanged',
+                    'frontend/lmcuser/passwordchanged',
                     array('userId' => $userId),
                     array('force_canonical'=>true)
                 );
@@ -254,7 +254,7 @@ class ForgotController extends AbstractActionController
     public function getUserService()
     {
         if (!$this->userService) {
-            $this->userService = $this->getServiceLocator()->get('zfcuser_user_service');
+            $this->userService = $this->getServiceLocator()->get('lmcuser_user_service');
         }
 
         return $this->userService;

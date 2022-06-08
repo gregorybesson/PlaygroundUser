@@ -3,11 +3,11 @@
 namespace PlaygroundUser\Mapper;
 
 use Doctrine\ORM\EntityManager;
-use ZfcUser\Mapper\User as ZfcUserMapper;
+use LmcUser\Mapper\User as LmcUserMapper;
 use PlaygroundUser\Options\ModuleOptions;
 use Laminas\Hydrator\HydratorInterface;
 
-class User extends ZfcUserMapper
+class User extends LmcUserMapper
 {
     /**
      * @var \Doctrine\ORM\EntityManager

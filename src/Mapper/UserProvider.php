@@ -5,7 +5,7 @@ use Doctrine\ORM\EntityManager;
 use Hybrid_User_Profile;
 use PlaygroundUser\Options\ModuleOptions;
 use Laminas\Hydrator\HydratorInterface;
-use ZfcUser\Entity\UserInterface;
+use LmcUser\Entity\UserInterface;
 use PlaygroundUser\Entity\UserProvider as UserProviderEntity;
 use Laminas\EventManager\EventManager;
 

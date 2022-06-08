@@ -1,29 +1,29 @@
 <?php
 $playgrounduser = array(
-        
+
     /**
         * add default registration role to BjyAuthorize
         *
         */
     'default_register_role' => 'user',
-    
+
     /**
         * @var bool
         * true = create user automatically after social authentication
         * false = data are extracted from the social id and sent to a registration form
         */
     'createUserAutoSocial' => false,
-    
+
     /**
         * Email Address that will appear in the 'From' of outbound emails
         *
         * Default: empty
-        */     
+        */
     'email_from_address' => array(
         'email' => 'contact@playground.gg',
         'name' => 'Administrateur',
     ),
-    
+
     /**
         * Subject line of the email message which is
         * sent out when a user enters their email address
@@ -31,7 +31,7 @@ $playgrounduser = array(
         * Default: 'You requested to reset your password'
         */
     'reset_email_subject_line' => 'Réinitialisation de votre mot de passe',
-    
+
     /**
         * Subject line of the email message which is
         * sent out when an admin has changed the password
@@ -40,7 +40,7 @@ $playgrounduser = array(
         * Default: 'Your new password'
         */
     'new_email_subject_line' => 'Votre nouveau mot de passe',
-    
+
     /**
         * Activate the email verification on registration
         *
@@ -55,24 +55,24 @@ $playgrounduser = array(
         * Default subject : 'Merci de votre inscription'
         */
     'emailConfirmation' => true,
-    
+
     /**
         * Subject line of the email message which is
         * sent out when verification on email registration
         * is activated
-        * 
+        *
         * Default: 'Vérification de votre compte'
         */
     'verificationEmailSubjectLine' => 'Vérification de votre compte',
-    
+
     /**
         * RememberMe Model Entity Class
         *
         * Name of Entity class to use. Useful for using your own entity class
-        * instead of the default one provided. Default is ZfcUser\Entity\User.
+        * instead of the default one provided. Default is LmcUser\Entity\User.
         */
     'remember_me_entity_class' => 'PlaygroundUser\Entity\RememberMe',
-    
+
     /**
         * Remember me cookie expire time
         *
@@ -82,17 +82,17 @@ $playgrounduser = array(
         * Accepted values: the number of seconds the user should be remembered
         */
     'cookie_expire' => 2592000,
-    
+
     /**
         * Drive path to the directory where user avatar will be stored
         */
     'avatar_path' => 'public' . DIRECTORY_SEPARATOR . 'media' . DIRECTORY_SEPARATOR . 'user',
-    
+
     /**
         * Url relative path to the directory where user avatar will be stored
         */
     'avatar_url' => 'media/user',
-    
+
     'social' => array(
         'providers' => include __DIR__.'/social.config.php',
         // if you want to enable logging, set 'debug_mode' to true  then provide a writable file by the web server on 'debug_file'
@@ -127,28 +127,28 @@ $playgrounduser = array(
 );
 
 /**
- * ZfcUser Configuration
+ * LmcUser Configuration
  *
  * If you have a ./config/autoload/ directory set up for your project, you can
  * drop this config file in it and change the values as you wish.
  */
-$zfcSettings = array(
+$LmcSettings = array(
 
     /**
      * Authentication Adapters
      *
      * Specify the adapters that will be used to try and authenticate the user
      *
-     * Default value: array containing 'ZfcUser\Authentication\Adapter\Db'
-     * Accepted values: array containing services that implement 'ZfcUser\Authentication\Adapter\ChainableAdapter'
+     * Default value: array containing 'LmcUser\Authentication\Adapter\Db'
+     * Accepted values: array containing services that implement 'LmcUser\Authentication\Adapter\ChainableAdapter'
      */
     'auth_adapters' => array(
         50 => 'PlaygroundUser\Authentication\Adapter\Cookie',
-        100 => 'ZfcUser\Authentication\Adapter\Db'
+        100 => 'LmcUser\Authentication\Adapter\Db'
      ),
 
     /**
-     * End of ZfcUser configuration
+     * End of LmcUser configuration
      */
 );
 
@@ -157,5 +157,5 @@ $zfcSettings = array(
  */
 return array(
     'playgrounduser' => $playgrounduser,
-    'zfcuser' => $zfcSettings,
+    'lmcuser' => $LmcSettings,
 );

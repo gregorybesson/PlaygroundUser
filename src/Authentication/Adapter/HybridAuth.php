@@ -6,9 +6,9 @@ use PlaygroundUser\Mapper\UserProvider;
 use PlaygroundUser\Options\ModuleOptions;
 use Laminas\Authentication\Result;
 use Laminas\ServiceManager\ServiceManager;
-use ZfcUser\Authentication\Adapter\AbstractAdapter;
-use ZfcUser\Mapper\UserInterface as UserMapperInterface;
-use ZfcUser\Options\UserServiceOptionsInterface;
+use LmcUser\Authentication\Adapter\AbstractAdapter;
+use LmcUser\Mapper\UserInterface as UserMapperInterface;
+use LmcUser\Options\UserServiceOptionsInterface;
 use Laminas\EventManager\EventManagerInterface;
 use Laminas\EventManager\EventManager;
 use Laminas\EventManager\EventManagerAwareInterface;
@@ -33,7 +33,7 @@ class HybridAuth extends AbstractAdapter implements EventManagerAwareInterface
     /**
      * @var UserServiceOptionsInterface
      */
-    protected $zfcUserOptions;
+    protected $lmcuserOptions;
 
     /**
      * @var UserProviderInterface
@@ -43,7 +43,7 @@ class HybridAuth extends AbstractAdapter implements EventManagerAwareInterface
     /**
      * @var UserMapperInterface
      */
-    protected $zfcUserMapper;
+    protected $lmcuserMapper;
 
     /**
      * @var EventManagerInterface
@@ -146,13 +146,13 @@ class HybridAuth extends AbstractAdapter implements EventManagerAwareInterface
             $this->getMapper()->insert($localUserProvider);
         }
 
-        $zfcUserOptions = $this->getZfcUserOptions();
+        $lmcuserOptions = $this->getLmcUserOptions();
 
-        if ($zfcUserOptions->getEnableUserState()) {
+        if ($lmcuserOptions->getEnableUserState()) {
             // Don't allow user to login if state is not in allowed list
-            $mapper = $this->getZfcUserMapper();
+            $mapper = $this->getLmcUserMapper();
             $user = $mapper->findById($localUserProvider->getUser()->getId());
-            if (!in_array($user->getState(), $zfcUserOptions->getAllowedLoginStates())) {
+            if (!in_array($user->getState(), $lmcuserOptions->getAllowedLoginStates())) {
                 $authEvent->setCode(Result::FAILURE_UNCATEGORIZED)
                     ->setMessages(array('A record with the supplied identity is not active.'));
                 $this->setSatisfied(false);
@@ -253,9 +253,9 @@ class HybridAuth extends AbstractAdapter implements EventManagerAwareInterface
      * @param  UserServiceOptionsInterface $options
      * @return HybridAuth
      */
-    public function setZfcUserOptions(UserServiceOptionsInterface $options)
+    public function setLmcUserOptions(UserServiceOptionsInterface $options)
     {
-        $this->zfcUserOptions = $options;
+        $this->lmcuserOptions = $options;
 
         return $this;
     }
@@ -263,13 +263,13 @@ class HybridAuth extends AbstractAdapter implements EventManagerAwareInterface
     /**
      * @return UserServiceOptionsInterface
      */
-    public function getZfcUserOptions()
+    public function getLmcUserOptions()
     {
-        if (!$this->zfcUserOptions instanceof UserServiceOptionsInterface) {
-            $this->setZfcUserOptions($this->getServiceManager()->get('zfcuser_module_options'));
+        if (!$this->lmcuserOptions instanceof UserServiceOptionsInterface) {
+            $this->setLmcUserOptions($this->getServiceManager()->get('lmcuser_module_options'));
         }
 
-        return $this->zfcUserOptions;
+        return $this->lmcuserOptions;
     }
 
     /**
@@ -300,30 +300,30 @@ class HybridAuth extends AbstractAdapter implements EventManagerAwareInterface
     }
 
     /**
-     * set zfcUserMapper
+     * set lmcuserMapper
      *
-     * @param  UserMapperInterface $zfcUserMapper
+     * @param  UserMapperInterface $lmcuserMapper
      * @return HybridAuth
      */
-    public function setZfcUserMapper(UserMapperInterface $zfcUserMapper)
+    public function setLmcUserMapper(UserMapperInterface $lmcuserMapper)
     {
-        $this->zfcUserMapper = $zfcUserMapper;
+        $this->lmcuserMapper = $lmcuserMapper;
 
         return $this;
     }
 
     /**
-     * get zfcUserMapper
+     * get lmcuserMapper
      *
      * @return UserMapperInterface
      */
-    public function getZfcUserMapper()
+    public function getLmcUserMapper()
     {
-        if (!$this->zfcUserMapper instanceof UserMapperInterface) {
-            $this->setZfcUserMapper($this->getServiceManager()->get('zfcuser_user_mapper'));
+        if (!$this->lmcuserMapper instanceof UserMapperInterface) {
+            $this->setLmcUserMapper($this->getServiceManager()->get('lmcuser_user_mapper'));
         }
 
-        return $this->zfcUserMapper;
+        return $this->lmcuserMapper;
     }
 
     /**
@@ -333,7 +333,7 @@ class HybridAuth extends AbstractAdapter implements EventManagerAwareInterface
      */
     protected function instantiateLocalUser()
     {
-        $userModelClass = $this->getZfcUserOptions()->getUserEntityClass();
+        $userModelClass = $this->getLmcUserOptions()->getUserEntityClass();
 
         return new $userModelClass;
     }
@@ -342,7 +342,7 @@ class HybridAuth extends AbstractAdapter implements EventManagerAwareInterface
 
     protected function facebookToLocalUser($userProfile)
     {
-        $mapper = $this->getZfcUserMapper();
+        $mapper = $this->getLmcUserMapper();
         if (false != ($localUser = $mapper->findByEmail($userProfile->email))) {
             return $localUser;
         }
@@ -389,7 +389,7 @@ class HybridAuth extends AbstractAdapter implements EventManagerAwareInterface
                 Result::FAILURE_CREDENTIAL_INVALID
             );
         }
-        $mapper = $this->getZfcUserMapper();
+        $mapper = $this->getLmcUserMapper();
         if (false != ($localUser = $mapper->findByEmail($userProfile->emailVerified))) {
             return $localUser;
         }
@@ -410,7 +410,7 @@ class HybridAuth extends AbstractAdapter implements EventManagerAwareInterface
                 Result::FAILURE_CREDENTIAL_INVALID
             );
         }
-        $mapper = $this->getZfcUserMapper();
+        $mapper = $this->getLmcUserMapper();
         if (false != ($localUser = $mapper->findByEmail($userProfile->emailVerified))) {
             return $localUser;
         }
@@ -477,12 +477,12 @@ class HybridAuth extends AbstractAdapter implements EventManagerAwareInterface
      */
     protected function insert($user, $provider, $userProfile)
     {
-        $zfcUserOptions = $this->getZfcUserOptions();
+        $lmcuserOptions = $this->getLmcUserOptions();
 
         // If user state is enabled, set the default state value
-        if ($zfcUserOptions->getEnableUserState()) {
-            if ($zfcUserOptions->getDefaultUserState()) {
-                $user->setState((int) $zfcUserOptions->getDefaultUserState());
+        if ($lmcuserOptions->getEnableUserState()) {
+            if ($lmcuserOptions->getDefaultUserState()) {
+                $user->setState((int) $lmcuserOptions->getDefaultUserState());
             }
         }
 
@@ -498,7 +498,7 @@ class HybridAuth extends AbstractAdapter implements EventManagerAwareInterface
         );
 
         $this->getEventManager()->trigger('registerViaProvider', $this, $options);
-        $result = $this->getZfcUserMapper()->insert($user);
+        $result = $this->getLmcUserMapper()->insert($user);
         $this->getEventManager()->trigger('registerViaProvider.post', $this, $options);
 
         return $result;

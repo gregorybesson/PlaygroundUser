@@ -22,17 +22,17 @@ class HybridAuthAdapterFactory implements FactoryInterface
         }
 
         $moduleOptions = $container->get('playgrounduser_module_options');
-        $zfcUserOptions = $container->get('zfcuser_module_options');
+        $lmcuserOptions = $container->get('lmcuser_module_options');
 
         $mapper = $container->get('playgrounduser_userprovider_mapper');
-        $zfcUserMapper = $container->get('zfcuser_user_mapper');
+        $lmcuserMapper = $container->get('lmcuser_user_mapper');
 
         $adapter = new HybridAuthAdapter();
         $adapter->setHybridAuth($hybridAuth);
         $adapter->setOptions($moduleOptions);
-        $adapter->setZfcUserOptions($zfcUserOptions);
+        $adapter->setLmcUserOptions($lmcuserOptions);
         $adapter->setMapper($mapper);
-        $adapter->setZfcUserMapper($zfcUserMapper);
+        $adapter->setLmcUserMapper($lmcuserMapper);
         $adapter->setServiceManager($container);
 
         return $adapter;

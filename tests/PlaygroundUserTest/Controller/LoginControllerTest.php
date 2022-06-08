@@ -33,7 +33,7 @@ class LoginControllerTest extends AbstractHttpControllerTestCase
     	$this->assertControllerName(\PlaygroundUser\Controller\Admin\LoginController::class);
     	$this->assertControllerClass('LoginController');
     	$this->assertActionName('login');
-    	$this->assertMatchedRouteName('frontend/zfcuser/login');
+    	$this->assertMatchedRouteName('frontend/lmcuser/login');
 
     	$this->assertRedirectTo('/admin');
     	//$postData = array('title' => 'Led Zeppelin III', 'artist' => 'Led Zeppelin');

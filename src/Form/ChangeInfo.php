@@ -2,7 +2,7 @@
 
 namespace PlaygroundUser\Form;
 
-use ZfcUser\Form\Register as Register;
+use LmcUser\Form\Register as Register;
 use PlaygroundUser\Options\UserCreateOptionsInterface;
 use Laminas\Mvc\I18n\Translator;
 

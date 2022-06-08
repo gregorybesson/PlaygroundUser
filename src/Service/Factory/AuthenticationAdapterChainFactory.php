@@ -3,7 +3,7 @@ namespace PlaygroundUser\Service\Factory;
 
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Interop\Container\ContainerInterface;
-use ZfcUser\Authentication\Adapter\AdapterChainServiceFactory;
+use LmcUser\Authentication\Adapter\AdapterChainServiceFactory;
 
 class AuthenticationAdapterChainFactory implements FactoryInterface
 {

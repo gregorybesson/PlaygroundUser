@@ -4,8 +4,8 @@ namespace PlaygroundUser\Form\Admin;
 use Laminas\Form\Element;
 use Laminas\Form\Form;
 use PlaygroundUser\Options\UserCreateOptionsInterface;
-use ZfcUser\Form\ProvidesEventsForm;
-use ZfcUser\Options\RegistrationOptionsInterface;
+use LmcUser\Form\ProvidesEventsForm;
+use LmcUser\Options\RegistrationOptionsInterface;
 use Laminas\Mvc\I18n\Translator;
 
 class Role extends ProvidesEventsForm

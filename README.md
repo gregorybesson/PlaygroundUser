@@ -5,7 +5,7 @@ PlaygroundUser
 
 #Introduction
 
-Ce module étend ZfcUser qui permet de nombreuses fonctionnalités liées à la gestion d'un compte client.
+Ce module étend LmcUser qui permet de nombreuses fonctionnalités liées à la gestion d'un compte client.
 
 Le fonctionnalités apportées par PgUser sont :
 * Gestion des autorisations via BjyAuthorize
@@ -31,7 +31,7 @@ La commande php doctrine-module.php data-fixture:import --append permet d'instal
 ## Use your own User entity
 If you want to use your own entity :
 
-1. Change the value of 'user_entity_class' in the zfcuser.global.php file.
+1. Change the value of 'user_entity_class' in the lmcuser.global.php file.
 
         'user_entity_class' => 'MyUser\Entity\User',
 
@@ -39,7 +39,7 @@ If you want to use your own entity :
 
         'doctrine' => array(
 		'driver' => array(
-			'zfcuser_entity' => array(
+			'lmcuser_entity' => array(
 				'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
 				'cache' => 'array',
 				'paths' => __DIR__ . '/../src/MyUser/Entity'
@@ -47,7 +47,7 @@ If you want to use your own entity :
 
 			'orm_default' => array(
 				'drivers' => array(
-				    'MyUser\Entity'  => 'zfcuser_entity'
+				    'MyUser\Entity'  => 'lmcuser_entity'
 				)
 			)
 		)
@@ -65,7 +65,7 @@ And in your Module.php onBootstrap method, You have then to use the doctrine lis
     	$sm = $e->getApplication()->getServiceManager();
     	$doctrine = $sm->get('application_doctrine_em');
     	$evm = $doctrine->getEventManager();
-	    
+
 	    $listener = new  \Doctrine\ORM\Tools\ResolveTargetEntityListener();
 	    $listener->addResolveTargetEntity(
     		'PgUser\Entity\UserInterface',
@@ -88,7 +88,7 @@ If you want to change the ChangeInfo Form for example (ie. you want to add a 'ch
 
          parent::__construct($name, $createOptions, $translator);
 
-    And then you add the Form elements you want 
+    And then you add the Form elements you want
 
         $this->add(array(
             'type' => 'Laminas\Form\Element\Select',
@@ -145,16 +145,16 @@ If you want to add an action or modify an existing one.
     		'children_views' => array(
    			'col_left'  => 'adfab-user/layout/col-user.phtml',
    		),
-        ),						
-        ),		
+        ),
+        ),
         'controllers' => array(
 		'invokables' => array(
 			'myuser_user'    => 'MyUser\Controller\UserController',
 		),
-        ),	
+        ),
         'router' => array(
 		'routes' => array(
-			'zfcuser' => array(
+			'lmcuser' => array(
 				'child_routes' => array(
 					'profile' => array(
 						'type' => 'Laminas\Router\Http\Literal',

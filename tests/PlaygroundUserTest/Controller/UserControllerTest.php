@@ -37,7 +37,7 @@ class UserControllerTest extends AbstractHttpControllerTestCase
         $this->assertControllerName('playgrounduser\controller\frontend\usercontroller');
         $this->assertControllerClass('UserController');
         $this->assertActionName('login');
-        $this->assertMatchedRouteName('frontend/zfcuser/login');
+        $this->assertMatchedRouteName('frontend/lmcuser/login');
 
         $this->assertRedirectTo('/mon-compte/inscription');
         //$postData = array('title' => 'Led Zeppelin III', 'artist' => 'Led Zeppelin');
@@ -54,7 +54,7 @@ class UserControllerTest extends AbstractHttpControllerTestCase
     	$this->assertControllerName('playgrounduser\controller\frontend\usercontroller');
     	$this->assertControllerClass('UserController');
     	$this->assertActionName('ajaxlogin');
-    	$this->assertMatchedRouteName('frontend/zfcuser/ajaxlogin');
+    	$this->assertMatchedRouteName('frontend/lmcuser/ajaxlogin');
     }*/
 
     /*public function testAjaxauthenticateActionCanBeAccessed()
@@ -66,7 +66,7 @@ class UserControllerTest extends AbstractHttpControllerTestCase
     	$this->assertControllerName('playgrounduser\controller\frontend\usercontroller');
     	$this->assertControllerClass('UserController');
     	$this->assertActionName('ajaxauthenticate');
-    	$this->assertMatchedRouteName('frontend/zfcuser/ajaxauthenticate');
+    	$this->assertMatchedRouteName('frontend/lmcuser/ajaxauthenticate');
     }*/
 
     public function testLogoutActionCanBeAccessed()
@@ -78,7 +78,7 @@ class UserControllerTest extends AbstractHttpControllerTestCase
         $this->assertControllerName('playgrounduser\controller\frontend\usercontroller');
         $this->assertControllerClass('UserController');
         $this->assertActionName('logout');
-        $this->assertMatchedRouteName('frontend/zfcuser/logout');
+        $this->assertMatchedRouteName('frontend/lmcuser/logout');
 
         $this->assertRedirectTo('/user/login');
     }
@@ -92,7 +92,7 @@ class UserControllerTest extends AbstractHttpControllerTestCase
     	$this->assertControllerName('playgrounduser\controller\frontend\usercontroller');
     	$this->assertControllerClass('UserController');
     	$this->assertActionName('providerLogin');
-    	$this->assertMatchedRouteName('frontend/zfcuser/login/provider');
+    	$this->assertMatchedRouteName('frontend/lmcuser/login/provider');
 
     	$this->assertRedirectTo('/mon-compte/inscription');
     }*/
@@ -107,7 +107,7 @@ class UserControllerTest extends AbstractHttpControllerTestCase
         $this->assertControllerName('playgrounduser\controller\frontend\usercontroller');
         $this->assertControllerClass('UserController');
         $this->assertActionName('register');
-        $this->assertMatchedRouteName('frontend/zfcuser/register');
+        $this->assertMatchedRouteName('frontend/lmcuser/register');
     }
 
     public function testProfileActionCanBeAccessed()
@@ -119,7 +119,7 @@ class UserControllerTest extends AbstractHttpControllerTestCase
         $this->assertControllerName('playgrounduser\controller\frontend\usercontroller');
         $this->assertControllerClass('UserController');
         $this->assertActionName('profile');
-        $this->assertMatchedRouteName('frontend/zfcuser/profile');
+        $this->assertMatchedRouteName('frontend/lmcuser/profile');
 
         $this->assertRedirectTo('/user');
     }
@@ -133,7 +133,7 @@ class UserControllerTest extends AbstractHttpControllerTestCase
         $this->assertControllerName('playgrounduser\controller\frontend\usercontroller');
         $this->assertControllerClass('UserController');
         $this->assertActionName('blockAccount');
-        $this->assertMatchedRouteName('frontend/zfcuser/blockaccount');
+        $this->assertMatchedRouteName('frontend/lmcuser/blockaccount');
 
         $this->assertRedirectTo('/mon-compte/mes-coordonnees');
     }
@@ -147,7 +147,7 @@ class UserControllerTest extends AbstractHttpControllerTestCase
         $this->assertControllerName('playgrounduser\controller\frontend\usercontroller');
         $this->assertControllerClass('UserController');
         $this->assertActionName('newsletter');
-        $this->assertMatchedRouteName('frontend/zfcuser/newsletter');
+        $this->assertMatchedRouteName('frontend/lmcuser/newsletter');
     }
 
     public function testAjaxNewsletterActionCanBeAccessed()
@@ -159,7 +159,7 @@ class UserControllerTest extends AbstractHttpControllerTestCase
         $this->assertControllerName('playgrounduser\controller\frontend\usercontroller');
         $this->assertControllerClass('UserController');
         $this->assertActionName('ajaxNewsletter');
-        $this->assertMatchedRouteName('frontend/zfcuser/ajax_newsletter');
+        $this->assertMatchedRouteName('frontend/lmcuser/ajax_newsletter');
     }
 
     public function testPrizeCategoryUserActionCanBeAccessed()
@@ -171,7 +171,7 @@ class UserControllerTest extends AbstractHttpControllerTestCase
         $this->assertControllerName('playgrounduser\controller\frontend\usercontroller');
         $this->assertControllerClass('UserController');
         $this->assertActionName('prizeCategoryUser');
-        $this->assertMatchedRouteName('frontend/zfcuser/profile_prizes');
+        $this->assertMatchedRouteName('frontend/lmcuser/profile_prizes');
     }
 
     public function testRegistermailActionCanBeAccessed()
@@ -183,7 +183,7 @@ class UserControllerTest extends AbstractHttpControllerTestCase
         $this->assertControllerName('playgrounduser\controller\frontend\usercontroller');
         $this->assertControllerClass('UserController');
         $this->assertActionName('registermail');
-        $this->assertMatchedRouteName('frontend/zfcuser/registermail');
+        $this->assertMatchedRouteName('frontend/lmcuser/registermail');
     }
 
     public function testChangeemailActionCanBeAccessed()
@@ -195,7 +195,7 @@ class UserControllerTest extends AbstractHttpControllerTestCase
         $this->assertControllerName('playgrounduser\controller\frontend\usercontroller');
         $this->assertControllerClass('UserController');
         $this->assertActionName('changeemail');
-        $this->assertMatchedRouteName('frontend/zfcuser/changeemail');
+        $this->assertMatchedRouteName('frontend/lmcuser/changeemail');
 
         $this->assertRedirectTo('/user');
     }

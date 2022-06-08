@@ -57,7 +57,7 @@ class UnauthorizedStrategy implements ListenerAggregateInterface, ServiceLocator
         $router = $e->getRouter();
         $match  = $e->getRouteMatch();
 
-        // get url to the zfcuser/login route
+        // get url to the lmcuser/login route
         $authAdminConfig = $this->getOptions()->getAdmin();
         $options['name'] = $authAdminConfig['route_login_fail'];
         $url = $router->assemble(array(), $options);

@@ -3,7 +3,7 @@ return array(
 
     'doctrine' => array(
         'driver' => array(
-            'zfcuser_entity' => array(
+            'lmcuser_entity' => array(
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
                 'paths' => __DIR__ . '/../src/Entity'
@@ -11,7 +11,7 @@ return array(
 
             'orm_default' => array(
                 'drivers' => array(
-                    'PlaygroundUser\Entity'  => 'zfcuser_entity'
+                    'PlaygroundUser\Entity'  => 'lmcuser_entity'
                 )
             )
         ),
@@ -53,7 +53,7 @@ return array(
         
         'guards' => array(
             'BjyAuthorize\Guard\Controller' => array(
-                array('controller' => 'zfcuser',   'roles' => array('guest', 'user')),
+                array('controller' => 'lmcuser',   'roles' => array('guest', 'user')),
                 array('controller' => \PlaygroundUser\Controller\Frontend\UserController::class,   'roles' => array('guest', 'user')),
                 array('controller' => \PlaygroundUser\Controller\Frontend\TeamController::class,   'roles' => array('guest', 'user')),
                 array('controller' => \PlaygroundUser\Controller\Frontend\ForgotController::class, 'roles' => array('guest', 'user')),
@@ -195,13 +195,13 @@ return array(
                             )
                         ),
                     ),
-                    'zfcuser' => array(
+                    'lmcuser' => array(
                         'type' => 'Laminas\Router\Http\Literal',
                         'priority' => 1000,
                         'options' => array(
                             'route' => 'mon-compte',
                             'defaults' => array(
-                                'controller' => 'zfcuser',
+                                'controller' => 'lmcuser',
                                 'action'     => 'index',
                             ),
                         ),
@@ -638,7 +638,7 @@ return array(
 
             'newsletter' => array(
                 'label' => 'Newsletter',
-                'route' => 'frontend/zfcuser/newsletter',
+                'route' => 'frontend/lmcuser/newsletter',
                 'controller' => \PlaygroundUser\Controller\Frontend\UserController::class,
                 'action'     => 'newsletter',
             ),

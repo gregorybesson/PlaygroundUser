@@ -16,7 +16,7 @@ use PlaygroundUser\Entity\Role;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\EventManager\EventManager;
 
-class User extends \ZfcUser\Service\User
+class User extends \LmcUser\Service\User
 {
 
     /**
@@ -67,8 +67,8 @@ class User extends \ZfcUser\Service\User
     public function create(array $data)
     {
         $entityManager = $this->getServiceManager()->get('doctrine.entitymanager.orm_default');
-        $zfcUserOptions = $this->getServiceManager()->get('zfcuser_module_options');
-        $class = $zfcUserOptions->getUserEntityClass();
+        $lmcuserOptions = $this->getServiceManager()->get('lmcuser_module_options');
+        $class = $lmcuserOptions->getUserEntityClass();
         $user  = new $class;
         $form  = $this->getServiceManager()->get('playgrounduseradmin_register_form');
         $form->get('dob')->setOptions(array('format' => 'Y-m-d'));
@@ -87,7 +87,7 @@ class User extends \ZfcUser\Service\User
             $rand = \Laminas\Math\Rand::getString(8);
             $clearPassword = $rand;
             $bcrypt = new Bcrypt;
-            $bcrypt->setCost($zfcUserOptions->getPasswordCost());
+            $bcrypt->setCost($lmcuserOptions->getPasswordCost());
             $pass = $bcrypt->create($rand);
             /*$data = array_merge(
                 $data,
@@ -115,22 +115,22 @@ class User extends \ZfcUser\Service\User
 
         $emailInput->getValidatorChain()->addValidator($noObjectExistsValidator);
 
-        if (!$zfcUserOptions->getEnableUsername()) {
+        if (!$lmcuserOptions->getEnableUsername()) {
             unset($data['username']);
         }
 
-        if (!$zfcUserOptions->getEnableDisplayName()) {
+        if (!$lmcuserOptions->getEnableDisplayName()) {
             unset($data['display_name']);
         }
 
         // If user state is enabled, set the default state value
-        if ($zfcUserOptions->getEnableUserState()) {
-            if ($zfcUserOptions->getDefaultUserState()) {
+        if ($lmcuserOptions->getEnableUserState()) {
+            if ($lmcuserOptions->getDefaultUserState()) {
                 /*$data = array_merge(
                     $data,
-                    array('state'=> $zfcUserOptions->getDefaultUserState())
+                    array('state'=> $lmcuserOptions->getDefaultUserState())
                 );*/
-                $user->setState((int) $zfcUserOptions->getDefaultUserState());
+                $user->setState((int) $lmcuserOptions->getDefaultUserState());
             }
         }
 
@@ -216,8 +216,8 @@ class User extends \ZfcUser\Service\User
     {
         $this->getEventManager()->trigger(__FUNCTION__.'.pre', $this, array('user' => $user, 'data' => $data));
         $entityManager          = $this->getServiceManager()->get('doctrine.entitymanager.orm_default');
-        $zfcUserOptions = $this->getServiceManager()->get('zfcuser_module_options');
-        $class                  = $zfcUserOptions->getUserEntityClass();
+        $lmcuserOptions = $this->getServiceManager()->get('lmcuser_module_options');
+        $class                  = $lmcuserOptions->getUserEntityClass();
         $path                 = $this->getOptions()->getAvatarPath() . DIRECTORY_SEPARATOR;
         if (!is_dir($path)) {
             mkdir($path, 0777, true);
@@ -337,9 +337,9 @@ class User extends \ZfcUser\Service\User
      */
     public function register(array $data, $formClass = false, $roleId = null)
     {
-        $zfcUserOptions = $this->getServiceManager()->get('zfcuser_module_options');
+        $lmcuserOptions = $this->getServiceManager()->get('lmcuser_module_options');
         $entityManager = $this->getServiceManager()->get('doctrine.entitymanager.orm_default');
-        $class = $zfcUserOptions->getUserEntityClass();
+        $class = $lmcuserOptions->getUserEntityClass();
         $user  = new $class;
 
         if ($formClass) {
@@ -364,7 +364,7 @@ class User extends \ZfcUser\Service\User
             $data['dob'] = $tmpDate->format('Y-m-d');
         }
 
-        if ($zfcUserOptions->getEnableUsername()) {
+        if ($lmcuserOptions->getEnableUsername()) {
             if (!isset($data['username']) || $data['username'] == '') {
                 if (isset($data['firstname']) && isset($data['lastname'])) {
                     $data['username'] = ucfirst($data['firstname']) . " " . substr(ucfirst($data['lastname']), 0, 1);
@@ -389,7 +389,7 @@ class User extends \ZfcUser\Service\User
 
         $emailInput->getValidatorChain()->addValidator($noObjectExistsValidator);
 
-        if ($zfcUserOptions->getEnableUsername() && $this->getOptions()->getUsernameUnique()) {
+        if ($lmcuserOptions->getEnableUsername() && $this->getOptions()->getUsernameUnique()) {
             $usernameInput = $form->getInputFilter()->get('username');
             // This username is already associated with another user
             $noObjectExistsValidator = new NoObjectExistsValidator(
@@ -418,44 +418,44 @@ class User extends \ZfcUser\Service\User
         }
 
         $user = $form->getData();
-        /* @var $user \ZfcUser\Entity\UserInterface */
+        /* @var $user \LmcUser\Entity\UserInterface */
 
         // Si creation sociale, je ne crée pas le mot de passe
         if (!isset($data['socialNetwork'])) {
             $bcrypt = new Bcrypt;
-            $bcrypt->setCost($zfcUserOptions->getPasswordCost());
+            $bcrypt->setCost($lmcuserOptions->getPasswordCost());
             $user->setPassword($bcrypt->create($user->getPassword()));
         } else {
             $user->setPassword('auth_'.$data['socialNetwork']);
         }
 
-        if ($zfcUserOptions->getEnableUsername()) {
+        if ($lmcuserOptions->getEnableUsername()) {
             $user->setUsername($data['username']);
         }
 
-        if ($zfcUserOptions->getEnableDisplayName()) {
+        if ($lmcuserOptions->getEnableDisplayName()) {
             $user->setDisplayName($data['display_name']);
         }
 
         // If user state is enabled, set the default state value
 
         //set default state value for socialNetwork and others
-        if ($zfcUserOptions->getEnableUserState()) {
-            if ($zfcUserOptions->getDefaultUserState()) {
-                $user->setState($zfcUserOptions->getDefaultUserState());
+        if ($lmcuserOptions->getEnableUserState()) {
+            if ($lmcuserOptions->getDefaultUserState()) {
+                $user->setState($lmcuserOptions->getDefaultUserState());
             }
         }
 
         /*
-        if ($zfcUserOptions->getEnableUserState()) {
+        if ($lmcuserOptions->getEnableUserState()) {
             if (!isset($data['socialNetwork'])) {
-                if ($zfcUserOptions->getDefaultUserState()) {
-                    $user->setState($zfcUserOptions->getDefaultUserState());
+                if ($lmcuserOptions->getDefaultUserState()) {
+                    $user->setState($lmcuserOptions->getDefaultUserState());
                 }
             } else {
                 // If socialNetwork, I must activate the user in this step
-                if ($zfcUserOptions->getAllowedLoginStates() && is_array($zfcUserOptions->getAllowedLoginStates())) {
-                    $states = $zfcUserOptions->getAllowedLoginStates();
+                if ($lmcuserOptions->getAllowedLoginStates() && is_array($lmcuserOptions->getAllowedLoginStates())) {
+                    $states = $lmcuserOptions->getAllowedLoginStates();
                     $user->setState($states[0]);
                 }
             }
@@ -472,7 +472,7 @@ class User extends \ZfcUser\Service\User
             }
         }
         if ($roleId == null) {
-            $defaultRegisterRole = $zfcUserOptions->getDefaultRegisterRole();
+            $defaultRegisterRole = $lmcuserOptions->getDefaultRegisterRole();
             $role = $roleMapper->findByRoleId($defaultRegisterRole);
             if ($role) {
                 $user->addRole($role);
@@ -526,11 +526,11 @@ class User extends \ZfcUser\Service\User
 
     public function resetPassword($user)
     {
-        $zfcUserOptions = $this->getServiceManager()->get('zfcuser_module_options');
+        $lmcuserOptions = $this->getServiceManager()->get('lmcuser_module_options');
         $rand = \Laminas\Math\Rand::getString(8);
         $clearPassword = $rand;
         $bcrypt = new Bcrypt;
-        $bcrypt->setCost($zfcUserOptions->getPasswordCost());
+        $bcrypt->setCost($lmcuserOptions->getPasswordCost());
         $pass = $bcrypt->create($rand);
 
         $user->setPassword($pass);
@@ -543,7 +543,7 @@ class User extends \ZfcUser\Service\User
 
     public function blockAccount(array $data)
     {
-        $zfcUserOptions = $this->getServiceManager()->get('zfcuser_module_options');
+        $lmcuserOptions = $this->getServiceManager()->get('lmcuser_module_options');
         $currentUser = $this->getAuthService()->getIdentity();
 
         $oldPass = $data['credential'];
@@ -554,7 +554,7 @@ class User extends \ZfcUser\Service\User
         }
 
         $bcrypt = new Bcrypt;
-        $bcrypt->setCost($zfcUserOptions->getPasswordCost());
+        $bcrypt->setCost($lmcuserOptions->getPasswordCost());
 
         if (!$bcrypt->verify($oldPass, $currentUser->getPassword())) {
             return false;
@@ -585,8 +585,8 @@ class User extends \ZfcUser\Service\User
         $em = $this->getServiceManager()->get('doctrine.entitymanager.orm_default');
 
         // I Have to know what is the User Class used
-        $zfcUserOptions = $this->getServiceManager()->get('zfcuser_module_options');
-        $userClass = $zfcUserOptions->getUserEntityClass();
+        $lmcuserOptions = $this->getServiceManager()->get('lmcuser_module_options');
+        $userClass = $lmcuserOptions->getUserEntityClass();
 
         $qb = $em->createQueryBuilder();
         $qb->select('u.id, u.'.$field)
@@ -850,8 +850,8 @@ class User extends \ZfcUser\Service\User
         $order = (in_array($order, array('ASC', 'DESC')))?$order:'DESC';
 
         // I Have to know what is the User Class used
-        $zfcUserOptions = $this->getServiceManager()->get('zfcuser_module_options');
-        $userClass = $zfcUserOptions->getUserEntityClass();
+        $lmcuserOptions = $this->getServiceManager()->get('lmcuser_module_options');
+        $userClass = $lmcuserOptions->getUserEntityClass();
 
         $qb = $em->createQueryBuilder();
         $qb->select('u')
@@ -1019,8 +1019,8 @@ class User extends \ZfcUser\Service\User
             $user->setEmail($email);
             $rand = \Laminas\Math\Rand::getString(8);
             $bcrypt = new Bcrypt;
-            $zfcUserOptions = $this->getServiceManager()->get('zfcuser_module_options');
-            $bcrypt->setCost($zfcUserOptions->getPasswordCost());
+            $lmcuserOptions = $this->getServiceManager()->get('lmcuser_module_options');
+            $bcrypt->setCost($lmcuserOptions->getPasswordCost());
             $pass = $bcrypt->create($rand);
             $user->setPassword($pass);
             $user = $this->getUserMapper()->insert($user);
@@ -1155,7 +1155,7 @@ class User extends \ZfcUser\Service\User
     public function getUserMapper()
     {
         if (null === $this->userMapper) {
-            $this->userMapper = $this->getServiceManager()->get('zfcuser_user_mapper');
+            $this->userMapper = $this->getServiceManager()->get('lmcuser_user_mapper');
         }
 
         return $this->userMapper;
@@ -1181,14 +1181,14 @@ class User extends \ZfcUser\Service\User
      * @param  UserMapperInterface $userMapper
      * @return User
      */
-    public function setUserMapper(\ZfcUser\Mapper\UserInterface $userMapper)
+    public function setUserMapper(\LmcUser\Mapper\UserInterface $userMapper)
     {
         $this->userMapper = $userMapper;
 
         return $this;
     }
 
-    public function setOptions(\ZfcUser\Options\UserServiceOptionsInterface $options)
+    public function setOptions(\LmcUser\Options\UserServiceOptionsInterface $options)
     {
         $this->options = $options;
 

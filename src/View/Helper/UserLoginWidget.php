@@ -74,7 +74,7 @@ class UserLoginWidget extends AbstractHelper
     /**
      * Inject Login Form Object
      * @param  LoginForm          $loginForm
-     * @return ZfcUserLoginWidget
+     * @return LmcUserLoginWidget
      */
     public function setLoginForm(LoginForm $loginForm)
     {
@@ -85,7 +85,7 @@ class UserLoginWidget extends AbstractHelper
 
     /**
      * @param  string             $viewTemplate
-     * @return ZfcUserLoginWidget
+     * @return LmcUserLoginWidget
      */
     public function setViewTemplate($viewTemplate)
     {

@@ -5,18 +5,18 @@ use Hybrid_Auth;
 use Laminas\Form\Form;
 use Laminas\Stdlib\ResponseInterface as Response;
 use Laminas\Stdlib\Parameters;
-use ZfcUser\Controller\UserController as ZfcUserController;
+use LmcUser\Controller\UserController as LmcUserController;
 use Laminas\View\Model\ViewModel;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\Session\Container;
 
-class UserController extends ZfcUserController
+class UserController extends LmcUserController
 {
-    const ROUTE_CHANGEPASSWD = 'frontend/zfcuser/changepassword';
+    const ROUTE_CHANGEPASSWD = 'frontend/lmcuser/changepassword';
     // No login page but register page !
-    const ROUTE_LOGIN        = 'frontend/zfcuser/register';
-    const ROUTE_REGISTER     = 'frontend/zfcuser/register';
-    const ROUTE_CHANGEEMAIL  = 'frontend/zfcuser/changeemail';
+    const ROUTE_LOGIN        = 'frontend/lmcuser/register';
+    const ROUTE_REGISTER     = 'frontend/lmcuser/register';
+    const ROUTE_CHANGEEMAIL  = 'frontend/lmcuser/changeemail';
 
     /**
      *
@@ -47,7 +47,7 @@ class UserController extends ZfcUserController
     public function __construct(ServiceLocatorInterface $locator)
     {
         $this->serviceLocator = $locator;
-        $redirectCallback = $locator->get('zfcuser_redirect_callback');
+        $redirectCallback = $locator->get('lmcuser_redirect_callback');
         parent::__construct($redirectCallback);
     }
 
@@ -78,14 +78,14 @@ class UserController extends ZfcUserController
         $form->setData($request->getPost());
 
         if (!$form->isValid()) {
-            $this->flashMessenger()->setNamespace('zfcuser-login-form')->addMessage($this->failedLoginMessage);
+            $this->flashMessenger()->setNamespace('lmcuser-login-form')->addMessage($this->failedLoginMessage);
 
             return $this->redirect()->toUrl($this->url()->fromRoute(static::ROUTE_REGISTER).($redirect ? '?redirect='.$redirect : ''));
         }
 
         // clear adapters
-        $this->zfcUserAuthentication()->getAuthAdapter()->resetAdapters();
-        $this->zfcUserAuthentication()->getAuthService()->clearIdentity();
+        $this->lmcuserAuthentication()->getAuthAdapter()->resetAdapters();
+        $this->lmcuserAuthentication()->getAuthService()->clearIdentity();
 
         return $this->forward()->dispatch('playgrounduser_user', array('action' => 'authenticate'));
     }
@@ -95,7 +95,7 @@ class UserController extends ZfcUserController
      */
     public function registerAction()
     {
-        if ($this->zfcUserAuthentication()->hasIdentity()) {
+        if ($this->lmcuserAuthentication()->hasIdentity()) {
 
             return $this->redirect()->toUrl($this->url()->fromRoute($this->getOptions()->getLoginRedirectRoute()));
         }
@@ -103,7 +103,7 @@ class UserController extends ZfcUserController
         $service = $this->getUserService();
         $form = $this->getRegisterForm();
         $socialnetwork = $this->params()->fromRoute('socialnetwork', false);
-        $form->setAttribute('action', $this->url()->fromRoute('frontend/zfcuser/register'));
+        $form->setAttribute('action', $this->url()->fromRoute('frontend/lmcuser/register'));
         $params = array();
         $socialCredentials = array();
 
@@ -130,13 +130,13 @@ class UserController extends ZfcUserController
                     if ($session->offsetGet('fb-redirect')) {
                         $redirect = $session->offsetGet('fb-redirect');
                     }
-                    //$redir = $this->url()->fromRoute('frontend/zfcuser/login') .'/' . $socialnetwork . ($redirect ? '?redirect=' . $redirect : '');
-                    $redir = $this->url()->fromRoute('frontend/zfcuser/authenticate') .'?provider=' . $socialnetwork . ($redirect ? '&redirect=' . $redirect : '');
+                    //$redir = $this->url()->fromRoute('frontend/lmcuser/login') .'/' . $socialnetwork . ($redirect ? '?redirect=' . $redirect : '');
+                    $redir = $this->url()->fromRoute('frontend/lmcuser/authenticate') .'?provider=' . $socialnetwork . ($redirect ? '&redirect=' . $redirect : '');
                     return $this->redirect()->toUrl($redir);
                 }
 
                 // Je retire la saisie du login/mdp
-                $form->setAttribute('action', $this->url()->fromRoute('frontend/zfcuser/register', array('socialnetwork' => $socialnetwork)));
+                $form->setAttribute('action', $this->url()->fromRoute('frontend/lmcuser/register', array('socialnetwork' => $socialnetwork)));
                 $form->remove('password');
                 $form->remove('passwordVerify');
 
@@ -172,7 +172,7 @@ class UserController extends ZfcUserController
             }
         }
 
-        $redirectUrl = $this->url()->fromRoute('frontend/zfcuser/register') .($socialnetwork ? '/' . $socialnetwork : ''). ($redirect ? '?redirect=' . $redirect : '');
+        $redirectUrl = $this->url()->fromRoute('frontend/lmcuser/register') .($socialnetwork ? '/' . $socialnetwork : ''). ($redirect ? '?redirect=' . $redirect : '');
         $prg = $this->fileprg($form, $redirectUrl, true);
 
         if ($prg instanceof Response) {
@@ -265,7 +265,7 @@ class UserController extends ZfcUserController
             );
         }
 
-        $redirect = $this->url()->fromRoute('frontend/zfcuser/login') . ($socialnetwork ? '/' . $socialnetwork : ''). ($redirect ? '?redirect=' . $redirect : '');
+        $redirect = $this->url()->fromRoute('frontend/lmcuser/login') . ($socialnetwork ? '/' . $socialnetwork : ''). ($redirect ? '?redirect=' . $redirect : '');
 
         return $this->redirect()->toUrl($redirect);
     }
@@ -309,8 +309,8 @@ class UserController extends ZfcUserController
                     'success' => 0
                 )));
             } else {
-                $this->zfcUserAuthentication()->getAuthAdapter()->resetAdapters();
-                $this->zfcUserAuthentication()->getAuthService()->clearIdentity();
+                $this->lmcuserAuthentication()->getAuthAdapter()->resetAdapters();
+                $this->lmcuserAuthentication()->getAuthService()->clearIdentity();
                 $result = $this->forward()->dispatch('playgrounduser_user', array(
                     'action' => 'ajaxauthenticate'
                 ));
@@ -336,14 +336,14 @@ class UserController extends ZfcUserController
     {
         // $this->getServiceLocator()->get('Laminas\Log')->info('ajaxloginAction -
         // AUTHENT : ');
-        if ($this->zfcUserAuthentication()
+        if ($this->lmcuserAuthentication()
             ->getAuthService()
             ->hasIdentity()) {
             return true;
         }
-        $adapter = $this->zfcUserAuthentication()->getAuthAdapter();
+        $adapter = $this->lmcuserAuthentication()->getAuthAdapter();
         $adapter->prepareForAuthentication($this->getRequest());
-        $auth = $this->zfcUserAuthentication()->getAuthService()->authenticate($adapter);
+        $auth = $this->lmcuserAuthentication()->getAuthService()->authenticate($adapter);
 
         if (! $auth->isValid()) {
             $adapter->resetAdapters();
@@ -351,7 +351,7 @@ class UserController extends ZfcUserController
             return false;
         }
 
-        $user = $this->zfcUserAuthentication()->getIdentity();
+        $user = $this->lmcuserAuthentication()->getIdentity();
 
         if ($user->getState() && $user->getState() === 2) {
             $this->getUserService()->getUserMapper()->activate($user);
@@ -370,13 +370,13 @@ class UserController extends ZfcUserController
         $hybridAuth = $this->getHybridAuth();
 
         $query = 'provider=' . $provider;
-        if ($this->getServiceLocator()->get('zfcuser_module_options')->getUseRedirectParameterIfPresent() &&
+        if ($this->getServiceLocator()->get('lmcuser_module_options')->getUseRedirectParameterIfPresent() &&
             $this->getRequest()->getQuery()->get('redirect')
         ) {
             $query .= '&redirect=' . $this->getRequest()->getQuery()->get('redirect');
         }
 
-        $redirectUrl = $this->url()->fromRoute('frontend/zfcuser/authenticate') . '?' . $query;
+        $redirectUrl = $this->url()->fromRoute('frontend/lmcuser/authenticate') . '?' . $query;
 
         $hybridAuth->authenticate(
             $provider,
@@ -389,12 +389,12 @@ class UserController extends ZfcUserController
 
     public function logoutAction()
     {
-        $user = $this->zfcUserAuthentication()->getIdentity();
+        $user = $this->lmcuserAuthentication()->getIdentity();
         //Hybrid_Auth::logoutAllProviders();
 
-        $this->zfcUserAuthentication()->getAuthAdapter()->resetAdapters();
-        $this->zfcUserAuthentication()->getAuthAdapter()->logoutAdapters();
-        $this->zfcUserAuthentication()->getAuthService()->clearIdentity();
+        $this->lmcuserAuthentication()->getAuthAdapter()->resetAdapters();
+        $this->lmcuserAuthentication()->getAuthAdapter()->logoutAdapters();
+        $this->lmcuserAuthentication()->getAuthService()->clearIdentity();
 
         $redirect = $this->params()->fromPost('redirect', $this->params()->fromQuery('redirect', false));
 
@@ -415,10 +415,10 @@ class UserController extends ZfcUserController
      */
     public function authenticateAction()
     {
-        if ($this->zfcUserAuthentication()->getAuthService()->hasIdentity()) {
+        if ($this->lmcuserAuthentication()->getAuthService()->hasIdentity()) {
             return $this->redirect()->toRoute($this->getOptions()->getLoginRedirectRoute());
         }
-        $adapter = $this->zfcUserAuthentication()->getAuthAdapter();
+        $adapter = $this->lmcuserAuthentication()->getAuthAdapter();
         $redirect = $this->params()->fromPost('redirect', $this->params()->fromQuery('redirect', false));
         
         $routeLoginAdmin = $this->params()->fromPost('routeLoginAdmin', $this->params()->fromQuery('routeLoginAdmin', false));
@@ -430,10 +430,10 @@ class UserController extends ZfcUserController
             return $result;
         }
 
-        $auth = $this->zfcUserAuthentication()->getAuthService()->authenticate($adapter);
+        $auth = $this->lmcuserAuthentication()->getAuthService()->authenticate($adapter);
 
         if (!$auth->isValid()) {
-            $this->flashMessenger()->setNamespace('zfcuser-login-form')->addMessage($this->failedLoginMessage);
+            $this->flashMessenger()->setNamespace('lmcuser-login-form')->addMessage($this->failedLoginMessage);
             $adapter->resetAdapters();
 
             if (!empty($routeLoginAdmin)) {
@@ -441,12 +441,12 @@ class UserController extends ZfcUserController
             }
 
             return $this->redirect()->toUrl(
-                $this->url()->fromRoute('frontend/zfcuser/login')
+                $this->url()->fromRoute('frontend/lmcuser/login')
                 . ($redirect ? '?redirect='.$redirect : '')
             );
         }
 
-        $user = $this->zfcUserAuthentication()->getIdentity();
+        $user = $this->lmcuserAuthentication()->getIdentity();
         $this->getEventManager()->trigger('authenticate.post', $this, array('user' => $user));
 
         if ($this->getOptions()->getUseRedirectParameterIfPresent() && $redirect) {
@@ -472,7 +472,7 @@ class UserController extends ZfcUserController
         } catch (\Exception $e) {
           //echo ($e->getMessage());
         }
-        if (! $this->zfcUserAuthentication()->hasIdentity()) {
+        if (! $this->lmcuserAuthentication()->hasIdentity()) {
             return $this->redirect()->toUrl(
                 $this->url()->fromRoute(
                     $this->getOptions()->getLoginRedirectRoute(),
@@ -529,14 +529,14 @@ class UserController extends ZfcUserController
         $formInfo      = $this->getChangeInfoForm();
         $formPrize     = $this->getPrizeCategoryForm();
         $formBlock     = $this->getBlockAccountForm();
-        if ($this->zfcUserAuthentication()->getIdentity()->getState() == 2) {
+        if ($this->lmcuserAuthentication()->getIdentity()->getState() == 2) {
             $formBlock->get('activate')->setAttribute('value', 1);
             $formBlock->get('submit')->setAttribute('value', $translator->translate('Reactivate my account', 'playgrounduser'));
             $formBlock->get('confirm_submit')->setAttribute('value', $translator->translate('Confirm account reactivation', 'playgrounduser'));
         }
 
         $categoryService = $this->getServiceLocator()->get('playgroundgame_prizecategoryuser_service');
-        $categoriesUser = $categoryService->getPrizeCategoryUserMapper()->findBy(array('user' => $this->zfcUserAuthentication()->getIdentity()));
+        $categoriesUser = $categoryService->getPrizeCategoryUserMapper()->findBy(array('user' => $this->lmcuserAuthentication()->getIdentity()));
         $existingCategories = array();
 
         foreach ($categoriesUser as $categoryUser) {
@@ -771,7 +771,7 @@ class UserController extends ZfcUserController
      */
     public function addressAction()
     {
-        if (! $this->zfcUserAuthentication()->hasIdentity()) {
+        if (! $this->lmcuserAuthentication()->hasIdentity()) {
             return null;
         }
         $form = $this->getAddressForm();
@@ -824,15 +824,15 @@ class UserController extends ZfcUserController
         $provider = $this->params()->fromRoute('provider');
         $this->getRequest()->getQuery()->provider = $provider;
 
-        $this->zfcUserAuthentication()->getAuthAdapter()->resetAdapters();
-        $this->zfcUserAuthentication()->getAuthService()->clearIdentity();
+        $this->lmcuserAuthentication()->getAuthAdapter()->resetAdapters();
+        $this->lmcuserAuthentication()->getAuthService()->clearIdentity();
 
-        $adapter = $this->zfcUserAuthentication()->getAuthAdapter();
+        $adapter = $this->lmcuserAuthentication()->getAuthAdapter();
         $adapter->prepareForAuthentication($this->getRequest());
 
-        $this->zfcUserAuthentication()->getAuthService()->authenticate($adapter);
+        $this->lmcuserAuthentication()->getAuthService()->authenticate($adapter);
 
-        $user = $this->zfcUserAuthentication()->getIdentity();
+        $user = $this->lmcuserAuthentication()->getIdentity();
 
         $viewModel = new ViewModel();
         $viewModel->setVariables(array('user' => $user));
@@ -843,9 +843,9 @@ class UserController extends ZfcUserController
     public function blockAccountAction()
     {
         // if the user isn't logged in, we can't change password
-        if (!$this->zfcUserAuthentication()->hasIdentity()) {
+        if (!$this->lmcuserAuthentication()->hasIdentity()) {
             return $this->redirect()->toUrl(
-                $this->url()->fromRoute('frontend/zfcuser/profile')
+                $this->url()->fromRoute('frontend/lmcuser/profile')
             );
         }
 
@@ -854,13 +854,13 @@ class UserController extends ZfcUserController
             if ($this->getUserService()->blockAccount($data)) {
                 $this->flashMessenger()->setNamespace('block-account')->addMessage(true);
                 return $this->redirect()->toUrl(
-                    $this->url()->fromRoute('frontend/zfcuser/logout')
+                    $this->url()->fromRoute('frontend/lmcuser/logout')
                 );
             }
         }
 
         return $this->redirect()->toUrl(
-            $this->url()->fromRoute('frontend/zfcuser/profile')
+            $this->url()->fromRoute('frontend/lmcuser/profile')
         );
     }
 
@@ -869,7 +869,7 @@ class UserController extends ZfcUserController
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost()->toArray();
             $service = $this->getServiceLocator()->get('playgroundgame_prizecategoryuser_service');
-            $result = $service->edit($data, $this->zfcUserAuthentication()->getIdentity(), 'playgroundgame_prizecategoryuser_form');
+            $result = $service->edit($data, $this->lmcuserAuthentication()->getIdentity(), 'playgroundgame_prizecategoryuser_form');
             if ($result) {
                 $this->flashMessenger()
                     ->setNamespace('playgroundgame')
@@ -878,7 +878,7 @@ class UserController extends ZfcUserController
         }
 
         return $this->redirect()->toUrl(
-            $this->url()->fromRoute('frontend/zfcuser/profile')
+            $this->url()->fromRoute('frontend/lmcuser/profile')
         );
     }
 
@@ -888,9 +888,9 @@ class UserController extends ZfcUserController
     public function newsletterAction()
     {
         // if the user isn't logged in, we can't change password
-        if (!$this->zfcUserAuthentication()->hasIdentity()) {
+        if (!$this->lmcuserAuthentication()->hasIdentity()) {
             return $this->redirect()->toUrl(
-                $this->url()->fromRoute('frontend/zfcuser/profile')
+                $this->url()->fromRoute('frontend/lmcuser/profile')
             );
         }
         $userId = $this->getUserService()
@@ -925,14 +925,14 @@ class UserController extends ZfcUserController
         $request = $this->getRequest();
         $response = $this->getResponse();
 
-        if (!$this->zfcUserAuthentication()->hasIdentity()) {
+        if (!$this->lmcuserAuthentication()->hasIdentity()) {
             $response->setContent(\Laminas\Json\Json::encode(array(
                 'success' => 0
             )));
         } else {
             if ($request->isPost()) {
                 $data = $this->getRequest()->getPost()->toArray();
-                $data['optinPartner'] = $this->zfcUserAuthentication()->getIdentity()->getOptinPartner();
+                $data['optinPartner'] = $this->lmcuserAuthentication()->getIdentity()->getOptinPartner();
 
                 if ($this->getUserService()->updateNewsletter($data)) {
                     $response->setContent(\Laminas\Json\Json::encode(array(

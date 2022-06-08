@@ -4,9 +4,9 @@ namespace PlaygroundUser\Form;
 
 use Laminas\Form\Form;
 use Laminas\Form\Element;
-use ZfcUser\Form\ProvidesEventsForm;
-use ZfcUser\Options\AuthenticationOptionsInterface;
-use ZfcUser\Module as ZfcUser;
+use LmcUser\Form\ProvidesEventsForm;
+use LmcUser\Options\AuthenticationOptionsInterface;
+use LmcUser\Module as LmcUser;
 use Laminas\Mvc\I18n\Translator;
 
 class Login extends ProvidesEventsForm
