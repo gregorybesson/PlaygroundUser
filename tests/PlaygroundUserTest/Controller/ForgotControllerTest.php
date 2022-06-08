@@ -42,7 +42,7 @@ class ForgotControllerTest extends AbstractHttpControllerTestCase
         $this->assertControllerName(\PlaygroundUser\Controller\Frontend\ForgotController::class);
         $this->assertControllerClass('ForgotController');
         $this->assertActionName('forgot');
-        $this->assertMatchedRouteName('frontend/zfcuser/forgotpassword');
+        $this->assertMatchedRouteName('frontend/lmcuser/forgotpassword');
     }
 
     public function testSentPasswordWrongMail()
@@ -78,6 +78,6 @@ class ForgotControllerTest extends AbstractHttpControllerTestCase
         $this->assertControllerName(\PlaygroundUser\Controller\Frontend\ForgotController::class);
         $this->assertControllerClass('ForgotController');
         $this->assertActionName('sent');
-        $this->assertMatchedRouteName('frontend/zfcuser/sentpassword');
+        $this->assertMatchedRouteName('frontend/lmcuser/sentpassword');
     }
 }

@@ -5,11 +5,11 @@ use Hybrid_Auth;
 use Laminas\Form\Form;
 use Laminas\Stdlib\ResponseInterface as Response;
 use Laminas\Stdlib\Parameters;
-use ZfcUser\Controller\UserController as ZfcUserController;
+use LmcUser\Controller\UserController as LmcUserController;
 use Laminas\View\Model\ViewModel;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
-class LoginController extends ZfcUserController
+class LoginController extends LmcUserController
 {
     protected $options = null;
 
@@ -22,7 +22,7 @@ class LoginController extends ZfcUserController
     public function __construct(ServiceLocatorInterface $locator)
     {
         $this->serviceLocator = $locator;
-        $redirectCallback = $locator->get('zfcuser_redirect_callback');
+        $redirectCallback = $locator->get('lmcuser_redirect_callback');
         parent::__construct($redirectCallback);
     }
 
@@ -39,7 +39,7 @@ class LoginController extends ZfcUserController
         $request = $this->getRequest();
         $form    = $this->getLoginForm();
 
-        $user = $this->zfcUserAuthentication()->getIdentity();
+        $user = $this->lmcuserAuthentication()->getIdentity();
         $authAdminConfig = $this->getOptions()->getAdmin();
 
         if ($user && $this->isAllowed($authAdminConfig['resource'], $authAdminConfig['privilege'])) {
@@ -50,15 +50,15 @@ class LoginController extends ZfcUserController
             $form->setData($request->getPost());
 
             if (!$form->isValid()) {
-                $this->flashMessenger()->setNamespace('zfcuser-login-form')->addMessage($this->failedLoginMessage);
+                $this->flashMessenger()->setNamespace('lmcuser-login-form')->addMessage($this->failedLoginMessage);
 
                 return $this->redirect()->toUrl($this->url()->fromRoute($authAdminConfig['route_login']));
             }
 
             // clear adapters
-            $this->zfcUserAuthentication()->getAuthAdapter()->resetAdapters();
-            $this->zfcUserAuthentication()->getAuthAdapter()->logoutAdapters();
-            $this->zfcUserAuthentication()->getAuthService()->clearIdentity();
+            $this->lmcuserAuthentication()->getAuthAdapter()->resetAdapters();
+            $this->lmcuserAuthentication()->getAuthAdapter()->logoutAdapters();
+            $this->lmcuserAuthentication()->getAuthService()->clearIdentity();
 
             $request->getQuery()->redirect = $this->url()->fromRoute($authAdminConfig['route_login']);
             $request->getQuery()->routeLoginAdmin = $authAdminConfig['route_login'];
@@ -73,11 +73,11 @@ class LoginController extends ZfcUserController
 
     public function logoutAction()
     {
-        $user = $this->zfcUserAuthentication()->getIdentity();
+        $user = $this->lmcuserAuthentication()->getIdentity();
 
-        $this->zfcUserAuthentication()->getAuthAdapter()->resetAdapters();
-        $this->zfcUserAuthentication()->getAuthAdapter()->logoutAdapters();
-        $this->zfcUserAuthentication()->getAuthService()->clearIdentity();
+        $this->lmcuserAuthentication()->getAuthAdapter()->resetAdapters();
+        $this->lmcuserAuthentication()->getAuthAdapter()->logoutAdapters();
+        $this->lmcuserAuthentication()->getAuthService()->clearIdentity();
 
         if ($user) {
             $this->getEventManager()->trigger('logout.post', $this, array('user' => $user));

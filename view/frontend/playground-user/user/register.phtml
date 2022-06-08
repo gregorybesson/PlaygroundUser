@@ -12,7 +12,7 @@
 						<p class="green"><?php echo $this->translate('Already an account ?')?></p>
 					</div>
 					<div class="block-right span5">
-					<?php if(!$this->zfcUserIdentity()): ?>
+					<?php if(!$this->lmcuserIdentity()): ?>
 					    <?php echo $this->userLoginWidget(array(
 			    		        'redirect' => ($this->redirect) ? $this->redirect : $this->url('frontend'),
 			    		        'enableRegistration' => false,
@@ -43,7 +43,7 @@
 					</div>
 					<div id="fb-connect" class="span7">
 						<p class="fb-connect-label"><?php echo $this->translate('Use Facebook connect')?></p>
-						<p><a href="<?php echo $this->url('frontend/zfcuser/register',array('socialnetwork' => 'facebook')) . ($this->redirect ? '?redirect='.$this->redirect : '');?>"><img src="<?php echo $this->frontendAssetPath('images/common/fb-connect.png') ?>" alt="Facebook Connect" /></a></p>
+						<p><a href="<?php echo $this->url('frontend/lmcuser/register',array('socialnetwork' => 'facebook')) . ($this->redirect ? '?redirect='.$this->redirect : '');?>"><img src="<?php echo $this->frontendAssetPath('images/common/fb-connect.png') ?>" alt="Facebook Connect" /></a></p>
 					</div>
 				</div>
 

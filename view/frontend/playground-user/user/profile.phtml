@@ -29,7 +29,7 @@
             $formEmail = $this->changeEmailForm;
 
             $formEmail->prepare();
-            $formEmail->setAttribute('action', $this->url('frontend/zfcuser/profile'));
+            $formEmail->setAttribute('action', $this->url('frontend/lmcuser/profile'));
             $formEmail->setAttribute('method', 'post');
 
             ?>
@@ -75,12 +75,12 @@
             $form = $this->changePasswordForm;
 
             $form->prepare();
-            $form->setAttribute('action', $this->url('frontend/zfcuser/profile'));
+            $form->setAttribute('action', $this->url('frontend/lmcuser/profile'));
             $form->setAttribute('method', 'post');
 			$form->setAttribute('class', 'validate');
 
             $emailElement = $form->get('identity');
-            $emailElement->setValue($this->zfcUserIdentity()->getEmail());
+            $emailElement->setValue($this->lmcuserIdentity()->getEmail());
 
             echo $this->form()->openTag($form);
 
@@ -135,7 +135,7 @@
     $formInfo = $this->changeInfoForm;
 
     $formInfo->prepare();
-    $formInfo->setAttribute('action', $this->url('frontend/zfcuser/profile'));
+    $formInfo->setAttribute('action', $this->url('frontend/lmcuser/profile'));
     $formInfo->setAttribute('method', 'post');
 	$formInfo->setAttribute('class', 'validate');
 
@@ -288,7 +288,7 @@
 
 	<?php
     $formPrize = $this->prizeCategoryForm;
-    $formPrize->setAttribute('action', $this->url('frontend/zfcuser/profile_prizes'));
+    $formPrize->setAttribute('action', $this->url('frontend/lmcuser/profile_prizes'));
     $formPrize->setAttribute('method', 'post');
     //$formInfo->prepare();
     ?>
@@ -310,15 +310,15 @@
 
     <?php
         $formBlockAccount = $this->blockAccountForm;
-        $formBlockAccount->setAttribute('action', $this->url('frontend/zfcuser/blockaccount'));
+        $formBlockAccount->setAttribute('action', $this->url('frontend/lmcuser/blockaccount'));
         $formBlockAccount->setAttribute('method', 'post');
         $emailElement = $formBlockAccount->get('identity');
-        $emailElement->setValue($this->zfcUserIdentity()->getEmail());
+        $emailElement->setValue($this->lmcuserIdentity()->getEmail());
         //$formInfo->prepare();
     ?>
     <!-- delete account-->
 	<div id="delete-account" class="row-fluid backgrey">
-	    <?php if($this->zfcUserIdentity()->getState() == 2):?>
+	    <?php if($this->lmcuserIdentity()->getState() == 2):?>
 
     		<p class="green-hand-star">Réactiver mon compte</p>
     		<p>Pour réactiver votre compte : </p>

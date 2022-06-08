@@ -38,7 +38,7 @@ class LoginTest extends \PHPUnit\Framework\TestCase
         $this->em = $this->sm->get('doctrine.entitymanager.orm_default');
         $this->entity = new User();
         $translator = $this->sm->get('MvcTranslator');
-        $options = $this->sm->get('zfcuser_module_options');
+        $options = $this->sm->get('lmcuser_module_options');
         $form = new \PlaygroundUser\Form\Login(null, $options, $translator);
         $form->setInputFilter(new \PlaygroundUser\Form\LoginFilter($options));
 

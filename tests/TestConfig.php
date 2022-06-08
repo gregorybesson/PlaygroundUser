@@ -3,7 +3,7 @@ return array(
     'modules' => array(
         'DoctrineModule',
         'DoctrineORMModule',
-        'ZfcUser',
+        'LmcUser',
         'PlaygroundCore',
         'PlaygroundDesign',
         'PlaygroundUser',

@@ -2,9 +2,9 @@
 
 namespace PlaygroundUser\Mapper;
 
-use ZfcUser\Mapper\UserInterface as ZfcUserMapperInterface;
+use LmcUser\Mapper\UserInterface as LmcUserMapperInterface;
 
-interface UserInterface extends ZfcUserMapperInterface
+interface UserInterface extends LmcUserMapperInterface
 {
     public function findByEmail($email);
 

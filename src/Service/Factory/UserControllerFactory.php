@@ -5,7 +5,7 @@ namespace PlaygroundUser\Service\Factory;
 use Laminas\Mvc\Controller\ControllerManager;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Interop\Container\ContainerInterface;
-use ZfcUser\Controller\RedirectCallback;
+use LmcUser\Controller\RedirectCallback;
 use PlaygroundUser\Controller\Frontend\UserController;
 
 class UserControllerFactory implements FactoryInterface

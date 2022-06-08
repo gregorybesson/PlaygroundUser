@@ -3,8 +3,8 @@
 namespace PlaygroundUser\Form\Admin;
 
 use PlaygroundUser\Options\UserCreateOptionsInterface;
-use ZfcUser\Options\RegistrationOptionsInterface;
-use ZfcUser\Form\Register as Register;
+use LmcUser\Options\RegistrationOptionsInterface;
+use LmcUser\Form\Register as Register;
 use Laminas\Mvc\I18n\Translator;
 
 class User extends Register

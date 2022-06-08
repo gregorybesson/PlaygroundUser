@@ -17,7 +17,7 @@ class UserTest extends \PHPUnit\Framework\TestCase
     {
         $this->sm = Bootstrap::getServiceManager();
         $this->em = $this->sm->get('doctrine.entitymanager.orm_default');
-        $this->tm = $this->sm->get('zfcuser_user_mapper');
+        $this->tm = $this->sm->get('lmcuser_user_mapper');
         $this->rm = $this->sm->get('playgrounduser_role_mapper');
         $tool = new \Doctrine\ORM\Tools\SchemaTool($this->em);
         $classes = $this->em->getMetadataFactory()->getAllMetadata();

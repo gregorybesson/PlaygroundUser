@@ -3,10 +3,10 @@ namespace PlaygroundUser\Form;
 
 use Laminas\Form\Form;
 use PlaygroundUser\Options\UserCreateOptionsInterface;
-use ZfcUser\Options\RegistrationOptionsInterface;
+use LmcUser\Options\RegistrationOptionsInterface;
 use Laminas\Mvc\I18n\Translator;
 
-class Register extends \ZfcUser\Form\Register
+class Register extends \LmcUser\Form\Register
 {
 
     /**

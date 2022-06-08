@@ -3,7 +3,7 @@
 namespace PlaygroundUser\Form;
 
 use Laminas\InputFilter\InputFilter;
-use ZfcUser\Options\AuthenticationOptionsInterface;
+use LmcUser\Options\AuthenticationOptionsInterface;
 
 class BlockAccountFilter extends InputFilter
 {

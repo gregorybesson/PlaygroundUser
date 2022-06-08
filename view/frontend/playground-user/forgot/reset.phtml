@@ -11,7 +11,7 @@
 				$form = $this->resetForm;
 			
 				$form->prepare();
-				$form->setAttribute('action', $this->url('frontend/zfcuser/resetpassword', array('userId' => $this->userId, 'token' => $this->token)));
+				$form->setAttribute('action', $this->url('frontend/lmcuser/resetpassword', array('userId' => $this->userId, 'token' => $this->token)));
 				$form->setAttribute('method', 'post');
 				
 				echo $this->form()->openTag($form);

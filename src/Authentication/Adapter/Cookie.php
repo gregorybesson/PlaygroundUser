@@ -2,7 +2,7 @@
 
 namespace PlaygroundUser\Authentication\Adapter;
 
-use ZfcUser\Authentication\Adapter\AbstractAdapter;
+use LmcUser\Authentication\Adapter\AbstractAdapter;
 use Laminas\Authentication\Result as AuthenticationResult;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Stdlib\ResponseInterface as Response;
@@ -37,7 +37,7 @@ class Cookie extends AbstractAdapter
              *  but afterwords login with identity/credential
              *  we remove the "cookieLogin" session.
              */
-            $session = new \Laminas\Session\Container('zfcuser');
+            $session = new \Laminas\Session\Container('lmcuser');
             $session->offsetSet("cookieLogin", false);
 
             return;
@@ -96,7 +96,7 @@ class Cookie extends AbstractAdapter
           ->setMessages(array('Authentication successful.'));
 
         // Reference for weak login. Should not be allowed to change PW etc.
-        $session = new \Laminas\Session\Container('zfcuser');
+        $session = new \Laminas\Session\Container('lmcuser');
         $session->offsetSet("cookieLogin", true);
     }
 
@@ -143,7 +143,7 @@ class Cookie extends AbstractAdapter
     public function getUserMapper()
     {
         if (null === $this->userMapper) {
-            $this->userMapper = $this->getServiceManager()->get('zfcuser_user_mapper');
+            $this->userMapper = $this->getServiceManager()->get('lmcuser_user_mapper');
         }
 
         return $this->userMapper;
@@ -170,7 +170,7 @@ class Cookie extends AbstractAdapter
      */
     public function logout()
     {
-        $authService = $this->getServiceManager()->get('zfcuser_auth_service');
+        $authService = $this->getServiceManager()->get('lmcuser_auth_service');
         $user = $authService->getIdentity();
 
         $cookie = explode("\n", $this->getRememberMeService()->getCookie());

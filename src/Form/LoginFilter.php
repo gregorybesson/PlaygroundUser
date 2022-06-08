@@ -3,9 +3,9 @@
 namespace PlaygroundUser\Form;
 
 use Laminas\InputFilter\InputFilter;
-use ZfcUser\Options\AuthenticationOptionsInterface;
+use LmcUser\Options\AuthenticationOptionsInterface;
 
-class LoginFilter extends \ZfcUser\Form\LoginFilter
+class LoginFilter extends \LmcUser\Form\LoginFilter
 {
     public function __construct(AuthenticationOptionsInterface $options)
     {

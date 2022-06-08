@@ -10,7 +10,7 @@ use PlaygroundUser\View\Strategy\RedirectionStrategy;
 
 use Laminas\Session\Container;
 use Laminas\Validator\AbstractValidator;
-use ZfcUser\Module as ZfcUser;
+use LmcUser\Module as LmcUser;
 use Laminas\Mvc\MvcEvent;
 
 class Module
@@ -40,16 +40,16 @@ class Module
             }
 
             // Remember me feature
-            $session     = new \Laminas\Session\Container('zfcuser');
+            $session     = new \Laminas\Session\Container('lmcuser');
             $cookieLogin = $session->offsetGet("cookieLogin");
 
             $cookie = $e->getRequest()->getCookie();
             // do autologin only if not done before and cookie is present
 
             if (isset($cookie['remember_me']) && $cookieLogin == false) {
-                $adapter = $e->getApplication()->getServiceManager()->get('ZfcUser\Authentication\Adapter\AdapterChain');
+                $adapter = $e->getApplication()->getServiceManager()->get('LmcUser\Authentication\Adapter\AdapterChain');
                 $adapter->prepareForAuthentication($e->getRequest());
-                $authService = $e->getApplication()->getServiceManager()->get('zfcuser_auth_service');
+                $authService = $e->getApplication()->getServiceManager()->get('lmcuser_auth_service');
 
                 $authService->authenticate($adapter);
             }
@@ -105,7 +105,7 @@ class Module
                     $areaName        = ($areaName == 'frontend' || $areaName == 'admin')? $areaName : 'frontend';
                     $actionName      = $match->getParam('action', 'not-found');
 
-                    $user = $controller->zfcUserAuthentication()->getIdentity();
+                    $user = $controller->lmcuserAuthentication()->getIdentity();
                     $logFrontendUser = (isset($config['playgrounduser']['log_frontend_user'])) ? $config['playgrounduser']['log_frontend_user'] : false;
                     $logAdminUser = (isset($config['playgrounduser']['log_admin_user'])) ? $config['playgrounduser']['log_admin_user'] : false;
 
@@ -181,7 +181,7 @@ class Module
         $user = $e->getParam('user');
         $user->setLastLogin(new \DateTime());
 
-        $userMapper = $e->getTarget()->getServiceManager()->get('zfcuser_user_mapper');
+        $userMapper = $e->getTarget()->getServiceManager()->get('lmcuser_user_mapper');
 
         $user = $userMapper->update($user);
 
@@ -215,8 +215,8 @@ class Module
             'factories' => [
                 'userLoginWidget' => function ($sm) {
                     $viewHelper = new View\Helper\UserLoginWidget;
-                    $viewHelper->setViewTemplate($sm->get('zfcuser_module_options')->getUserLoginWidgetViewTemplate());
-                    $viewHelper->setLoginForm($sm->get('zfcuser_login_form'));
+                    $viewHelper->setViewTemplate($sm->get('lmcuser_module_options')->getUserLoginWidgetViewTemplate());
+                    $viewHelper->setLoginForm($sm->get('lmcuser_login_form'));
 
                     return $viewHelper;
                 },
@@ -243,7 +243,7 @@ class Module
             'aliases' => array(
                 'translator' => 'MvcTranslator',
                 'playgrounduser_message' => 'playgroundcore_message',
-                'zfcuser_user_service'   => 'playgrounduser_user_service',
+                'lmcuser_user_service'   => 'playgrounduser_user_service',
                 'playgrounduser_user_service' => \PlaygroundUser\Service\User::class,
                 'playgrounduser_rememberme_service'             => \PlaygroundUser\Service\RememberMe::class,
                 'playgrounduser_team_service'                   => \PlaygroundUser\Service\Team::class,
@@ -268,47 +268,47 @@ class Module
                 \PlaygroundUser\Authentication\Adapter\Cookie::class  => \PlaygroundUser\Service\Factory\CookieAdapterFactory::class,
                 \PlaygroundUser\Authentication\Adapter\EmailValidation::class => \PlaygroundUser\Service\Factory\EmailValidationAdapterFactory::class,
                 \PlaygroundUser\Authentication\Adapter\HybridAuth::class => \PlaygroundUser\Service\Factory\HybridAuthAdapterFactory::class,
-                //'ZfcUser\Authentication\Adapter\AdapterChain'   => \PlaygroundUser\Service\Factory\AuthenticationAdapterChainFactory::class,
-                'zfcuser_module_options'                        => function ($sm) {
+                //'LmcUser\Authentication\Adapter\AdapterChain'   => \PlaygroundUser\Service\Factory\AuthenticationAdapterChainFactory::class,
+                'lmcuser_module_options'                        => function ($sm) {
                     $config = $sm->get('Configuration');
 
-                    return new Options\ModuleOptions(isset($config['zfcuser'])?$config['zfcuser']:array());
+                    return new Options\ModuleOptions(isset($config['lmcuser'])?$config['lmcuser']:array());
                 },
-                'zfcuser_user_mapper' => function ($sm) {
+                'lmcuser_user_mapper' => function ($sm) {
                     return new \PlaygroundUser\Mapper\User(
                         $sm->get('doctrine.entitymanager.orm_default'),
-                        $sm->get('zfcuser_module_options')
+                        $sm->get('lmcuser_module_options')
                     );
                 },
-                'zfcuser_login_form' => function ($sm) {
+                'lmcuser_login_form' => function ($sm) {
                     $translator = $sm->get('MvcTranslator');
-                    $options = $sm->get('zfcuser_module_options');
+                    $options = $sm->get('lmcuser_module_options');
                     $form = new Form\Login(null, $options, $translator);
                     $form->setInputFilter(new \PlaygroundUser\Form\LoginFilter($options));
 
                     return $form;
                 },
 
-                'zfcuser_register_form' => function ($sm) {
+                'lmcuser_register_form' => function ($sm) {
                     $translator = $sm->get('MvcTranslator');
-                    $zfcUserOptions = $sm->get('zfcuser_module_options');
-                    $form = new Form\Register(null, $zfcUserOptions, $translator, $sm);
-                    //$form->setCaptchaElement($sm->get('zfcuser_captcha_element'));
+                    $lmcuserOptions = $sm->get('lmcuser_module_options');
+                    $form = new Form\Register(null, $lmcuserOptions, $translator, $sm);
+                    //$form->setCaptchaElement($sm->get('lmcuser_captcha_element'));
                     $form->setInputFilter(
                         new Form\RegisterFilter(
-                            new \ZfcUser\Validator\NoRecordExists(
+                            new \LmcUser\Validator\NoRecordExists(
                                 array(
-                                    'mapper' => $sm->get('zfcuser_user_mapper'),
+                                    'mapper' => $sm->get('lmcuser_user_mapper'),
                                     'key'    => 'email',
                                 )
                             ),
-                            new \ZfcUser\Validator\NoRecordExists(
+                            new \LmcUser\Validator\NoRecordExists(
                                 array(
-                                    'mapper' => $sm->get('zfcuser_user_mapper'),
+                                    'mapper' => $sm->get('lmcuser_user_mapper'),
                                     'key'    => 'username',
                                 )
                             ),
-                            $zfcUserOptions
+                            $lmcuserOptions
                         )
                     );
 
@@ -336,7 +336,7 @@ class Module
                         $config['base_url'] = $router->assemble(
                             array(),
                             array(
-                                'name'            => 'frontend/zfcuser/backend',
+                                'name'            => 'frontend/lmcuser/backend',
                                 'force_canonical' => true,
                             )
                         );
@@ -351,7 +351,7 @@ class Module
                     // this following config doesn't work with bjyprofiler
                     //https://github.com/SocalNick/ScnSocialAuth/issues/57
                     //$urlHelper = $sm->get('ViewHelperManager')->get('url');
-                    //$config['base_url'] = $urlHelper('frontend/zfcuser/backend',array(), array('force_canonical' => true));
+                    //$config['base_url'] = $urlHelper('frontend/lmcuser/backend',array(), array('force_canonical' => true));
                     return $config;
                 },
 
@@ -382,31 +382,31 @@ class Module
 
                 'playgrounduser_user_form' => function ($sm) {
                     $translator = $sm->get('MvcTranslator');
-                    $zfcUserOptions = $sm->get('zfcuser_module_options');
-                    $form = new Form\Register(null, $zfcUserOptions, $translator, $sm);
+                    $lmcuserOptions = $sm->get('lmcuser_module_options');
+                    $form = new Form\Register(null, $lmcuserOptions, $translator, $sm);
 
                     return $form;
                 },
 
                 'playgrounduseradmin_register_form' => function ($sm) {
                     $translator = $sm->get('MvcTranslator');
-                    $zfcUserOptions = $sm->get('zfcuser_module_options');
+                    $lmcuserOptions = $sm->get('lmcuser_module_options');
                     $playgroundUserOptions = $sm->get('playgrounduser_module_options');
-                    $form = new Form\Admin\User(null, $playgroundUserOptions, $zfcUserOptions, $translator, $sm);
+                    $form = new Form\Admin\User(null, $playgroundUserOptions, $lmcuserOptions, $translator, $sm);
                     $filter = new Form\RegisterFilter(
-                        new \ZfcUser\Validator\NoRecordExists(
+                        new \LmcUser\Validator\NoRecordExists(
                             array(
-                                'mapper' => $sm->get('zfcuser_user_mapper'),
+                                'mapper' => $sm->get('lmcuser_user_mapper'),
                                 'key'    => 'email',
                             )
                         ),
-                        new \ZfcUser\Validator\NoRecordExists(
+                        new \LmcUser\Validator\NoRecordExists(
                             array(
-                                'mapper' => $sm->get('zfcuser_user_mapper'),
+                                'mapper' => $sm->get('lmcuser_user_mapper'),
                                 'key'    => 'username',
                             )
                         ),
-                        $zfcUserOptions
+                        $lmcuserOptions
                     );
                     if ($playgroundUserOptions->getCreateUserAutoPassword()) {
                         $filter->remove('password')->remove('passwordVerify');
@@ -443,7 +443,7 @@ class Module
                 'playgrounduser_emailverification_mapper' => function ($sm) {
                     $mapper = new \PlaygroundUser\Mapper\EmailVerification(
                         $sm->get('doctrine.entitymanager.orm_default'),
-                        $sm->get('zfcuser_module_options')
+                        $sm->get('lmcuser_module_options')
                     );
                     $mapper->setEventManager($sm->get('SharedEventManager'));
 
@@ -477,8 +477,8 @@ class Module
 
                 'playgrounduser_blockaccount_form' => function ($sm) {
                     $translator = $sm->get('MvcTranslator');
-                    $options = $sm->get('zfcuser_module_options');
-                    $form = new Form\BlockAccount(null, $sm->get('zfcuser_module_options'), $translator);
+                    $options = $sm->get('lmcuser_module_options');
+                    $form = new Form\BlockAccount(null, $sm->get('lmcuser_module_options'), $translator);
                     $form->setInputFilter(new Form\BlockAccountFilter($options));
 
                     return $form;
@@ -486,8 +486,8 @@ class Module
 
                 'playgrounduser_newsletter_form' => function ($sm) {
                     $translator = $sm->get('MvcTranslator');
-                    $options = $sm->get('zfcuser_module_options');
-                    $form = new Form\Newsletter(null, $sm->get('zfcuser_module_options'), $translator);
+                    $options = $sm->get('lmcuser_module_options');
+                    $form = new Form\Newsletter(null, $sm->get('lmcuser_module_options'), $translator);
                     $form->setInputFilter(new Form\NewsletterFilter($options));
 
                     return $form;
@@ -504,7 +504,7 @@ class Module
                 'playgrounduser_password_mapper' => function ($sm) {
                     //                     $options = $sm->get('playgrounduser_module_options');
                     //                     $mapper = new Mapper\Password;
-                    //                     $mapper->setDbAdapter($sm->get('zfcuser_zend_db_adapter'));
+                    //                     $mapper->setDbAdapter($sm->get('lmcuser_zend_db_adapter'));
                     //                     $entityClass = $options->getPasswordEntityClass();
                     //                     $mapper->setEntityPrototype(new $entityClass);
                     //                     $mapper->setHydrator(new Mapper\PasswordHydrator());

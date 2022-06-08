@@ -3,7 +3,7 @@
 namespace PlaygroundUser\Form;
 
 use Laminas\Form\Element;
-use ZfcUser\Form\ProvidesEventsForm;
+use LmcUser\Form\ProvidesEventsForm;
 use PlaygroundUser\Options\ForgotOptionsInterface;
 use Laminas\Mvc\I18n\Translator;
 

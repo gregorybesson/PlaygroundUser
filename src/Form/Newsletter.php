@@ -3,8 +3,8 @@ namespace PlaygroundUser\Form;
 
 use Laminas\Form\Form;
 use Laminas\Form\Element;
-use ZfcUser\Options\RegistrationOptionsInterface;
-use ZfcUser\Form\ProvidesEventsForm;
+use LmcUser\Options\RegistrationOptionsInterface;
+use LmcUser\Form\ProvidesEventsForm;
 use Laminas\Mvc\I18n\Translator;
 
 class Newsletter extends ProvidesEventsForm

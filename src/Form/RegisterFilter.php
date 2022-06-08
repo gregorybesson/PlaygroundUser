@@ -2,10 +2,10 @@
 
 namespace PlaygroundUser\Form;
 
-use ZfcUser\InputFilter\ProvidesEventsInputFilter;
-use ZfcUser\Options\RegistrationOptionsInterface;
+use LmcUser\InputFilter\ProvidesEventsInputFilter;
+use LmcUser\Options\RegistrationOptionsInterface;
 
-class RegisterFilter  extends \ZfcUser\Form\RegisterFilter
+class RegisterFilter  extends \LmcUser\Form\RegisterFilter
 {
     protected $emailValidator;
     protected $usernameValidator;

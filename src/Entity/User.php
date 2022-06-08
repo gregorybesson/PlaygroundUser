@@ -17,7 +17,7 @@ use BjyAuthorize\Provider\Role\ProviderInterface;
  * @ORM\Entity @HasLifecycleCallbacks
  * @ORM\Table(name="user",indexes={@ORM\Index(name="idx_state", columns={"state"})})
  */
-class User implements \ZfcUser\Entity\UserInterface, ProviderInterface, InputFilterAwareInterface
+class User implements \LmcUser\Entity\UserInterface, ProviderInterface, InputFilterAwareInterface
 {
 
     protected $inputFilter;

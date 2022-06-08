@@ -55,8 +55,8 @@ class Cron
         $em = $this->getServiceManager()->get('doctrine.entitymanager.orm_default');
 
         // I Have to know what is the User Class used
-        $zfcUserOptions = $this->getServiceManager()->get('zfcuser_module_options');
-        $userClass = $zfcUserOptions->getUserEntityClass();
+        $lmcuserOptions = $this->getServiceManager()->get('lmcuser_module_options');
+        $userClass = $lmcuserOptions->getUserEntityClass();
 
         // Users with disable pending since n days
         $query = $em->createQuery('SELECT u FROM :userClass u WHERE (u.updated_at <= :date AND u.state = 2)');
@@ -94,7 +94,7 @@ class Cron
     public function getUserMapper()
     {
         if (null === $this->userMapper) {
-            $this->userMapper = $this->getServiceManager()->get('zfcuser_user_mapper');
+            $this->userMapper = $this->getServiceManager()->get('lmcuser_user_mapper');
         }
 
         return $this->userMapper;

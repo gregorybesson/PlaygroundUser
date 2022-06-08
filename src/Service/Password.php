@@ -2,7 +2,7 @@
 
 namespace PlaygroundUser\Service;
 
-use ZfcUser\Options\PasswordOptionsInterface;
+use LmcUser\Options\PasswordOptionsInterface;
 use PlaygroundUser\Options\ForgotOptionsInterface;
 use Laminas\ServiceManager\ServiceManager;
 use PlaygroundUser\Mapper\UserInterface as UserMapperInterface;
@@ -23,7 +23,7 @@ class Password
     protected $userMapper;
     protected $serviceManager;
     protected $options;
-    protected $zfcUserOptions;
+    protected $lmcuserOptions;
     protected $event;
 
     public function __construct(ServiceLocatorInterface $locator)
@@ -93,7 +93,7 @@ class Password
         $newPass = $data['newCredential'];
 
         $bcrypt = new Bcrypt;
-        $bcrypt->setCost($this->getZfcUserOptions()->getPasswordCost());
+        $bcrypt->setCost($this->getLmcUserOptions()->getPasswordCost());
 
         $pass = $bcrypt->create($newPass);
         $user->setPassword($pass);
@@ -119,7 +119,7 @@ class Password
     public function getUserMapper()
     {
         if (null === $this->userMapper) {
-            $this->userMapper = $this->getServiceManager()->get('zfcuser_user_mapper');
+            $this->userMapper = $this->getServiceManager()->get('lmcuser_user_mapper');
         }
 
         return $this->userMapper;
@@ -170,18 +170,18 @@ class Password
         return $this;
     }
 
-    public function getZfcUserOptions()
+    public function getLmcUserOptions()
     {
-        if (!$this->zfcUserOptions instanceof PasswordOptionsInterface) {
-            $this->setZfcUserOptions($this->getServiceManager()->get('zfcuser_module_options'));
+        if (!$this->lmcuserOptions instanceof PasswordOptionsInterface) {
+            $this->setLmcUserOptions($this->getServiceManager()->get('lmcuser_module_options'));
         }
 
-        return $this->zfcUserOptions;
+        return $this->lmcuserOptions;
     }
 
-    public function setZfcUserOptions(PasswordOptionsInterface $zfcUserOptions)
+    public function setLmcUserOptions(PasswordOptionsInterface $lmcuserOptions)
     {
-        $this->zfcUserOptions = $zfcUserOptions;
+        $this->lmcuserOptions = $lmcuserOptions;
 
         return $this;
     }
