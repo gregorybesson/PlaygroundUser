@@ -84,8 +84,8 @@ class UserController extends LmcUserController
         }
 
         // clear adapters
-        $this->lmcuserAuthentication()->getAuthAdapter()->resetAdapters();
-        $this->lmcuserAuthentication()->getAuthService()->clearIdentity();
+        $this->lmcUserAuthentication()->getAuthAdapter()->resetAdapters();
+        $this->lmcUserAuthentication()->getAuthService()->clearIdentity();
 
         return $this->forward()->dispatch('playgrounduser_user', array('action' => 'authenticate'));
     }
@@ -95,7 +95,7 @@ class UserController extends LmcUserController
      */
     public function registerAction()
     {
-        if ($this->lmcuserAuthentication()->hasIdentity()) {
+        if ($this->lmcUserAuthentication()->hasIdentity()) {
 
             return $this->redirect()->toUrl($this->url()->fromRoute($this->getOptions()->getLoginRedirectRoute()));
         }
@@ -309,8 +309,8 @@ class UserController extends LmcUserController
                     'success' => 0
                 )));
             } else {
-                $this->lmcuserAuthentication()->getAuthAdapter()->resetAdapters();
-                $this->lmcuserAuthentication()->getAuthService()->clearIdentity();
+                $this->lmcUserAuthentication()->getAuthAdapter()->resetAdapters();
+                $this->lmcUserAuthentication()->getAuthService()->clearIdentity();
                 $result = $this->forward()->dispatch('playgrounduser_user', array(
                     'action' => 'ajaxauthenticate'
                 ));
@@ -336,14 +336,14 @@ class UserController extends LmcUserController
     {
         // $this->getServiceLocator()->get('Laminas\Log')->info('ajaxloginAction -
         // AUTHENT : ');
-        if ($this->lmcuserAuthentication()
+        if ($this->lmcUserAuthentication()
             ->getAuthService()
             ->hasIdentity()) {
             return true;
         }
-        $adapter = $this->lmcuserAuthentication()->getAuthAdapter();
+        $adapter = $this->lmcUserAuthentication()->getAuthAdapter();
         $adapter->prepareForAuthentication($this->getRequest());
-        $auth = $this->lmcuserAuthentication()->getAuthService()->authenticate($adapter);
+        $auth = $this->lmcUserAuthentication()->getAuthService()->authenticate($adapter);
 
         if (! $auth->isValid()) {
             $adapter->resetAdapters();
@@ -351,7 +351,7 @@ class UserController extends LmcUserController
             return false;
         }
 
-        $user = $this->lmcuserAuthentication()->getIdentity();
+        $user = $this->lmcUserAuthentication()->getIdentity();
 
         if ($user->getState() && $user->getState() === 2) {
             $this->getUserService()->getUserMapper()->activate($user);
@@ -389,12 +389,12 @@ class UserController extends LmcUserController
 
     public function logoutAction()
     {
-        $user = $this->lmcuserAuthentication()->getIdentity();
+        $user = $this->lmcUserAuthentication()->getIdentity();
         //Hybrid_Auth::logoutAllProviders();
 
-        $this->lmcuserAuthentication()->getAuthAdapter()->resetAdapters();
-        $this->lmcuserAuthentication()->getAuthAdapter()->logoutAdapters();
-        $this->lmcuserAuthentication()->getAuthService()->clearIdentity();
+        $this->lmcUserAuthentication()->getAuthAdapter()->resetAdapters();
+        $this->lmcUserAuthentication()->getAuthAdapter()->logoutAdapters();
+        $this->lmcUserAuthentication()->getAuthService()->clearIdentity();
 
         $redirect = $this->params()->fromPost('redirect', $this->params()->fromQuery('redirect', false));
 
@@ -415,10 +415,10 @@ class UserController extends LmcUserController
      */
     public function authenticateAction()
     {
-        if ($this->lmcuserAuthentication()->getAuthService()->hasIdentity()) {
+        if ($this->lmcUserAuthentication()->getAuthService()->hasIdentity()) {
             return $this->redirect()->toRoute($this->getOptions()->getLoginRedirectRoute());
         }
-        $adapter = $this->lmcuserAuthentication()->getAuthAdapter();
+        $adapter = $this->lmcUserAuthentication()->getAuthAdapter();
         $redirect = $this->params()->fromPost('redirect', $this->params()->fromQuery('redirect', false));
         
         $routeLoginAdmin = $this->params()->fromPost('routeLoginAdmin', $this->params()->fromQuery('routeLoginAdmin', false));
@@ -430,7 +430,7 @@ class UserController extends LmcUserController
             return $result;
         }
 
-        $auth = $this->lmcuserAuthentication()->getAuthService()->authenticate($adapter);
+        $auth = $this->lmcUserAuthentication()->getAuthService()->authenticate($adapter);
 
         if (!$auth->isValid()) {
             $this->flashMessenger()->setNamespace('lmcuser-login-form')->addMessage($this->failedLoginMessage);
@@ -446,7 +446,7 @@ class UserController extends LmcUserController
             );
         }
 
-        $user = $this->lmcuserAuthentication()->getIdentity();
+        $user = $this->lmcUserAuthentication()->getIdentity();
         $this->getEventManager()->trigger('authenticate.post', $this, array('user' => $user));
 
         if ($this->getOptions()->getUseRedirectParameterIfPresent() && $redirect) {
@@ -472,7 +472,7 @@ class UserController extends LmcUserController
         } catch (\Exception $e) {
           //echo ($e->getMessage());
         }
-        if (! $this->lmcuserAuthentication()->hasIdentity()) {
+        if (! $this->lmcUserAuthentication()->hasIdentity()) {
             return $this->redirect()->toUrl(
                 $this->url()->fromRoute(
                     $this->getOptions()->getLoginRedirectRoute(),
@@ -529,14 +529,14 @@ class UserController extends LmcUserController
         $formInfo      = $this->getChangeInfoForm();
         $formPrize     = $this->getPrizeCategoryForm();
         $formBlock     = $this->getBlockAccountForm();
-        if ($this->lmcuserAuthentication()->getIdentity()->getState() == 2) {
+        if ($this->lmcUserAuthentication()->getIdentity()->getState() == 2) {
             $formBlock->get('activate')->setAttribute('value', 1);
             $formBlock->get('submit')->setAttribute('value', $translator->translate('Reactivate my account', 'playgrounduser'));
             $formBlock->get('confirm_submit')->setAttribute('value', $translator->translate('Confirm account reactivation', 'playgrounduser'));
         }
 
         $categoryService = $this->getServiceLocator()->get('playgroundgame_prizecategoryuser_service');
-        $categoriesUser = $categoryService->getPrizeCategoryUserMapper()->findBy(array('user' => $this->lmcuserAuthentication()->getIdentity()));
+        $categoriesUser = $categoryService->getPrizeCategoryUserMapper()->findBy(array('user' => $this->lmcUserAuthentication()->getIdentity()));
         $existingCategories = array();
 
         foreach ($categoriesUser as $categoryUser) {
@@ -771,7 +771,7 @@ class UserController extends LmcUserController
      */
     public function addressAction()
     {
-        if (! $this->lmcuserAuthentication()->hasIdentity()) {
+        if (! $this->lmcUserAuthentication()->hasIdentity()) {
             return null;
         }
         $form = $this->getAddressForm();
@@ -824,15 +824,15 @@ class UserController extends LmcUserController
         $provider = $this->params()->fromRoute('provider');
         $this->getRequest()->getQuery()->provider = $provider;
 
-        $this->lmcuserAuthentication()->getAuthAdapter()->resetAdapters();
-        $this->lmcuserAuthentication()->getAuthService()->clearIdentity();
+        $this->lmcUserAuthentication()->getAuthAdapter()->resetAdapters();
+        $this->lmcUserAuthentication()->getAuthService()->clearIdentity();
 
-        $adapter = $this->lmcuserAuthentication()->getAuthAdapter();
+        $adapter = $this->lmcUserAuthentication()->getAuthAdapter();
         $adapter->prepareForAuthentication($this->getRequest());
 
-        $this->lmcuserAuthentication()->getAuthService()->authenticate($adapter);
+        $this->lmcUserAuthentication()->getAuthService()->authenticate($adapter);
 
-        $user = $this->lmcuserAuthentication()->getIdentity();
+        $user = $this->lmcUserAuthentication()->getIdentity();
 
         $viewModel = new ViewModel();
         $viewModel->setVariables(array('user' => $user));
@@ -843,7 +843,7 @@ class UserController extends LmcUserController
     public function blockAccountAction()
     {
         // if the user isn't logged in, we can't change password
-        if (!$this->lmcuserAuthentication()->hasIdentity()) {
+        if (!$this->lmcUserAuthentication()->hasIdentity()) {
             return $this->redirect()->toUrl(
                 $this->url()->fromRoute('frontend/lmcuser/profile')
             );
@@ -869,7 +869,7 @@ class UserController extends LmcUserController
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost()->toArray();
             $service = $this->getServiceLocator()->get('playgroundgame_prizecategoryuser_service');
-            $result = $service->edit($data, $this->lmcuserAuthentication()->getIdentity(), 'playgroundgame_prizecategoryuser_form');
+            $result = $service->edit($data, $this->lmcUserAuthentication()->getIdentity(), 'playgroundgame_prizecategoryuser_form');
             if ($result) {
                 $this->flashMessenger()
                     ->setNamespace('playgroundgame')
@@ -888,7 +888,7 @@ class UserController extends LmcUserController
     public function newsletterAction()
     {
         // if the user isn't logged in, we can't change password
-        if (!$this->lmcuserAuthentication()->hasIdentity()) {
+        if (!$this->lmcUserAuthentication()->hasIdentity()) {
             return $this->redirect()->toUrl(
                 $this->url()->fromRoute('frontend/lmcuser/profile')
             );
@@ -925,14 +925,14 @@ class UserController extends LmcUserController
         $request = $this->getRequest();
         $response = $this->getResponse();
 
-        if (!$this->lmcuserAuthentication()->hasIdentity()) {
+        if (!$this->lmcUserAuthentication()->hasIdentity()) {
             $response->setContent(\Laminas\Json\Json::encode(array(
                 'success' => 0
             )));
         } else {
             if ($request->isPost()) {
                 $data = $this->getRequest()->getPost()->toArray();
-                $data['optinPartner'] = $this->lmcuserAuthentication()->getIdentity()->getOptinPartner();
+                $data['optinPartner'] = $this->lmcUserAuthentication()->getIdentity()->getOptinPartner();
 
                 if ($this->getUserService()->updateNewsletter($data)) {
                     $response->setContent(\Laminas\Json\Json::encode(array(

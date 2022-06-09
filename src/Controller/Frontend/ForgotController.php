@@ -70,7 +70,7 @@ class ForgotController extends AbstractActionController
     public function indexAction()
     {
         //$this->getServiceLocator()->get('Laminas\Log')->info('ForgotAction...');
-        if ($this->lmcuserAuthentication()->hasIdentity()) {
+        if ($this->lmcUserAuthentication()->hasIdentity()) {
             return $this->redirect()->toRoute('frontend/lmcuser');
         } else {
             return $this->redirect()->toRoute('frontend/lmcuser/forgotpassword');
