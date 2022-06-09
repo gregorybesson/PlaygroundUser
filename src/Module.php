@@ -105,7 +105,7 @@ class Module
                     $areaName        = ($areaName == 'frontend' || $areaName == 'admin')? $areaName : 'frontend';
                     $actionName      = $match->getParam('action', 'not-found');
 
-                    $user = $controller->lmcuserAuthentication()->getIdentity();
+                    $user = $controller->lmcUserAuthentication()->getIdentity();
                     $logFrontendUser = (isset($config['playgrounduser']['log_frontend_user'])) ? $config['playgrounduser']['log_frontend_user'] : false;
                     $logAdminUser = (isset($config['playgrounduser']['log_admin_user'])) ? $config['playgrounduser']['log_admin_user'] : false;
 

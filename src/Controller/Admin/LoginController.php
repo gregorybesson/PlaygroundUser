@@ -39,7 +39,7 @@ class LoginController extends LmcUserController
         $request = $this->getRequest();
         $form    = $this->getLoginForm();
 
-        $user = $this->lmcuserAuthentication()->getIdentity();
+        $user = $this->lmcUserAuthentication()->getIdentity();
         $authAdminConfig = $this->getOptions()->getAdmin();
 
         if ($user && $this->isAllowed($authAdminConfig['resource'], $authAdminConfig['privilege'])) {
@@ -56,9 +56,9 @@ class LoginController extends LmcUserController
             }
 
             // clear adapters
-            $this->lmcuserAuthentication()->getAuthAdapter()->resetAdapters();
-            $this->lmcuserAuthentication()->getAuthAdapter()->logoutAdapters();
-            $this->lmcuserAuthentication()->getAuthService()->clearIdentity();
+            $this->lmcUserAuthentication()->getAuthAdapter()->resetAdapters();
+            $this->lmcUserAuthentication()->getAuthAdapter()->logoutAdapters();
+            $this->lmcUserAuthentication()->getAuthService()->clearIdentity();
 
             $request->getQuery()->redirect = $this->url()->fromRoute($authAdminConfig['route_login']);
             $request->getQuery()->routeLoginAdmin = $authAdminConfig['route_login'];
@@ -73,11 +73,11 @@ class LoginController extends LmcUserController
 
     public function logoutAction()
     {
-        $user = $this->lmcuserAuthentication()->getIdentity();
+        $user = $this->lmcUserAuthentication()->getIdentity();
 
-        $this->lmcuserAuthentication()->getAuthAdapter()->resetAdapters();
-        $this->lmcuserAuthentication()->getAuthAdapter()->logoutAdapters();
-        $this->lmcuserAuthentication()->getAuthService()->clearIdentity();
+        $this->lmcUserAuthentication()->getAuthAdapter()->resetAdapters();
+        $this->lmcUserAuthentication()->getAuthAdapter()->logoutAdapters();
+        $this->lmcUserAuthentication()->getAuthService()->clearIdentity();
 
         if ($user) {
             $this->getEventManager()->trigger('logout.post', $this, array('user' => $user));
