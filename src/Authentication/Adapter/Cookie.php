@@ -7,6 +7,7 @@ use Laminas\Authentication\Result as AuthenticationResult;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Stdlib\ResponseInterface as Response;
 use Laminas\ServiceManager\ServiceLocatorInterface;
+use LmcUser\Authentication\Adapter\AdapterChainEvent;
 
 class Cookie extends AbstractAdapter
 {
@@ -23,9 +24,8 @@ class Cookie extends AbstractAdapter
         $this->serviceManager = $locator;
     }
 
-    public function authenticate(\Laminas\EventManager\EventInterface $e)
+    public function authenticate(AdapterChainEvent $e)
     {
-        $e = $e->getTarget();
         //throw new \Exception('Cookie Auth event was stopped without a response.');
         // check if cookie needs to be set, only when prior auth has been successful
         if ($e->getIdentity() !== null && $e->getRequest()->isPost() && $e->getRequest()->getPost()->get('remember_me') == 1) {

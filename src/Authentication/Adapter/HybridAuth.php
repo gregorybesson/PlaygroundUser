@@ -12,6 +12,7 @@ use LmcUser\Options\UserServiceOptionsInterface;
 use Laminas\EventManager\EventManagerInterface;
 use Laminas\EventManager\EventManager;
 use Laminas\EventManager\EventManagerAwareInterface;
+use LmcUser\Authentication\Adapter\AdapterChainEvent;
 
 class HybridAuth extends AbstractAdapter implements EventManagerAwareInterface
 {
@@ -55,26 +56,25 @@ class HybridAuth extends AbstractAdapter implements EventManagerAwareInterface
      */
     protected $roleMapper;
 
-    public function authenticate(\Laminas\EventManager\EventInterface $authEvent)
+    public function authenticate(AdapterChainEvent $e)
     {
-        $authEvent = $authEvent->getTarget();
         if ($this->isSatisfied()) {
             $storage = $this->getStorage()->read();
-            $authEvent->setIdentity($storage['identity'])
+            $e->setIdentity($storage['identity'])
               ->setCode(Result::SUCCESS)
               ->setMessages(array('Authentication successful.'));
 
             return;
         }
-        
-        $provider = $authEvent->getRequest()->getQuery()->get('provider');
+
+        $provider = $e->getRequest()->getQuery()->get('provider');
         if (empty($provider)) {
             return;
         }
 
         $enabledProviders = $this->getOptions()->getEnabledProviders();
         if (!in_array($provider, $enabledProviders)) {
-            $authEvent->setCode(Result::FAILURE)
+            $e->setCode(Result::FAILURE)
               ->setMessages(array('Invalid provider'));
             $this->setSatisfied(false);
             return false;
@@ -100,7 +100,7 @@ class HybridAuth extends AbstractAdapter implements EventManagerAwareInterface
                     $userProfile = $adapter->getUserProfile();
                 }
             } else {
-                $authEvent->setCode(Result::FAILURE)
+                $e->setCode(Result::FAILURE)
                 ->setMessages(array('Invalid provider'));
                 $this->setSatisfied(false);
 
@@ -109,7 +109,7 @@ class HybridAuth extends AbstractAdapter implements EventManagerAwareInterface
         }
 
         if (!$userProfile) {
-            $authEvent->setCode(Result::FAILURE_IDENTITY_NOT_FOUND)
+            $e->setCode(Result::FAILURE_IDENTITY_NOT_FOUND)
               ->setMessages(array('A record with the supplied identity could not be found.'));
             $this->setSatisfied(false);
 
@@ -124,7 +124,7 @@ class HybridAuth extends AbstractAdapter implements EventManagerAwareInterface
                 try {
                     $localUser = $this->$method($userProfile);
                 } catch (\RuntimeException $ex) {
-                    $authEvent->setCode($ex->getCode())
+                    $e->setCode($ex->getCode())
                         ->setMessages(array($ex->getMessage()))
                         ->stopPropagation();
                     $this->setSatisfied(false);
@@ -153,7 +153,7 @@ class HybridAuth extends AbstractAdapter implements EventManagerAwareInterface
             $mapper = $this->getLmcUserMapper();
             $user = $mapper->findById($localUserProvider->getUser()->getId());
             if (!in_array($user->getState(), $lmcuserOptions->getAllowedLoginStates())) {
-                $authEvent->setCode(Result::FAILURE_UNCATEGORIZED)
+                $e->setCode(Result::FAILURE_UNCATEGORIZED)
                     ->setMessages(array('A record with the supplied identity is not active.'));
                 $this->setSatisfied(false);
 
@@ -161,13 +161,13 @@ class HybridAuth extends AbstractAdapter implements EventManagerAwareInterface
             }
         }
 
-        $authEvent->setIdentity($localUserProvider->getUser()->getId());
+        $e->setIdentity($localUserProvider->getUser()->getId());
 
         $this->setSatisfied(true);
         $storage = $this->getStorage()->read();
-        $storage['identity'] = $authEvent->getIdentity();
+        $storage['identity'] = $e->getIdentity();
         $this->getStorage()->write($storage);
-        $authEvent->setCode(Result::SUCCESS)->setMessages(array('Authentication successful.'));
+        $e->setCode(Result::SUCCESS)->setMessages(array('Authentication successful.'));
     }
 
     /**

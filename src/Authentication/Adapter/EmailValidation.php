@@ -3,6 +3,7 @@
 namespace PlaygroundUser\Authentication\Adapter;
 
 use LmcUser\Authentication\Adapter\AbstractAdapter;
+use LmcUser\Authentication\Adapter\AdapterChainEvent;
 use Laminas\Authentication\Result as AuthenticationResult;
 use Laminas\EventManager\EventInterface as AuthEvent;
 use Laminas\ServiceManager\ServiceManager;
@@ -21,9 +22,8 @@ class EmailValidation extends AbstractAdapter
         $this->serviceManager = $locator;
     }
 
-    public function authenticate(AuthEvent $e)
+    public function authenticate(AdapterChainEvent $e)
     {
-        $e = $e->getTarget();
         if ($this->isSatisfied()) {
             $storage = $this->getStorage()->read();
             $e->setIdentity($storage['identity'])
